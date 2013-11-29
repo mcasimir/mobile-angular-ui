@@ -1,0 +1,16 @@
+.section {
+  background: @body-bg;
+  padding-top: floor(@line-height-computed / 2);
+  padding-bottom: floor(@line-height-computed / 2);
+}
+
+.section.section-condensed {
+  padding-top: 0; padding-bottom: 0; 
+}
+
+.section.section-break {
+  margin-bottom: @line-height-computed;
+  -moz-box-shadow: 0 -1px rgba(0, 0, 0, 0.08), 0 1px rgba(0, 0, 0, 0.07), 0 1px 1px rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: 0 -1px rgba(0, 0, 0, 0.08), 0 1px rgba(0, 0, 0, 0.07), 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 -1px rgba(0, 0, 0, 0.08), 0 1px rgba(0, 0, 0, 0.07), 0 1px 1px rgba(0, 0, 0, 0.05);
+}

@@ -1,0 +1,22 @@
+.app-body {
+  height: 100%;
+  padding: 50px 0 50px;
+}
+
+.app-search {
+  border-width: 0 0 1px;
+  position: absolute;
+  top: 50px;
+  z-index: 1029;
+  width: 100%;
+  left: 0;
+}
+
+.app-search~.scrollable {
+  padding-top: 34px; 
+}
+
+/* Tests pointer-events: none; polyfill */
+.btn.disabled {
+  pointer-events: all;  
+}

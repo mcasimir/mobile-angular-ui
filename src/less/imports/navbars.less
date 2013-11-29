@@ -1,0 +1,54 @@
+.navbar-app {  
+  border-color: @navbar-default-border;
+  background: @navbar-default-bg;
+  border-width: 1px;
+  border-style: solid;
+  color: @navbar-default-color;
+
+  .fa {
+    font-size: 24px;
+    vertical-align: middle;
+  }
+
+  .btn-navbar {
+    line-height: 46px;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: @link-color;
+    &:hover {
+      color: darken(@link-color, 10%);
+    }
+  }
+
+  .navbar-brand-center {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+// Top and bottom navbars with absolute positioning,
+// they are necessary to create scroll areas and fake fixed positioning
+// without glitches.
+
+.navbar-absolute-top, .navbar-absolute-bottom {
+  position: absolute;
+  z-index: @zindex-navbar;
+  border-width: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  margin: 0;
+}
+
+.navbar-absolute-top {
+  top:0;
+  border-bottom-width: 1px;
+}
+
+.navbar-absolute-bottom {
+  top: auto;
+  bottom: 0;
+  border-bottom: 0 none;
+  border-top-width: 1px;
+}

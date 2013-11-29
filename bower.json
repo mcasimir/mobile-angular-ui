@@ -1,0 +1,36 @@
+{
+  "name": "maui",
+  "version": "0.0.0",
+  "homepage": "https://github.com/mcasimir/maui",
+  "authors": [
+    "mcasimir <maurizio.cas@gmail.com>"
+  ],
+  "description": "Mobile UI for Bootstrap 3 and Angular JS",
+  "main": "dist/maui.min.js",
+  "keywords": [
+    "maui",
+    "angularjs",
+    "boostrap3",
+    "angular-mobile",
+    "mobile-ui",
+    "boostrap3-mobile"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.1",
+    "font-awesome": "~4.0.3",
+    "bootstrap": "3.0",
+    "angular-animate": "~1.2.2",
+    "angular-touch": "~1.2.2",
+    "angular-route": "~1.2.2",
+    "angular-ui-bootstrap": "~0.7.0",
+    "iscroll": "~5.0.6"
+  }
+}

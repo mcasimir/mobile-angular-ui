@@ -1,0 +1,34 @@
+.sidebar {
+  z-index: 0;
+  width: 80%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: @gray;
+  display: block;
+
+  &.sidebar-left {
+    left: 0;
+    right: auto;
+    &.in ~ .app {
+      right: auto;
+      left: 80%;
+    }
+  }
+
+  &.sidebar-right {
+    left: auto;
+    right: 0;
+    &.in ~ .app {
+      left: auto;
+      right: 80%;
+    }
+  }
+
+  &.in {
+    &~.app {
+      width: 100%;
+      position: absolute;
+    }
+  }
+}
