@@ -38,5 +38,8 @@
     "grunt-contrib-connect": "~0.5.0",
     "grunt-snockets": "~0.1.5",
     "grunt-shell": "~0.6.1"
+  },
+  "dependencies": {
+    "grunt-git": "~0.2.2"
   }
 }

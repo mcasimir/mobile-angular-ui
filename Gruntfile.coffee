@@ -1,5 +1,5 @@
 path = require("path")
-
+exec = require("child_process").exec
 
 #   CSS workflow:
 #
@@ -120,6 +120,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-shell"
   grunt.loadNpmTasks "grunt-contrib-coffee"
 
+
   grunt.task.loadTasks "tasks"
 
   grunt.registerTask "build", [ "clean"
@@ -133,4 +134,18 @@ module.exports = (grunt) ->
   grunt.registerTask "minify",  [ "build"
                                   "uglify"
                                   "cssmin"
+                                ]
+
+  grunt.registerTask "git", "", ->
+    console.log "GIT"
+    done = grunt.task.current.async()
+
+    child = exec 'git commit', (error, stdout, stderr) ->
+      grunt.log.writeln('stdout: ' + stdout)
+      grunt.log.writeln('stderr: ' + stderr)
+      done(error)
+
+
+  grunt.registerTask "commit",  [ "minify",
+                                  "git"
                                 ]
