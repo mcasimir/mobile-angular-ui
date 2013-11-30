@@ -1,5 +1,5 @@
 path = require("path")
-exec = require("child_process").exec
+kexec = require("kexec")
 
 #   CSS workflow:
 #
@@ -110,16 +110,14 @@ module.exports = (grunt) ->
           keepalive: true
 
   grunt.loadNpmTasks "grunt-contrib-clean"
-  grunt.loadNpmTasks "grunt-contrib-copy"
-  grunt.loadNpmTasks "grunt-contrib-watch"
-  grunt.loadNpmTasks "grunt-contrib-concat"
-  grunt.loadNpmTasks "grunt-contrib-uglify"
-  grunt.loadNpmTasks "grunt-contrib-cssmin"
-  grunt.loadNpmTasks "grunt-contrib-connect"
-  grunt.loadNpmTasks "grunt-recess"
-  grunt.loadNpmTasks "grunt-shell"
   grunt.loadNpmTasks "grunt-contrib-coffee"
-
+  grunt.loadNpmTasks "grunt-contrib-concat"
+  grunt.loadNpmTasks "grunt-contrib-connect"
+  grunt.loadNpmTasks "grunt-contrib-copy"
+  grunt.loadNpmTasks "grunt-contrib-cssmin"
+  grunt.loadNpmTasks "grunt-contrib-uglify"
+  grunt.loadNpmTasks "grunt-contrib-watch"
+  grunt.loadNpmTasks "grunt-recess"
 
   grunt.task.loadTasks "tasks"
 
@@ -137,14 +135,8 @@ module.exports = (grunt) ->
                                 ]
 
   grunt.registerTask "git", "", ->
-    console.log "GIT"
     done = grunt.task.current.async()
-
-    child = exec 'git commit', (error, stdout, stderr) ->
-      grunt.log.writeln('stdout: ' + stdout)
-      grunt.log.writeln('stderr: ' + stderr)
-      done(error)
-
+    kexec 'git add . && git commit -a && git push'
 
   grunt.registerTask "commit",  [ "minify",
                                   "git"

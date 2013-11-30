@@ -1,5 +1,4 @@
 util =  require 'util'
-_ = require 'lodash'
 parameterize = require 'parameterize'
 
 fs =  require "fs"
