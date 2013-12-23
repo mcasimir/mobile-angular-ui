@@ -7,13 +7,15 @@ angular.module('mobile-angular-ui.directives.forms', [])
     template: (elems, attrs) -> 
       inputId = attrs.ngModel.replace(".", "_") + "_input"
       """
-        <div class="form-group">
-          <label for="#{inputId}" class="control-label col-sm-2">#{attrs.label}</label>
-          <div class="col-sm-10">
-            <input type="#{attrs.type}" 
-                   id="#{inputId}"
-                   ng-model="#{attrs.ngModel}" 
-                   class="form-control #{attrs.class or ''}" />
+        <div class="form-group container-fluid">
+          <div class="row">
+            <label for="#{inputId}" class="control-label col-sm-2">#{attrs.label}</label>
+            <div class="col-sm-10">
+              <input type="#{attrs.type}" 
+                     id="#{inputId}"
+                     ng-model="#{attrs.ngModel}" 
+                     class="form-control #{attrs.class or ''}" />
+            </div>
           </div>
         </div>
       """

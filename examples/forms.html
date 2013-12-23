@@ -1,36 +1,33 @@
+<div content-for="title">
+  <span>Forms</span>
+</div>
+
+
 <div class="scrollable">
   <div class="container section">
     
     <form action="" id="">
 
 
-<div bs-panel title="Generali">
-  <input type="text" ng-model="customer.name"         label="Nome" bs-input />
+<div bs-panel title="Globals">
+  <input type="text" ng-model="customer.name"         label="Name" bs-input />
   <input type="text" ng-model="customer.email"        label="Email" bs-input />
-  <input type="text" ng-model="customer.fullname"     label="Nome Completo" bs-input />
+  <input type="text" ng-model="customer.fullname"     label="Full Name" bs-input />
   <input type="text" ng-model="customer.address"      label="Address" bs-input />
-  <input type="text" ng-model="customer.vat"          label="P. Iva" bs-input />
-  <input type="text" ng-model="customer.fiscal_code"  label="Codice Fiscale" bs-input />
+  <input type="text" ng-model="customer.vat"          label="VAT" bs-input />
+  <input type="text" ng-model="customer.fiscal_code"  label="Tax Code" bs-input />
 </div>
 
-<div bs-panel title="Posta Cartacea">
-  <input type="text" ng-model="customer.mailing_recipient"  label="Destinatario Posta" bs-input />
-  <textarea type="text" ng-model="customer.mailing_address" label="Indirizzo" bs-textarea></textarea>
+<div bs-panel title="Regular Mail">
+  <input type="text" ng-model="customer.mailing_recipient"  label="Recipient" bs-input />
+  <textarea type="text" ng-model="customer.mailing_address" label="Address" bs-textarea></textarea>
 </div>
 
-<!-- 
-  navbar-actions are duplicated in top navbar
-  any click to top navbar button is translated 
-  to original button click
- -->
-<div>
-  <button class="btn btn-primary" navbar-action>
+<div content-for="navbarAction" duplicate>
+  <button class="btn btn-primary">
     Save
   </button>
 </div>
-
-
-
 
     </form>
   </div>

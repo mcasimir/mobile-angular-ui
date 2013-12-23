@@ -1,14 +1,3 @@
-.btn-navbar-app-action, .navbar-app .btn-navbar {
-    line-height: 46px;
-    padding-top: 0;
-    padding-bottom: 0;
-    color: @link-color;
-    &:hover {
-      color: darken(@link-color, 10%);
-    }
-  }
-
-
 .navbar-app {  
   border-color: @navbar-default-border;
   background: @navbar-default-bg;
@@ -26,6 +15,19 @@
     text-align: center;
     width: 100%;
   }
+
+ .btn-navbar, .btn {
+    background: none;
+    border: none;
+    line-height: 46px;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: @link-color;
+    &:hover {
+      color: darken(@link-color, 10%);
+    }
+  }
+
 }
 
 // Top and bottom navbars with absolute positioning,

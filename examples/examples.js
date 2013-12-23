@@ -19,6 +19,6 @@ app.filter('range', function() {
   };
 });
 
-app.controller('MainController', function($scope){
+app.controller('MainController', function($rootScope){
 
 });

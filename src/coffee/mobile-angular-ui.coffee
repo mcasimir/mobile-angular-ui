@@ -4,6 +4,8 @@ angular.module("mobile-angular-ui", [
   'mobile-angular-ui.directives.toggle'
   'mobile-angular-ui.directives.overlay'
   'mobile-angular-ui.directives.forms'
+  'mobile-angular-ui.directives.panels'
+  'mobile-angular-ui.directives.capture'
  ])
 
 #

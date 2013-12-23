@@ -1,47 +1,60 @@
 # content-for / yield-to directives
 # 
 
-
 angular.module("mobile-angular-ui.directives.capture", [])
 
-.run [ ->
-  # on route change reset yield to default
-]
+.run( [ "CaptureService", "$rootScope", (CaptureService, $rootScope) ->
+  $rootScope.$on '$routeChangeStart', ->
+    CaptureService.resetAll()
+])
 
-# .directive( "contentFor", [
-#   "$sce"
-#   ($sce) ->
-#     return compile: (e, attrs, transclude) ->
-#       pre: (scope, iElement, iAttrs, controller) ->
-#         html = undefined
-#         targetScope = undefined
-#         varname = undefined
-#         varname = iAttrs["contentFor"]
-#         targetScope = scope
-#         while targetScope.$parent
-#           if (if targetScope.hasOwnProperty then targetScope.hasOwnProperty(varname) else targetScope[varname])
-#             break
-#           else
-#             targetScope = targetScope.$parent
-#         html = iElement.html()
-#         targetScope[varname] = $sce.trustAsHtml(html)
-#         iElement.remove()
-# ])
+.factory("CaptureService", [ "$compile", ($compile) -> 
+  yielders = {}
 
-# App.directive( "yieldTo", [
-#   "$sce"
-#   "$parse"
-#   ($sce, $parse) ->
-#     return (scope, element, attr) ->
+  resetAll: () ->
+    for name, yielder of yielders
+      @resetYielder(name)
+  
+  resetYielder: (name) ->
+    b = yielders[name]
+    @setContentFor(name, b.defaultContent, b.defaultScope)
 
-#       getStringValue = ->
-#         (parsed(scope) or "").toString()
+  putYielder: (name, element, defaultScope, defaultContent) ->
+    yielder = yielders[name] = {}
+    yielder.name = name
+    yielder.element = element
+    yielder.defaultContent = defaultContent or ""
+    yielder.defaultScope = defaultScope
 
-#       parsed = $parse(attr.yieldTo)
-#       scope.$watch getStringValue, yieldToWatchAction = (value) ->
-#         html = $sce.getTrustedHtml(parsed(scope)) or ""
-#         element.html html
-#         # element.attr("yield-to", attr.yieldTo)
-#         # element.addClass("ng-binding").data "$binding", attr.yieldTo
+  getYielder: (name) ->
+    yielders[name]
 
-# ])
+  removeYielder: (name) ->
+    delete yielders[name]
+
+  setContentFor: (name, content, scope) ->
+    b = yielders[name]
+    return unless b
+    sanitizedContent = content.replace(/^\s+/, "")
+    compiled = $compile( sanitizedContent )(scope)
+    b.element.empty().append(compiled)
+])
+
+.directive( "contentFor", [ "CaptureService", (CaptureService) -> 
+  link: (scope, elem, attrs) ->
+    CaptureService.setContentFor(attrs.contentFor, elem.html(), scope)
+    if not attrs.duplicate?
+      elem.remove()
+    else
+      elem
+])
+
+.directive( "yieldTo", [ 
+  "$compile"
+  "CaptureService"
+  ($compile, CaptureService) ->
+    link: (scope, element, attr) ->
+      CaptureService.putYielder(attr.yieldTo, element, scope, element.html())
+      element.contents().remove()
+
+])

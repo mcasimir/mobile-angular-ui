@@ -5984,19 +5984,6 @@ a.list-group-item .fa.pull-right {
   transition: left 0.2s ease-out, right 0.2s ease-out;
 }
 
-.btn-navbar-app-action,
-.navbar-app .btn-navbar {
-  padding-top: 0;
-  padding-bottom: 0;
-  line-height: 46px;
-  color: #007aff;
-}
-
-.btn-navbar-app-action:hover,
-.navbar-app .btn-navbar:hover {
-  color: #0062cc;
-}
-
 .navbar-app {
   color: #777777;
   background: #f8f8f8;
@@ -6014,6 +6001,21 @@ a.list-group-item .fa.pull-right {
   position: absolute;
   width: 100%;
   text-align: center;
+}
+
+.navbar-app .btn-navbar,
+.navbar-app .btn {
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 46px;
+  color: #007aff;
+  background: none;
+  border: none;
+}
+
+.navbar-app .btn-navbar:hover,
+.navbar-app .btn:hover {
+  color: #0062cc;
 }
 
 .navbar-absolute-top,

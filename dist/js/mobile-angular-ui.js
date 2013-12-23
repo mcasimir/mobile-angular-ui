@@ -22478,7 +22478,80 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
 
 })(window, window.angular);
 
-angular.module("mobile-angular-ui.directives.capture", []).run([function() {}]);
+angular.module("mobile-angular-ui.directives.capture", []).run([
+  "CaptureService", "$rootScope", function(CaptureService, $rootScope) {
+    return $rootScope.$on('$routeChangeStart', function() {
+      return CaptureService.resetAll();
+    });
+  }
+]).factory("CaptureService", [
+  "$compile", function($compile) {
+    var yielders;
+    yielders = {};
+    return {
+      resetAll: function() {
+        var name, yielder, _results;
+        _results = [];
+        for (name in yielders) {
+          yielder = yielders[name];
+          _results.push(this.resetYielder(name));
+        }
+        return _results;
+      },
+      resetYielder: function(name) {
+        var b;
+        b = yielders[name];
+        return this.setContentFor(name, b.defaultContent, b.defaultScope);
+      },
+      putYielder: function(name, element, defaultScope, defaultContent) {
+        var yielder;
+        yielder = yielders[name] = {};
+        yielder.name = name;
+        yielder.element = element;
+        yielder.defaultContent = defaultContent || "";
+        return yielder.defaultScope = defaultScope;
+      },
+      getYielder: function(name) {
+        return yielders[name];
+      },
+      removeYielder: function(name) {
+        return delete yielders[name];
+      },
+      setContentFor: function(name, content, scope) {
+        var b, compiled, sanitizedContent;
+        b = yielders[name];
+        if (!b) {
+          return;
+        }
+        sanitizedContent = content.replace(/^\s+/, "");
+        compiled = $compile(sanitizedContent)(scope);
+        return b.element.empty().append(compiled);
+      }
+    };
+  }
+]).directive("contentFor", [
+  "CaptureService", function(CaptureService) {
+    return {
+      link: function(scope, elem, attrs) {
+        CaptureService.setContentFor(attrs.contentFor, elem.html(), scope);
+        if (attrs.duplicate == null) {
+          return elem.remove();
+        } else {
+          return elem;
+        }
+      }
+    };
+  }
+]).directive("yieldTo", [
+  "$compile", "CaptureService", function($compile, CaptureService) {
+    return {
+      link: function(scope, element, attr) {
+        CaptureService.putYielder(attr.yieldTo, element, scope, element.html());
+        return element.contents().remove();
+      }
+    };
+  }
+]);
 
 angular.module('mobile-angular-ui.directives.forms', []).directive("bsInput", function() {
   return {
@@ -22487,7 +22560,7 @@ angular.module('mobile-angular-ui.directives.forms', []).directive("bsInput", fu
     template: function(elems, attrs) {
       var inputId;
       inputId = attrs.ngModel.replace(".", "_") + "_input";
-      return "<div class=\"form-group\">\n  <label for=\"" + inputId + "\" class=\"control-label col-sm-2\">" + attrs.label + "</label>\n  <div class=\"col-sm-10\">\n    <input type=\"" + attrs.type + "\" \n           id=\"" + inputId + "\"\n           ng-model=\"" + attrs.ngModel + "\" \n           class=\"form-control " + (attrs["class"] || '') + "\" />\n  </div>\n</div>";
+      return "<div class=\"form-group container-fluid\">\n  <div class=\"row\">\n    <label for=\"" + inputId + "\" class=\"control-label col-sm-2\">" + attrs.label + "</label>\n    <div class=\"col-sm-10\">\n      <input type=\"" + attrs.type + "\" \n             id=\"" + inputId + "\"\n             ng-model=\"" + attrs.ngModel + "\" \n             class=\"form-control " + (attrs["class"] || '') + "\" />\n    </div>\n  </div>\n</div>";
     },
     link: function(scope, element, attrs) {
       return element.removeAttr('type').removeAttr('label').removeAttr('ng-model').attr('class', "form-group");
@@ -22523,7 +22596,22 @@ angular.module('mobile-angular-ui.directives.overlay', []).directive('overlay', 
   }
 ]);
 
-
+angular.module("mobile-angular-ui.directives.panels", []).directive("bsPanel", function() {
+  return {
+    restrict: 'EA',
+    replace: true,
+    scope: false,
+    transclude: true,
+    template: function(elems, attrs) {
+      var heading;
+      heading = "";
+      if (attrs.title) {
+        heading = "<div class=\"panel-heading\">\n  <h2 class=\"panel-title\">\n    " + attrs.title + "\n  </h2>\n</div>";
+      }
+      return "<div class=\"panel panel-default\">\n  " + heading + "\n  <div class=\"panel-body\">\n     <div ng-transclude></div>\n  </div>\n</div>";
+    }
+  };
+});
 
 (function() {
   var Toggle, Toggleable, Toggler;
@@ -22772,7 +22860,7 @@ angular.module('mobile-angular-ui.directives.overlay', []).directive('overlay', 
   ]);
 })();
 
-angular.module("mobile-angular-ui", ['ngTouch', 'ngAnimate', 'mobile-angular-ui.directives.toggle', 'mobile-angular-ui.directives.overlay', 'mobile-angular-ui.directives.forms']).run([
+angular.module("mobile-angular-ui", ['ngTouch', 'ngAnimate', 'mobile-angular-ui.directives.toggle', 'mobile-angular-ui.directives.overlay', 'mobile-angular-ui.directives.forms', 'mobile-angular-ui.directives.panels', 'mobile-angular-ui.directives.capture']).run([
   "$rootScope", function($rootScope) {
     return angular.forEach(["$locationChangeSuccess", "$includeContentLoaded"], function(evtName) {
       return $rootScope.$on(evtName, function() {
