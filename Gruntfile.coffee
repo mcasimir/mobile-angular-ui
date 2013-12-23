@@ -3,7 +3,7 @@ kexec = require("kexec")
 
 #   CSS workflow:
 #
-#   2) create a combined css with Bootstrap, Fontawesome and Maui sources
+#   2) create a combined css with Bootstrap, Fontawesome and Angular Ui Mobile sources
 #   3) split complete css
 #      into different files 
 #      according to media queries
@@ -19,7 +19,7 @@ module.exports = (grunt) ->
       bootstrap:
         src:  "tmp/complete.css"
         dest: "dist/css"
-        basename: "maui"
+        basename: "mobile-angular-ui"
 
     clean: ["tmp", "dist", "examples/assets"]
     copy:
@@ -50,7 +50,7 @@ module.exports = (grunt) ->
         files:
           "tmp/complete.css": [
             "bower_components/font-awesome/css/font-awesome.css",
-            "src/less/maui.less"
+            "src/less/mobile-angular-ui.less"
           ]
 
     coffee:
@@ -58,26 +58,22 @@ module.exports = (grunt) ->
         options:
           bare: true
         files:
-          "tmp/maui.js": [
+          "tmp/mobile-angular-ui.js": [
             "src/coffee/directives/**/*.coffee"
-            "src/coffee/maui.coffee"
+            "src/coffee/mobile-angular-ui.coffee"
           ]
 
     concat:
       js:
         files: 
-          "dist/js/maui.js": [
+          "dist/js/mobile-angular-ui.js": [
             "bower_components/overthrow/src/overthrow-detect.js"
             "bower_components/overthrow/src/overthrow-toss.js"
             "bower_components/overthrow/src/overthrow-polyfill.js"
             "bower_components/angular/angular.js"
             "bower_components/angular-animate/angular-animate.js"
             "bower_components/angular-touch/angular-touch.js"
-            "bower_components/angular-ui-bootstrap/src/transition/transition.js"
-            "bower_components/angular-ui-bootstrap/src/accordion/accordion.js"
-            "bower_components/angular-ui-bootstrap/src/collapse/collapse.js"
-            "bower_components/angular-ui-bootstrap/src/dropdownToggle/dropdownToggle.js"
-            "tmp/maui.js"
+            "tmp/mobile-angular-ui.js"
           ]
 
     uglify:
@@ -85,7 +81,7 @@ module.exports = (grunt) ->
         options:
           report: 'min'
         files: 
-          "dist/js/maui.min.js": ["dist/js/maui.js"]
+          "dist/js/mobile-angular-ui.min.js": ["dist/js/mobile-angular-ui.js"]
 
     cssmin:
       minify:

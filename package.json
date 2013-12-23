@@ -1,5 +1,5 @@
 {
-  "name": "maui",
+  "name": "mobile-angular-ui",
   "version": "0.0.0",
   "description": "Mobile Angular UI",
   "main": "index.js",
@@ -12,12 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mcasimir/maui.git"
+    "url": "git://github.com/mcasimir/mobile-angular-ui.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mcasimir/maui/issues"
+    "url": "https://github.com/mcasimir/mobile-angular-ui/issues"
   },
   "devDependencies": {
     "css-parse": "~1.6.0",

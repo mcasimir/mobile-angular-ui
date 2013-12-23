@@ -14,33 +14,27 @@ to see this page in browser
 <head>
   <meta charset="utf-8" />
 
-  <title>Maui Example</title>
+  <title>Mobile Angular Ui Examples</title>
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
   
-  <link rel="stylesheet" href="assets/css/maui.base.css" />
+  <link rel="stylesheet" href="assets/css/mobile-angular-ui.base.css" />
   <link rel="stylesheet" href="examples.css" />
 
-  <script src="assets/js/maui.js"></script>
+  <script src="assets/js/mobile-angular-ui.js"></script>
   <script src="assets/js/angular-route.js"></script>
   <script src="examples.js"></script>
 </head>
 
-<body ng-app="MauiExamples" ng-controller="MainController">
+<body ng-app="AngularUiMobileExamples" ng-controller="MainController">
 
-  <div sidebar="main" class="sidebar sidebar-left">
-    <div class="list-group">
-      <a class="list-group-item" href="#/">Kitchen Sink <i class="fa fa-chevron-right pull-right"></i></a>
-      <a class="list-group-item" href="#/scroll">Scroll <i class="fa fa-chevron-right pull-right"></i></a>
-      <a class="list-group-item" href="#/tabs">Tabs <i class="fa fa-chevron-right pull-right"></i></a>
-
-
-    </div>
+  <div class="sidebar sidebar-left" toggleable active-class="in" id="mainSidebar">
+    <ng-include src="'/sidebar.html'"></ng-include>
   </div>
 
   <div class="app">
@@ -52,14 +46,14 @@ to see this page in browser
         </div>
 
         <div class="btn-group pull-left">
-          <div ng-click="toggleSidebar('main')" class="btn btn-navbar">
+          <div ng-click="toggle('mainSidebar')" class="btn btn-navbar mySidebarToggle">
             <i class="fa fa-bars"></i> Menu
           </div>
         </div>
 
-        <div class="btn-group pull-right">
+        <div class="btn-group pull-right" yield-to="navbarAction">
           <div class="btn btn-navbar">
-            <i class="fa fa-plus"></i> Nuovo
+            <i class="fa fa-plus"></i> New
           </div>
         </div>
     </div>

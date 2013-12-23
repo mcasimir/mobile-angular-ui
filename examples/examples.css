@@ -3,6 +3,11 @@
   padding: 50px 0 50px;
 }
 
+.app-name {
+  padding: 10px;
+  color: #fff;
+}
+
 .app-search {
   border-width: 0 0 1px;
   position: absolute;
@@ -19,4 +24,34 @@
 /* Tests pointer-events: none; polyfill */
 .btn.disabled {
   pointer-events: all;  
+}
+
+.nav.nav-tabs {
+  margin-bottom: 15px;
+}
+
+@media (min-width: 700px) {
+  .mySidebarToggle {
+    display: none;
+  }
+  .navbar-app .navbar-brand-center {
+    text-align: left;
+  }
+  .sidebar.sidebar-left, .sidebar.sidebar-left.in {
+    display: block;
+    left: 0;
+    width: 300px;
+  }
+  .sidebar.sidebar-left~.app,.sidebar.sidebar-left.in~.app{
+    width: auto;
+    margin-left: 300px;
+    left: 0;
+  }
+  .navbar-absolute-bottom {
+    display: none;
+  }
+  .app-body {
+    padding-bottom: 0;
+  }
+  
 }

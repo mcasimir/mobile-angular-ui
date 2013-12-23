@@ -10,28 +10,22 @@
   }
 }
 
-// .btn-default {
-//   color: @link-color;
-//   background: @body-bg;
-//   border: 1px solid @link-color;
-// }
+.btn-group.justified > .btn {
+  &:not(:last-child) { // Trick for IE8: IE8 should ignore :not thus rendering the 1px border anyway
+    border-right-width: 0;
+  }
 
-// .btn-default.active {
-//   &, &:hover, &:focus, &:active {
-//     -webkit-box-shadow: none;
-//     -moz-box-shadow: none;
-//     box-shadow: none;
-//     border-color: @link-color;
-//     background: @link-color;
-//     color: contrast(@link-color);
-//   }
-// }
+  &:last-child, &.active {
+    border-right-width: 1px;
+  }
 
-// .btn-default:hover, .btn-default:focus, .btn-default:active {
-//   color: @link-color;
-//   border-color: @link-color;
-// }
+  &:not(:last-child).active+.btn {
+    border-left-width: 0; 
+  }
+}
 
 .btn-group.nav-tabs {
   border: 0 none;
 }
+
+//.btn-group > .btn:last-child:not(:first-child)

@@ -2,7 +2,7 @@
 
 ## Angular &amp; Bootstrap 3 for Mobile web and applications
 
-Maui glues together: 
+Angular Ui Mobile glues together: 
 
 - Angular 1.2+
 - Bootstrap 3
@@ -36,7 +36,7 @@ __NOTE__
 This project is partially functional now but not ready yet. To test it and see what it is now just clone this repo:
 
 ``` sh
-git clone https://github.com/mcasimir/maui.git
+git clone https://github.com/mcasimir/mobile-angular-ui.git
 ```
 
 then you need `node`, `bower` and `grunt` so you can run `npm install` and use `grunt` to launch a local server that serves a demo app at `http://localhost:3000`
@@ -89,7 +89,7 @@ Removed components:
 
 ## The Roadmap
 
-- Reproduce all of the targeted twitter bootstrap basic functionalities
+√ Reproduce all of the targeted twitter bootstrap basic functionalities [OK]
 - Isolate scrolling polyfills and hide details through generic markup and angular directives
 - Test and choose wise between iScroll and Overthrow or something else
 - Add a switch component

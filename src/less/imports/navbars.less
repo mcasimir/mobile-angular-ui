@@ -1,3 +1,14 @@
+.btn-navbar-app-action, .navbar-app .btn-navbar {
+    line-height: 46px;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: @link-color;
+    &:hover {
+      color: darken(@link-color, 10%);
+    }
+  }
+
+
 .navbar-app {  
   border-color: @navbar-default-border;
   background: @navbar-default-bg;
@@ -8,16 +19,6 @@
   .fa {
     font-size: 24px;
     vertical-align: middle;
-  }
-
-  .btn-navbar {
-    line-height: 46px;
-    padding-top: 0;
-    padding-bottom: 0;
-    color: @link-color;
-    &:hover {
-      color: darken(@link-color, 10%);
-    }
   }
 
   .navbar-brand-center {
