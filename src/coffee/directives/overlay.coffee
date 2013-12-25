@@ -9,7 +9,7 @@ angular.module('mobile-angular-ui.directives.overlay', [])
       <div class="overlay" id="#{id}" toggleable active-class="in">
         <div class="overlay-inner">
           <div class="overlay-background"></div>
-          <a href="##{id}" toggle="deactivate" class="overlay-dismiss">
+          <a href="##{id}" toggle="off" class="overlay-dismiss">
             <i class="fa fa-times-circle-o"></i>
           </a>
           <div class="overlay-content">

@@ -5993,6 +5993,7 @@ a.list-group-item .fa.pull-right {
 }
 
 .navbar-app {
+  min-height: 50px;
   color: #777777;
   background: #f8f8f8;
   border-color: #adadad;
@@ -6000,8 +6001,8 @@ a.list-group-item .fa.pull-right {
   border-width: 1px;
 }
 
-.navbar-app .fa {
-  font-size: 24px;
+.navbar-app .btn-icon-only .fa {
+  font-size: 22px;
   vertical-align: middle;
 }
 
@@ -6015,7 +6016,7 @@ a.list-group-item .fa.pull-right {
 .navbar-app .btn {
   padding-top: 0;
   padding-bottom: 0;
-  line-height: 46px;
+  line-height: 50px;
   color: #007aff;
   text-transform: uppercase;
   background: none;

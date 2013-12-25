@@ -35,12 +35,6 @@ module.exports = (grunt) ->
         src: ["**"],
         dest: "examples/assets"
 
-      examples_routes:
-        expand: true,
-        cwd: "bower_components/angular-route"
-        src: ["angular-route.js"],
-        dest: "examples/assets/js"
-
     recess:
       dist:
         options:
@@ -71,6 +65,7 @@ module.exports = (grunt) ->
             "bower_components/overthrow/src/overthrow-toss.js"
             "bower_components/overthrow/src/overthrow-polyfill.js"
             "bower_components/angular/angular.js"
+            "bower_components/angular-route/angular-route.js"
             "bower_components/angular-animate/angular-animate.js"
             "bower_components/angular-touch/angular-touch.js"
             "tmp/mobile-angular-ui.js"

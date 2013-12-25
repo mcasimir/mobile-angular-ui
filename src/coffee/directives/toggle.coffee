@@ -19,7 +19,7 @@
   # another element of the same group has been activated it
   # immediately disables himself and notify the updated state trough an event  
 
-  #   <a  toggle="activate"
+  #   <a  toggle="on"
   #       target="tab1"
   #       active-class="active"
   #   >
@@ -50,9 +50,9 @@
       toggleableToggled:  "mobile-angular-ui.toggle.toggled"
 
     commands:
-      alternate:  "alternate"
-      activate:   "activate"
-      deactivate: "deactivate"
+      alternate:  "toggle"
+      activate:   "on"
+      deactivate: "off"
 
     helpers:
       updateElemClasses: (elem, attrs, active) ->
@@ -218,10 +218,10 @@
   # Sets up global 'toggle' and 'toggleByClass' function
   #
   .run(["$rootScope", ($rootScope) ->
-    $rootScope.toggle = (target, command = "alternate") ->
+    $rootScope.toggle = (target, command = "toggle") ->
       $rootScope.$broadcast(Toggle.events.toggle, target, command)
     
-    $rootScope.toggleByClass = (targetClass, command = "alternate") ->
+    $rootScope.toggleByClass = (targetClass, command = "toggle") ->
       $rootScope.$broadcast(Toggle.events.toggleByClass, targetClass, command)
 
   ])

@@ -21,7 +21,7 @@
 .app-search {
   border-width: 0 0 1px;
   position: absolute;
-  top: 50px;
+  top: 51px;
   z-index: 1029;
   width: 100%;
   left: 0;
@@ -38,6 +38,12 @@
 
 .nav.nav-tabs {
   margin-bottom: 15px;
+}
+
+#lightbulb {
+  font-size: 100px;
+  display: block;
+  text-align: center; 
 }
 
 @media (min-width: 700px) {

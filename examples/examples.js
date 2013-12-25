@@ -19,6 +19,27 @@ app.filter('range', function() {
   };
 });
 
+var escapeHtml = function(str) {
+    var tagsToReplace = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;'
+    };
+    return str.replace(/[&<>]/g, function(tag) {
+        return tagsToReplace[tag] || tag;
+    });
+};
+
+app.directive('exampleCode', function(){
+  return {
+    link: function(scope, elem, attrs) {
+      container = angular.element(document.getElementById(attrs.exampleCode));
+      html = container.html();
+      elem.empty().append("<pre><code>" + escapeHtml(html) + "</code></pre>")
+    }
+  };
+});
+
 app.controller('MainController', function($rootScope){
 
 });

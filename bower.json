@@ -1,6 +1,6 @@
 {
   "name": "mobile-angular-ui",
-  "version": "1.0.0-alpha",
+  "version": "1.0.1-alpha",
   "homepage": "https://github.com/mcasimir/mobile-angular-ui",
   "authors": [
     "mcasimir <maurizio.cas@gmail.com>"
@@ -30,7 +30,6 @@
     "angular-animate": "~1.2.2",
     "angular-touch": "~1.2.2",
     "angular-route": "~1.2.2",
-    "angular-ui-bootstrap": "~0.7.0",
     "overthrow": "~0.7.0"
   }
 }
