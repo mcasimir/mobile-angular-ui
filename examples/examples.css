@@ -6,6 +6,16 @@
 .app-name {
   padding: 10px;
   color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  z-index: 1000;
+}
+
+.sidebar {
+  padding-top: 100px;
 }
 
 .app-search {

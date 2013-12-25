@@ -19,7 +19,7 @@ angular.module("mobile-angular-ui.directives.panels", [])
         """
 
       """
-        <div class="panel panel-default">
+        <div class="panel">
           #{heading}
           <div class="panel-body">
              <div ng-transclude></div>

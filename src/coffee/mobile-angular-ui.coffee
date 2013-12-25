@@ -1,3 +1,5 @@
+overthrow.scrollIndicatorClassName = "scrollable"
+
 angular.module("mobile-angular-ui", [
   'ngTouch'
   'ngAnimate'

@@ -1,4 +1,14 @@
 angular.module('mobile-angular-ui.directives.forms', [])
+# .run( [->
+
+#   console.log "PROVA"
+#   angular.forEach( document.getElementsByTagName("input"), (i) ->
+
+#     if i.type is "date"
+#       console.log "DATE INPUT"
+    
+#   ) 
+# ])
 
 .directive( "bsInput", -> 
   return {
@@ -20,7 +30,7 @@ angular.module('mobile-angular-ui.directives.forms', [])
         </div>
       """
 
-    link: (scope, element, attrs) ->
+    link: (scope, element, attrs) ->      
       element.removeAttr('type')
              .removeAttr('label')
              .removeAttr('ng-model')
@@ -35,10 +45,12 @@ angular.module('mobile-angular-ui.directives.forms', [])
     template: (elems, attrs) -> 
       inputId = attrs.ngModel.replace(".", "_") + "_input"
       """
-        <div class="form-group">
-          <label for="#{inputId}" class="control-label col-sm-2">#{attrs.label}</label>
-          <div class="col-sm-10">
-            <textarea id="#{inputId}" ng-model="#{attrs.ngModel}" class="form-control #{attrs.class or ''}"></textarea>
+        <div class="form-group container-fluid">
+          <div class="row">
+            <label for="#{inputId}" class="control-label col-sm-2">#{attrs.label}</label>
+            <div class="col-sm-10">
+              <textarea id="#{inputId}" ng-model="#{attrs.ngModel}" class="form-control #{attrs.class or ''}"></textarea>
+            </div>
           </div>
         </div>
       """

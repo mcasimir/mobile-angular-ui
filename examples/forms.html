@@ -4,31 +4,30 @@
 
 
 <div class="scrollable">
-  <div class="container section">
-    
-    <form action="" id="">
+ <div class="scrollable-content container section">
+   
+   <form action="" id="">
 
+     <div bs-panel title="Invoice">
+       <input type="text" ng-model="invoice.customer"    label="Customer" bs-input />
+       <input type="checkbox" ng-model="invoice.payed"   label="Payed" bs-input />
+       <input type="number" ng-model="invoice.amount"    label="Amount" bs-input />
+       <input type="date" ng-model="invoice.date"        label="Date" bs-input />
 
-<div bs-panel title="Globals">
-  <input type="text" ng-model="customer.name"         label="Name" bs-input />
-  <input type="text" ng-model="customer.email"        label="Email" bs-input />
-  <input type="text" ng-model="customer.fullname"     label="Full Name" bs-input />
-  <input type="text" ng-model="customer.address"      label="Address" bs-input />
-  <input type="text" ng-model="customer.vat"          label="VAT" bs-input />
-  <input type="text" ng-model="customer.fiscal_code"  label="Tax Code" bs-input />
-</div>
+     </div>
 
-<div bs-panel title="Regular Mail">
-  <input type="text" ng-model="customer.mailing_recipient"  label="Recipient" bs-input />
-  <textarea type="text" ng-model="customer.mailing_address" label="Address" bs-textarea></textarea>
-</div>
+     <div bs-panel title="Notes">
+       <textarea type="text" ng-model="customer.mailing_address" label="Address" bs-textarea></textarea>
+     </div>
+      
+    <div bs-panel>
+      <div content-for="navbarAction" duplicate>
+        <button class="btn btn-primary">
+          Save
+        </button>
+      </div>
+    </div>
+   </form>
 
-<div content-for="navbarAction" duplicate>
-  <button class="btn btn-primary">
-    Save
-  </button>
-</div>
-
-    </form>
-  </div>
+ </div>
 </div>

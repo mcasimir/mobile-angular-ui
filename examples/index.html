@@ -31,7 +31,9 @@ to see this page in browser
   <script src="examples.js"></script>
 </head>
 
-<body ng-app="AngularUiMobileExamples" ng-controller="MainController">
+<body ng-app="AngularUiMobileExamples" ng-controller="MainController"  
+        ng-swipe-left="toggle('mainSidebar', 'deactivate')"
+        ng-swipe-right="toggle('mainSidebar', 'activate')">
 
   <div class="sidebar sidebar-left" toggleable active-class="in" id="mainSidebar">
     <ng-include src="'/sidebar.html'"></ng-include>
