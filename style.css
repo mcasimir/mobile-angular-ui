@@ -22,7 +22,7 @@ b, strong {
   position: relative;
 }
 
-.navbar:after {
+.navbar-top:after {
   content: "";
   display: block;
   position: absolute;
@@ -52,6 +52,11 @@ b, strong {
   line-height: 50px;
 }
 
+.navbar-brand {
+  text-transform: uppercase;
+  margin: 0;
+}
+
 .navbar-nav>li>a:hover {
   background: none;
   opacity: .8;
@@ -60,7 +65,7 @@ b, strong {
 .jumbotron {
   background: #ecf0f1;
   position: relative;
-  font-size: 37px;
+  font-size: 30px;
   line-height: 48px;
 }
 
@@ -115,9 +120,18 @@ html .page-header {
 }
 
 #carousel-example-generic {
-  width: 320px;
-  margin:auto;
   margin-bottom: 40px;
+}
+
+#carousel-example-generic .item {
+  text-align: center;
+  padding: 20px;
+}
+
+.carousel-inner>.item>img, .carousel-inner>.item>a>img {
+  display: inline;
+  display: inline-block;
+  box-shadow: 0 0 20px rgba(0,0,0,.5);
 }
 
 .carousel-indicators {
@@ -131,3 +145,39 @@ bottom: -50px !important;
 .carousel-indicators .active {
   background-color: #888;
 }
+
+.carousel-control.left, .carousel-control.right {
+  background-image: none;
+}
+
+.logo img {
+  margin-top: -10px;
+}
+
+.footer {
+  margin-top: 40px;
+  padding: 15px;
+  background: #5899d0;
+  overflow: hidden;
+}
+
+.footer a {
+  color: #2a6496;
+}
+
+.footer-title {
+  color: #fff;
+  margin: 0;
+}
+
+.footer-credits {
+  margin: 0;  
+}
+
+pre {
+  margin: 40px 20px;
+}
+
+.kw {font-weight: bold; color: #000;}
+.ot {color: #028482;}
+.st {color: #dd1144;}
