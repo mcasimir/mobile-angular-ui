@@ -2,6 +2,8 @@
 
 ## Angular &amp; Bootstrap 3 for Mobile web and applications
 
+![](http://mobileangularui.com/logo.png)
+
 Angular Ui Mobile glues together: 
 
 - Angular 1.2+
@@ -9,10 +11,10 @@ Angular Ui Mobile glues together:
 - Angular directives for Bootstrap 3
 - An essential set of Bootstrap 3 components for mobile (navbars, sidebars, switches ..)
 - Icons with FontAwesome
-- iScroll
+- Overthrow js `overflow: auto` polyfill
 - Some other mobile Web App best pratices and polyfills
 
-Some features:
+### Some features:
 
 - Mobile only Bootstrap 3
 - Scalable Icons with FontAwesome
@@ -31,69 +33,29 @@ Some convenient implementation constraints:
 - Use the same bootstrap variables
 - Keep it lighter than Bootstrap 3 + Jquery + Angular Js
 
-__NOTE__
 
-This project is partially functional now but not ready yet. To test it and see what it is now just clone this repo:
+### Test with your devices
 
 ``` sh
 git clone https://github.com/mcasimir/mobile-angular-ui.git
 ```
 
-then you need `node`, `bower` and `grunt` so you can run `npm install` and use `grunt` to launch a local server that serves a demo app at `http://localhost:3000`
+then you need `node`, `bower` and `grunt` so you can run `npm install` and use `grunt` to launch a local server that serves a demo app at `http://localhost:3001/demo`
 
 ``` sh
 grunt connect
 ```
 
-### Differences with Bootstrap Javascript
+### Differences with Bootstrap 3
 
-We will only support:
+1. It uses font-awesome in place of glyphicons
 
-- tabs
-- dropdowns
-- accordions
-- collapsible
-- modals
-- dismissing alerts and modals
+2. responsive css rules for *-sm, *-md, *-lg are moved out of the default bundle
 
-#### Tabs
+3. removed/unsupported components:
 
-Tabs can be triggered by any `.nav-tabs>[toggle-tab]` so we can take advantage of .button-group to reproduce ios7-like tab navigation
+  - breadcrumbs and pagination: they are just not the best way to navigate a mobile app
+  - tooltips: unlikely to be useful with small screens and touch devices, popovers should be enough
+  - carousels
 
-``` html
-<div class="btn-group justified nav-tabs">
-  <a class="btn btn-default active" toggle-tab href="#TabGroup1.Tab1">Tab1</a>
-  <a class="btn btn-default"        toggle-tab href="#TabGroup1.Tab2">Tab2</a>
-  <a class="btn btn-default"        toggle-tab href="#TabGroup1.Tab3">Tab3</a>
-</div>
-
-<div class="nav-content">
-  <div class="tab-pane" id="TabGroup1.Tab1">...</div>
-  <div class="tab-pane" id="TabGroup1.Tab2">...</div>
-  <div class="tab-pane" id="TabGroup1.Tab3">...</div>
-</div>
-```
-
-As you can see from the example above tabs component substantially keeps the original markup except that toggle="tab" is replaced by toggle-tab.
-
-You should also notice that target ids are composed of a pair of arbitrary `tab-group-id` and `tab-id` separated by a dot. 
-
-This way tab grouping does not depend on markup anymore and we can avoid to rely on DOM for things like activate/unactivate tabs using angular events instead. 
-
-### Differences with Bootstrap CSS
-
-Removed components:
-
-- breadcrumbs and pagination: they are just not the best way to navigate a mobile app
-- tooltips and popovers: unlikely to be useful with small screens, altough one of the two could be reintroduced bound to long-press event
-
-## The Roadmap
-
-√ Reproduce all of the targeted twitter bootstrap basic functionalities [OK]
-- Isolate scrolling polyfills and hide details through generic markup and angular directives
-- Test and choose wise between iScroll and Overthrow or something else
-- Add a switch component
-- Add `contentFor` and `yield` directives to easily setup title and buttons by route
-- Add some directives to simplify bootstrap markup for forms
-- Support gestures for sidebars and switches
-- Write a detailed documentation
+4. All of the Bootstrap Javascript features are obtained with just two angular directives: `toggle` and `toggleable`. Read the [docs](http://mobileangularui.com/) for more.

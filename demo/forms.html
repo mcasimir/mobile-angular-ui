@@ -1,0 +1,33 @@
+<div content-for="title">
+  <span>Forms</span>
+</div>
+
+
+<div class="scrollable">
+ <div class="scrollable-content container section">
+   
+   <form action="" id="">
+
+     <div bs-panel title="Invoice">
+       <input type="text" ng-model="invoice.customer"    label="Customer" bs-input />
+       <input type="checkbox" ng-model="invoice.payed"   label="Payed" bs-input />
+       <input type="number" ng-model="invoice.amount"    label="Amount" bs-input />
+       <input type="date" ng-model="invoice.date"        label="Date" bs-input />
+
+     </div>
+
+     <div bs-panel title="Notes">
+       <textarea type="text" ng-model="customer.mailing_address" label="Address" bs-textarea></textarea>
+     </div>
+      
+    <div bs-panel class="form-actions">
+      <div content-for="navbarAction" duplicate>
+        <button class="btn btn-primary">
+          Save
+        </button>
+      </div>
+    </div>
+   </form>
+
+ </div>
+</div>

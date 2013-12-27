@@ -1,0 +1,139 @@
+---
+title: Home
+---
+
+<div class="jumbotron">
+<div class="clearfix carousel-container">
+  
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+
+<!-- Wrapper for slides -->
+<div class="carousel-inner">
+<div class="item active"><img src="caps/1.png" /></div>
+<div class="item"><img src="caps/6.png" /></div>
+<div class="item"><img src="caps/2.png" /></div>
+<div class="item"><img src="caps/3.png" /></div>
+<div class="item"><img src="caps/7.png" /></div>
+<div class="item"><img src="caps/4.png" /></div>
+<div class="item"><img src="caps/5.png" /></div>    
+</div>
+
+<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+  <span class="glyphicon glyphicon-chevron-left"></span>
+</a>
+<a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+  <span class="glyphicon glyphicon-chevron-right"></span>
+</a>
+</div>
+
+</div>
+
+<div class="clearfix">
+<div class="pull-left  hidden-xs">
+<figure><img src="/logo.png" alt="Mobile Angular UI" class="logo"></figure>
+</div>
+
+**Mobile Angular UI** is ***a mobile UI framework*** just like Sencha Touch or jQuery Mobile but is based on ***trending technologies you already know and love*** like Angular.js and Twitter Bootstrap. 
+
+<br />
+
+<a href="https://github.com/mcasimir/mobile-angular-ui/archive/master.zip" class="btn btn-primary btn-lg"><i class="fa fa-download"></i> Download</a> <a href="demo" class="btn btn-warning btn-lg"><i class="fa fa-check"></i> Demo</a>
+
+</div>
+
+
+</div>
+
+<div class="container">  
+<div class="row features">
+
+<div class="col-sm-4 col-md-4 col-lg-4 feature-box">
+<figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/angular.png);"></figure>
+## The Angular JS way
+
+No jQuery dependencies, no fat bootstrap js. Just a few angular.js directives super easy to learn to put things together.
+</div>
+
+<div class="col-sm-4 col-md-4 col-lg-4 feature-box">
+<figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/bootstrap.png);"></figure>
+## Bootstrap 3 for Mobile
+
+Original Bootstrap 3 stripped out of responsive media queries that are put apart in separate files (just include what you need). [FontAwesome](http://fontawesome.io/) Icons included by default.
+</div>
+
+<div class="col-sm-4 col-md-4 col-lg-4 feature-box">
+<figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/mobile.png);"></figure>
+## Mobile based Widgets
+
+Sidebars, top and bottom navbars not bouncing and native scroll with polyfills.
+</div>
+
+</div>
+
+
+<h2 class="page-header">All you need to create mobile web apps</h2>
+
+### Native Scroll
+
+One thing you'll always have to deal with approaching mobile web app development is scroll and `position:fixed` bugs. 
+Scrollable areas with `overflow: auto` easily solve any problems but since it is not always available we polyfills it with [Overthrow](http://filamentgroup.github.io/Overthrow/) when necessary.
+
+
+``` html
+<div class="scrollable">
+  <div class="scrollable-content">...</div>
+</div>
+```
+
+### Mobile Friendly Navbars
+
+Bootstrap default navbars are awesome for responsive websites, but are not the best to interact with in a small screen. Plus fixed positioning is not an option to create navbars standing in top or bottom of the screen.
+
+So I replaced it with a new `.navbar-app`
+
+
+### Sidebars
+
+### Justify Everithing
+
+### Togglers
+
+Reproduce any Bootstrap component and even more with only one Angular directive.
+
+<h2 class="page-header">Getting Started</h2>
+
+### Installation
+
+Either install via `bower` or download it
+
+``` sh
+bower install --save mobile-angular-ui
+```
+
+Load files in the head section of your html
+
+``` html
+<link rel="stylesheet" href="mobile-angular-ui/dist/css/mobile-angular-ui.min.css" />
+<script src="mobile-angular-ui/dist/js/mobile-angular-ui.min.js"></script>
+```
+
+### Main structure
+
+``` html
+<body ng-app="myApp" ng-controller="MainController">
+  <!-- overlays ... -->
+  
+  <div class="app-container">
+    <!-- sidebars ... -->
+    
+    <div class="app"></div>
+    
+    <!-- sidebars ... -->
+  </div>
+  
+  <!-- overlays ... -->
+</body>
+```
+
+
+</div>

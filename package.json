@@ -33,6 +33,7 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt-recess": "~0.4.0",
     "kexec": "~0.1.1",
-    "parameterize": "0.0.7"
+    "parameterize": "0.0.7",
+    "grunt-github-pages": "0.0.4"
   }
 }

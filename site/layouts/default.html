@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><%= [@item[:title], "Mobile Angular UI"].join(" | ") %></title>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- you don't need to keep this, but it's cool for stats! -->
+    <meta name="generator" content="nanoc <%= Nanoc::VERSION %>">
+  </head>
+  <body>
+    <div class="navbar navbar-top">
+        <h1 class="navbar-brand">
+          Mobile Angular UI
+        </h1>
+
+        <ul class="nav navbar-nav pull-right">
+          <li><a href="https://github.com/mcasimir/mobile-angular-ui" target="_blank"><i class="fa fa-github"></i></a></li>
+        </ul>
+    </div>
+
+    <div id="main">
+      <%= yield %>
+    </div>
+
+    <footer class="footer">
+      <div>
+        <h4 class="footer-title">Mobile Angular Ui</h4>
+        <p class="footer-credits">made for you by <a href="https://github.com/mcasimir" target="_blank">mcasimir</a></p>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  </body>
+</html>

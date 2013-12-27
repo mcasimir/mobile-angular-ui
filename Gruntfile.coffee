@@ -1,9 +1,6 @@
-path = require("path")
-kexec = require("kexec")
-
 #   CSS workflow:
 #
-#   2) create a combined css with Bootstrap, Fontawesome and Angular Ui Mobile sources
+#   2) create a combined css with Bootstrap, Fontawesome and Mobile Angular UI sources
 #   3) split complete css
 #      into different files 
 #      according to media queries
@@ -21,7 +18,10 @@ module.exports = (grunt) ->
         dest: "dist/css"
         basename: "mobile-angular-ui"
 
-    clean: ["tmp", "dist", "examples/assets"]
+    clean: 
+      dev: ["tmp", "dist", "demo/assets"]
+      site: ["gh-pages"]
+      tmp_gh_pages_git: ["tmp/gh_pages_git"]
     copy:
       fa:
         expand: true, 
@@ -29,11 +29,42 @@ module.exports = (grunt) ->
         src: ["**"], 
         dest: 'dist/fonts'
 
-      examples:
+      demo:
         expand: true,
         cwd: "dist/"
         src: ["**"],
-        dest: "examples/assets"
+        dest: "demo/assets"
+      
+      backup_gh_pages_git:
+        expand: true,
+        cwd: "gh-pages/.git"
+        src: ["**"],
+        dest: "tmp/gh_pages_git"
+      
+      restore_gh_pages_git:
+        expand: true,
+        cwd: "tmp/gh_pages_git"
+        src: ["**"],
+        dest: "gh-pages/.git"
+
+      gh_pages_demo:
+        expand: true,
+        cwd: "demo/"
+        src: ["**"],
+        dest: "gh-pages/demo"
+
+      gh_pages_site:
+        expand: true,
+        cwd: "site/output"
+        src: ["**"],
+        dest: "gh-pages"
+
+      gh_pages_cname:
+        expand: true,
+        cwd: "site"
+        src: ["CNAME"],
+        dest: "gh-pages"
+
 
     recess:
       dist:
@@ -96,9 +127,16 @@ module.exports = (grunt) ->
     connect:
       server:
         options:
-          port: 3000
-          base: 'examples'
+          port: 3001
+          #base: 'demo'
           keepalive: true
+
+    githubPages:
+      site:
+        options:
+          commitMessage: "push"
+
+        src: "gh-pages"
 
   grunt.loadNpmTasks "grunt-contrib-clean"
   grunt.loadNpmTasks "grunt-contrib-coffee"
@@ -108,27 +146,31 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-cssmin"
   grunt.loadNpmTasks "grunt-contrib-uglify"
   grunt.loadNpmTasks "grunt-contrib-watch"
+  grunt.loadNpmTasks "grunt-github-pages"
   grunt.loadNpmTasks "grunt-recess"
 
   grunt.task.loadTasks "tasks"
 
-  grunt.registerTask "build", [ "clean"
+  grunt.registerTask "build", [ "clean:dev"
                                 "recess"
                                 "smq"
                                 "coffee"
                                 "concat"
-                                "copy"
+                                "copy:fa"
+                                "copy:demo"
+                                "uglify"
+                                "cssmin"
                               ]
 
-  grunt.registerTask "minify",  [ "build"
-                                  "uglify"
-                                  "cssmin"
-                                ]
 
-  grunt.registerTask "git", "", ->
-    done = grunt.task.current.async()
-    kexec 'git add . && git commit -a && git push'
+  grunt.registerTask "site", [ 
+      "copy:backup_gh_pages_git"
+      "clean:site"
+      "copy:restore_gh_pages_git"
+      "clean:tmp_gh_pages_git"
+      "copy:gh_pages_demo"
+      "copy:gh_pages_site"
+      "copy:gh_pages_cname"
+      "githubPages:site"
+    ]
 
-  grunt.registerTask "commit",  [ "minify",
-                                  "git"
-                                ]
