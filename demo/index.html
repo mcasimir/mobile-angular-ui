@@ -4,7 +4,7 @@
 ** NOTE **
 
 Run `grunt connect` then 
-navigate to http://localhost:3000 
+navigate to http://localhost:3001/demo
 to see this page in browser  
 
 -->
@@ -13,8 +13,8 @@ to see this page in browser
 
 <head>
   <meta charset="utf-8" />
-
-  <title>Mobile Angular Ui Examples</title>
+  <base href="/demo/" />
+  <title>Mobile Angular UI Examples</title>
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -30,12 +30,12 @@ to see this page in browser
   <script src="examples.js"></script>
 </head>
 
-<body ng-app="AngularUiMobileExamples" ng-controller="MainController"  
+<body ng-app="MobileAngularUiExamples" ng-controller="MainController"  
         ng-swipe-left="toggle('mainSidebar', 'deactivate')"
         ng-swipe-right="toggle('mainSidebar', 'activate')">
 
   <div class="sidebar sidebar-left" toggleable active-class="in" id="mainSidebar">
-    <ng-include src="'/sidebar.html'"></ng-include>
+    <ng-include src="'sidebar.html'"></ng-include>
   </div>
 
   <div class="app">

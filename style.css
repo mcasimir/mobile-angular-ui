@@ -5,7 +5,7 @@ body {
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: 'Source Sans Pro', sans-serif; 
-  font-weight: 300;
+  font-weight: normal;
 }
 
 b, strong {
@@ -112,4 +112,22 @@ b, strong {
 
 html .page-header {
   font-weight: 600;
+}
+
+#carousel-example-generic {
+  width: 320px;
+  margin:auto;
+  margin-bottom: 40px;
+}
+
+.carousel-indicators {
+bottom: -50px !important;
+}
+
+.carousel-indicators li {
+  border-color: #888;
+}
+
+.carousel-indicators .active {
+  background-color: #888;
 }

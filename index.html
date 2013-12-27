@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Home | Mobile Angular Ui</title>
+    <title>Home | Mobile Angular UI</title>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
@@ -15,7 +15,7 @@
   <body>
     <div class="navbar">
         <div class="navbar-brand">
-          Mobile Angular Ui
+          Mobile Angular UI
         </div>
 
         <ul class="nav navbar-nav pull-right">
@@ -25,49 +25,88 @@
 
     <div id="main">
       <div class="jumbotron">
-<div class="pull-left">
+<div class="clearfix carousel-container">
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+<!-- Indicators -->
+<ol class="carousel-indicators">
+<li data-target="#carousel-example-generic" data-slide-to="0" class="active">
+<li data-target="#carousel-example-generic" data-slide-to="1">
+<li data-target="#carousel-example-generic" data-slide-to="2">
+<li data-target="#carousel-example-generic" data-slide-to="3">
+<li data-target="#carousel-example-generic" data-slide-to="4">
+</ol>
+
+<!-- Wrapper for slides -->
+<div class="carousel-inner">
+<div class="item active">
+<img src="caps/1.png">
+</div>
+<div class="item">
+<img src="caps/2.png">
+</div>
+<div class="item">
+<img src="caps/3.png">
+</div>
+<div class="item">
+<img src="caps/4.png">
+</div>
+<div class="item">
+<img src="caps/5.png">
+</div>
+</div>
+</div>
+</div>
+<div class="pull-left  hidden-xs">
 <figure>
 <img src="logo.png" alt="Mobile Angular UI">
 </figure>
 </div>
 <div>
-<p><strong>Mobile Angular Ui</strong> is <strong><em>a mobile UI framework</em></strong> just like Sencha Touch or jQuery Mobile but is based on <strong><em>trending technologies you already know and love</em></strong> like Angular.js and Twitter Bootstrap.</p>
+<p><strong>Mobile Angular UI</strong> is <strong><em>a mobile UI framework</em></strong> just like Sencha Touch or jQuery Mobile but is based on <strong><em>trending technologies you already know and love</em></strong> like Angular.js and Twitter Bootstrap.</p>
 </div>
+
 <p><a href="https://github.com/mcasimir/mobile-angular-ui/archive/master.zip" class="btn btn-primary btn-lg"><i class="fa fa-download"></i> Download</a> <a href="demo" class="btn btn-warning btn-lg"><i class="fa fa-check"></i> Demo</a></p>
 </div>
-<div class="container">
+
+<div class="container">  
 <div class="row features">
+
 <div class="col-sm-4 col-md-4 col-lg-4 feature-box">
 <figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/angular.png);"></figure>
-<h2>Angular JS Everything</h2>
+<h2 id="angular-js-everything">Angular JS Everything</h2>
 No jQuery dependencies, no fat bootstrap js. Just a few angular.js directives super easy to learn to put things together.
 </div>
+
 <div class="col-sm-4 col-md-4 col-lg-4 feature-box">
 <figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/bootstrap.png);"></figure>
-<h2>Bootstrap 3 for Mobile</h2>
+<h2 id="bootstrap-3-for-mobile">Bootstrap 3 for Mobile</h2>
 The original Bootstrap 3 stripped out of responsive media queries that are put apart in separate files (just include what you need). <a href="http://fontawesome.io/">FontAwesome</a> Icons included by default.
 </div>
+
 <div class="col-sm-4 col-md-4 col-lg-4 feature-box">
 <figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/mobile.png);"></figure>
-<h2>Mobile based Widgets</h2>
+<h2 id="mobile-based-widgets">Mobile based Widgets</h2>
 Sidebars, mobile friendly navbars not bouncing and native scroll with Polyfills. Just some features you’ll get.
 </div>
+
 </div>
+
+
 <h2 class="page-header">
 All you need to create mobile web apps
 </h2>
 
-<h3>Native Scroll</h3>
+<h3 id="native-scroll">Native Scroll</h3>
 <p>One thing you'll always have to deal with approaching mobile web app development is scroll and <code>position:fixed</code> bugs. Scrollable areas with <code>overflow: auto</code> easily solve any problems but since it is not always available we polyfills it with <a href="http://filamentgroup.github.io/Overthrow/">Overthrow</a> when necessary.</p>
 <pre><code>&lt;div class=&quot;scrollable&quot;&gt;
   &lt;div class=&quot;scrollable-content&quot;&gt;...&lt;/div&gt;
 &lt;/div&gt;</code></pre>
-<h3>Mobile Friendly Navbars</h3>
+<h3 id="mobile-friendly-navbars">Mobile Friendly Navbars</h3>
 <p>Bootstrap default navbars are awesome for responsive websites, but are not the best to interact with in a small screen. Plus fixed positioning is not an option to create navbars standing in top or bottom of the screen.</p>
 <p>So I replaced it with a new <code>.navbar-app</code></p>
-<h3>Sidebars</h3>
-<h3>Justify Everithing</h3>
-<h3>Togglers</h3>
+<h3 id="sidebars">Sidebars</h3>
+<h3 id="justify-everithing">Justify Everithing</h3>
+<h3 id="togglers">Togglers</h3>
 <p>Reproduce any Bootstrap component and even more with only one Angular directive.</p>
 <h2 class="page-header">
 Getting Started
@@ -76,6 +115,10 @@ Getting Started
 <pre><code>bower install --save mobile-angular-ui</code></pre>
 </div>
 
+
+
     </div>
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
   </body>
 </html>
