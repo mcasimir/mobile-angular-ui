@@ -57,5 +57,6 @@ grunt connect
   - breadcrumbs and pagination: they are just not the best way to navigate a mobile app
   - tooltips: unlikely to be useful with small screens and touch devices, popovers should be enough
   - carousels
+  - modals: are replaced by overlays
 
 4. All of the Bootstrap Javascript features are obtained with just two angular directives: `toggle` and `toggleable`. Read the [docs](http://mobileangularui.com/) for more.
