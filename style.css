@@ -14,7 +14,7 @@ b, strong {
 
 .navbar {
   margin-bottom: 0;
-  background: #FC2800;
+  background: #5899d0;
   color: #fff;
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
@@ -36,7 +36,7 @@ b, strong {
   margin-left: -25px;
   border-style: solid;
   border-width: 15px 25px 0 25px;
-  border-color: #FC2800 transparent transparent transparent;
+  border-color: #5899d0 transparent transparent transparent;
   z-index: 200;
 }
 
