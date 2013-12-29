@@ -1,6 +1,5 @@
 .app-body {
   height: 100%;
-  padding: 50px 0 50px;
 }
 
 .app-name {
@@ -32,8 +31,18 @@
   left: 0;
 }
 
+.scrollable {
+  top: 50px; 
+  bottom: 50px; 
+}
+
+.sidebar .scrollable {
+  top: 100px;
+  bottom: 0;
+}
+
 .app-search~.scrollable {
-  padding-top: 34px; 
+  top: 84px; 
 }
 
 /* Tests pointer-events: none; polyfill */
