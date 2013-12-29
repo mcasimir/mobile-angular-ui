@@ -1,6 +1,6 @@
 {
   "name": "mobile-angular-ui",
-  "version": "1.0.2-alpha",
+  "version": "1.0.3-alpha",
   "homepage": "https://github.com/mcasimir/mobile-angular-ui",
   "authors": [
     "mcasimir <maurizio.cas@gmail.com>"
@@ -21,7 +21,11 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "demo",
+    "site",
+    "gh-pages",
+    "logo.ai"
   ],
   "dependencies": {
     "angular": "~1.2.1",
@@ -30,6 +34,7 @@
     "angular-animate": "~1.2.2",
     "angular-touch": "~1.2.2",
     "angular-route": "~1.2.2",
-    "overthrow": "~0.7.0"
+    "iscroll": "4.2",
+    "ng-iScroll": "*"
   }
 }

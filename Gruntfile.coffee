@@ -92,9 +92,7 @@ module.exports = (grunt) ->
       js:
         files: 
           "dist/js/mobile-angular-ui.js": [
-            "bower_components/overthrow/src/overthrow-detect.js"
-            "bower_components/overthrow/src/overthrow-toss.js"
-            "bower_components/overthrow/src/overthrow-polyfill.js"
+            "bower_components/iscroll/src/iscroll.js"
             "bower_components/angular/angular.js"
             "bower_components/angular-route/angular-route.js"
             "bower_components/angular-animate/angular-animate.js"

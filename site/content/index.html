@@ -49,56 +49,31 @@ title: Home
 
 <div class="col-sm-4 col-md-4 col-lg-4 feature-box">
 <figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/angular.png);"></figure>
-## The Angular JS way
+## Angular JS
 
 No jQuery dependencies, no fat bootstrap js. Just a few angular.js directives super easy to learn to put things together.
+
+Mobile Angular UI is packed with angular-route, angular-animate, angular-touch modules by default to make you up and running in a minute.
+
 </div>
 
 <div class="col-sm-4 col-md-4 col-lg-4 feature-box">
 <figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/bootstrap.png);"></figure>
 ## Bootstrap 3 for Mobile
 
-Original Bootstrap 3 stripped out of responsive media queries that are put apart in separate files (just include what you need). [FontAwesome](http://fontawesome.io/) Icons included by default.
+Original Bootstrap 3 stripped out of responsive media queries that are put apart in separate files (just include what you need).
+
+[FontAwesome](http://fontawesome.io/) Icons are included by default in place of Glyphicons.
 </div>
 
 <div class="col-sm-4 col-md-4 col-lg-4 feature-box">
 <figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/mobile.png);"></figure>
-## Mobile based Widgets
+## Mobile Components
 
-Sidebars, top and bottom navbars not bouncing and native scroll with polyfills.
+Mobile Angular UI provides essential mobile components that are missing in Bootstrap 3, in particular introduces sidebars, absolute positioned top and bottom navbars with native scroll with polyfills to create fixed navbars that dont bounces on scroll.
 </div>
 
 </div>
-
-
-<h2 class="page-header">All you need to create mobile web apps</h2>
-
-### Native Scroll
-
-One thing you'll always have to deal with approaching mobile web app development is scroll and `position:fixed` bugs. 
-Scrollable areas with `overflow: auto` easily solve any problems but since it is not always available we polyfills it with [Overthrow](http://filamentgroup.github.io/Overthrow/) when necessary.
-
-
-``` html
-<div class="scrollable">
-  <div class="scrollable-content">...</div>
-</div>
-```
-
-### Mobile Friendly Navbars
-
-Bootstrap default navbars are awesome for responsive websites, but are not the best to interact with in a small screen. Plus fixed positioning is not an option to create navbars standing in top or bottom of the screen.
-
-So I replaced it with a new `.navbar-app`
-
-
-### Sidebars
-
-### Justify Everithing
-
-### Togglers
-
-Reproduce any Bootstrap component and even more with only one Angular directive.
 
 <h2 class="page-header">Getting Started</h2>
 
@@ -117,23 +92,38 @@ Load files in the head section of your html
 <script src="mobile-angular-ui/dist/js/mobile-angular-ui.min.js"></script>
 ```
 
-### Main structure
+### Basic Layout
+
+Basically we only need an an `.app` block nested in an `.app-container`. `.app-container` also contains sidebars. Overlays, modals and so on should be placed outside the `.app-container`.  
 
 ``` html
-<body ng-app="myApp" ng-controller="MainController">
-  <!-- overlays ... -->
-  
-  <div class="app-container">
-    <!-- sidebars ... -->
-    
-    <div class="app"></div>
-    
-    <!-- sidebars ... -->
-  </div>
-  
-  <!-- overlays ... -->
-</body>
+<div class="app-container">
+  <div class="sidebar">...</div>
+  <div class="app">...</div>
+</div>
 ```
 
+### Native Scroll
+
+One thing you'll always have to deal with approaching mobile web app development is scroll and `position:fixed` bugs. 
+Scrollable areas with `overflow: auto` easily solve any problems but since it is not always available we polyfills it with [iScroll](http://cubiq.org/iscroll-4) when necessary.
+
+
+``` html
+<div class="scrollable">
+  <div class="scrollable-content">...</div>
+</div>
+```
+### Mobile Friendly Navbars
+
+Bootstrap default navbars are awesome for responsive websites, but are not the best to interact with in a small screen. Plus fixed positioning is not an option to create navbars standing in top or bottom of the screen.
+
+### Sidebars
+
+### Justify Everithing
+
+### Togglers
+
+Reproduce any Bootstrap component and even more with only one Angular directive.
 
 </div>

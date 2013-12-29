@@ -19,10 +19,11 @@ Angular Ui Mobile glues together:
 - Mobile only Bootstrap 3
 - Scalable Icons with FontAwesome
 - Base css stripped out of responsive media queries that are put apart in separate files (just include what you need)
-- Angular JS module with `angular-touch` and `angular-animate` prepacked and preloaded
-- Scrollable areas with `overflow: auto` polyfilled with [Overthrow](http://filamentgroup.github.io/Overthrow/) when necessary
+- Angular JS module with `angular-route`, `angular-touch` and `angular-animate` prepacked and preloaded
+- Scrollable areas with `overflow: auto` polyfilled with iScroll
 - Slide-out/slide-in Sidebar
-- Bottom Bar with Justified Buttons
+- Bottom navbar
+- Justified Buttons
 - Customizable build workflow with Grunt
 
 Some convenient implementation constraints:

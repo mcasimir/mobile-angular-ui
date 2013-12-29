@@ -1,13 +1,18 @@
-overthrow.scrollIndicatorClassName = "scrollable"
+document.addEventListener "touchmove", ((e) ->
+  e.preventDefault()
+), false
+
 
 angular.module("mobile-angular-ui", [
   'ngTouch'
   'ngAnimate'
+  'ngRoute'
   'mobile-angular-ui.directives.toggle'
   'mobile-angular-ui.directives.overlay'
   'mobile-angular-ui.directives.forms'
   'mobile-angular-ui.directives.panels'
   'mobile-angular-ui.directives.capture'
+  'mobile-angular-ui.directives.scrollable'
  ])
 
 #

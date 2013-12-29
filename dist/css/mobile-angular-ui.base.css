@@ -6257,18 +6257,10 @@ a.list-group-item .fa.pull-right {
 }
 
 .scrollable {
-  height: 100%;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  -moz-overflow-scrolling: touch;
-  overflow-scrolling: touch;
-}
-
-.scrollable-content {
-  overflow: hidden;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
 }
 
 [overlay],
