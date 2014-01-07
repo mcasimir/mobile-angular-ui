@@ -24574,20 +24574,25 @@ angular.module('mobile-angular-ui.directives.forms', []).directive("bsInput", fu
   return {
     replace: true,
     require: "ngModel",
-    template: function(elems, attrs) {
-      var inputId;
-      inputId = attrs.ngModel.replace(".", "_") + "_input";
-      return "<div class=\"form-group container-fluid\">\n  <div class=\"row\">\n    <label for=\"" + inputId + "\" class=\"control-label col-sm-2\">" + attrs.label + "</label>\n    <div class=\"col-sm-10\">\n      <input type=\"" + attrs.type + "\" \n             id=\"" + inputId + "\"\n             ng-model=\"" + attrs.ngModel + "\" \n             class=\"form-control " + (attrs["class"] || '') + "\" />\n    </div>\n  </div>\n</div>";
-    },
-    link: function(scope, element, attrs) {
-      return element.removeAttr('type').removeAttr('label').removeAttr('ng-model').attr('class', "form-group");
+    link: function(scope, elem, attrs) {
+      var ll, w1, w2, w3;
+      if (attrs.id == null) {
+        attrs.id = attrs.ngModel.replace(".", "_") + "_input";
+      }
+      elem.addClass("form-control");
+      ll = angular.element("<label for=\"" + attrs.id + "\" class=\"control-label col-sm-2\">" + attrs.label + "</label>");
+      w1 = angular.element("<div class=\"form-group container-fluid\"></div>");
+      w2 = angular.element("<div class=\"row\"></div>");
+      w3 = angular.element("<div class=\"col-sm-10\"></div>");
+      elem.wrap(w1).wrap(w2).wrap(w3);
+      return w2.prepend(ll);
     }
   };
 }).directive("bsTextarea", function() {
   return {
     replace: true,
     require: "ngModel",
-    template: function(elems, attrs) {
+    template: function(elem, attrs) {
       var inputId;
       inputId = attrs.ngModel.replace(".", "_") + "_input";
       return "<div class=\"form-group container-fluid\">\n  <div class=\"row\">\n    <label for=\"" + inputId + "\" class=\"control-label col-sm-2\">" + attrs.label + "</label>\n    <div class=\"col-sm-10\">\n      <textarea id=\"" + inputId + "\" ng-model=\"" + attrs.ngModel + "\" class=\"form-control " + (attrs["class"] || '') + "\"></textarea>\n    </div>\n  </div>\n</div>";
@@ -24637,8 +24642,15 @@ angular.module("mobile-angular-ui.directives.scrollable", []).directive("scrolla
     link: function(scope, element, attr) {
       return setTimeout((function() {
         var iscroll;
+        [].slice.call(document.querySelectorAll("input, select, button, textarea")).forEach(function(el) {
+          return el.addEventListener(("ontouchstart" in window ? "touchstart" : "mousedown"), function(e) {
+            console.log("Preventing event from bubbling up to iScroll, as it would then remove it.");
+            return e.stopPropagation();
+          });
+        });
         return iscroll = new iScroll(element[0], {
-          wheelAction: 'scroll'
+          wheelAction: 'scroll',
+          checkDOMChanges: true
         });
       }), 200);
     }
@@ -24896,7 +24908,7 @@ document.addEventListener("touchmove", (function(e) {
   return e.preventDefault();
 }), false);
 
-angular.module("mobile-angular-ui", ['ngRoute', 'mobile-angular-ui.directives.toggle', 'mobile-angular-ui.directives.overlay', 'mobile-angular-ui.directives.forms', 'mobile-angular-ui.directives.panels', 'mobile-angular-ui.directives.capture', 'mobile-angular-ui.directives.scrollable']).run([
+angular.module("mobile-angular-ui", ['ngTouch', 'ngAnimate', 'ngRoute', 'mobile-angular-ui.directives.toggle', 'mobile-angular-ui.directives.overlay', 'mobile-angular-ui.directives.forms', 'mobile-angular-ui.directives.panels', 'mobile-angular-ui.directives.capture', 'mobile-angular-ui.directives.scrollable']).run([
   "$rootScope", function($rootScope) {
     return angular.forEach(["$locationChangeSuccess", "$includeContentLoaded"], function(evtName) {
       return $rootScope.$on(evtName, function() {

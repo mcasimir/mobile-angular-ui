@@ -6335,6 +6335,14 @@ a.list-group-item .fa.pull-right {
   vertical-align: middle;
 }
 
+.ng-dirty input.ng-invalid {
+  border: 1px solid #f0ad4e;
+}
+
+.ng-dirty input.ng-invalid ~ span.ko {
+  color: #d9534f;
+}
+
 .panel {
   background: #ffffff;
   border-radius: 0;
