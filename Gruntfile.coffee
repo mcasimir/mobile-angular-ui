@@ -1,7 +1,7 @@
 #   CSS workflow:
 #
 #   2) create a combined css with Bootstrap, Fontawesome and Mobile Angular UI sources
-#   3) split complete css
+#   3) split mobile css
 #      into different files 
 #      according to media queries
 #    
@@ -14,7 +14,7 @@ module.exports = (grunt) ->
 
     smq: # Split Css by Media Queries
       bootstrap:
-        src:  "tmp/complete.css"
+        src:  "tmp/mobile.css"
         dest: "dist/css"
         basename: "mobile-angular-ui"
 
@@ -22,7 +22,14 @@ module.exports = (grunt) ->
       dev: ["tmp", "dist", "demo/assets"]
       site: ["gh-pages"]
       tmp_gh_pages_git: ["tmp/gh_pages_git"]
+
     copy:
+      desktop:
+        expand: true
+        cwd:  "tmp/"
+        src:  ["mobile-angular-ui-desktop.css"]
+        dest: "dist/css"
+
       fa:
         expand: true, 
         cwd: "bower_components/font-awesome/fonts", 
@@ -73,9 +80,12 @@ module.exports = (grunt) ->
           includePath: ["bower_components/bootstrap/less"]
 
         files:
-          "tmp/complete.css": [
+          "tmp/mobile.css": [
             "bower_components/font-awesome/css/font-awesome.css",
             "src/less/mobile-angular-ui.less"
+          ]
+          "tmp/mobile-angular-ui-desktop.css": [
+            "src/less/mobile-angular-ui-desktop.less"
           ]
 
     coffee:
@@ -126,7 +136,6 @@ module.exports = (grunt) ->
       server:
         options:
           port: 3001
-          #base: 'demo'
           keepalive: true
 
     githubPages:
@@ -154,6 +163,7 @@ module.exports = (grunt) ->
                                 "smq"
                                 "coffee"
                                 "concat"
+                                "copy:desktop"
                                 "copy:fa"
                                 "copy:demo"
                                 "uglify"

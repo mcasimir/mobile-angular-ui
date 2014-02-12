@@ -1,6 +1,5 @@
 {
   "name": "mobile-angular-ui",
-  "version": "1.0.4-alpha",
   "homepage": "https://github.com/mcasimir/mobile-angular-ui",
   "authors": [
     "mcasimir <maurizio.cas@gmail.com>"
@@ -34,7 +33,6 @@
     "angular-animate": "~1.2.2",
     "angular-touch": "~1.2.2",
     "angular-route": "~1.2.2",
-    "iscroll": "4.2",
-    "ng-iScroll": "*"
+    "iscroll": "4.2"
   }
 }

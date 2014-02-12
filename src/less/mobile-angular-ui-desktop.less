@@ -1,0 +1,18 @@
+@media (min-width: 700px) {
+  .sidebar-toggle {
+    display: none;
+  }
+  .navbar-app .navbar-brand-center {
+    text-align: left;
+  }
+  .sidebar.sidebar-left, .sidebar.sidebar-left.in {
+    display: block;
+    left: 0;
+    width: 300px;
+  }
+  .sidebar.sidebar-left~.app,.sidebar.sidebar-left.in~.app{
+    width: auto;
+    margin-left: 300px;
+    left: 0;
+  }  
+}

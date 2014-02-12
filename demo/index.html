@@ -23,7 +23,9 @@ to see this page in browser
 
   <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
   
-  <link rel="stylesheet" href="assets/css/mobile-angular-ui.base.css" />
+  <link rel="stylesheet" href="assets/css/mobile-angular-ui-base.css" />
+  <link rel="stylesheet" href="assets/css/mobile-angular-ui-desktop.css" />
+
   <link rel="stylesheet" href="examples.css" />
 
   <script src="assets/js/mobile-angular-ui.js"></script>
@@ -31,8 +33,8 @@ to see this page in browser
 </head>
 
 <body ng-app="MobileAngularUiExamples" ng-controller="MainController"  
-        ng-swipe-left="toggle('mainSidebar', 'deactivate')"
-        ng-swipe-right="toggle('mainSidebar', 'activate')">
+        ng-swipe-left="toggle('mainSidebar', 'off')"
+        ng-swipe-right="toggle('mainSidebar', 'on')">
 
   <div class="sidebar sidebar-left" toggleable active-class="in" id="mainSidebar">
     <ng-include src="'sidebar.html'"></ng-include>
@@ -47,7 +49,7 @@ to see this page in browser
         </div>
 
         <div class="btn-group pull-left">
-          <div ng-click="toggle('mainSidebar')" class="btn btn-navbar mySidebarToggle">
+          <div ng-click="toggle('mainSidebar')" class="btn btn-navbar sidebar-toggle">
             <i class="fa fa-bars"></i> Menu
           </div>
         </div>
@@ -59,16 +61,19 @@ to see this page in browser
         </div>
     </div>
 
-    <div class="app-body">
-      <ng-view></ng-view>
-    </div>
-
     <div class="navbar navbar-app navbar-absolute-bottom">
       <div class="btn-group justified">
         <a href="#/" class="btn btn-navbar btn-icon-only"><i class="fa fa-home fa-navbar"></i></a>
         <a href="#/scroll" class="btn btn-navbar btn-icon-only"><i class="fa fa-list fa-navbar"></i></a>
       </div>
     </div>
+
+    <div class="app-body">
+        <ng-view class="app-content"></ng-view>
+      </div>
+    </div>
+
+  
 
   </div>
 </body>

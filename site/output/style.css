@@ -8,8 +8,14 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-weight: normal;
 }
 
+h4, h5, h6, .h4, .h5, .h6 {
+  padding: 20px 0 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
 b, strong {
-  font-weight: 400; 
+  font-weight: 600; 
 }
 
 .navbar {
@@ -45,11 +51,22 @@ b, strong {
   margin: 0;
   padding-right: 15px; 
 }
+
 .navbar-nav>li>a {
+  margin-top: 2px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: white;
+  text-transform: uppercase;
+}
+
+.navbar-nav .nav-github {
   color: #fff;
   font-size: 33px;
   padding: 0;
   line-height: 50px;
+  margin-left: 15px;
+  margin-top: 0;
 }
 
 .navbar-brand {
@@ -159,6 +176,8 @@ bottom: -50px !important;
   padding: 15px;
   background: #5899d0;
   overflow: hidden;
+  z-index: 100000;
+  position: relative;
 }
 
 .footer a {
@@ -178,6 +197,111 @@ pre {
   margin: 40px 20px;
 }
 
+.table-bordered {
+  margin-top: 40px;
+  margin-bottom: 40px; 
+}
+
 .kw {font-weight: bold; color: #000;}
 .ot {color: #028482;}
 .st {color: #dd1144;}
+
+.full-width-figure {
+  width: 100%;
+  max-width: 100%;
+  padding: 20px;
+  text-align: center;
+}
+
+.full-width-figure img {
+  max-width: 100%;
+}
+
+.section-title {
+  text-align: center;
+  background: #ecf0f1;
+padding: 20px;
+border-radius: 3px;
+margin-bottom: 40px;
+margin-top: 60px;
+border-top: 4px solid #5899d0;
+position: relative;
+}
+
+
+.section-title .fa {
+  background: #ccc;
+  padding: inherit;
+  border-radius: 50px;
+  line-height: 50px;
+  width: 50px;
+  margin-top: -10px;
+  padding: 0;
+}
+
+.section-title.first-section-title {
+  margin-top: 0;
+}
+
+.section-title:after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: -15px;
+  top: auto;
+  left: 50%;
+  right: auto;
+  width: 0px;
+  height: 0px;
+  margin-left: -25px;
+  border-style: solid;
+  border-width: 15px 25px 0 25px;
+  border-color: #ecf0f1 transparent transparent transparent;
+  z-index: 200;
+}
+
+@media (min-width: 768px) {
+  .fix {
+    position: fixed;
+    top: 0;
+  }  
+
+  #sidebar-container {
+    margin-top: -20px;
+  }
+}
+
+.sidebar ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.sidebar-title {
+  margin: 0;
+  padding: 20px 0 10px;
+}
+
+.sidebar a {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #999;
+  padding: 4px 10px;
+}
+
+.sidebar .toc-active a, .sidebar a:hover {
+  color: #5899d0;
+  border-left: 2px solid #5899d0;
+  font-weight: 600;
+  margin-left: -2px;
+}
+
+html .sidebar .toc-h3 a {
+  padding-left: 30px;
+}
+html .sidebar .toc-h4 a {
+  padding-left: 50px;
+}
+

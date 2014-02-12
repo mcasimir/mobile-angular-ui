@@ -21,7 +21,7 @@ module.exports = (grunt) ->
       nameroot = config.basename or path.basename(src, path.extname(src))
 
       ifile = path.resolve(config.cwd or ".", src)
-      ofile = path.resolve(dest, nameroot + ".base.css")
+      ofile = path.resolve(dest, nameroot + "-base.css")
       css = fs.readFileSync( ifile ).toString()
       tree = cssParse(css)
       rules = tree.stylesheet.rules or []
@@ -43,7 +43,7 @@ module.exports = (grunt) ->
       for name, rules of medias
         filename = parameterize name
 
-        destFile = path.resolve(dest, nameroot + "." + filename + ".css")
+        destFile = path.resolve(dest, nameroot + "-" + filename + ".css")
         stylesheet = {
           type: "stylesheet",
           stylesheet: {

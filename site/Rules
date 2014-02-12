@@ -17,6 +17,10 @@ compile '/stylesheet/' do
   # don’t filter or layout
 end
 
+compile '/js/*/' do
+  # don’t filter or layout
+end
+
 compile '*' do
   if item.binary?
     # don’t filter binary items
@@ -30,6 +34,10 @@ end
 
 route '/stylesheet/' do
   '/style.css'
+end
+
+route '/js/*/' do
+  item.identifier.chop + ".js"
 end
 
 route '*' do

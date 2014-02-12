@@ -2,17 +2,19 @@
 
 ## Angular &amp; Bootstrap 3 for Mobile web and applications
 
+This small UI framework will let you use Angular Js for mobile development of integrating Bootstrap 3 with some mobile friendly patterns.
+
+Check out the website http://mobileangularui.com with *Demo*, *Docs* and *Getting Started* now.
+
 ![](http://mobileangularui.com/logo.png)
 
-Angular Ui Mobile glues together: 
+Mobile Angular UI glues together: 
 
 - Angular 1.2+
 - Bootstrap 3
 - Angular directives for Bootstrap 3
 - An essential set of Bootstrap 3 components for mobile (navbars, sidebars, switches ..)
 - Icons with FontAwesome
-- Overthrow js `overflow: auto` polyfill
-- Some other mobile Web App best pratices and polyfills
 
 ### Some features:
 
@@ -25,17 +27,14 @@ Angular Ui Mobile glues together:
 - Bottom navbar
 - Justified Buttons
 - Customizable build workflow with Grunt
-
-Some convenient implementation constraints:
-
-- Be the less invasive we can: use things as they are when possible
-- Keep Angular components in separate modules 
-- Follow twitter bootstrap patterns for markup
-- Use the same bootstrap variables
-- Keep it lighter than Bootstrap 3 + Jquery + Angular Js
+- Its lighter than Bootstrap 3 + Jquery + Angular Js
 
 
 ### Test with your devices
+
+You can just go to http://mobileangularui.com/demo
+
+or:
 
 ``` sh
 git clone https://github.com/mcasimir/mobile-angular-ui.git
@@ -46,18 +45,3 @@ then you need `node`, `bower` and `grunt` so you can run `npm install` and use `
 ``` sh
 grunt connect
 ```
-
-### Differences with Bootstrap 3
-
-1. It uses font-awesome in place of glyphicons
-
-2. responsive css rules for *-sm, *-md, *-lg are moved out of the default bundle
-
-3. removed/unsupported components:
-
-  - breadcrumbs and pagination: they are just not the best way to navigate a mobile app
-  - tooltips: unlikely to be useful with small screens and touch devices, popovers should be enough
-  - carousels
-  - modals: are replaced by overlays
-
-4. All of the Bootstrap Javascript features are obtained with just two angular directives: `toggle` and `toggleable`. Read the [docs](http://mobileangularui.com/) for more.

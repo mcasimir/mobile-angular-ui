@@ -15,6 +15,11 @@
     position: absolute;
     text-align: center;
     width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+
   }
 
  .btn-navbar, .btn {
@@ -44,6 +49,14 @@
   right: 0;
   width: 100%;
   margin: 0;
+}
+
+.navbar-absolute-top~.app-body {
+  padding-top: 51px;
+}
+
+.navbar-absolute-bottom~.app-body {
+  padding-bottom: 51px;
 }
 
 .navbar-absolute-top {

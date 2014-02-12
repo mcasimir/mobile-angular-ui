@@ -24644,7 +24644,6 @@ angular.module("mobile-angular-ui.directives.scrollable", []).directive("scrolla
         var iscroll;
         [].slice.call(document.querySelectorAll("input, select, button, textarea")).forEach(function(el) {
           return el.addEventListener(("ontouchstart" in window ? "touchstart" : "mousedown"), function(e) {
-            console.log("Preventing event from bubbling up to iScroll, as it would then remove it.");
             return e.stopPropagation();
           });
         });

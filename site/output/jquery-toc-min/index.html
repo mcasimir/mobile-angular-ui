@@ -7,7 +7,7 @@
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
-    <title><%= [@item[:title], "Mobile Angular UI"].join(" | ") %></title>
+    <title> | Mobile Angular UI</title>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="style.css">
 
     <!-- you don't need to keep this, but it's cool for stats! -->
-    <meta name="generator" content="nanoc <%= Nanoc::VERSION %>">
+    <meta name="generator" content="nanoc 3.6.6">
   </head>
   <body>
     <div class="navbar navbar-top">
@@ -30,7 +30,12 @@
     </div>
 
     <div id="main">
-      <%= yield %>
+      /<em>! </em> toc - jQuery Table of Contents Plugin * v0.1.2 * http://projects.jga.me/toc/ * copyright Greg Allen 2013 * MIT License */ (function(t){t.fn.toc=function(e){var n,i=this,r=t.extend({},jQuery.fn.toc.defaults,e),o=t(r.container),a=t(r.selectors,o),l=[],h=r.prefix+"-active",s=function(e){if(r.smoothScrolling){e.preventDefault();var n=t(e.target).attr("href"),o=t(n);t("body,html").animate({scrollTop:o.offset().top},400,"swing",function(){location.hash=n})}t("li",i).removeClass(h),t(e.target).parent().addClass(h)},c=function(){n&amp;&amp;clearTimeout(n),n=setTimeout(function(){for(var e,n=t(window).scrollTop(),o=0,a=l.length;a&gt;o;o++)if(l[o]&gt;=n){t("li",i).removeClass(h),e=t("li:eq("+(o-1)+")",i).addClass(h),r.onHighlight(e);break}},50)};return r.highlightOnScroll&amp;&amp;(t(window).bind("scroll",c),c()),this.each(function(){var e=t(this),n=t("
+<ul></ul>
+");a.each(function(i,o){var a=t(o);l.push(a.offset().top-r.highlightOffset),t("<span></span>").attr("id",r.anchorName(i,o,r.prefix)).insertBefore(a);var h=t("<a></a>").text(r.headerText(i,o,a)).attr("href","#"+r.anchorName(i,o,r.prefix)).bind("click",function(n){s(n),e.trigger("selected",t(this).attr("href"))}),c=t("
+<li>
+<p>").addClass(r.itemClass(i,o,a,r.prefix)).append(h);n.append(c)}),e.html(n)})},jQuery.fn.toc.defaults={container:"body",selectors:"h1,h2,h3",smoothScrolling:!0,prefix:"toc",onHighlight:function(){},highlightOnScroll:!0,highlightOffset:100,anchorName:function(t,e,n){return n+t},headerText:function(t,e,n){return n.text()},itemClass:function(t,e,n,i){return i+"-"+n[0].tagName.toLowerCase()}}})(jQuery);</p>
+</li>
     </div>
 
     <footer class="footer">
@@ -42,37 +47,15 @@
 
     <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    <script src="js/jquery-toc-min.js"></script>
-
+    <script src="jquery-toc-min.js"></script>
     <script>
 
     $('#toc').toc({
-        'selectors': 'h2,h3', //elements to use as headings
         'container': '#docs', //element to find all selectors in
         'smoothScrolling': true, //enable or disable smooth scrolling on click
         'highlightOnScroll': true, //add class to heading that is currently in focus
         'highlightOffset': 100, //offset to trigger the next headline
     });
-
-    var sidebarContainer = $("#sidebar-container");
-    var sidebar = $("#sidebar");
-    
-
-    adjustSidebar = function(e) {
-      var tocOffsetTop = sidebarContainer.offset().top;
-      if($(window).scrollTop() >= tocOffsetTop) {
-        sidebar.addClass("fix");
-        sidebar.css("left", sidebarContainer.offset().left);
-        sidebar.css("width", sidebarContainer.width());
-      } else {
-        sidebar.removeClass("fix");
-        sidebar.css("left", 'auto');
-      }
-    };
-
-    $(window).scroll(adjustSidebar);
-    $(window).resize(adjustSidebar);
-
     </script>
   </body>
 </html>

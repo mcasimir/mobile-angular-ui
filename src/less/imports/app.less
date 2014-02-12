@@ -1,3 +1,15 @@
+html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
 .app {
   height: 100%;
   position: relative;
@@ -11,4 +23,44 @@
   -webkit-box-shadow: -1px 0 4px rgba(0,0,0,0.4);
   -moz-box-shadow: -1px 0 4px rgba(0,0,0,0.4);
   box-shadow: 0 0 4px rgba(0,0,0,0.4);
+}
+
+.app-body {
+  display: block;
+  height: 100%;
+  padding: 0;
+}
+
+.app-content {
+  display: block;
+  position: relative;
+  height: 100%;
+  padding: 0;
+}
+
+.app-search {
+  border-width: 0 0 1px;
+  position: absolute;
+  top: 0;
+  z-index: 1029;
+  width: 100%;
+  left: 0;
+}
+
+.app-name {
+  padding: 10px;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  z-index: 1000;
+  line-height: 70px;
+  padding: 0 10px;
+  font-size: 32px;
+}
+
+.fa.disabled {
+  opacity: .2;
 }
