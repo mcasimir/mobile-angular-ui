@@ -24,7 +24,8 @@
         </h1>
 
         <ul class="nav navbar-nav pull-right">
-          <li><a href="https://github.com/mcasimir/mobile-angular-ui" target="_blank"><i class="fa fa-github"></i></a></li>
+          <li><a href="demo" class="btn btn-primary"><i class="fa fa-eye"></i> Demo</a></li>
+          <li><a class="nav-github" href="https://github.com/mcasimir/mobile-angular-ui" target="_blank"><i class="fa fa-github"></i></a></li>
         </ul>
     </div>
 
@@ -62,14 +63,11 @@
 
 <div class="clearfix">
 <div class="pull-left  hidden-xs">
-<figure>
-<img src="logo.png" alt="Mobile Angular UI" class="logo">
-</figure>
+<figure><img src="logo.png" alt="Mobile Angular UI" class="logo"></figure>
 </div>
 
 <p><strong>Mobile Angular UI</strong> is <strong><em>a mobile UI framework</em></strong> just like Sencha Touch or jQuery Mobile but is based on <strong><em>trending technologies you already know and love</em></strong> like Angular.js and Twitter Bootstrap.</p>
-<p><br></p>
-<p><a href="https://github.com/mcasimir/mobile-angular-ui/archive/master.zip" class="btn btn-primary btn-lg"><i class="fa fa-download"></i> Download</a> <a href="demo" class="btn btn-warning btn-lg"><i class="fa fa-check"></i> Demo</a></p>
+<p><br><a href="https://github.com/mcasimir/mobile-angular-ui/archive/master.zip" class="btn btn-primary btn-lg"><i class="fa fa-download"></i> Download</a> <a href="demo" class="btn btn-warning btn-lg"><i class="fa fa-eye"></i> Demo</a></p>
 </div>
 
 
@@ -79,56 +77,689 @@
 <div class="row features">
 
 <div class="col-sm-4 col-md-4 col-lg-4 feature-box">
-<figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/angular.png);"></figure>
-<h2 id="angular-js">Angular JS</h2>
+<figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/angular.png);"></figure><h2 id="angular-js">Angular JS</h2>
 <p>No jQuery dependencies, no fat bootstrap js. Just a few angular.js directives super easy to learn to put things together.</p>
 <p>Mobile Angular UI is packed with angular-route, angular-animate, angular-touch modules by default to make you up and running in a minute.</p>
 </div>
 
 <div class="col-sm-4 col-md-4 col-lg-4 feature-box">
-<figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/bootstrap.png);"></figure>
-<h2 id="bootstrap-3-for-mobile">Bootstrap 3 for Mobile</h2>
+<figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/bootstrap.png);"></figure><h2 id="bootstrap-3-for-mobile">Bootstrap 3 for Mobile</h2>
 <p>Original Bootstrap 3 stripped out of responsive media queries that are put apart in separate files (just include what you need).</p>
 <a href="http://fontawesome.io/">FontAwesome</a> Icons are included by default in place of Glyphicons.
 </div>
 
 <div class="col-sm-4 col-md-4 col-lg-4 feature-box">
-<figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/mobile.png);"></figure>
-<h2 id="mobile-components">Mobile Components</h2>
+<figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/mobile.png);"></figure><h2 id="mobile-components">Mobile Components</h2>
 Mobile Angular UI provides essential mobile components that are missing in Bootstrap 3, in particular introduces sidebars, absolute positioned top and bottom navbars with native scroll with polyfills to create fixed navbars that dont bounces on scroll.
 </div>
 
 </div>
 
-<h2 class="page-header">
-Getting Started
+<br><div id="docs" class="row">
+<div class="col-xs-12 pull-right col-sm-3 col-md-3 col-lg-3">
+<div id="sidebar-container">
+<div id="sidebar">
+<h4 class="sidebar-title">
+Docs
+</h4>
+<div id="toc" class="nav sidebar"></div>
+</div>  
+</div>
+<br>
+</div>
+<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+<h2 class="section-title first-section-title">
+<i class="fa fa-coffee"></i><br> Getting Started
 </h2>
 
-<h3 id="installation">Installation</h3>
+<h3>Installation</h3>
 <p>Either install via <code>bower</code> or download it</p>
 <pre class="sh"><code>bower install --save mobile-angular-ui</code></pre>
 <p>Load files in the head section of your html</p>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;link</span><span class="ot"> rel=</span><span class="st">"stylesheet"</span><span class="ot"> href=</span><span class="st">"mobile-angular-ui/dist/css/mobile-angular-ui.min.css"</span><span class="kw">&gt;</span>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;link</span><span class="ot"> rel=</span><span class="st">"stylesheet"</span><span class="ot"> href=</span><span class="st">"mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css"</span><span class="kw">&gt;</span>
+<span class="kw">&lt;link</span><span class="ot"> rel=</span><span class="st">"stylesheet"</span><span class="ot"> href=</span><span class="st">"mobile-angular-ui/dist/css/mobile-angular-ui-desktop.min.css"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">"mobile-angular-ui/dist/js/mobile-angular-ui.min.js"</span><span class="kw">&gt;&lt;/script&gt;</span></code></pre>
-<h3 id="basic-layout">Basic Layout</h3>
-<p>Basically we only need an an <code>.app</code> block nested in an <code>.app-container</code>. <code>.app-container</code> also contains sidebars. Overlays, modals and so on should be placed outside the <code>.app-container</code>.</p>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"app-container"</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"sidebar"</span><span class="kw">&gt;</span>...<span class="kw">&lt;/div&gt;</span>
-  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"app"</span><span class="kw">&gt;</span>...<span class="kw">&lt;/div&gt;</span>
+<p>The <code>base</code> css includes only the mobile css (it has no media queries), while the <code>desktop</code> css contains just a few lines of code to make sidebars always visible on desktop. So with these two files you can only work with the <code>.*-xs</code> classes from Bootstrap. If you need more you can include other files from the distribution package to fit your needs. eg. you could add <code>mobile-angular-ui-max-width-767px.css</code> to use <code>(max-width: 767px)</code> media queries from Bootstrap.</p>
+<p>Then you can initialize your Angular application declaring <code>mobile-angular-ui</code> as a dependence.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">angular</span>.<span class="fu">module</span>(<span class="st">'myApp'</span>, [<span class="st">"mobile-angular-ui"</span>])
+  .<span class="fu">config</span>(<span class="kw">function</span>($routeProvider) {
+      <span class="ot">$routeProvider</span>.<span class="fu">when</span>(<span class="st">'/'</span>, { 
+        <span class="co">// ...</span>
+      });
+      <span class="co">// ...</span>
+  });</code></pre>
+<p>This will load also <code>ngTouch</code>, <code>ngAnimate</code> and <code>ngRoute</code> by default.</p>
+<p>If you wish you can pick a subset of the loaded modules to fit your needs. This is how the <code>mobile-angular-ui</code> module is defined with its dependencies.</p>
+<pre><code>angular.module("mobile-angular-ui", [
+  'ngTouch',
+  'ngAnimate',
+  'ngRoute',
+  'mobile-angular-ui.directives.toggle',
+  'mobile-angular-ui.directives.overlay',
+  'mobile-angular-ui.directives.forms',
+  'mobile-angular-ui.directives.panels',
+  'mobile-angular-ui.directives.capture',
+  'mobile-angular-ui.directives.scrollable'
+ ]);</code></pre>
+<h3>Basic Layout</h3>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="co">&lt;!-- Sidebars --&gt;</span>
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"sidebar sidebar-left"</span><span class="ot"> toggleable active-class=</span><span class="st">"in"</span><span class="ot"> id=</span><span class="st">"mainSidebar"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;h1</span><span class="ot"> class=</span><span class="st">"app-name"</span><span class="kw">&gt;</span>My App<span class="kw">&lt;/h1&gt;</span>
+
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"scrollable"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"scrollable-content"</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"list-group"</span><span class="ot"> toggle=</span><span class="st">"off"</span><span class="ot"> bubble target=</span><span class="st">"mainSidebar"</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"list-group-item"</span><span class="ot"> href=</span><span class="st">"#/"</span><span class="kw">&gt;</span>Home <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-chevron-right pull-right"</span><span class="kw">&gt;&lt;/i&gt;&lt;/a&gt;</span>
+        <span class="co">&lt;!-- ... --&gt;</span>
+      <span class="kw">&lt;/div&gt;</span>
+
+    <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"app"</span><span class="kw">&gt;</span>
+  
+  <span class="co">&lt;!-- Navbars --&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"navbar navbar-app navbar-absolute-top"</span><span class="kw">&gt;</span>
+
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"navbar-brand navbar-brand-center"</span><span class="ot"> yield-to=</span><span class="st">"title"</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;span&gt;</span>My App<span class="kw">&lt;/span&gt;</span>
+      <span class="kw">&lt;/div&gt;</span>
+
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group pull-left"</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;div</span><span class="ot"> ng-click=</span><span class="st">"toggle('mainSidebar')"</span><span class="ot"> class=</span><span class="st">"btn btn-navbar sidebar-toggle"</span><span class="kw">&gt;</span>
+          <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-bars"</span><span class="kw">&gt;&lt;/i&gt;</span> Menu
+        <span class="kw">&lt;/div&gt;</span>
+      <span class="kw">&lt;/div&gt;</span>
+
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group pull-right"</span><span class="ot"> yield-to=</span><span class="st">"navbarAction"</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn btn-navbar"</span><span class="kw">&gt;</span>
+          <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-plus"</span><span class="kw">&gt;&lt;/i&gt;</span> New
+        <span class="kw">&lt;/div&gt;</span>
+      <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"navbar navbar-app navbar-absolute-bottom"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group justified"</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">"#/route1"</span><span class="ot"> class=</span><span class="st">"btn btn-navbar btn-icon-only"</span><span class="kw">&gt;&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-home fa-navbar"</span><span class="kw">&gt;&lt;/i&gt;&lt;/a&gt;</span>
+      <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">"#/route2"</span><span class="ot"> class=</span><span class="st">"btn btn-navbar btn-icon-only"</span><span class="kw">&gt;&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-list fa-navbar"</span><span class="kw">&gt;&lt;/i&gt;&lt;/a&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"app-body"</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;ng-view</span><span class="ot"> class=</span><span class="st">"app-content"</span><span class="kw">&gt;&lt;/ng-view&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<h3 id="native-scroll">Native Scroll</h3>
-<p>One thing you'll always have to deal with approaching mobile web app development is scroll and <code>position:fixed</code> bugs. Scrollable areas with <code>overflow: auto</code> easily solve any problems but since it is not always available we polyfills it with <a href="http://cubiq.org/iscroll-4">iScroll</a> when necessary.</p>
+<h3>Differences with Bootstrap 3</h3>
+<ol style="list-style-type: decimal">
+<li><p>It uses font-awesome in place of glyphicons</p></li>
+<li><p>responsive css rules for <em>-sm, </em>-md, *-lg are moved out of the default bundle</p></li>
+<li><p>removed/unsupported components:</p></li>
+</ol>
+<ul>
+<li>breadcrumbs and pagination: they are just not the best way to navigate a mobile app</li>
+<li>tooltips: unlikely to be useful with small screens and touch devices, popovers should be enough</li>
+<li>carousels</li>
+<li>modals: are replaced by overlays</li>
+</ul>
+<h2 class="section-title">
+<div class="section-icon">
+  
+<i class="fa fa-gears"></i>
+</div>
+Angular Directives<br>
+</h2>
+
+<p>Before going ahead with components you may want to familiarize with some basic mobile angular ui directives.</p>
+<h3 class="page-header">
+<code>scrollable</code>
+</h3>
+
+<p>First of all: one thing you'll always have to deal with approaching mobile web app development is scroll and <code>position:fixed</code> bugs.</p>
+<p>Due to the lack of support in some devices fixed positioned elements may bounce or disappear during scroll. Also mobile interaction often leverages horizontal scroll eg. in carousels or sliders.</p>
+<p>We use scrollable areas to solve any problems related to scroll. Since it is not always available in touch devices we polyfills it with <a href="http://cubiq.org/iscroll-4">iScroll</a> when necessary.</p>
+<p>Markup for any scrollable areas is as simple as:</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"scrollable"</span><span class="kw">&gt;</span>
   <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"scrollable-content"</span><span class="kw">&gt;</span>...<span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<h3 id="mobile-friendly-navbars">Mobile Friendly Navbars</h3>
-<p>Bootstrap default navbars are awesome for responsive websites, but are not the best to interact with in a small screen. Plus fixed positioning is not an option to create navbars standing in top or bottom of the screen.</p>
-<h3 id="sidebars">Sidebars</h3>
-<h3 id="justify-everithing">Justify Everithing</h3>
-<h3 id="togglers">Togglers</h3>
-<p>Reproduce any Bootstrap component and even more with only one Angular directive.</p>
-</div>
+<p>This piece of code will trigger a directive that properly setup a new iScroll instance for the <code>.scrollable</code> node.</p>
+<h3 class="page-header">
+<code>toggle</code> and <code>toggleable</code>
+</h3>
 
+<p>Toggle module is the basic to implement tabs, accordions, collapsibles and all the other components that need to be selectively or exclusively switched on or off.</p>
+<p>Toggle module defines two directive: <code>toggle</code> and <code>toggleable</code>. These two directives replaces almost all of the bootstrap 3 jquery stuffs.</p>
+<p>A <code>[toggle]</code> node will works as a trigger to turn <code>on</code> or <code>off</code> one or more targeted <code>[toggleable]</code> nodes by translating clicks into <em>toggle events</em>.</p>
+<table class="table table-bordered">
+<thead><tr><th colspan="2">
+<code>toggle</code> directive parameters
+</th></tr></thead>
+<tbody>
+<tr>
+<th>
+toggle
+</th>
+<td>
+        
+Possible values are <code>on</code>, <code>off</code> or <code>toggle</code> (default to <code>toggle</code>)
+</td>
+    </tr>
+<tr>
+<th>
+target
+</th>
+<td>
+The <code>id</code> of the corresponding toggleable. One of <code>target</code> or <code>targetClass</code> is required.
+</td>
+    </tr>
+<tr>
+<th>
+targetClass
+</th>
+<td>
+The <code>class</code> of the corresponding toggleable. One of <code>target</code> or <code>targetClass</code> is required. Notice that this wont select nodes with dom methods.
+</td>
+    </tr>
+<tr>
+<th>
+bubble
+</th>
+<td>
+If <code>bubble</code> is set <code>[toggle]</code> does not capture the click event and let it to be propagated to dom.
+</td>
+    </tr>
+<tr>
+<th>
+activeClass
+</th>
+<td>
+The <code>class</code> the element will acquire when corresponding target is active and that will be removed when target is inactive. Does not affect <code>targetClass</code>.
+</td>
+    </tr>
+<tr>
+<th>
+inactiveClass
+</th>
+<td>
+The <code>class</code> the element will acquire when corresponding target is inactive and that will be removed when target is active. Does not affect <code>targetClass</code>.
+</td>
+    </tr>
+<tr>
+<th>
+parentActiveClass
+</th>
+<td>
+The <code>class</code> the parent of the element will acquire when corresponding target is inactive and that will be removed when target is active. Does not affect <code>targetClass</code>.
+</td>
+    </tr>
+<tr>
+<th>
+parentInactiveClass
+</th>
+<td>
+The <code>class</code> the parent of the element will acquire when corresponding target is inactive and that will be removed when target is active. Does not affect <code>targetClass</code>.
+</td>
+    </tr>
+</tbody>
+</table>
+<table class="table table-bordered">
+<thead><tr><th colspan="2">
+<code>toggleable</code> directive parameters
+</th></tr></thead>
+<tbody>
+<tr>
+<th>
+exclusionGroup
+</th>
+<td>
+        
+Instruct the element to <em>"turn itself off"</em> when another element of the same <code>exclusionGroup</code> is activated.
+</td>
+    </tr>
+<tr>
+<th>
+default
+</th>
+<td>
+The initial state of the element <code>active</code> or <code>inactive</code> (default to <code>inactive</code>).
+</td>
+    </tr>
+<tr>
+<th>
+activeClass
+</th>
+<td>
+The <code>class</code> the element will acquire when is active and that will be removed when is inactive.
+</td>
+    </tr>
+<tr>
+<th>
+inactiveClass
+</th>
+<td>
+The <code>class</code> the element will acquire when is inactive and that will be removed when is active.
+</td>
+    </tr>
+<tr>
+<th>
+parentActiveClass
+</th>
+<td>
+The <code>class</code> the parent of the element will acquire when is inactive and that will be removed when is active.
+</td>
+    </tr>
+<tr>
+<th>
+parentInactiveClass
+</th>
+<td>
+The <code>class</code> the parent of the element will acquire when is inactive and that will be removed when is active.
+</td>
+    </tr>
+</tbody>
+</table>
+<p>To understand how it works consider the following example:</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;p</span><span class="ot"> toggleable id=</span><span class="st">"lightbulb"</span><span class="ot"> active-class=</span><span class="st">"text-primary"</span><span class="ot"> class=</span><span class="st">"text-default"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-lightbulb-o"</span><span class="kw">&gt;&lt;/i&gt;</span>
+<span class="kw">&lt;/p&gt;</span>
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group justified nav-tabs"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;a</span><span class="ot"> toggle=</span><span class="st">"toggle"</span><span class="ot"> target=</span><span class="st">"lightbulb"</span><span class="ot"> active-class=</span><span class="st">"active"</span><span class="ot"> class=</span><span class="st">"btn btn-default"</span><span class="ot"> href</span><span class="kw">&gt;</span>
+      Toggle
+  <span class="kw">&lt;/a&gt;</span>
+  <span class="kw">&lt;a</span><span class="ot"> toggle=</span><span class="st">"on"</span><span class="ot"> target=</span><span class="st">"lightbulb"</span><span class="ot"> class=</span><span class="st">"btn btn-default"</span><span class="ot"> href</span><span class="kw">&gt;</span>
+      Turn On
+  <span class="kw">&lt;/a&gt;</span>
+  <span class="kw">&lt;a</span><span class="ot"> toggle=</span><span class="st">"off"</span><span class="ot"> target=</span><span class="st">"lightbulb"</span><span class="ot"> class=</span><span class="st">"btn btn-default"</span><span class="ot"> href</span><span class="kw">&gt;</span>
+      Turn Off
+  <span class="kw">&lt;/a&gt;</span>        
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<p>The purpose of this code is to create a black <code>lightbulb</code> icon getting colored when it turns on. The <code>lightbulb</code> should be turned on and off by three switches. The first alternates its state, the second turns it on and the latter turns it off.</p>
+<p><code>#lightbulb</code> is a <code>[toggleable]</code> that wraps a lightbulb icon in form of font icon. When activated it acquires the <code>text-primary</code> class, thus being highlighted with the primary color.</p>
+<p>The first <code>[toggle]</code> turns on and off the <code>#lightbulb</code> depending of its state. It also reflects the <code>#lightbulb</code> activation since when lightbulb is active it takes the <code>active</code> class.</p>
+<p>Second and third <code>[toggle]</code> are only sending <code>on</code> or <code>off</code> commands to <code>#lightbulb</code>.</p>
+<p><a href="demo/#/toggle">Try this example in the demo</a></p>
+<h4>Programmatic API</h4>
+<p>Toggle module exposes the <code>toggle</code> and <code>toggleByClass</code> functions through <code>$rootScope</code> to interact with <code>[toggleable]</code> in a programmatic way. This will let you do something like that:</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> ng-swipe-left=</span><span class="st">"toggle('mainSidebar', 'off')"</span><span class="ot"> ng-swipe-right=</span><span class="st">"toggle('mainSidebar', 'on')"</span><span class="kw">&gt;</span>
+<span class="kw">&lt;div&gt;</span></code></pre>
+<p><code>toggle</code> method takes 2 parameters: the <code>[toggleable]</code> id and the command to send (one of <code>toggle</code>, <code>on</code> or <code>off</code>).</p>
+<p><code>toggleByClass</code> method takes also 2 parameters: the <code>[toggleable]</code> class and the command to send.</p>
+<h3 class="page-header">
+<code>contentFor</code> and <code>yieldTo</code><br>
+</h3>
+
+
+<p>The capture module exposes directives to let you extract markup which can be used in other parts of a template.</p>
+<p>It provides a way to move or clone a block of markup to other parts of the document.</p>
+<p>This method is particularly useful to setup parts of the layout within an angular view. Since blocks of html are transplanted within their original <code>$scope</code> is easy to create layout interactions depending on the context. Some tipical task you can accomplish with these directives are: <em>setup the navbar title depending on the view</em> or <em>place a submit button for a form inside a navbar</em>.</p>
+<p><strong>Usage:</strong></p>
+<p>Use <code>yield-to</code> as a placeholder.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="co">&lt;!-- index.html --&gt;</span>
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"navbar"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> yield-to=</span><span class="st">"title"</span><span class="ot"> class=</span><span class="st">"navbar-brand"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;span&gt;</span>Default Title<span class="kw">&lt;/span&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"app-body"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;ng-view</span><span class="ot"> class=</span><span class="st">"app-content"</span><span class="kw">&gt;&lt;/ng-view&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<p>Use <code>content-for</code> inside any view to populate the <code>yield-to</code> content.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="co">&lt;!-- myView.html --&gt;</span>
+
+<span class="kw">&lt;div</span><span class="ot"> content-for=</span><span class="st">"title"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;span&gt;</span>My View Title<span class="kw">&lt;/span&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<p>Since the original scope is preserved you can use directives inside <code>content-for</code> blocks to interact with the current scope. In the following example we will add a navbar button to submit a form inside a nested view.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="co">&lt;!-- index.html --&gt;</span>
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"navbar"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> yield-to=</span><span class="st">"navbarAction"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"app-body"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;ng-view</span><span class="ot"> class=</span><span class="st">"app-content"</span><span class="kw">&gt;&lt;/ng-view&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="co">&lt;!-- newCustomer.html --&gt;</span>
+
+<span class="kw">&lt;form</span><span class="ot"> ng-controller=</span><span class="st">"newCustomerController"</span><span class="kw">&gt;</span>
+  
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"inputs"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"customer.name"</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+  
+  <span class="kw">&lt;div</span><span class="ot"> content-for=</span><span class="st">"navbarAction"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;button</span><span class="ot"> ng-click=</span><span class="st">"createCustomer()"</span><span class="kw">&gt;</span>
+      Save
+    <span class="kw">&lt;/button&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+<span class="kw">&lt;/form&gt;</span></code></pre>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">app</span>.<span class="fu">controller</span>(<span class="st">'newCustomerController'</span>, <span class="kw">function</span>($scope, Store){
+  <span class="ot">$scope</span>.<span class="fu">customer</span> = {};
+  <span class="ot">$scope</span>.<span class="fu">createCustomer</span> = <span class="kw">function</span>(){
+    <span class="ot">Store</span>.<span class="fu">create</span>(<span class="ot">$scope</span>.<span class="fu">customer</span>);
+    <span class="co">// ...</span>
+  }
+});</code></pre>
+<p>If you wish you can also duplicate markup instead of move it. Just add <code>duplicate</code> parameter to <code>contentFor</code> directive to specify this behaviour.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> content-for=</span><span class="st">"navbarAction"</span><span class="ot"> duplicate</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;button</span><span class="ot"> ng-click=</span><span class="st">"createCustomer()"</span><span class="kw">&gt;</span>
+    Save
+  <span class="kw">&lt;/button&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<table class="table table-bordered">
+<thead><tr><th colspan="2">
+<code>yieldTo</code> directive parameters
+</th></tr></thead>
+<tbody>
+<tr>
+<th>
+yieldTo
+</th>
+<td>
+        
+An unique name to reference the placeholder.
+</td>
+    </tr>
+<tr>
+<th>
+[content]
+</th>
+<td>
+        
+The default content. Default content is restored each time on <code>$routeChangeStart</code>.
+</td>
+    </tr>
+</tbody>
+</table>
+<table class="table table-bordered">
+<thead><tr><th colspan="2">
+<code>contentFor</code> directive parameters
+</th></tr></thead>
+<tbody>
+<tr>
+<th>
+contentFor
+</th>
+<td>
+        
+An unique name to reference the placeholder.
+</td>
+    </tr>
+<tr>
+<th>
+duplicate
+</th>
+<td>
+        
+Indicates whether the content should be duplicated instead of moved.
+</td>
+    </tr>
+<tr>
+<th>
+[content]
+</th>
+<td>
+        
+The content to take place in the placeholder.
+</td>
+    </tr>
+</tbody>
+</table>
+<h2 class="section-title">
+  
+<i class="fa fa-code"></i> <br> Components
+</h2>
+
+<h3>Navbars</h3>
+<p>Bootstrap default navbars are awesome for responsive websites, but are not the best to interact with in a small screen. Plus fixed positioning is not an option to create navbars standing in top or bottom of the screen.</p>
+<p>Mobile Angular Ui offers an alternative to bootstrap navbars that is better suitable for mobile.</p>
+<p>It uses scrollable areas to avoid scroll issues. In the following figure you can see the difference between fixed navbars and navbars with absolute positioning.</p>
+<figure class="full-width-figure"><img src="figs/fixed-overflow.png" alt=""></figure><p>Here is the basic markup to achieve this.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"app"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"navbar navbar-app navbar-absolute-top"</span><span class="kw">&gt;</span>
+    <span class="co">&lt;!-- ... --&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"navbar navbar-app navbar-absolute-bottom"</span><span class="kw">&gt;</span>
+    <span class="co">&lt;!-- ... --&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"app-body"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;ng-view&gt;&lt;/ng-view&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<p>As you can notice the base class is <code>.navbar-app</code> while the positioning is obtained adding either <code>.navbar-absolute-top</code> or <code>.navbar-absolute-bottom</code> class.</p>
+<h4>Mobile Navbar Layout</h4>
+<p>Top navbar in mobile design most of the times follows a clear pattern: a centered title surrounded by one or two action buttons, the <em>back</em> or the <em>menu</em> buttons are two common examples.</p>
+<p>Twitter Bootstrap ships with a different arrangement of components for navbars since they are supposed to host an horizontal navigation menu.</p>
+<p><code>.navbar-app</code> is specifically designed to support this different type of interaction and arrangement.</p>
+<p>Consider the following example:</p>
+<pre><code>&lt;div class="navbar navbar-app navbar-absolute-top"&gt;
+
+  &lt;div class="navbar-brand navbar-brand-center"&gt;
+    Navbar Brand
+  &lt;/div&gt;
+
+  &lt;div class="btn-group pull-left"&gt;
+    &lt;div class="btn btn-navbar"&gt;
+      Left Action
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class="btn-group pull-right"&gt;
+    &lt;div class="btn btn-navbar"&gt;
+      Right Action
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>As you can see the markup is pretty straightforward: there is a <code>.navbar-brand</code> with its new specification, <code>.navbar-brand-center</code>, that will render the title centered and below the two button groups. Note that <code>.navbar-brand-center</code> will position the title with absolute positioning ensuring that it will never cover the buttons, which would cause interaction problems.</p>
+<h3>Sidebar</h3>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"sidebar sidebar-left"</span><span class="ot"> toggleable active-class=</span><span class="st">"in"</span><span class="ot"> id=</span><span class="st">"mainSidebar"</span><span class="kw">&gt;</span>
+
+<span class="kw">&lt;h1</span><span class="ot"> class=</span><span class="st">"app-name"</span><span class="kw">&gt;</span>Mobile Angular UI<span class="kw">&lt;/h1&gt;</span>
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"scrollable"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"scrollable-content"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"list-group"</span><span class="ot"> toggle=</span><span class="st">"off"</span><span class="ot"> bubble target=</span><span class="st">"mainSidebar"</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"list-group-item"</span><span class="ot"> href=</span><span class="st">"#/"</span><span class="kw">&gt;</span>Home <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-chevron-right pull-right"</span><span class="kw">&gt;&lt;/i&gt;&lt;/a&gt;</span>
+      <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"list-group-item"</span><span class="ot"> href=</span><span class="st">"#/scroll"</span><span class="kw">&gt;</span>Scroll <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-chevron-right pull-right"</span><span class="kw">&gt;&lt;/i&gt;&lt;/a&gt;</span>
+      <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"list-group-item"</span><span class="ot"> href=</span><span class="st">"#/toggle"</span><span class="kw">&gt;</span>Toggle <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-chevron-right pull-right"</span><span class="kw">&gt;&lt;/i&gt;&lt;/a&gt;</span>
+      <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"list-group-item"</span><span class="ot"> href=</span><span class="st">"#/tabs"</span><span class="kw">&gt;</span>Tabs <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-chevron-right pull-right"</span><span class="kw">&gt;&lt;/i&gt;&lt;/a&gt;</span>
+      <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"list-group-item"</span><span class="ot"> href=</span><span class="st">"#/accordion"</span><span class="kw">&gt;</span>Accordion <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-chevron-right pull-right"</span><span class="kw">&gt;&lt;/i&gt;&lt;/a&gt;</span>
+      <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"list-group-item"</span><span class="ot"> href=</span><span class="st">"#/overlay"</span><span class="kw">&gt;</span>Overlay <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-chevron-right pull-right"</span><span class="kw">&gt;&lt;/i&gt;&lt;/a&gt;</span>
+      <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"list-group-item"</span><span class="ot"> href=</span><span class="st">"#/forms"</span><span class="kw">&gt;</span>Forms <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-chevron-right pull-right"</span><span class="kw">&gt;&lt;/i&gt;&lt;/a&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<p>As you can see sidebars can be placed either in left side or right side adding respectively <code>.sidebar-left</code> and <code>.sidebar-right</code> classes.</p>
+<p>You should also notice that a sidebar is a toggleable. So a sidebar is shown when it has the <code>.in</code> class.</p>
+<p>The purpose of the <code>toggle</code> directive for <code>.list-group</code> is to make the sidebar disappear when a link is clicked or tapped, the <code>bubble</code> parameters is infact used to let click events be propagated to inner links.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"list-group"</span><span class="ot"> toggle=</span><span class="st">"off"</span><span class="ot"> bubble target=</span><span class="st">"mainSidebar"</span><span class="kw">&gt;</span>
+  <span class="co">&lt;!-- ... --&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<p>Sidebars can be toggled using the <code>toggle</code> directive either as an attribute or programmatically via <code>toggle('sidebarId')</code></p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group pull-left"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> ng-click=</span><span class="st">"toggle('mainSidebar')"</span><span class="ot"> class=</span><span class="st">"btn btn-navbar sidebar-toggle"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-bars"</span><span class="kw">&gt;&lt;/i&gt;</span> Menu
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<h3> Tabs</h3>
+<p>Tabs are achieved via <code>toggle</code> and <code>toggleable</code> directives using <code>exclusion-group</code> parameter to inactivate other tabs than the but one.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">"nav nav-tabs"</span><span class="kw">&gt;</span>
+<span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">"#Tab1"</span><span class="ot"> toggle=</span><span class="st">"on"</span><span class="ot"> parent-active-class=</span><span class="st">"active"</span><span class="kw">&gt;</span>Tab 1<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">"#Tab2"</span><span class="ot"> toggle=</span><span class="st">"on"</span><span class="ot"> parent-active-class=</span><span class="st">"active"</span><span class="kw">&gt;</span>Tab 2<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">"#Tab3"</span><span class="ot"> toggle=</span><span class="st">"on"</span><span class="ot"> parent-active-class=</span><span class="st">"active"</span><span class="kw">&gt;</span>Tab 3<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+<span class="kw">&lt;/ul&gt;</span>
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"tab-content"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"tab-pane"</span><span class="ot"> toggleable active-class=</span><span class="st">"active"</span><span class="ot"> default=</span><span class="st">"active"</span><span class="ot"> id=</span><span class="st">"Tab1"</span><span class="ot"> exclusion-group=</span><span class="st">"myTabs"</span><span class="kw">&gt;</span>
+
+    <span class="kw">&lt;h3</span><span class="ot"> class=</span><span class="st">"page-header"</span><span class="kw">&gt;</span>Tab 1<span class="kw">&lt;/h3&gt;</span>
+    <span class="kw">&lt;p&gt;</span><span class="co">&lt;!-- ... --&gt;</span><span class="kw">&lt;/p&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"tab-pane"</span><span class="ot"> toggleable active-class=</span><span class="st">"active"</span><span class="ot"> id=</span><span class="st">"Tab2"</span><span class="ot"> exclusion-group=</span><span class="st">"myTabs"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;h3</span><span class="ot"> class=</span><span class="st">"page-header"</span><span class="kw">&gt;</span>Tab 2<span class="kw">&lt;/h3&gt;</span>
+    <span class="kw">&lt;p&gt;</span><span class="co">&lt;!-- ... --&gt;</span><span class="kw">&lt;/p&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"tab-pane"</span><span class="ot"> toggleable active-class=</span><span class="st">"active"</span><span class="ot"> id=</span><span class="st">"Tab3"</span><span class="ot"> exclusion-group=</span><span class="st">"myTabs"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;h3</span><span class="ot"> class=</span><span class="st">"page-header"</span><span class="kw">&gt;</span>Tab 3<span class="kw">&lt;/h3&gt;</span>
+    <span class="kw">&lt;p&gt;</span><span class="co">&lt;!-- ... --&gt;</span><span class="kw">&lt;/p&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group justified nav-tabs"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"btn btn-default"</span><span class="ot"> href=</span><span class="st">"#Tab1"</span><span class="ot"> toggle=</span><span class="st">"on"</span><span class="ot"> active-class=</span><span class="st">"active"</span><span class="kw">&gt;</span>Tab 1
+  <span class="kw">&lt;/a&gt;</span>
+  
+  <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"btn btn-default"</span><span class="ot"> href=</span><span class="st">"#Tab2"</span><span class="ot"> toggle=</span><span class="st">"on"</span><span class="ot"> active-class=</span><span class="st">"active"</span><span class="kw">&gt;</span>Tab 2
+  <span class="kw">&lt;/a&gt;</span>
+  
+  <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"btn btn-default"</span><span class="ot"> href=</span><span class="st">"#Tab3"</span><span class="ot"> toggle=</span><span class="st">"on"</span><span class="ot"> active-class=</span><span class="st">"active"</span><span class="kw">&gt;</span>Tab 3
+  <span class="kw">&lt;/a&gt;</span>
+  
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<h3> Accordion and Collapse</h3>
+<p>Accordion component is achieved via <code>toggle</code> and <code>toggleable</code> directives. <code>exclusion-group</code> parameter is used to inactivate other panels but the active one.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-group"</span><span class="ot"> id=</span><span class="st">"accordion"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel panel-default"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-heading"</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;h4</span><span class="ot"> class=</span><span class="st">"panel-title"</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;a</span><span class="ot"> href toggle target=</span><span class="st">"collapseOne"</span><span class="kw">&gt;</span>
+          Collapsible Group Item #1
+        <span class="kw">&lt;/a&gt;</span>
+      <span class="kw">&lt;/h4&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">"collapseOne"</span><span class="ot"> toggleable active-class=</span><span class="st">"in"</span><span class="ot"> exclusion-group=</span><span class="st">"accordion1"</span><span class="ot"> default=</span><span class="st">"active"</span><span class="ot"> class=</span><span class="st">"panel-collapse collapse"</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-body"</span><span class="kw">&gt;</span>
+        <span class="co">&lt;!-- ... --&gt;</span>
+      <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel panel-default"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-heading"</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;h4</span><span class="ot"> class=</span><span class="st">"panel-title"</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;a</span><span class="ot"> href toggle target=</span><span class="st">"collapseTwo"</span><span class="kw">&gt;</span>
+          Collapsible Group Item #2
+        <span class="kw">&lt;/a&gt;</span>
+      <span class="kw">&lt;/h4&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">"collapseTwo"</span><span class="ot"> toggleable active-class=</span><span class="st">"in"</span><span class="ot"> exclusion-group=</span><span class="st">"accordion1"</span><span class="ot"> class=</span><span class="st">"panel-collapse collapse"</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-body"</span><span class="kw">&gt;</span>
+        <span class="co">&lt;!-- ... --&gt;</span>
+      <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel panel-default"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-heading"</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;h4</span><span class="ot"> class=</span><span class="st">"panel-title"</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;a</span><span class="ot"> href toggle target=</span><span class="st">"collapseThree"</span><span class="kw">&gt;</span>
+          Collapsible Group Item #3
+        <span class="kw">&lt;/a&gt;</span>
+      <span class="kw">&lt;/h4&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">"collapseThree"</span><span class="ot"> toggleable active-class=</span><span class="st">"in"</span><span class="ot"> exclusion-group=</span><span class="st">"accordion1"</span><span class="ot"> class=</span><span class="st">"panel-collapse collapse"</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-body"</span><span class="kw">&gt;</span>
+        <span class="co">&lt;!-- ... --&gt;</span>
+      <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<h3>Overlays</h3>
+<p>An overlay is an attempt to replace modals with a component better following mobile patterns.</p>
+<p>This is the basic markup for an <code>overlay</code>. An <code>overlay</code> directive implicitly sets up a <code>toggleable</code> using its argument as <code>id</code>.</p>
+<pre><code>&lt;div overlay="myOverlay"&gt;
+  &lt;h4 class="overlay-title"&gt;My Overlay&lt;/h4&gt;    
+  &lt;p&gt;
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, ex eaque possimus ipsa ab quasi quos corporis consequatur laudantium? Ab assumenda delectus quo velit voluptates doloribus. Earum odit facilis qui.
+  &lt;/p&gt;
+  &lt;p toggle="off" bubble target="myOverlay"&gt;
+    &lt;span class="btn btn-primary"&gt;Ok&lt;/span&gt;
+    &lt;span class="btn btn-default"&gt;Cancel&lt;/span&gt;
+  &lt;/p&gt;  
+&lt;/div&gt;</code></pre>
+<h3>Dropdowns</h3>
+<p>Dropdowns are also achieved with <code>toggle</code> and <code>toggleable</code>.</p>
+<pre><code>&lt;div class="btn-group pull-right toggleable-dropdown" active-class="open" id="myDropdown" toggleable&gt;
+  &lt;button type="button" class="btn btn-default dropdown-toggle" toggle target="myDropdown"&gt;
+    &lt;i class="fa fa-gear"&gt;&lt;/i&gt; &lt;span class="caret"&gt;&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;ul class="dropdown-menu" role="menu" toggle="off" bubble target="myDropdown"&gt;
+&lt;li&gt;&lt;a href&gt;Action&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href&gt;Another action&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="divider"&gt;
+    &lt;li&gt;&lt;a href&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+<h2 class="section-title">
+  
+<i class="fa fa-wrench"></i> <br> Utils
+</h2>
+
+<h3>Justified Blocks</h3>
+<p>Mobile screens are small and it's common to have 2 or three buttons justified. To achieve this behaviour you can use the <code>.justified</code> class in any parent block of a group of items. This will apply a <code>table</code> layout to parent and a <code>table-cell</code> layout to its children.</p>
+<figure class="full-width-figure"><img src="figs/justify.png" alt=""></figure><p>Example:</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group justified nav-tabs"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"btn"</span><span class="kw">&gt;</span>Tab 1<span class="kw">&lt;/a&gt;</span>
+  <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"btn"</span><span class="kw">&gt;</span>Tab 2<span class="kw">&lt;/a&gt;</span>
+  <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"btn"</span><span class="kw">&gt;</span>Tab 3<span class="kw">&lt;/a&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<h3>Form helpers</h3>
+<p>Mobile angular Ui provides some markup savers to create form inputs.</p>
+<h4><code>bs-input</code></h4>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"invoice.customer"</span><span class="ot"> label=</span><span class="st">"Customer"</span><span class="ot"> bs-input</span><span class="kw">&gt;</span></code></pre>
+<p>That translates to</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"form-group container-fluid"</span><span class="kw">&gt;</span>
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"row"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">"invoice_customer_input"</span><span class="ot"> class=</span><span class="st">"control-label col-sm-2"</span><span class="kw">&gt;</span>Customer<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"col-sm-10"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"invoice.customer"</span><span class="ot"> label=</span><span class="st">"Customer"</span><span class="ot"> bs-input=</span><span class="st">""</span><span class="ot"> class=</span><span class="st">"ng-scope ng-pristine ng-valid form-control"</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<h4><code>bs-textarea</code></h4>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;textarea</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"customer.mailing_address"</span><span class="ot"> label=</span><span class="st">"Address"</span><span class="ot"> bs-textarea</span><span class="kw">&gt;&lt;/textarea&gt;</span></code></pre>
+<p>That translates to</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"form-group"</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> bs-textarea=</span><span class="st">""</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"row"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">"customer_mailing_address_input"</span><span class="ot"> class=</span><span class="st">"control-label col-sm-2"</span><span class="kw">&gt;</span>Address<span class="kw">&lt;/label&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"col-sm-10"</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;textarea</span><span class="ot"> id=</span><span class="st">"customer_mailing_address_input"</span><span class="ot"> ng-model=</span><span class="st">"customer.mailing_address"</span><span class="ot"> class=</span><span class="st">"form-control  ng-pristine ng-valid"</span><span class="kw">&gt;&lt;/textarea&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<h3>Panel Helpers</h3>
+<h4> <code>bs-panel</code>
+</h4>
+<p>A super simple directive minimizing the markup to use bootstrap panels.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> bs-panel title=</span><span class="st">"My Panel"</span><span class="kw">&gt;</span>
+  <span class="co">&lt;!-- Content --&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<p>That translates to</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-heading"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;h2</span><span class="ot"> class=</span><span class="st">"panel-title"</span><span class="kw">&gt;</span>
+      My Panel
+    <span class="kw">&lt;/h2&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-body"</span><span class="kw">&gt;</span>
+     <span class="co">&lt;!-- Content --&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+</div>
+</div>
+</div>
 
 
     </div>
@@ -142,5 +773,37 @@ Getting Started
 
     <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="js/jquery-toc-min.js"></script>
+
+    <script>
+
+    $('#toc').toc({
+        'selectors': 'h2,h3', //elements to use as headings
+        'container': '#docs', //element to find all selectors in
+        'smoothScrolling': true, //enable or disable smooth scrolling on click
+        'highlightOnScroll': true, //add class to heading that is currently in focus
+        'highlightOffset': 100, //offset to trigger the next headline
+    });
+
+    var sidebarContainer = $("#sidebar-container");
+    var sidebar = $("#sidebar");
+    
+
+    adjustSidebar = function(e) {
+      var tocOffsetTop = sidebarContainer.offset().top;
+      if($(window).scrollTop() >= tocOffsetTop) {
+        sidebar.addClass("fix");
+        sidebar.css("left", sidebarContainer.offset().left);
+        sidebar.css("width", sidebarContainer.width());
+      } else {
+        sidebar.removeClass("fix");
+        sidebar.css("left", 'auto');
+      }
+    };
+
+    $(window).scroll(adjustSidebar);
+    $(window).resize(adjustSidebar);
+
+    </script>
   </body>
 </html>

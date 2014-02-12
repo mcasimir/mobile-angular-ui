@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <title> | Mobile Angular UI</title>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- you don't need to keep this, but it's cool for stats! -->
+    <meta name="generator" content="nanoc 3.6.6">
+  </head>
+  <body>
+    <div class="navbar navbar-top">
+        <h1 class="navbar-brand">
+          Mobile Angular UI
+        </h1>
+
+        <ul class="nav navbar-nav pull-right">
+          <li><a href="demo" class="btn btn-primary"><i class="fa fa-eye"></i> Demo</a></li>
+          <li><a class="nav-github" href="https://github.com/mcasimir/mobile-angular-ui" target="_blank"><i class="fa fa-github"></i></a></li>
+        </ul>
+    </div>
+
+    <div id="main">
+      /<em>! </em> toc - jQuery Table of Contents Plugin * v0.1.2 * http://projects.jga.me/toc/ * copyright Greg Allen 2013 * MIT License */ (function(t){t.fn.toc=function(e){var n,i=this,r=t.extend({},jQuery.fn.toc.defaults,e),o=t(r.container),a=t(r.selectors,o),l=[],h=r.prefix+"-active",s=function(e){if(r.smoothScrolling){e.preventDefault();var n=t(e.target).attr("href"),o=t(n);t("body,html").animate({scrollTop:o.offset().top},400,"swing",function(){location.hash=n})}t("li",i).removeClass(h),t(e.target).parent().addClass(h)},c=function(){n&amp;&amp;clearTimeout(n),n=setTimeout(function(){for(var e,n=t(window).scrollTop(),o=0,a=l.length;a&gt;o;o++)if(l[o]&gt;=n){t("li",i).removeClass(h),e=t("li:eq("+(o-1)+")",i).addClass(h),r.onHighlight(e);break}},50)};return r.highlightOnScroll&amp;&amp;(t(window).bind("scroll",c),c()),this.each(function(){var e=t(this),n=t("
+<ul></ul>
+");a.each(function(i,o){var a=t(o);l.push(a.offset().top-r.highlightOffset),t("<span></span>").attr("id",r.anchorName(i,o,r.prefix)).insertBefore(a);var h=t("<a></a>").text(r.headerText(i,o,a)).attr("href","#"+r.anchorName(i,o,r.prefix)).bind("click",function(n){s(n),e.trigger("selected",t(this).attr("href"))}),c=t("
+<li>
+<p>").addClass(r.itemClass(i,o,a,r.prefix)).append(h);n.append(c)}),e.html(n)})},jQuery.fn.toc.defaults={container:"body",selectors:"h1,h2,h3",smoothScrolling:!0,prefix:"toc",onHighlight:function(){},highlightOnScroll:!0,highlightOffset:100,anchorName:function(t,e,n){return n+t},headerText:function(t,e,n){return n.text()},itemClass:function(t,e,n,i){return i+"-"+n[0].tagName.toLowerCase()}}})(jQuery);</p>
+</li>
+    </div>
+
+    <footer class="footer">
+      <div>
+        <h4 class="footer-title">Mobile Angular Ui</h4>
+        <p class="footer-credits">made for you by <a href="https://github.com/mcasimir" target="_blank">mcasimir</a></p>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="jquery-toc-min.js"></script>
+    <script>
+
+    $('#toc').toc({
+        'container': '#docs', //element to find all selectors in
+        'smoothScrolling': true, //enable or disable smooth scrolling on click
+        'highlightOnScroll': true, //add class to heading that is currently in focus
+        'highlightOffset': 100, //offset to trigger the next headline
+    });
+    </script>
+  </body>
+</html>

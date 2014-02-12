@@ -5986,9 +5986,16 @@ td.visible-print {
   display: none !important;
 }
 
-html,
-body {
+html {
+  width: 100%;
   height: 100%;
+  overflow: hidden;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 
 a {
@@ -6119,6 +6126,18 @@ a.list-group-item .fa.pull-right {
   margin-top: 4px;
 }
 
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
 .app {
   position: relative;
   z-index: 2;
@@ -6131,6 +6150,46 @@ a.list-group-item .fa.pull-right {
   -webkit-transition: left 0.2s ease-out, right 0.2s ease-out;
   -moz-transition: left 0.2s ease-out, right 0.2s ease-out;
   transition: left 0.2s ease-out, right 0.2s ease-out;
+}
+
+.app-body {
+  display: block;
+  height: 100%;
+  padding: 0;
+}
+
+.app-content {
+  position: relative;
+  display: block;
+  height: 100%;
+  padding: 0;
+}
+
+.app-search {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1029;
+  width: 100%;
+  border-width: 0 0 1px;
+}
+
+.app-name {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  padding: 0 10px;
+  font-size: 32px;
+  line-height: 70px;
+  color: #fff;
+}
+
+.fa.disabled {
+  opacity: .2;
 }
 
 .navbar-app {
@@ -6150,7 +6209,11 @@ a.list-group-item .fa.pull-right {
 .navbar-app .navbar-brand-center {
   position: absolute;
   width: 100%;
+  overflow: hidden;
   text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .navbar-app .btn-navbar,
@@ -6178,6 +6241,14 @@ a.list-group-item .fa.pull-right {
   width: 100%;
   margin: 0;
   border-width: 0;
+}
+
+.navbar-absolute-top ~ .app-body {
+  padding-top: 51px;
+}
+
+.navbar-absolute-bottom ~ .app-body {
+  padding-bottom: 51px;
 }
 
 .navbar-absolute-top {
@@ -6261,6 +6332,18 @@ a.list-group-item .fa.pull-right {
   top: 0;
   bottom: 0;
   width: 100%;
+  height: auto;
+  padding: 0;
+  overflow: auto;
+}
+
+.sidebar .scrollable {
+  top: 70px;
+  bottom: 0;
+}
+
+.app-search ~ .scrollable {
+  top: 34px;
 }
 
 [overlay],
@@ -6335,6 +6418,11 @@ a.list-group-item .fa.pull-right {
   vertical-align: middle;
 }
 
+input.ng-invalid,
+textarea.ng-invalid {
+  border: 1px solid #f0ad4e;
+}
+
 .ng-dirty input.ng-invalid {
   border: 1px solid #f0ad4e;
 }
@@ -6366,7 +6454,8 @@ a.list-group-item .fa.pull-right {
 }
 
 .panel-title {
-  font-size: 24px;
+  padding: 10px 10px 0;
+  font-size: 16px;
 }
 
 .panel-group .panel-heading + .panel-collapse .panel-body {
@@ -6374,7 +6463,7 @@ a.list-group-item .fa.pull-right {
 }
 
 .panel-default .panel-heading {
-  padding: 10px 15px;
+  padding: 0 0 10px 0;
 }
 
 .panel-default .panel-body {
