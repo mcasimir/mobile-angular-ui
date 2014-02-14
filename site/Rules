@@ -21,6 +21,10 @@ compile '/js/*/' do
   # don’t filter or layout
 end
 
+compile '/sitemap/' do
+  # don’t filter or layout
+end
+
 compile '*' do
   if item.binary?
     # don’t filter binary items
@@ -34,6 +38,10 @@ end
 
 route '/stylesheet/' do
   '/style.css'
+end
+
+route '/sitemap/' do
+  '/sitemap.xml'
 end
 
 route '/js/*/' do

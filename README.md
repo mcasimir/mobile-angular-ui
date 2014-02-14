@@ -2,7 +2,7 @@
 
 ## Angular &amp; Bootstrap 3 for Mobile web and applications
 
-This small UI framework will let you use Angular Js for mobile development of integrating Bootstrap 3 with some mobile friendly patterns.
+Mobile Angular UI is an HTML5 mobile UI framework that will let you use Angular Js and Bootstrap 3 for mobile app development.
 
 Check out the website http://mobileangularui.com with *Demo*, *Docs* and *Getting Started* now.
 
