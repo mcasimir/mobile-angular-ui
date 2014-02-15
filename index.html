@@ -91,7 +91,7 @@
 
 <div class="col-sm-4 col-md-4 col-lg-4 feature-box">
 <figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/mobile.png);"></figure><h2 id="mobile-components">Mobile Components</h2>
-Mobile Angular UI provides essential mobile components that are missing in Bootstrap 3, in particular sidebars, scrollable areas, absolute positioned top and bottom navbars that don't bounces on scroll.
+Mobile Angular UI provides essential mobile components that are missing in Bootstrap 3, in particular sidebars, scrollable areas, absolute positioned top and bottom navbars that don't bounce on scroll.
 </div>
 
 </div>
@@ -131,16 +131,16 @@ Docs
   });</code></pre>
 <p>This will load also <code>ngTouch</code>, <code>ngAnimate</code> and <code>ngRoute</code> by default.</p>
 <p>If you wish you can pick a subset of the loaded modules to fit your needs. This is how the <code>mobile-angular-ui</code> module is defined with its dependencies.</p>
-<pre><code>angular.module("mobile-angular-ui", [
-  'ngTouch',
-  'ngAnimate',
-  'ngRoute',
-  'mobile-angular-ui.directives.toggle',
-  'mobile-angular-ui.directives.overlay',
-  'mobile-angular-ui.directives.forms',
-  'mobile-angular-ui.directives.panels',
-  'mobile-angular-ui.directives.capture',
-  'mobile-angular-ui.directives.scrollable'
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">angular</span>.<span class="fu">module</span>(<span class="st">"mobile-angular-ui"</span>, [
+  <span class="st">'ngTouch'</span>,
+  <span class="st">'ngAnimate'</span>,
+  <span class="st">'ngRoute'</span>,
+  <span class="st">'mobile-angular-ui.directives.toggle'</span>,
+  <span class="st">'mobile-angular-ui.directives.overlay'</span>,
+  <span class="st">'mobile-angular-ui.directives.forms'</span>,
+  <span class="st">'mobile-angular-ui.directives.panels'</span>,
+  <span class="st">'mobile-angular-ui.directives.capture'</span>,
+  <span class="st">'mobile-angular-ui.directives.scrollable'</span>
  ]);</code></pre>
 <h3>Basic Layout</h3>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="co">&lt;!-- Sidebars --&gt;</span>
@@ -230,7 +230,7 @@ Angular Directives<br>
 </h3>
 
 <p>Toggle module is the basic to implement tabs, accordions, collapsibles and all the other components that need to be selectively or exclusively switched on or off.</p>
-<p>Toggle module defines two directive: <code>toggle</code> and <code>toggleable</code>. These two directives replaces almost all of the bootstrap 3 jquery stuffs.</p>
+<p>Toggle module defines two directives: <code>toggle</code> and <code>toggleable</code>. These two directives replaces almost all of the bootstrap 3 jquery stuffs.</p>
 <p>A <code>[toggle]</code> node will works as a trigger to turn <code>on</code> or <code>off</code> one or more targeted <code>[toggleable]</code> nodes by translating clicks into <em>toggle events</em>.</p>
 <table class="table table-bordered">
 <thead><tr><th colspan="2">
@@ -541,25 +541,24 @@ The content to take place in the placeholder.
 <p>Twitter Bootstrap ships with a different arrangement of components for navbars since they are supposed to host an horizontal navigation menu.</p>
 <p><code>.navbar-app</code> is specifically designed to support this different type of interaction and arrangement.</p>
 <p>Consider the following example:</p>
-<pre><code>&lt;div class="navbar navbar-app navbar-absolute-top"&gt;
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"navbar navbar-app navbar-absolute-top"</span><span class="kw">&gt;</span>
 
-  &lt;div class="navbar-brand navbar-brand-center"&gt;
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"navbar-brand navbar-brand-center"</span><span class="kw">&gt;</span>
     Navbar Brand
-  &lt;/div&gt;
+  <span class="kw">&lt;/div&gt;</span>
 
-  &lt;div class="btn-group pull-left"&gt;
-    &lt;div class="btn btn-navbar"&gt;
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group pull-left"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn btn-navbar"</span><span class="kw">&gt;</span>
       Left Action
-    &lt;/div&gt;
-  &lt;/div&gt;
+    <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
 
-  &lt;div class="btn-group pull-right"&gt;
-    &lt;div class="btn btn-navbar"&gt;
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group pull-right"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn btn-navbar"</span><span class="kw">&gt;</span>
       Right Action
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
+    <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
 <p>As you can see the markup is pretty straightforward: there is a <code>.navbar-brand</code> with its new specification, <code>.navbar-brand-center</code>, that will render the title centered and below the two button groups. Note that <code>.navbar-brand-center</code> will position the title with absolute positioning ensuring that it will never cover the buttons, which would cause interaction problems.</p>
 <h3>Sidebar</h3>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"sidebar sidebar-left"</span><span class="ot"> toggleable active-class=</span><span class="st">"in"</span><span class="ot"> id=</span><span class="st">"mainSidebar"</span><span class="kw">&gt;</span>
@@ -595,7 +594,7 @@ The content to take place in the placeholder.
   <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <h3> Tabs</h3>
-<p>Tabs are achieved via <code>toggle</code> and <code>toggleable</code> directives using <code>exclusion-group</code> parameter to inactivate other tabs than the but one.</p>
+<p>Tabs component is realized via <code>toggle</code> and <code>toggleable</code> directives using <code>exclusion-group</code> parameter to inactivate other tabs but the active one.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">"nav nav-tabs"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">"#Tab1"</span><span class="ot"> toggle=</span><span class="st">"on"</span><span class="ot"> parent-active-class=</span><span class="st">"active"</span><span class="kw">&gt;</span>Tab 1<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
   <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">"#Tab2"</span><span class="ot"> toggle=</span><span class="st">"on"</span><span class="ot"> parent-active-class=</span><span class="st">"active"</span><span class="kw">&gt;</span>Tab 2<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
@@ -679,30 +678,30 @@ The content to take place in the placeholder.
 <h3>Overlays</h3>
 <p>An overlay is an attempt to replace modals with a component better following mobile patterns.</p>
 <p>This is the basic markup for an <code>overlay</code>. An <code>overlay</code> directive implicitly sets up a <code>toggleable</code> using its argument as <code>id</code>.</p>
-<pre><code>&lt;div overlay="myOverlay"&gt;
-  &lt;h4 class="overlay-title"&gt;My Overlay&lt;/h4&gt;    
-  &lt;p&gt;
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> overlay=</span><span class="st">"myOverlay"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;h4</span><span class="ot"> class=</span><span class="st">"overlay-title"</span><span class="kw">&gt;</span>My Overlay<span class="kw">&lt;/h4&gt;</span>    
+  <span class="kw">&lt;p&gt;</span>
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, ex eaque possimus ipsa ab quasi quos corporis consequatur laudantium? Ab assumenda delectus quo velit voluptates doloribus. Earum odit facilis qui.
-  &lt;/p&gt;
-  &lt;p toggle="off" bubble target="myOverlay"&gt;
-    &lt;span class="btn btn-primary"&gt;Ok&lt;/span&gt;
-    &lt;span class="btn btn-default"&gt;Cancel&lt;/span&gt;
-  &lt;/p&gt;  
-&lt;/div&gt;</code></pre>
+  <span class="kw">&lt;/p&gt;</span>
+  <span class="kw">&lt;p</span><span class="ot"> toggle=</span><span class="st">"off"</span><span class="ot"> bubble target=</span><span class="st">"myOverlay"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">"btn btn-primary"</span><span class="kw">&gt;</span>Ok<span class="kw">&lt;/span&gt;</span>
+    <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">"btn btn-default"</span><span class="kw">&gt;</span>Cancel<span class="kw">&lt;/span&gt;</span>
+  <span class="kw">&lt;/p&gt;</span>  
+<span class="kw">&lt;/div&gt;</span></code></pre>
 <h3>Dropdowns</h3>
 <p>Dropdowns are also achieved with <code>toggle</code> and <code>toggleable</code>.</p>
-<pre><code>&lt;div class="btn-group pull-right toggleable-dropdown" active-class="open" id="myDropdown" toggleable&gt;
-  &lt;button type="button" class="btn btn-default dropdown-toggle" toggle target="myDropdown"&gt;
-    &lt;i class="fa fa-gear"&gt;&lt;/i&gt; &lt;span class="caret"&gt;&lt;/span&gt;
-  &lt;/button&gt;
-  &lt;ul class="dropdown-menu" role="menu" toggle="off" bubble target="myDropdown"&gt;
-&lt;li&gt;&lt;a href&gt;Action&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href&gt;Another action&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href&gt;Something else here&lt;/a&gt;&lt;/li&gt;
-    &lt;li class="divider"&gt;
-    &lt;li&gt;&lt;a href&gt;Separated link&lt;/a&gt;&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/div&gt;</code></pre>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group pull-right toggleable-dropdown"</span><span class="ot"> active-class=</span><span class="st">"open"</span><span class="ot"> id=</span><span class="st">"myDropdown"</span><span class="ot"> toggleable</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;button</span><span class="ot"> type=</span><span class="st">"button"</span><span class="ot"> class=</span><span class="st">"btn btn-default dropdown-toggle"</span><span class="ot"> toggle target=</span><span class="st">"myDropdown"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-gear"</span><span class="kw">&gt;&lt;/i&gt;</span> <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">"caret"</span><span class="kw">&gt;&lt;/span&gt;</span>
+  <span class="kw">&lt;/button&gt;</span>
+  <span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">"dropdown-menu"</span><span class="ot"> role=</span><span class="st">"menu"</span><span class="ot"> toggle=</span><span class="st">"off"</span><span class="ot"> bubble target=</span><span class="st">"myDropdown"</span><span class="kw">&gt;</span>
+<span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href</span><span class="kw">&gt;</span>Action<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href</span><span class="kw">&gt;</span>Another action<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href</span><span class="kw">&gt;</span>Something else here<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">"divider"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href</span><span class="kw">&gt;</span>Separated link<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;/ul&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
 <h2 class="section-title">
   
 <i class="fa fa-wrench"></i> <br> Utils
