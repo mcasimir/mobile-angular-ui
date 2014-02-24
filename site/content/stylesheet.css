@@ -305,3 +305,14 @@ html .sidebar .toc-h4 a {
   padding-left: 50px;
 }
 
+.carousel-control .glyphicon-chevron-left, .carousel-control .glyphicon-chevron-right {
+  background: rgba(0,0,0,0.2);
+  width: 30px;
+  display: block;
+  height: 30px;
+  border-radius: 50px;
+  padding: 0;
+  margin: 0;
+  line-height: 28px;  
+}
+

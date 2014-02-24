@@ -35,9 +35,8 @@ angular.module("mobile-angular-ui.directives.capture", [])
   setContentFor: (name, content, scope) ->
     b = yielders[name]
     return unless b
-    sanitizedContent = content.replace(/^\s+/, "")
-    compiled = $compile( sanitizedContent )(scope)
-    b.element.empty().append(compiled)
+    b.element.html(content)
+    $compile(b.element.contents())(scope)
 ])
 
 .directive( "contentFor", [ "CaptureService", (CaptureService) -> 

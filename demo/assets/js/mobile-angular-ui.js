@@ -24535,14 +24535,13 @@ angular.module("mobile-angular-ui.directives.capture", []).run([
         return delete yielders[name];
       },
       setContentFor: function(name, content, scope) {
-        var b, compiled, sanitizedContent;
+        var b;
         b = yielders[name];
         if (!b) {
           return;
         }
-        sanitizedContent = content.replace(/^\s+/, "");
-        compiled = $compile(sanitizedContent)(scope);
-        return b.element.empty().append(compiled);
+        b.element.html(content);
+        return $compile(b.element.contents())(scope);
       }
     };
   }

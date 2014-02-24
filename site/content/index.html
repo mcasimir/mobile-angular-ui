@@ -70,7 +70,7 @@ Original Bootstrap 3 stripped out of responsive media queries that are put apart
 <figure class="feature-image" style="background-image: url(http://mcasimir.github.io/mobile-angular-ui/mobile.png);"></figure>
 ## Mobile Components
 
-Mobile Angular UI provides essential mobile components that are missing in Bootstrap 3, in particular sidebars, scrollable areas, absolute positioned top and bottom navbars that don't bounces on scroll.
+Mobile Angular UI provides essential mobile components that are missing in Bootstrap 3, in particular sidebars, scrollable areas, absolute positioned top and bottom navbars that don't bounce on scroll.
 </div>
 
 </div>
@@ -127,7 +127,7 @@ This will load also `ngTouch`, `ngAnimate` and `ngRoute` by default.
 
 If you wish you can pick a subset of the loaded modules to fit your needs. This is how the `mobile-angular-ui` module is defined with its dependencies. 
 
-```
+``` javascript
 angular.module("mobile-angular-ui", [
   'ngTouch',
   'ngAnimate',
@@ -243,7 +243,7 @@ This piece of code will trigger a directive that properly setup a new iScroll in
 
 Toggle module is the basic to implement tabs, accordions, collapsibles and all the other components that need to be selectively or exclusively switched on or off.
 
-Toggle module defines two directive: `toggle` and `toggleable`. These two directives replaces almost all of the bootstrap 3 jquery stuffs.
+Toggle module defines two directives: `toggle` and `toggleable`. These two directives replaces almost all of the bootstrap 3 jquery stuffs.
 
 A `[toggle]` node will works as a trigger to turn `on` or `off` one or more targeted `[toggleable]` nodes by translating clicks into _toggle events_.
 
@@ -547,7 +547,7 @@ Twitter Bootstrap ships with a different arrangement of components for navbars s
 
 Consider the following example:
 
-```
+``` html
 <div class="navbar navbar-app navbar-absolute-top">
 
   <div class="navbar-brand navbar-brand-center">
@@ -621,7 +621,7 @@ Sidebars can be toggled using the `toggle` directive either as an attribute or p
 
 ### Tabs
 
-Tabs are achieved via `toggle` and `toggleable` directives using `exclusion-group` parameter to inactivate other tabs than the but one.
+Tabs component is realized via `toggle` and `toggleable` directives using `exclusion-group` parameter to inactivate other tabs but the active one.
 
 ``` html
 <ul class="nav nav-tabs">
@@ -740,7 +740,7 @@ An overlay is an attempt to replace modals with a component better following mob
 
 This is the basic markup for an `overlay`. An `overlay` directive implicitly sets up a `toggleable` using its argument as `id`.
 
-```
+``` html
 <div overlay="myOverlay">
   <h4 class="overlay-title">My Overlay</h4>    
   <p>
@@ -757,7 +757,7 @@ This is the basic markup for an `overlay`. An `overlay` directive implicitly set
 
 Dropdowns are also achieved with `toggle` and `toggleable`.
 
-```
+``` html
 <div class="btn-group pull-right toggleable-dropdown" active-class="open" id="myDropdown" toggleable>
   <button type="button" 
     class="btn btn-default dropdown-toggle" toggle 
