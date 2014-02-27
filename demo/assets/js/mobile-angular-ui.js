@@ -23743,7 +23743,7 @@ document.addEventListener("touchmove", (function(e) {
   return e.preventDefault();
 }), false);
 
-angular.module("mobile-angular-ui", ['ngTouch', 'mobile-angular-ui.directives.toggle', 'mobile-angular-ui.directives.overlay', 'mobile-angular-ui.directives.forms', 'mobile-angular-ui.directives.panels', 'mobile-angular-ui.directives.capture', 'mobile-angular-ui.directives.scrollable']).run([
+angular.module("mobile-angular-ui", ['ngRoute', 'mobile-angular-ui.directives.toggle', 'mobile-angular-ui.directives.overlay', 'mobile-angular-ui.directives.forms', 'mobile-angular-ui.directives.panels', 'mobile-angular-ui.directives.capture', 'mobile-angular-ui.directives.scrollable']).run([
   "$rootScope", function($rootScope) {
     return angular.forEach(["$locationChangeSuccess", "$includeContentLoaded"], function(evtName) {
       return $rootScope.$on(evtName, function() {
