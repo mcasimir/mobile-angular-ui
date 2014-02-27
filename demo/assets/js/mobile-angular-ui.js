@@ -23764,16 +23764,6 @@ angular.module("mobile-angular-ui", ['ngRoute', 'mobile-angular-ui.directives.to
 ]);
 
 angular.element(document).on("click tap", function(e) {
-  var el;
-  try {
-    el = angular.element(document.getElementsByClassName("scrollable-content")[1]);
-    return el.prepend("<p class=\"alert alert-warning\">" + e.type + " - " + e.constructor.name + "</p>");
-  } catch (_error) {
-    e = _error;
-  }
-});
-
-angular.element(document).on("click tap", function(e) {
   var target;
   target = angular.element(e.target);
   if (target.hasClass("disabled")) {
