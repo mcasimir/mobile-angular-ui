@@ -6280,10 +6280,7 @@ body {
 
 .sidebar.sidebar-left.in ~ .app {
   right: auto;
-  -webkit-transform: translate3d(80%, 0, 0px);
-  -moz-transform: translate3d(80%, 0, 0px);
-  -ms-transform: translate3d(80%, 0, 0px);
-  transform: translate3d(80%, 0, 0px);
+  left: 80%;
 }
 
 .sidebar.sidebar-right {
@@ -6292,11 +6289,8 @@ body {
 }
 
 .sidebar.sidebar-right.in ~ .app {
+  right: 80%;
   left: auto;
-  -webkit-transform: translate3d(-80%, 0, 0px);
-  -moz-transform: translate3d(-80%, 0, 0px);
-  -ms-transform: translate3d(-80%, 0, 0px);
-  transform: translate3d(-80%, 0, 0px);
 }
 
 .sidebar.in ~ .app {
