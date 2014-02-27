@@ -10,25 +10,26 @@
   &.sidebar-left {
     left: 0;
     right: auto;
-    &.in ~ .app {
-      right: auto;
-      left: 80%;
-    }
   }
 
   &.sidebar-right {
     left: auto;
     right: 0;
-    &.in ~ .app {
-      left: auto;
-      right: 80%;
-    }
-  }
-
-  &.in {
-    &~.app {
-      width: 100%;
-      position: absolute;
-    }
   }
 }
+
+.sidebar-left-in .app {
+  right: auto;
+  left: 80%;
+  width: 100%;
+  position: absolute;
+}
+
+.sidebar-right-in .app {
+  left: auto;
+  right: 80%;
+  width: 100%;
+  position: absolute;
+}
+
+

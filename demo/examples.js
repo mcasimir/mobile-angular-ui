@@ -41,5 +41,8 @@ app.directive('exampleCode', function(){
 });
 
 app.controller('MainController', function($rootScope){
-
+  $rootScope.logClick = function() {    
+    // var el = angular.element(document.getElementsByClassName("scrollable-content")[1]);
+    // el.prepend('<p class="alert alert-warning">ng-click</p>');
+  };
 });

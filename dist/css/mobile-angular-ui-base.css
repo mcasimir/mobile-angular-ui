@@ -6183,7 +6183,8 @@ body {
   height: 50px;
   padding: 10px;
   padding: 0 10px;
-  font-size: 32px;
+  overflow: hidden;
+  font-size: 23px;
   line-height: 70px;
   color: #fff;
 }
@@ -6278,23 +6279,22 @@ body {
   left: 0;
 }
 
-.sidebar.sidebar-left.in ~ .app {
-  right: auto;
-  left: 80%;
-}
-
 .sidebar.sidebar-right {
   right: 0;
   left: auto;
 }
 
-.sidebar.sidebar-right.in ~ .app {
-  right: 80%;
-  left: auto;
+.sidebar-left-in .app {
+  position: absolute;
+  right: auto;
+  left: 80%;
+  width: 100%;
 }
 
-.sidebar.in ~ .app {
+.sidebar-right-in .app {
   position: absolute;
+  right: 80%;
+  left: auto;
   width: 100%;
 }
 

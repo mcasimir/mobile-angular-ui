@@ -105,8 +105,7 @@ module.exports = (grunt) ->
             "bower_components/iscroll/src/iscroll.js"
             "bower_components/angular/angular.js"
             "bower_components/angular-route/angular-route.js"
-            "bower_components/angular-animate/angular-animate.js"
-            "bower_components/angular-touch/angular-touch.js"
+            "bower_components/fastclick/lib/fastclick.js"
             "tmp/mobile-angular-ui.js"
           ]
 
@@ -135,6 +134,7 @@ module.exports = (grunt) ->
     connect:
       server:
         options:
+          hostname: '0.0.0.0'
           port: 3001
           keepalive: true
 

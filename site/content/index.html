@@ -146,7 +146,7 @@ angular.module("mobile-angular-ui", [
 ``` html
 <!-- Sidebars -->
 
-<div class="sidebar sidebar-left" toggleable active-class="in" id="mainSidebar">
+<div class="sidebar sidebar-left" toggleable parent-active-class="sidebar-left-in" id="mainSidebar">
   <h1 class="app-name">My App</h1>
 
   <div class="scrollable">
@@ -574,7 +574,7 @@ As you can see the markup is pretty straightforward: there is a `.navbar-brand` 
 ### Sidebar
 
 ``` html
-<div class="sidebar sidebar-left" toggleable active-class="in" id="mainSidebar">
+<div class="sidebar sidebar-left" toggleable parent-active-class="sidebar-left-in" id="mainSidebar">
 
 <h1 class="app-name">Mobile Angular UI</h1>
 
@@ -598,9 +598,9 @@ As you can see the markup is pretty straightforward: there is a `.navbar-brand` 
 
 As you can see sidebars can be placed either in left side or right side adding respectively `.sidebar-left` and `.sidebar-right` classes.
 
-You should also notice that a sidebar is a toggleable. So a sidebar is shown when it has the `.in` class.
+You should also notice that a sidebar is a toggleable. A sidebar is shown when parent has the `.sidebar-[left|right]-in` class moving the above `.app` element left or right. `.sidebar` and `.app` are supposed to be siblings.
 
-The purpose of the `toggle` directive for `.list-group` is to make the sidebar disappear when a link is clicked or tapped, the `bubble` parameters is infact used to let click events be propagated to inner links.
+The purpose of the `toggle` directive for `.list-group` is to make the sidebar disappear when a link is clicked or tapped, the `bubble` parameter is infact used to let click events be propagated to inner links.
 
 ``` html
 <div class="list-group" toggle="off" bubble target="mainSidebar">

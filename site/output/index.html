@@ -145,7 +145,7 @@ Docs
 <h3>Basic Layout</h3>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="co">&lt;!-- Sidebars --&gt;</span>
 
-<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"sidebar sidebar-left"</span><span class="ot"> toggleable active-class=</span><span class="st">"in"</span><span class="ot"> id=</span><span class="st">"mainSidebar"</span><span class="kw">&gt;</span>
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"sidebar sidebar-left"</span><span class="ot"> toggleable parent-active-class=</span><span class="st">"sidebar-left-in"</span><span class="ot"> id=</span><span class="st">"mainSidebar"</span><span class="kw">&gt;</span>
   <span class="kw">&lt;h1</span><span class="ot"> class=</span><span class="st">"app-name"</span><span class="kw">&gt;</span>My App<span class="kw">&lt;/h1&gt;</span>
 
   <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"scrollable"</span><span class="kw">&gt;</span>
@@ -561,7 +561,7 @@ The content to take place in the placeholder.
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <p>As you can see the markup is pretty straightforward: there is a <code>.navbar-brand</code> with its new specification, <code>.navbar-brand-center</code>, that will render the title centered and below the two button groups. Note that <code>.navbar-brand-center</code> will position the title with absolute positioning ensuring that it will never cover the buttons, which would cause interaction problems.</p>
 <h3>Sidebar</h3>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"sidebar sidebar-left"</span><span class="ot"> toggleable active-class=</span><span class="st">"in"</span><span class="ot"> id=</span><span class="st">"mainSidebar"</span><span class="kw">&gt;</span>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"sidebar sidebar-left"</span><span class="ot"> toggleable parent-active-class=</span><span class="st">"sidebar-left-in"</span><span class="ot"> id=</span><span class="st">"mainSidebar"</span><span class="kw">&gt;</span>
 
 <span class="kw">&lt;h1</span><span class="ot"> class=</span><span class="st">"app-name"</span><span class="kw">&gt;</span>Mobile Angular UI<span class="kw">&lt;/h1&gt;</span>
 
@@ -582,8 +582,8 @@ The content to take place in the placeholder.
 
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <p>As you can see sidebars can be placed either in left side or right side adding respectively <code>.sidebar-left</code> and <code>.sidebar-right</code> classes.</p>
-<p>You should also notice that a sidebar is a toggleable. So a sidebar is shown when it has the <code>.in</code> class.</p>
-<p>The purpose of the <code>toggle</code> directive for <code>.list-group</code> is to make the sidebar disappear when a link is clicked or tapped, the <code>bubble</code> parameters is infact used to let click events be propagated to inner links.</p>
+<p>You should also notice that a sidebar is a toggleable. A sidebar is shown when parent has the <code>.sidebar-[left|right]-in</code> class moving the above <code>.app</code> element left or right. <code>.sidebar</code> and <code>.app</code> are supposed to be siblings.</p>
+<p>The purpose of the <code>toggle</code> directive for <code>.list-group</code> is to make the sidebar disappear when a link is clicked or tapped, the <code>bubble</code> parameter is infact used to let click events be propagated to inner links.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"list-group"</span><span class="ot"> toggle=</span><span class="st">"off"</span><span class="ot"> bubble target=</span><span class="st">"mainSidebar"</span><span class="kw">&gt;</span>
   <span class="co">&lt;!-- ... --&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>

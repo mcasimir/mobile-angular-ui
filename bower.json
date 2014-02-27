@@ -23,16 +23,18 @@
     "tests",
     "demo",
     "site",
+    "experiments",
     "gh-pages",
-    "logo.ai"
+    "logo.ai",
+    "tmp"
   ],
   "dependencies": {
     "angular": "~1.2.1",
     "font-awesome": "~4.0.3",
     "bootstrap": "3.0",
     "angular-animate": "~1.2.2",
-    "angular-touch": "~1.2.2",
     "angular-route": "~1.2.2",
-    "iscroll": "4.2"
+    "iscroll": "4.2",
+    "fastclick": "~1.0.0"
   }
 }
