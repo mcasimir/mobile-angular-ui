@@ -16,9 +16,5 @@
     left: 0;
     width: auto;
     margin-left: 300px;
-    -webkit-transform: translate3d(0, 0px, 0px);
-       -moz-transform: translate3d(0, 0px, 0px);
-        -ms-transform: translate3d(0, 0px, 0px);
-            transform: translate3d(0, 0px, 0px);
   }
 }
