@@ -6144,12 +6144,15 @@ body {
   width: 100%;
   height: 100%;
   background: #999999;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
   -webkit-box-shadow: -1px 0 4px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: -1px 0 4px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
-  -webkit-transition: left 0.2s ease-out, right 0.2s ease-out;
-  -moz-transition: left 0.2s ease-out, right 0.2s ease-out;
-  transition: left 0.2s ease-out, right 0.2s ease-out;
+  -webkit-transition: -webkit-transform 400ms ease;
+  -moz-transition: -moz-transform 400ms ease;
+  transition: transform 400ms ease;
 }
 
 .app-body {
@@ -6286,16 +6289,24 @@ body {
 
 .sidebar-left-in .app {
   position: absolute;
-  right: auto;
-  left: 80%;
   width: 100%;
+  -webkit-transform: translate3d(80%, 0, 0);
+  -moz-transform: translate3d(80%, 0, 0);
+  transform: translate3d(80%, 0, 0);
+  -webkit-transition: -webkit-transform 400ms ease;
+  -moz-transition: -moz-transform 400ms ease;
+  transition: transform 400ms ease;
 }
 
 .sidebar-right-in .app {
   position: absolute;
-  right: 80%;
-  left: auto;
   width: 100%;
+  -webkit-transform: translate3d(-80%, 0, 0);
+  -moz-transform: translate3d(-80%, 0, 0);
+  transform: translate3d(-80%, 0, 0);
+  -webkit-transition: -webkit-transform 400ms ease;
+  -moz-transition: -moz-transform 400ms ease;
+  transition: transform 400ms ease;
 }
 
 .section {
@@ -6360,18 +6371,6 @@ body {
   display: none;
 }
 
-.overlay.in {
-  display: block;
-}
-
-.overlay.in ~ * {
-  -webkit-filter: blur(5px);
-  -moz-filter: blur(5px);
-  -ms-filter: blur(5px);
-  -o-filter: blur(5px);
-  filter: blur(5px);
-}
-
 .overlay .overlay-inner {
   position: relative;
   width: 100%;
@@ -6416,6 +6415,19 @@ body {
 .overlay .overlay-inner > .overlay-content > .overlay-body {
   display: table-cell;
   vertical-align: middle;
+}
+
+.overlay-in > .overlay {
+  display: block;
+}
+
+.overlay-in > .app,
+.overlay-in > .sidebar {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -ms-filter: blur(5px);
+  -o-filter: blur(5px);
+  filter: blur(5px);
 }
 
 input.ng-invalid,

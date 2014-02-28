@@ -19,17 +19,31 @@
 }
 
 .sidebar-left-in .app {
-  right: auto;
-  left: 80%;
+  // right: auto;
+  // left: 80%;
   width: 100%;
   position: absolute;
+
+  -webkit-transform: translate3d(80%, 0, 0);
+  -moz-transform: translate3d(80%, 0, 0);
+  transform: translate3d(80%, 0, 0);
+
+  -webkit-transition: -webkit-transform 400ms ease;
+  -moz-transition: -moz-transform 400ms ease;
+  transition: transform 400ms ease;
 }
 
 .sidebar-right-in .app {
-  left: auto;
-  right: 80%;
+  // left: auto;
+  // right: 80%;
   width: 100%;
   position: absolute;
+  -webkit-transform: translate3d(-80%, 0, 0);
+  -moz-transform: translate3d(-80%, 0, 0);
+  transform: translate3d(-80%, 0, 0);
+  -webkit-transition: -webkit-transform 400ms ease;
+  -moz-transition: -moz-transform 400ms ease;
+  transition: transform 400ms ease;
 }
 
 

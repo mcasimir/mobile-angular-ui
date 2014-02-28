@@ -10,18 +10,6 @@
     bottom: 0;
     right: 0;
 
-    &.in {
-      display: block;
-      // This would cause some glitches in webkit
-      &~* {
-        -webkit-filter: blur(5px);
-        -moz-filter: blur(5px);
-        -o-filter: blur(5px);
-        -ms-filter: blur(5px);            
-        filter: blur(5px);
-      }
-    }
-
     .overlay-inner {
         width: 100%;
         height: 100%;
@@ -64,4 +52,16 @@
         }
 
     }
+}
+
+.overlay-in>.overlay {
+  display: block;  
+}
+
+.overlay-in>.app,.overlay-in>.sidebar {  
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);            
+    filter: blur(5px);
 }

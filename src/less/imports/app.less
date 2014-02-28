@@ -16,9 +16,14 @@ body {
   z-index: 2;
   width: 100%;
   background: @gray-light;
-  -webkit-transition: left 0.2s ease-out, right 0.2s ease-out;
-  -moz-transition: left 0.2s ease-out, right 0.2s ease-out;
-  transition: left 0.2s ease-out, right 0.2s ease-out;
+
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+
+  -webkit-transition: -webkit-transform 400ms ease;
+  -moz-transition: -moz-transform 400ms ease;
+  transition: transform 400ms ease;
 
   -webkit-box-shadow: -1px 0 4px rgba(0,0,0,0.4);
   -moz-box-shadow: -1px 0 4px rgba(0,0,0,0.4);

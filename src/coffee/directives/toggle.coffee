@@ -91,7 +91,7 @@
       @rootScope.toggle(@target, @command)
 
     toggleByClass: () ->
-      @$rootScope.toggleByClass(@targetClass, @command)
+      @rootScope.toggleByClass(@targetClass, @command)
 
     hasTarget: () ->
       !!@target
@@ -101,7 +101,7 @@
 
     fireTogglerLinked: () ->
       if @hasTarget()
-        @rootScope.$broadcast(Toggle.events.togglerLinked, @target)
+        @rootScope.$emit(Toggle.events.togglerLinked, @target)
 
     link: ->
 
@@ -153,7 +153,7 @@
       !!@toggleState
 
     notifyToggleState: () ->
-      @rootScope.$broadcast(Toggle.events.toggleableToggled, @id, @getToggleState(), @exclusionGroup)
+      @rootScope.$emit(Toggle.events.toggleableToggled, @id, @getToggleState(), @exclusionGroup)
 
     toggleStateChanged: ->
       @notifyToggleState()    
@@ -219,26 +219,26 @@
   #
   .run(["$rootScope", ($rootScope) ->
     $rootScope.toggle = (target, command = "toggle") ->
-      $rootScope.$broadcast(Toggle.events.toggle, target, command)
+      $rootScope.$emit(Toggle.events.toggle, target, command)
     
     $rootScope.toggleByClass = (targetClass, command = "toggle") ->
-      $rootScope.$broadcast(Toggle.events.toggleByClass, targetClass, command)
+      $rootScope.$emit(Toggle.events.toggleByClass, targetClass, command)
 
   ])
 
-  .directive('toggle', [->
+  .directive('toggle', ["$rootScope", ($rootScope) ->
       restrict: "A"
       link: (scope, elem, attrs) ->
-        toggler = new Toggler(scope, elem, attrs)
+        toggler = new Toggler($rootScope, elem, attrs)
         toggler.link()
 
     ])
 
-  .directive('toggleable', [->
+  .directive('toggleable', ["$rootScope", ($rootScope) ->
       restrict: "A"
       
       link: (scope, elem, attrs) ->
-        toggleable = new Toggleable(scope, elem, attrs)
+        toggleable = new Toggleable($rootScope, elem, attrs)
         toggleable.link()
     
   ])

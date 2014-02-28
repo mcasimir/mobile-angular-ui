@@ -6,7 +6,7 @@ angular.module('mobile-angular-ui.directives.overlay', [])
     body = elem.html()
     id = attrs.overlay
     html = """
-      <div class="overlay" id="#{id}" toggleable active-class="in">
+      <div class="overlay" id="#{id}" toggleable parent-active-class="overlay-in">
         <div class="overlay-inner">
           <div class="overlay-background"></div>
           <a href="##{id}" toggle="off" class="overlay-dismiss">
