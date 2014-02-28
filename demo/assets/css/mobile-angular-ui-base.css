@@ -6109,6 +6109,13 @@ input[type="search"] {
   border-color: #007aff;
 }
 
+.list-group-item,
+a.list-group-item {
+  margin-bottom: 0;
+  border: 0 none;
+  border-bottom: 1px solid #dddddd;
+}
+
 .list-group-item:first-child,
 a.list-group-item:first-child {
   border-top-right-radius: 0;

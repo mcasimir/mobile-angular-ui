@@ -34,7 +34,7 @@
     "bootstrap": "3.0",
     "angular-animate": "~1.2.2",
     "angular-route": "~1.2.2",
-    "iscroll": "4.2",
+    "iscroll": "~5.1.1",
     "fastclick": "~1.0.0"
   }
 }

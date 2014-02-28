@@ -102,7 +102,7 @@ module.exports = (grunt) ->
       js:
         files: 
           "dist/js/mobile-angular-ui.js": [
-            "bower_components/iscroll/src/iscroll.js"
+            "bower_components/iscroll/build/iscroll.js"
             "bower_components/angular/angular.js"
             "bower_components/angular-route/angular-route.js"
             "bower_components/fastclick/lib/fastclick.js"
