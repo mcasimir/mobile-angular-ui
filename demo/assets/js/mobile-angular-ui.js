@@ -23442,7 +23442,7 @@ angular.module('mobile-angular-ui.directives.overlay', []).directive('overlay', 
         var body, html, id;
         body = elem.html();
         id = attrs.overlay;
-        html = "<div class=\"overlay\" id=\"" + id + "\" toggleable active-class=\"in\">\n  <div class=\"overlay-inner\">\n    <div class=\"overlay-background\"></div>\n    <a href=\"#" + id + "\" toggle=\"off\" class=\"overlay-dismiss\">\n      <i class=\"fa fa-times-circle-o\"></i>\n    </a>\n    <div class=\"overlay-content\">\n      <div class=\"overlay-body\">\n        " + body + "\n      </div>\n    </div>\n  </div>\n</div>";
+        html = "<div class=\"overlay\" id=\"" + id + "\" toggleable parent-active-class=\"overlay-in\">\n  <div class=\"overlay-inner\">\n    <div class=\"overlay-background\"></div>\n    <a href=\"#" + id + "\" toggle=\"off\" class=\"overlay-dismiss\">\n      <i class=\"fa fa-times-circle-o\"></i>\n    </a>\n    <div class=\"overlay-content\">\n      <div class=\"overlay-body\">\n        " + body + "\n      </div>\n    </div>\n  </div>\n</div>";
         angular.element(document.body).prepend($compile(html)(scope));
         return elem.remove();
       }
@@ -23562,7 +23562,7 @@ angular.module("mobile-angular-ui.directives.scrollable", []).directive("scrolla
     };
 
     Toggler.prototype.toggleByClass = function() {
-      return this.$rootScope.toggleByClass(this.targetClass, this.command);
+      return this.rootScope.toggleByClass(this.targetClass, this.command);
     };
 
     Toggler.prototype.hasTarget = function() {
@@ -23575,7 +23575,7 @@ angular.module("mobile-angular-ui.directives.scrollable", []).directive("scrolla
 
     Toggler.prototype.fireTogglerLinked = function() {
       if (this.hasTarget()) {
-        return this.rootScope.$broadcast(Toggle.events.togglerLinked, this.target);
+        return this.rootScope.$emit(Toggle.events.togglerLinked, this.target);
       }
     };
 
@@ -23631,7 +23631,7 @@ angular.module("mobile-angular-ui.directives.scrollable", []).directive("scrolla
     };
 
     Toggleable.prototype.notifyToggleState = function() {
-      return this.rootScope.$broadcast(Toggle.events.toggleableToggled, this.id, this.getToggleState(), this.exclusionGroup);
+      return this.rootScope.$emit(Toggle.events.toggleableToggled, this.id, this.getToggleState(), this.exclusionGroup);
     };
 
     Toggleable.prototype.toggleStateChanged = function() {
@@ -23701,33 +23701,33 @@ angular.module("mobile-angular-ui.directives.scrollable", []).directive("scrolla
         if (command == null) {
           command = "toggle";
         }
-        return $rootScope.$broadcast(Toggle.events.toggle, target, command);
+        return $rootScope.$emit(Toggle.events.toggle, target, command);
       };
       return $rootScope.toggleByClass = function(targetClass, command) {
         if (command == null) {
           command = "toggle";
         }
-        return $rootScope.$broadcast(Toggle.events.toggleByClass, targetClass, command);
+        return $rootScope.$emit(Toggle.events.toggleByClass, targetClass, command);
       };
     }
   ]).directive('toggle', [
-    function() {
+    "$rootScope", function($rootScope) {
       return {
         restrict: "A",
         link: function(scope, elem, attrs) {
           var toggler;
-          toggler = new Toggler(scope, elem, attrs);
+          toggler = new Toggler($rootScope, elem, attrs);
           return toggler.link();
         }
       };
     }
   ]).directive('toggleable', [
-    function() {
+    "$rootScope", function($rootScope) {
       return {
         restrict: "A",
         link: function(scope, elem, attrs) {
           var toggleable;
-          toggleable = new Toggleable(scope, elem, attrs);
+          toggleable = new Toggleable($rootScope, elem, attrs);
           return toggleable.link();
         }
       };
