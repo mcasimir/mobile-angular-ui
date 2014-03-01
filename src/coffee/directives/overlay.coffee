@@ -21,8 +21,13 @@ angular.module('mobile-angular-ui.directives.overlay', [])
       </div>
     """
 
+    elem.remove()
+    sameId = angular.element(document.getElementById(id))
+    
+    if sameId.length > 0 and sameId.hasClass('overlay')
+      sameId.remove()
+
     angular.element(document.body)
       .prepend($compile( html )( scope )) # moves elem where it overlays everithing
-    elem.remove()
 
 ])

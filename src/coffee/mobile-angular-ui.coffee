@@ -32,16 +32,7 @@ angular.module("mobile-angular-ui", [
           link.addClass("active")
         else
           link.removeClass("active")
-
 ])
-
-
-# angular.element(document).on "click tap", (e) ->
-#   try
-#     el = angular.element(document.getElementsByClassName("scrollable-content")[1])
-#     el.prepend("<p class=\"alert alert-warning\">#{e.type} - #{e.constructor.name}</p>")
-#   catch e
-#     # ...
 
 # 
 # Prevents click/tap actions on disabled elements

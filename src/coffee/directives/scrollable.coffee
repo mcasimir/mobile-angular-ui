@@ -8,5 +8,5 @@ angular.module("mobile-angular-ui.directives.scrollable", [])
         el.addEventListener (if ("ontouchstart" of window) then "touchstart" else "mousedown"), (e) ->
           e.stopPropagation()
 
-      iscroll = new IScroll(element[0], {wheelAction: 'scroll', checkDOMChanges: true})
+      iscroll = new IScroll(element[0], {scrollbars: true, wheelAction: 'scroll', checkDOMChanges: true})
     ), 200
