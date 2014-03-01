@@ -24833,12 +24833,16 @@ angular.module('mobile-angular-ui.directives.overlay', []).directive('overlay', 
   "$compile", function($compile) {
     return {
       link: function(scope, elem, attrs) {
-        var body, html, id;
+        var body, html, id, sameId;
         body = elem.html();
         id = attrs.overlay;
         html = "<div class=\"overlay\" id=\"" + id + "\" toggleable parent-active-class=\"overlay-in\">\n  <div class=\"overlay-inner\">\n    <div class=\"overlay-background\"></div>\n    <a href=\"#" + id + "\" toggle=\"off\" class=\"overlay-dismiss\">\n      <i class=\"fa fa-times-circle-o\"></i>\n    </a>\n    <div class=\"overlay-content\">\n      <div class=\"overlay-body\">\n        " + body + "\n      </div>\n    </div>\n  </div>\n</div>";
-        angular.element(document.body).prepend($compile(html)(scope));
-        return elem.remove();
+        elem.remove();
+        sameId = angular.element(document.getElementById(id));
+        if (sameId.length > 0 && sameId.hasClass('overlay')) {
+          sameId.remove();
+        }
+        return angular.element(document.body).prepend($compile(html)(scope));
       }
     };
   }
@@ -24874,6 +24878,7 @@ angular.module("mobile-angular-ui.directives.scrollable", []).directive("scrolla
           });
         });
         return iscroll = new IScroll(element[0], {
+          scrollbars: true,
           wheelAction: 'scroll',
           checkDOMChanges: true
         });

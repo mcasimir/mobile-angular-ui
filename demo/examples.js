@@ -41,9 +41,5 @@ app.directive('exampleCode', function(){
 });
 
 app.controller('MainController', function($rootScope, $scope){
-  var digests = 0;
-  $scope.$watch(function() {
-    digests++;
-    console.log(digests + " calls");
-  });
+
 });
