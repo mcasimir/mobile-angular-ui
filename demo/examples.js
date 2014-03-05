@@ -1,4 +1,9 @@
-var app = angular.module('MobileAngularUiExamples', ["mobile-angular-ui"]);
+var app = angular.module('MobileAngularUiExamples', [
+  "ngRoute",
+  "mobile-angular-ui",
+  "mobile-angular-ui.fastclick",
+  "mobile-angular-ui.scrollable"
+]);
 
 app.config(function($routeProvider, $locationProvider) {
   $routeProvider.when('/',          {templateUrl: "home.html"});

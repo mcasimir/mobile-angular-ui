@@ -41,7 +41,19 @@ module.exports = (grunt) ->
         cwd: "dist/"
         src: ["**"],
         dest: "demo/assets"
-      
+
+      demo_angular:
+        expand: true,
+        cwd: "bower_components/angular"
+        src: ["angular.js", "angular.min.js"],
+        dest: "demo/assets/js"
+
+      demo_angular_route:
+        expand: true,
+        cwd: "bower_components/angular-route"
+        src: ["angular-route.js", "angular-route.min.js"],
+        dest: "demo/assets/js"
+
       backup_gh_pages_git:
         expand: true,
         cwd: "gh-pages/.git"
@@ -95,17 +107,41 @@ module.exports = (grunt) ->
         files:
           "tmp/mobile-angular-ui.js": [
             "src/coffee/directives/**/*.coffee"
+            "src/coffee/initializers/**/*.coffee"
             "src/coffee/mobile-angular-ui.coffee"
+          ]
+
+          "tmp/mobile-angular-ui-scrollable-iscroll.js": [
+            "src/coffee/mobile-angular-ui-scrollable-iscroll.coffee"
+          ]
+
+          "tmp/mobile-angular-ui-scrollable-iscroll-lite.js": [
+            "src/coffee/mobile-angular-ui-scrollable-iscroll-lite.coffee"
+          ]
+
+          "tmp/mobile-angular-ui-fastclick.js": [
+            "src/coffee/mobile-angular-ui-fastclick.coffee"
           ]
 
     concat:
       js:
         files: 
-          "dist/js/mobile-angular-ui.js": [
+          "dist/js/mobile-angular-ui-scrollable-iscroll.js": [
             "bower_components/iscroll/build/iscroll.js"
-            "bower_components/angular/angular.js"
-            "bower_components/angular-route/angular-route.js"
+            "tmp/mobile-angular-ui-scrollable-iscroll.js"
+          ]
+
+          "dist/js/mobile-angular-ui-scrollable-iscroll-lite.js": [
+            "bower_components/iscroll/build/iscroll-lite.js"
+            "tmp/mobile-angular-ui-scrollable-iscroll.js"
+          ]
+
+          "dist/js/mobile-angular-ui-fastclick.js": [
             "bower_components/fastclick/lib/fastclick.js"
+            "tmp/mobile-angular-ui-fastclick.js"
+          ]
+
+          "dist/js/mobile-angular-ui.js": [
             "tmp/mobile-angular-ui.js"
           ]
 
@@ -115,6 +151,9 @@ module.exports = (grunt) ->
           report: 'min'
         files: 
           "dist/js/mobile-angular-ui.min.js": ["dist/js/mobile-angular-ui.js"]
+          "dist/js/mobile-angular-ui-scrollable-iscroll.min.js": ["dist/js/mobile-angular-ui-scrollable-iscroll.js"]
+          "dist/js/mobile-angular-ui-scrollable-iscroll-lite.min.js": ["dist/js/mobile-angular-ui-scrollable-iscroll-lite.js"]
+          "dist/js/mobile-angular-ui-fastclick.min.js": ["dist/js/mobile-angular-ui-fastclick.js"]
 
     cssmin:
       minify:
@@ -166,6 +205,8 @@ module.exports = (grunt) ->
                                 "copy:desktop"
                                 "copy:fa"
                                 "copy:demo"
+                                "copy:demo_angular"
+                                "copy:demo_angular_route"
                                 "uglify"
                                 "cssmin"
                               ]
