@@ -777,7 +777,31 @@ angular.module('mobile-angular-ui.touch', []).run([
       return FastClick.attach($document[0].body);
     }), false);
   }
-]).factory("$swipe", [
+]).directive("select", function() {
+  return {
+    replace: false,
+    restrict: "E",
+    link: function(scope, element, attr) {
+      element.addClass("needsclick");
+    }
+  };
+}).directive("input", function() {
+  return {
+    replace: false,
+    restrict: "E",
+    link: function(scope, element, attr) {
+      element.addClass("needsclick");
+    }
+  };
+}).directive("textarea", function() {
+  return {
+    replace: false,
+    restrict: "E",
+    link: function(scope, element, attr) {
+      element.addClass("needsclick");
+    }
+  };
+}).factory("$swipe", [
   function() {
     var MOVE_BUFFER_RADIUS, getCoordinates;
     getCoordinates = function(event) {
