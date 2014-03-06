@@ -51,4 +51,5 @@ var escapeHtml = function(str) {
 
 app.controller('MainController', function($rootScope, $scope){
 
+  $rootScope.log = function(m){ console.log(m); };
 });
