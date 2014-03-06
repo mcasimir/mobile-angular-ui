@@ -2,17 +2,28 @@
   .sidebar-toggle {
     display: none;
   }
+  
   .navbar-app .navbar-brand-center {
     text-align: left;
   }
+  
   .sidebar.sidebar-left, .sidebar.sidebar-left.in {
     display: block;
     left: 0;
     width: 300px;
   }
-  .sidebar.sidebar-left~.app,.sidebar.sidebar-left.in~.app{
+
+  .sidebar.sidebar-left~.app, .app-has-sidebar-left, .sidebar-left-in .app {
     width: auto;
     margin-left: 300px;
     left: 0;
-  }  
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    position: relative;
+    -webkit-transition: -webkit-transform 0 ease;
+    -moz-transition: -moz-transform 0 ease;
+    transition: transform 0 ease;
+  }
 }
+

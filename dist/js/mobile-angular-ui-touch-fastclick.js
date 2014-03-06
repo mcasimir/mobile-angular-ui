@@ -853,7 +853,7 @@ angular.forEach([
     eventName: "swipeleft"
   }, {
     directiveName: "ngSwipeRight",
-    direction: -1,
+    direction: 1,
     eventName: "swiperight"
   }
 ], function(options) {

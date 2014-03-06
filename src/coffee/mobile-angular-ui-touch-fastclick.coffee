@@ -76,7 +76,7 @@ angular.forEach([
   }
   {
     directiveName: "ngSwipeRight"
-    direction: -1
+    direction: 1
     eventName: "swiperight"
   }], 
 

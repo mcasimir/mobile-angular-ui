@@ -433,9 +433,8 @@ angular.module("mobile-angular-ui.scrollable", []).directive("scrollable", funct
     replace: false,
     restrict: "C",
     link: function(scope, element, attr) {
-      console.log(overthrow.support);
       if (overthrow.support === "native") {
-        return element.attr("style", "overflow: auto; -webkit-overflow-scrolling: touch;");
+        return element.attr("style", "overflow-y: auto; -webkit-overflow-scrolling: touch;");
       } else {
         element.addClass("overthrow");
         overthrow.forget();
