@@ -14,6 +14,30 @@ angular.module('mobile-angular-ui.touch', [])
 
 ])
 
+.directive("select", ->
+  replace: false
+  restrict: "E"
+  link: (scope, element, attr) ->
+    element.addClass "needsclick"
+    return
+)
+
+.directive("input", ->
+  replace: false
+  restrict: "E"
+  link: (scope, element, attr) ->
+    element.addClass "needsclick"
+    return
+)
+
+.directive("textarea", ->
+  replace: false
+  restrict: "E"
+  link: (scope, element, attr) ->
+    element.addClass "needsclick"
+    return
+)
+
 .factory "$swipe", [->
   getCoordinates = (event) ->
     touches = (if event.touches and event.touches.length then event.touches else [event])
