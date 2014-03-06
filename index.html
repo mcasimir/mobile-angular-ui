@@ -122,20 +122,40 @@ Docs
 <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">"angular.min.js"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;/script&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"angular-route.min.js"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;/script&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"mobile-angular-ui/dist/js/mobile-angular-ui.min.js"</span><span class="kw">&gt;</span>
-<span class="kw">&lt;/script&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"mobile-angular-ui/dist/js/mobile-angular-ui-fastclick.min.js"</span><span class="kw">&gt;</span>
-<span class="kw">&lt;/script&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"mobile-angular-ui/dist/js/mobile-angular-ui-scrollable-iscroll.min.js"</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/script&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"mobile-angular-ui/dist/js/mobile-angular-ui-touch-fastclick.min.js"</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/script&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"mobile-angular-ui/dist/js/mobile-angular-ui-scrollable-overthrow.min.js"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;/script&gt;</span></code></pre>
 <p>The <code>base</code> css includes only the mobile css (it has no media queries), while the <code>desktop</code> css contains just a few lines of code to make sidebars always visible on desktop. So with these two files you can only work with the <code>.*-xs</code> classes from Bootstrap. If you need more you can include other files from the distribution package to fit your needs. eg. you could add <code>mobile-angular-ui-max-width-767px.css</code> to use <code>(max-width: 767px)</code> media queries from Bootstrap.</p>
-<p><code>mobile-angular-ui-fastclick.min.js</code> will enable fastclick.js, you can replace it with <code>angular-touch</code> or any similar module.</p>
-<p><code>mobile-angular-ui-scrollable-iscroll.min.js</code> or <code>mobile-angular-ui-scrollable-iscroll-lite.min.js</code> will enable <code>[scrollable]</code> directive with iScroll.</p>
+<p>In the example above some other modules are included along with the core js <code>mobile-angular-ui.min.js</code>.</p>
+<h3>mobile-angular-ui.touch</h3>
+<p><code>mobile-angular-ui-touch-[implementation].js</code> provides touch events and <code>swipeLeft</code>, <code>swipeRight</code> directives.</p>
+<p>Available implemetations are:</p>
+<ul>
+<li>
+<code>mobile-angular-ui-touch-fastclick.min.js</code> (using <code>fastclick.js</code>)</li>
+<li>
+<code>mobile-angular-ui-touch-ng.min.js</code> (using <code>angular-touch</code>)</li>
+</ul>
+<h3>mobile-angular-ui.scrollable</h3>
+<p><code>mobile-angular-ui-scrollable-[implementation].min.js</code> will enable <code>[scrollable]</code> directive.</p>
+<p>Available implemetations are:</p>
+<ul>
+<li>
+<code>mobile-angular-ui-scrollable-overthrow.min.js</code> (using <code>overthrow.js</code>)</li>
+<li>
+<code>mobile-angular-ui-scrollable-iscroll.min.js</code> (using <code>iscroll</code>)</li>
+<li>
+<code>mobile-angular-ui-scrollable-iscroll-lite.min.js</code> (using <code>iscroll-lite</code>)</li>
+</ul>
+<h3>Initialization</h3>
 <p>Then you can initialize your Angular application declaring <code>mobile-angular-ui</code> as a dependence.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">angular</span>.<span class="fu">module</span>(<span class="st">'myApp'</span>, [<span class="st">"mobile-angular-ui"</span>]);</code></pre>
-<p>This will not load ngRoute, fastclick and scrollable modules by default.</p>
+<p>This will not load ngRoute, touch events and scrollable modules by default.</p>
 <p>A more complete initialization would be like that:</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">angular</span>.<span class="fu">module</span>(<span class="st">'myApp'</span>, [
   <span class="st">"ngRoute"</span>,
   <span class="st">"mobile-angular-ui"</span>,
-  <span class="st">"mobile-angular-ui.fastclick"</span>,
+  <span class="st">"mobile-angular-ui.touch"</span>,
   <span class="st">"mobile-angular-ui.scrollable"</span>
 ]).<span class="fu">config</span>(<span class="kw">function</span>($routeProvider) {
       <span class="ot">$routeProvider</span>.<span class="fu">when</span>(<span class="st">'/'</span>, { 
@@ -230,13 +250,13 @@ Angular Directives<br>
 
 <p>First of all: one thing you'll always have to deal with approaching mobile web app development is scroll and <code>position:fixed</code> bugs.</p>
 <p>Due to the lack of support in some devices fixed positioned elements may bounce or disappear during scroll. Also mobile interaction often leverages horizontal scroll eg. in carousels or sliders.</p>
-<p>We use scrollable areas to solve any problems related to scroll. Since it is not always available in touch devices we bundle an implementation of scrollable with <a href="https://github.com/cubiq/iscroll">iScroll</a>.</p>
-<p>To use it include either <code>mobile-angular-ui-scrollable-iscroll.js</code> or <code>mobile-angular-ui-scrollable-iscroll-lite.js</code>.</p>
+<p>We use scrollable areas to solve any problems related to scroll. Since it is not always available in touch devices we bundle an implementation of scrollable with <a href="https://github.com/cubiq/iscroll">iScroll</a> or <a href="http://filamentgroup.github.io/Overthrow/">Overthrow</a>.</p>
+<p>To use it include either <code>mobile-angular-ui-scrollable-iscroll.js</code>, <code>mobile-angular-ui-scrollable-iscroll-lite.js</code> or <code>mobile-angular-ui-scrollable-overthrow.js</code>.</p>
 <p>Markup for any scrollable areas is as simple as:</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"scrollable"</span><span class="kw">&gt;</span>
   <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"scrollable-content"</span><span class="kw">&gt;</span>...<span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<p>This piece of code will trigger a directive that properly setup a new iScroll instance for the <code>.scrollable</code> node.</p>
+<p>This piece of code will trigger a directive that properly setup a new iScroll or <code>Overthrow</code> instance for the <code>.scrollable</code> node.</p>
 <h3 class="page-header">
 <code>toggle</code> and <code>toggleable</code>
 </h3>
