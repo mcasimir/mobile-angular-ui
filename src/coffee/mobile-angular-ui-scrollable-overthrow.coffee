@@ -9,7 +9,7 @@ angular.module("mobile-angular-ui.scrollable", [])
   restrict: "C"
   link: (scope, element, attr) ->
     if(overthrow.support is "native") 
-      element.attr("style", "overflow-y: auto; -webkit-overflow-scrolling: touch;")
+      element.attr("style", "overflow: auto; -webkit-overflow-scrolling: touch;")
     else
       element.addClass("overthrow")
       overthrow.forget()
