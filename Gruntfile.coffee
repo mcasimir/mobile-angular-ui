@@ -6,7 +6,7 @@
 #      according to media queries
 #    
 #   4) copy combined and partials files minified and unminified to dist
-#   
+#
 module.exports = (grunt) ->
 
   grunt.initConfig
@@ -115,12 +115,20 @@ module.exports = (grunt) ->
             "src/coffee/mobile-angular-ui-scrollable-iscroll.coffee"
           ]
 
+          "tmp/mobile-angular-ui-scrollable-overthrow.js": [
+            "src/coffee/mobile-angular-ui-scrollable-overthrow.coffee"
+          ]
+
           "tmp/mobile-angular-ui-scrollable-iscroll-lite.js": [
             "src/coffee/mobile-angular-ui-scrollable-iscroll-lite.coffee"
           ]
 
-          "tmp/mobile-angular-ui-fastclick.js": [
-            "src/coffee/mobile-angular-ui-fastclick.coffee"
+          "tmp/mobile-angular-ui-touch-fastclick.js": [
+            "src/coffee/mobile-angular-ui-touch-fastclick.coffee"
+          ]
+
+          "tmp/mobile-angular-ui-touch-ng.js": [
+            "src/coffee/mobile-angular-ui-touch-ng.coffee"
           ]
 
     concat:
@@ -136,9 +144,22 @@ module.exports = (grunt) ->
             "tmp/mobile-angular-ui-scrollable-iscroll.js"
           ]
 
-          "dist/js/mobile-angular-ui-fastclick.js": [
+          "dist/js/mobile-angular-ui-scrollable-overthrow.js": [
+            "bower_components/overthrow/src/overthrow-detect.js"
+            "bower_components/overthrow/src/overthrow-init.js"
+            "bower_components/overthrow/src/overthrow-polyfill.js"
+            "bower_components/overthrow/src/overthrow-toss.js"
+            "tmp/mobile-angular-ui-scrollable-overthrow.js"
+          ]
+
+          "dist/js/mobile-angular-ui-touch-fastclick.js": [
             "bower_components/fastclick/lib/fastclick.js"
-            "tmp/mobile-angular-ui-fastclick.js"
+            "tmp/mobile-angular-ui-touch-fastclick.js"
+          ]
+
+          "dist/js/mobile-angular-ui-touch-ng.js": [
+            "bower_components/angular-touch/angular-touch.js"
+            "tmp/mobile-angular-ui-touch-ng.js"
           ]
 
           "dist/js/mobile-angular-ui.js": [
@@ -153,7 +174,10 @@ module.exports = (grunt) ->
           "dist/js/mobile-angular-ui.min.js": ["dist/js/mobile-angular-ui.js"]
           "dist/js/mobile-angular-ui-scrollable-iscroll.min.js": ["dist/js/mobile-angular-ui-scrollable-iscroll.js"]
           "dist/js/mobile-angular-ui-scrollable-iscroll-lite.min.js": ["dist/js/mobile-angular-ui-scrollable-iscroll-lite.js"]
-          "dist/js/mobile-angular-ui-fastclick.min.js": ["dist/js/mobile-angular-ui-fastclick.js"]
+          "dist/js/mobile-angular-ui-scrollable-overthrow.min.js": ["dist/js/mobile-angular-ui-scrollable-overthrow.js"]
+          "dist/js/mobile-angular-ui-touch-fastclick.min.js": ["dist/js/mobile-angular-ui-touch-fastclick.js"]
+          "dist/js/mobile-angular-ui-touch-ng.min.js": ["dist/js/mobile-angular-ui-touch-ng.js"]
+
 
     cssmin:
       minify:

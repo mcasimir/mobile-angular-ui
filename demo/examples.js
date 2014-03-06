@@ -1,7 +1,47 @@
+function loadjsfile(filename){
+  var fileref=document.createElement('script')
+  fileref.setAttribute("type","text/javascript")
+  fileref.setAttribute("src", filename)
+  document.getElementsByTagName("head")[0].appendChild(fileref)
+}
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+// var scrollableImpl = getParameterByName('scrollable') || 'iscroll';
+// var touchImpl = getParameterByName('touch') || 'fastclick';
+
+// console.log(scrollableImpl, touchImpl);
+
+// if (scrollableImpl == "iscroll") {
+//   loadjsfile("assets/js/mobile-angular-ui-scrollable-iscroll.js");
+// }
+
+// if (scrollableImpl == "iscroll-lite") {
+//   loadjsfile("assets/js/mobile-angular-ui-scrollable-iscroll-lite.js");
+// }
+
+// if (scrollableImpl == "overthrow") {
+//   loadjsfile("assets/js/mobile-angular-ui-scrollable-overthrow.js");
+// }
+
+// if (touchImpl == "fastclick") {
+//   loadjsfile("assets/js/mobile-angular-ui-touch-fastclick.js");
+// }
+
+// if (touchImpl == "ng") {
+//   loadjsfile("assets/js/mobile-angular-ui-touch-ng.js");
+// }
+
+
 var app = angular.module('MobileAngularUiExamples', [
   "ngRoute",
   "mobile-angular-ui",
-  "mobile-angular-ui.fastclick",
+  "mobile-angular-ui.touch",
   "mobile-angular-ui.scrollable"
 ]);
 
@@ -34,16 +74,6 @@ var escapeHtml = function(str) {
         return tagsToReplace[tag] || tag;
     });
 };
-
-app.directive('exampleCode', function(){
-  return {
-    link: function(scope, elem, attrs) {
-      container = angular.element(document.getElementById(attrs.exampleCode));
-      html = container.html();
-      elem.empty().append("<pre><code>" + escapeHtml(html) + "</code></pre>")
-    }
-  };
-});
 
 app.controller('MainController', function($rootScope, $scope){
 

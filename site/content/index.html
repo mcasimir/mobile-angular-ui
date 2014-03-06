@@ -105,20 +105,43 @@ Load files in the head section of your html
 
 ``` html
 <link rel="stylesheet" href="mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css" />
-<link rel="stylesheet" href="mobile-angular-ui/dist/css/mobile-angular-ui-desktop.min.css" />
-
-<script src="angular.min.js"></script>
-<script src="angular-route.min.js"></script>
-<script src="mobile-angular-ui/dist/js/mobile-angular-ui.min.js"></script>
-<script src="mobile-angular-ui/dist/js/mobile-angular-ui-fastclick.min.js"></script>
-<script src="mobile-angular-ui/dist/js/mobile-angular-ui-scrollable-iscroll.min.js"></script>
+<link rel="stylesheet" href="mobile-angular-ui/dist/css/mobile-angular-ui-desktop.min.css" /> 
+<script src="angular.min.js">
+</script>
+<script src="angular-route.min.js">
+</script>
+<script src="mobile-angular-ui/dist/js/mobile-angular-ui.min.js">
+</script>
+<script src="mobile-angular-ui/dist/js/mobile-angular-ui-touch-fastclick.min.js">
+</script>
+<script src="mobile-angular-ui/dist/js/mobile-angular-ui-scrollable-overthrow.min.js">
+</script>
 ```
 
 The `base` css includes only the mobile css (it has no media queries), while the `desktop` css contains just a few lines of code to make sidebars always visible on desktop. So with these two files you can  only work with the `.*-xs` classes from Bootstrap. If you need more you can include other files from the distribution package to fit your needs. eg. you could add `mobile-angular-ui-max-width-767px.css` to use `(max-width: 767px)` media queries from Bootstrap.
 
-`mobile-angular-ui-fastclick.min.js` will enable fastclick.js, you can replace it with `angular-touch` or any similar module.
+In the example above some other modules are included along with the core js `mobile-angular-ui.min.js`.
 
-`mobile-angular-ui-scrollable-iscroll.min.js` or `mobile-angular-ui-scrollable-iscroll-lite.min.js` will enable `[scrollable]` directive with iScroll.
+### mobile-angular-ui.touch
+
+`mobile-angular-ui-touch-[implementation].js` provides touch events and `swipeLeft`, `swipeRight` directives.
+
+Available implemetations are:
+
+- `mobile-angular-ui-touch-fastclick.min.js` (using `fastclick.js`)
+- `mobile-angular-ui-touch-ng.min.js` (using `angular-touch`)
+
+### mobile-angular-ui.scrollable
+
+`mobile-angular-ui-scrollable-[implementation].min.js` will enable `[scrollable]` directive.
+
+Available implemetations are:
+
+- `mobile-angular-ui-scrollable-overthrow.min.js` (using `overthrow.js`)
+- `mobile-angular-ui-scrollable-iscroll.min.js` (using `iscroll`)
+- `mobile-angular-ui-scrollable-iscroll-lite.min.js` (using `iscroll-lite`)
+
+### Initialization
 
 Then you can initialize your Angular application declaring `mobile-angular-ui` as a dependence.
 
@@ -126,7 +149,7 @@ Then you can initialize your Angular application declaring `mobile-angular-ui` a
 angular.module('myApp', ["mobile-angular-ui"]);
 ```
 
-This will not load ngRoute, fastclick and scrollable modules by default.
+This will not load ngRoute, touch events and scrollable modules by default.
 
 A more complete initialization would be like that:
 
@@ -134,7 +157,7 @@ A more complete initialization would be like that:
 angular.module('myApp', [
   "ngRoute",
   "mobile-angular-ui",
-  "mobile-angular-ui.fastclick",
+  "mobile-angular-ui.touch",
   "mobile-angular-ui.scrollable"
 ]).config(function($routeProvider) {
       $routeProvider.when('/', { 
@@ -243,9 +266,9 @@ First of all: one thing you'll always have to deal with approaching mobile web a
 
 Due to the lack of support in some devices fixed positioned elements may bounce or disappear during scroll. Also mobile interaction often leverages horizontal scroll eg. in carousels or sliders.
 
-We use scrollable areas to solve any problems related to scroll. Since it is not always available in touch devices we bundle an implementation of scrollable with [iScroll](https://github.com/cubiq/iscroll).
+We use scrollable areas to solve any problems related to scroll. Since it is not always available in touch devices we bundle an implementation of scrollable with [iScroll](https://github.com/cubiq/iscroll) or [Overthrow](http://filamentgroup.github.io/Overthrow/).
 
-To use it include either `mobile-angular-ui-scrollable-iscroll.js` or `mobile-angular-ui-scrollable-iscroll-lite.js`.
+To use it include either `mobile-angular-ui-scrollable-iscroll.js`, `mobile-angular-ui-scrollable-iscroll-lite.js` or `mobile-angular-ui-scrollable-overthrow.js`.
 
 Markup for any scrollable areas is as simple as:
 
@@ -255,7 +278,7 @@ Markup for any scrollable areas is as simple as:
 </div>
 ```
 
-This piece of code will trigger a directive that properly setup a new iScroll instance for the `.scrollable` node.
+This piece of code will trigger a directive that properly setup a new iScroll or `Overthrow` instance for the `.scrollable` node.
 
 <h3 class="page-header">
 `toggle` and `toggleable` 
