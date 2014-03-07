@@ -11,17 +11,6 @@
     vertical-align: middle;
   }
 
-  .navbar-brand-center {
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-
-  }
-
  .btn-navbar, .btn {
     background: none;
     border: none;
@@ -35,6 +24,16 @@
     }
   }
 
+}
+
+.navbar-brand-center {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 
 // Top and bottom navbars with absolute positioning,
@@ -51,11 +50,11 @@
   margin: 0;
 }
 
-.navbar-absolute-top~.app-body {
+.has-navbar-top .app-body {
   padding-top: 51px;
 }
 
-.navbar-absolute-bottom~.app-body {
+.has-navbar-bottom .app-body {
   padding-bottom: 51px;
 }
 

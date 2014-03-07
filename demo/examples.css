@@ -3,3 +3,9 @@
   display: block;
   text-align: center;
 }
+
+.chat-user-avatar {
+  font-size: 40px;
+  background: #ccc;
+  padding: 5px 10px;
+}

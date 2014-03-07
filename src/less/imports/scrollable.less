@@ -1,21 +1,22 @@
 // Scrollable
 
 .scrollable {
-  position: absolute;
+  position: relative;
   width: 100%;
+  height: 100%;
+ }
+
+.scrollable-content {
+  position: absolute;
   overflow: hidden;
-  bottom: 0;
-  padding: 0; 
+  width: 100%;
   height: auto;
+  bottom: 0;
+  padding: 0;
   top: 0;
 }
 
-.sidebar .scrollable {
-  top: 70px;
-  bottom: 0;
-}
 
-
-.app-search~.scrollable {
-  top: 34px; 
+.app-search + .scrollable>.scrollable-content {
+  padding-bottom: 35px;
 }

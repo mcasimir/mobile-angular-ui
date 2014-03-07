@@ -428,7 +428,7 @@
 
 })( this, this.overthrow );
 
-angular.module("mobile-angular-ui.scrollable", []).directive("scrollable", function() {
+angular.module("mobile-angular-ui.scrollable", []).directive("scrollableContent", function() {
   return {
     replace: false,
     restrict: "C",

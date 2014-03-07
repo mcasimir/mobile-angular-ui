@@ -4,7 +4,7 @@
 
 angular.module("mobile-angular-ui.scrollable", [])
 
-.directive "scrollable", ->
+.directive "scrollableContent", ->
   replace: false
   restrict: "C"
   link: (scope, element, attr) ->

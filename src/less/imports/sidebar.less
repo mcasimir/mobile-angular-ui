@@ -5,8 +5,8 @@
   top: 0;
   bottom: 0;
   background: @gray;
-  display: block;
-
+  display: none;
+  
   &.sidebar-left {
     left: 0;
     right: auto;
@@ -16,6 +16,14 @@
     left: auto;
     right: 0;
   }
+}
+
+.sidebar-left-in .sidebar-left {
+  display: block;
+}
+
+.sidebar-right-in .sidebar-right {
+  display: block; 
 }
 
 .sidebar-left-in .app {
@@ -42,4 +50,10 @@
   transition: transform 400ms ease;
 }
 
-
+.app-name {
+  line-height: 70px;
+  padding: 0 10px;
+  font-size: 23px;
+  color: #fff;
+  margin-bottom: 0;
+}

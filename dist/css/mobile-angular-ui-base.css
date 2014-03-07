@@ -6133,6 +6133,11 @@ a.list-group-item .fa.pull-right {
   margin-top: 4px;
 }
 
+.list-group-item.media {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 html {
   width: 100%;
   height: 100%;
@@ -6157,9 +6162,9 @@ body {
   -webkit-box-shadow: -1px 0 4px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: -1px 0 4px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
-  -webkit-transition: -webkit-transform 400ms ease;
-  -moz-transition: -moz-transform 400ms ease;
-  transition: transform 400ms ease;
+  -webkit-transition: -webkit-transform 0;
+  -moz-transition: -moz-transform 0;
+  transition: transform 0;
 }
 
 .app-body {
@@ -6176,27 +6181,9 @@ body {
 }
 
 .app-search {
-  position: absolute;
-  top: 0;
-  left: 0;
   z-index: 1029;
   width: 100%;
   border-width: 0 0 1px;
-}
-
-.app-name {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  width: 100%;
-  height: 50px;
-  padding: 10px;
-  padding: 0 10px;
-  overflow: hidden;
-  font-size: 23px;
-  line-height: 70px;
-  color: #fff;
 }
 
 .fa.disabled {
@@ -6217,16 +6204,6 @@ body {
   vertical-align: middle;
 }
 
-.navbar-app .navbar-brand-center {
-  position: absolute;
-  width: 100%;
-  overflow: hidden;
-  text-align: center;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .navbar-app .btn-navbar,
 .navbar-app .btn {
   padding-top: 0;
@@ -6243,6 +6220,16 @@ body {
   color: #0062cc;
 }
 
+.navbar-brand-center {
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .navbar-absolute-top,
 .navbar-absolute-bottom {
   position: absolute;
@@ -6254,11 +6241,11 @@ body {
   border-width: 0;
 }
 
-.navbar-absolute-top ~ .app-body {
+.has-navbar-top .app-body {
   padding-top: 51px;
 }
 
-.navbar-absolute-bottom ~ .app-body {
+.has-navbar-bottom .app-body {
   padding-bottom: 51px;
 }
 
@@ -6279,7 +6266,7 @@ body {
   top: 0;
   bottom: 0;
   z-index: 0;
-  display: block;
+  display: none;
   width: 80%;
   background: #555555;
 }
@@ -6292,6 +6279,14 @@ body {
 .sidebar.sidebar-right {
   right: 0;
   left: auto;
+}
+
+.sidebar-left-in .sidebar-left {
+  display: block;
+}
+
+.sidebar-right-in .sidebar-right {
+  display: block;
 }
 
 .sidebar-left-in .app {
@@ -6314,6 +6309,14 @@ body {
   -webkit-transition: -webkit-transform 400ms ease;
   -moz-transition: -moz-transform 400ms ease;
   transition: transform 400ms ease;
+}
+
+.app-name {
+  padding: 0 10px;
+  margin-bottom: 0;
+  font-size: 23px;
+  line-height: 70px;
+  color: #fff;
 }
 
 .section {
@@ -6346,6 +6349,12 @@ body {
 }
 
 .scrollable {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.scrollable-content {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -6355,13 +6364,8 @@ body {
   overflow: hidden;
 }
 
-.sidebar .scrollable {
-  top: 70px;
-  bottom: 0;
-}
-
-.app-search ~ .scrollable {
-  top: 34px;
+.app-search + .scrollable > .scrollable-content {
+  padding-bottom: 35px;
 }
 
 [overlay],

@@ -1,22 +1,42 @@
-@media (min-width: 700px) {
+@media (min-width: 900px) {
   .sidebar-toggle {
     display: none;
   }
   
-  .navbar-app .navbar-brand-center {
+  .navbar-brand-center {
     text-align: left;
   }
   
-  .sidebar.sidebar-left, .sidebar.sidebar-left.in {
+  .sidebar-left {
     display: block;
     left: 0;
-    width: 300px;
+    width: 280px;
   }
 
-  .sidebar.sidebar-left~.app, .app-has-sidebar-left, .sidebar-left-in .app {
+  .sidebar-right {
+    display: block;
+    right: 0;
+    left: auto;
+    width: 280px;
+  }
+
+  .has-sidebar-left .app, .sidebar-left-in .app {
     width: auto;
-    margin-left: 300px;
+    margin-left: 280px;
     left: 0;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    position: relative;
+    -webkit-transition: -webkit-transform 0 ease;
+    -moz-transition: -moz-transform 0 ease;
+    transition: transform 0 ease;
+  }
+
+  .sidebar-right-in .app {
+    width: auto;
+    margin-right: 280px;
+    right: 0;
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);

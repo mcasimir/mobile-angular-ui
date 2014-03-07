@@ -105,6 +105,24 @@ angular.module('mobile-angular-ui.directives.forms', []).directive("bsInput", fu
   };
 });
 
+angular.module('mobile-angular-ui.directives.navbars', []).directive('navbarAbsoluteTop', function() {
+  return {
+    replace: false,
+    restrict: "C",
+    link: function(scope, elem, attrs) {
+      return elem.parent().addClass('has-navbar-top');
+    }
+  };
+}).directive('navbarAbsoluteBottom', function() {
+  return {
+    replace: false,
+    restrict: "C",
+    link: function(scope, elem, attrs) {
+      return elem.parent().addClass('has-navbar-bottom');
+    }
+  };
+});
+
 angular.module('mobile-angular-ui.directives.overlay', []).directive('overlay', [
   "$compile", function($compile) {
     return {
@@ -137,6 +155,24 @@ angular.module("mobile-angular-ui.directives.panels", []).directive("bsPanel", f
         heading = "<div class=\"panel-heading\">\n  <h2 class=\"panel-title\">\n    " + attrs.title + "\n  </h2>\n</div>";
       }
       return "<div class=\"panel\">\n  " + heading + "\n  <div class=\"panel-body\">\n     <div ng-transclude></div>\n  </div>\n</div>";
+    }
+  };
+});
+
+angular.module('mobile-angular-ui.directives.sidebars', []).directive('sidebarLeft', function() {
+  return {
+    replace: false,
+    restrict: "C",
+    link: function(scope, elem, attrs) {
+      return elem.parent().addClass('has-sidebar-left');
+    }
+  };
+}).directive('sidebarRight', function() {
+  return {
+    replace: false,
+    restrict: "C",
+    link: function(scope, elem, attrs) {
+      return elem.parent().addClass('has-sidebar-right');
     }
   };
 });
@@ -424,4 +460,4 @@ angular.module('mobile-angular-ui.pointer-events', []).run([
   }
 ]);
 
-angular.module("mobile-angular-ui", ['mobile-angular-ui.pointer-events', 'mobile-angular-ui.active-links', 'mobile-angular-ui.directives.toggle', 'mobile-angular-ui.directives.overlay', 'mobile-angular-ui.directives.forms', 'mobile-angular-ui.directives.panels', 'mobile-angular-ui.directives.capture']);
+angular.module("mobile-angular-ui", ['mobile-angular-ui.pointer-events', 'mobile-angular-ui.active-links', 'mobile-angular-ui.directives.toggle', 'mobile-angular-ui.directives.overlay', 'mobile-angular-ui.directives.forms', 'mobile-angular-ui.directives.panels', 'mobile-angular-ui.directives.capture', 'mobile-angular-ui.directives.sidebars', 'mobile-angular-ui.directives.navbars']);

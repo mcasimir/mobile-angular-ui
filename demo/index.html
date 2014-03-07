@@ -45,6 +45,10 @@ to see this page in browser
     <ng-include src="'sidebar.html'"></ng-include>
   </div>
 
+  <div class="sidebar sidebar-right" toggleable parent-active-class="sidebar-right-in" id="rightSidebar">
+    <ng-include src="'sidebarRight.html'"></ng-include>
+  </div>
+
   <div class="app">
     <!-- Navbar -->
     <div class="navbar navbar-app navbar-absolute-top">
@@ -60,8 +64,8 @@ to see this page in browser
         </div>
 
         <div class="btn-group pull-right" yield-to="navbarAction">
-          <div class="btn btn-navbar">
-            <i class="fa fa-plus"></i> New
+          <div ng-click="toggle('rightSidebar')" class="btn btn-navbar">
+            <i class="fa fa-comment"></i> Chat
           </div>
         </div>
     </div>

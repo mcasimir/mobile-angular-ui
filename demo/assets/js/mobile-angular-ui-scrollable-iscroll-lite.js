@@ -934,7 +934,7 @@ angular.module("mobile-angular-ui.scrollable", []).run([
       return e.preventDefault();
     }), false);
   }
-]).directive("scrollable", function() {
+]).directive("scrollableContent", function() {
   return {
     replace: false,
     restrict: "C",
