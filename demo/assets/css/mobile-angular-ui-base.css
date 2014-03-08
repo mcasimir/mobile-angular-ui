@@ -6162,9 +6162,9 @@ body {
   -webkit-box-shadow: -1px 0 4px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: -1px 0 4px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
-  -webkit-transition: -webkit-transform 0;
-  -moz-transition: -moz-transform 0;
-  transition: transform 0;
+  -webkit-transition: -webkit-transform 400ms ease;
+  -moz-transition: -moz-transform 400ms ease;
+  transition: transform 400ms ease;
 }
 
 .app-body {
@@ -6266,9 +6266,15 @@ body {
   top: 0;
   bottom: 0;
   z-index: 0;
-  display: none;
+  display: block;
   width: 80%;
   background: #555555;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition: -webkit-transform 400ms ease;
+  -moz-transition: -moz-transform 400ms ease;
+  transition: transform 400ms ease;
 }
 
 .sidebar.sidebar-left {
@@ -6281,12 +6287,16 @@ body {
   left: auto;
 }
 
-.sidebar-left-in .sidebar-left {
-  display: block;
+.sidebar-right-in .sidebar-left {
+  -webkit-transform: translate3d(-80%, 0, 0);
+  -moz-transform: translate3d(-80%, 0, 0);
+  transform: translate3d(-80%, 0, 0);
 }
 
-.sidebar-right-in .sidebar-right {
-  display: block;
+.sidebar-left-in .sidebar-right {
+  -webkit-transform: translate3d(80%, 0, 0);
+  -moz-transform: translate3d(80%, 0, 0);
+  transform: translate3d(80%, 0, 0);
 }
 
 .sidebar-left-in .app {
@@ -6357,15 +6367,13 @@ body {
 .scrollable-content {
   position: absolute;
   top: 0;
+  right: 0;
   bottom: 0;
+  left: 0;
   width: 100%;
   height: auto;
   padding: 0;
   overflow: hidden;
-}
-
-.app-search + .scrollable > .scrollable-content {
-  padding-bottom: 35px;
 }
 
 [overlay],

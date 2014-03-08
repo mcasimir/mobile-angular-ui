@@ -41,13 +41,9 @@ to see this page in browser
         ng-swipe-left="toggle('mainSidebar', 'off')"
         ng-swipe-right="toggle('mainSidebar', 'on')">
 
-  <div class="sidebar sidebar-left" toggleable parent-active-class="sidebar-left-in" id="mainSidebar">
-    <ng-include src="'sidebar.html'"></ng-include>
-  </div>
+  <div ng-include="'sidebar.html'" class="sidebar sidebar-left" toggleable parent-active-class="sidebar-left-in" id="mainSidebar"></div>
 
-  <div class="sidebar sidebar-right" toggleable parent-active-class="sidebar-right-in" id="rightSidebar">
-    <ng-include src="'sidebarRight.html'"></ng-include>
-  </div>
+  <div ng-include="'sidebarRight.html'" class="sidebar sidebar-right" toggleable parent-active-class="sidebar-right-in" id="rightSidebar"></div>
 
   <div class="app">
     <!-- Navbar -->
