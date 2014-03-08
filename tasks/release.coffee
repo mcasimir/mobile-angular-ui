@@ -39,7 +39,7 @@ module.exports = (grunt) ->
           nextver = semver.inc(latest, verType)
 
           console.log "Latest:", latest
-          console.log "Next:", next
+          console.log "Next:", nextver
 
           run "git add .", (err, out) ->
             if err
