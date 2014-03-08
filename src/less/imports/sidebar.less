@@ -5,8 +5,17 @@
   top: 0;
   bottom: 0;
   background: @gray;
-  display: none;
+  display: block;
   
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+
+  -webkit-transition: -webkit-transform 400ms ease;
+  -moz-transition: -moz-transform 400ms ease;
+  transition: transform 400ms ease;
+
+
   &.sidebar-left {
     left: 0;
     right: auto;
@@ -18,13 +27,18 @@
   }
 }
 
-.sidebar-left-in .sidebar-left {
-  display: block;
+.sidebar-right-in .sidebar-left {
+  -webkit-transform: translate3d(-80%, 0, 0);
+  -moz-transform: translate3d(-80%, 0, 0);
+  transform: translate3d(-80%, 0, 0);
 }
 
-.sidebar-right-in .sidebar-right {
-  display: block; 
+.sidebar-left-in .sidebar-right {
+  -webkit-transform: translate3d(80%, 0, 0);
+  -moz-transform: translate3d(80%, 0, 0);
+  transform: translate3d(80%, 0, 0);
 }
+
 
 .sidebar-left-in .app {
   width: 100%;
