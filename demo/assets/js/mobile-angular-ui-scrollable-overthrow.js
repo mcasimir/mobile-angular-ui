@@ -428,18 +428,47 @@
 
 })( this, this.overthrow );
 
-angular.module("mobile-angular-ui.scrollable", []).directive("scrollableContent", function() {
-  return {
-    replace: false,
-    restrict: "C",
-    link: function(scope, element, attr) {
-      if (overthrow.support === "native") {
-        return element.attr("style", "overflow: auto; -webkit-overflow-scrolling: touch;");
-      } else {
-        element.addClass("overthrow");
-        overthrow.forget();
-        return overthrow.set();
+(function() {
+  var adjustScrollableHeight, adjustScrollablesHeight;
+  adjustScrollableHeight = function(e) {
+    var p, paddingAndBordersHeight, rightHeight;
+    p = e.offsetParent;
+    paddingAndBordersHeight = e.offsetHeight - e.clientHeight;
+    if (e.offsetTop + e.offsetHeight > p.clientHeight) {
+      rightHeight = p.clientHeight - paddingAndBordersHeight - e.offsetTop;
+      if (rightHeight > 0) {
+        return e.setAttribute("style", "max-height:" + rightHeight + "px");
       }
+    } else {
+      return e.setAttribute("style", "max-height:99999px");
     }
   };
-});
+  adjustScrollablesHeight = function() {
+    var scrollables;
+    scrollables = document.getElementsByClassName("scrollable");
+    return angular.forEach(scrollables, function(e) {
+      return adjustScrollableHeight(e);
+    });
+  };
+  return angular.module("mobile-angular-ui.scrollable", []).run([
+    "$window", function($window) {
+      adjustScrollablesHeight();
+      return $window.onresize = adjustScrollablesHeight;
+    }
+  ]).directive("scrollableContent", function() {
+    return {
+      replace: false,
+      restrict: "C",
+      link: function(scope, element, attr) {
+        adjustScrollableHeight(element.parent()[0]);
+        if (overthrow.support === "native") {
+          return element.attr("style", "overflow: auto; -webkit-overflow-scrolling: touch;");
+        } else {
+          element.addClass("overthrow");
+          overthrow.forget();
+          return overthrow.set();
+        }
+      }
+    };
+  });
+})();

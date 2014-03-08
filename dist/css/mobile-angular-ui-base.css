@@ -6376,10 +6376,6 @@ body {
   overflow: hidden;
 }
 
-.app-search + .scrollable > .scrollable-content {
-  padding-bottom: 35px;
-}
-
 [overlay],
 [data-overlay] {
   display: none;
