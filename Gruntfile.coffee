@@ -228,11 +228,11 @@ module.exports = (grunt) ->
                                 "concat"
                                 "copy:desktop"
                                 "copy:fa"
+                                "uglify"
+                                "cssmin"
                                 "copy:demo"
                                 "copy:demo_angular"
                                 "copy:demo_angular_route"
-                                "uglify"
-                                "cssmin"
                               ]
 
 

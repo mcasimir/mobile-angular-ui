@@ -4,8 +4,23 @@
   text-align: center;
 }
 
+h1 {
+  padding: 0;
+  margin: 10px 0;
+}
+
 .chat-user-avatar {
   font-size: 40px;
   background: #ccc;
   padding: 5px 10px;
+}
+
+.feature-icon {
+  font-size: 44px;
+  padding: 0;
+  color: #0062cc;
+  line-height: 64px;
+  width: 64px;
+  text-align: center;
+  opacity: .8;
 }
