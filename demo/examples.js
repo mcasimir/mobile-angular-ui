@@ -25,7 +25,7 @@ app.filter('range', function() {
 });
 
 app.controller('MainController', function($rootScope, $scope){
-
+  $scope.userAgent =  navigator.userAgent;
   $scope.chatUsers = [
     { name: "Carlos  Flowers", online: true },
     { name: "Byron Taylor", online: true },
