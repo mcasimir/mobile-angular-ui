@@ -34,6 +34,16 @@ to see this page in browser
   <script src="assets/js/mobile-angular-ui-touch-fastclick.min.js"></script>
   <script src="assets/js/mobile-angular-ui-scrollable-overthrow.min.js"></script>
 
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-48036416-1', 'mobileangularui.com');
+    ga('send', 'pageview');
+  </script>
+
   <script src="examples.js"></script>
 </head>
 
@@ -70,13 +80,16 @@ to see this page in browser
       <div class="btn-group justified">
         <a href="http://www.mobileangularui.com" class="btn btn-navbar"><i class="fa fa-home fa-navbar"></i> Docs</a>
         <a href="https://github.com/mcasimir/mobile-angular-ui" class="btn btn-navbar"><i class="fa fa-github fa-navbar"></i> Sources</a>
-        <a href="https://github.com/mcasimir/mobile-angular-ui/issues" class="btn btn-navbar"><i class="fa fa-exclamation-triangle fa-navbar"></i> Issues</a>
+        <a href="https://github.com/mcasimir/mobile-angular-ui/issues" class="btn btn-navbar"><i class="fa fa-exclamation-circle fa-navbar"></i> Issues</a>
 
       </div>
     </div>
 
-    <div class="app-body">
-        <ng-view class="app-content"></ng-view>
+    <div class="app-body" ng-class="{loading: loading}">
+        <div ng-show="loading" class="app-content-loading">
+          <i class="fa fa-spinner fa-spin loading-spinner"></i>
+        </div>
+        <ng-view class="app-content" ng-hide="loading"></ng-view>
       </div>
     </div>
 
