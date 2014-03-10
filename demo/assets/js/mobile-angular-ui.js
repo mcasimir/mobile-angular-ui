@@ -72,6 +72,69 @@ angular.module("mobile-angular-ui.directives.capture", []).run([
   }
 ]);
 
+angular.module('mobile-angular-ui.directives.carousel', []).run([
+  "$rootScope", function($rootScope) {
+    var carouselItems, findActiveItemIndex;
+    $rootScope.carouselPrev = function(id) {
+      return $rootScope.$emit("mobile-angular-ui.carousel.prev", id);
+    };
+    $rootScope.carouselNext = function(id) {
+      return $rootScope.$emit("mobile-angular-ui.carousel.next", id);
+    };
+    carouselItems = function(id) {
+      var elem;
+      elem = angular.element(document.getElementById(id));
+      return angular.element(elem.children()[0]).children();
+    };
+    findActiveItemIndex = function(items) {
+      var found, idx, item, _i, _len;
+      idx = -1;
+      found = false;
+      for (_i = 0, _len = items.length; _i < _len; _i++) {
+        item = items[_i];
+        idx += 1;
+        if (angular.element(item).hasClass('active')) {
+          found = true;
+          break;
+        }
+      }
+      if (found) {
+        return idx;
+      } else {
+        return -1;
+      }
+    };
+    $rootScope.$on("mobile-angular-ui.carousel.prev", function(e, id) {
+      var idx, items, lastIdx;
+      items = carouselItems(id);
+      idx = findActiveItemIndex(items);
+      lastIdx = items.length - 1;
+      if (idx !== -1) {
+        angular.element(items[idx]).removeClass("active");
+      }
+      if (idx <= 0) {
+        return angular.element(items[lastIdx]).addClass("active");
+      } else {
+        return angular.element(items[idx - 1]).addClass("active");
+      }
+    });
+    return $rootScope.$on("mobile-angular-ui.carousel.next", function(e, id) {
+      var idx, items, lastIdx;
+      items = carouselItems(id);
+      idx = findActiveItemIndex(items);
+      lastIdx = items.length - 1;
+      if (idx !== -1) {
+        angular.element(items[idx]).removeClass("active");
+      }
+      if (idx === lastIdx) {
+        return angular.element(items[0]).addClass("active");
+      } else {
+        return angular.element(items[idx + 1]).addClass("active");
+      }
+    });
+  }
+]);
+
 angular.module('mobile-angular-ui.directives.forms', []).directive("bsInput", function() {
   return {
     replace: true,
@@ -460,4 +523,4 @@ angular.module('mobile-angular-ui.pointer-events', []).run([
   }
 ]);
 
-angular.module("mobile-angular-ui", ['mobile-angular-ui.pointer-events', 'mobile-angular-ui.active-links', 'mobile-angular-ui.directives.toggle', 'mobile-angular-ui.directives.overlay', 'mobile-angular-ui.directives.forms', 'mobile-angular-ui.directives.panels', 'mobile-angular-ui.directives.capture', 'mobile-angular-ui.directives.sidebars', 'mobile-angular-ui.directives.navbars']);
+angular.module("mobile-angular-ui", ['mobile-angular-ui.pointer-events', 'mobile-angular-ui.active-links', 'mobile-angular-ui.directives.toggle', 'mobile-angular-ui.directives.overlay', 'mobile-angular-ui.directives.forms', 'mobile-angular-ui.directives.panels', 'mobile-angular-ui.directives.capture', 'mobile-angular-ui.directives.sidebars', 'mobile-angular-ui.directives.navbars', 'mobile-angular-ui.directives.carousel']);

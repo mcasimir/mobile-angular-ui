@@ -1986,30 +1986,58 @@ if ( typeof module != 'undefined' && module.exports ) {
 }
 
 })(window, document, Math);
-angular.module("mobile-angular-ui.scrollable", []).run([
-  '$document', function($document) {
-    return $document[0].addEventListener("touchmove", (function(e) {
-      return e.preventDefault();
-    }), false);
-  }
-]).directive("scrollableContent", function() {
-  return {
-    replace: false,
-    restrict: "C",
-    link: function(scope, element, attr) {
-      return setTimeout((function() {
-        var iscroll;
-        [].slice.call(document.querySelectorAll("input, select, button, textarea")).forEach(function(el) {
-          return el.addEventListener(("ontouchstart" in window ? "touchstart" : "mousedown"), function(e) {
-            return e.stopPropagation();
-          });
-        });
-        return iscroll = new IScroll(element[0], {
-          scrollbars: true,
-          mouseWheel: true,
-          checkDOMChanges: true
-        });
-      }), 200);
+(function() {
+  var adjustScrollableHeight, adjustScrollablesHeight;
+  adjustScrollableHeight = function(e) {
+    var p, paddingAndBordersHeight, rightHeight;
+    p = e.offsetParent;
+    paddingAndBordersHeight = e.offsetHeight - e.clientHeight;
+    if (e.offsetTop + e.offsetHeight > p.clientHeight) {
+      rightHeight = p.clientHeight - paddingAndBordersHeight - e.offsetTop;
+      if (rightHeight > 0) {
+        return e.setAttribute("style", "max-height:" + rightHeight + "px");
+      }
+    } else {
+      return e.setAttribute("style", "max-height:99999px");
     }
   };
-});
+  adjustScrollablesHeight = function() {
+    var scrollables;
+    scrollables = document.getElementsByClassName("scrollable");
+    return angular.forEach(scrollables, function(e) {
+      return adjustScrollableHeight(e);
+    });
+  };
+  return angular.module("mobile-angular-ui.scrollable", []).run([
+    '$document', function($document) {
+      return $document[0].addEventListener("touchmove", (function(e) {
+        return e.preventDefault();
+      }), false);
+    }
+  ]).run([
+    "$window", function($window) {
+      adjustScrollablesHeight();
+      return $window.onresize = adjustScrollablesHeight;
+    }
+  ]).directive("scrollableContent", function() {
+    ({
+      replace: false,
+      restrict: "C",
+      link: function(scope, element, attr) {}
+    });
+    adjustScrollableHeight(element.parent()[0]);
+    return setTimeout((function() {
+      var iscroll;
+      [].slice.call(document.querySelectorAll("input, select, button, textarea")).forEach(function(el) {
+        return el.addEventListener(("ontouchstart" in window ? "touchstart" : "mousedown"), function(e) {
+          return e.stopPropagation();
+        });
+      });
+      return iscroll = new IScroll(element[0], {
+        scrollbars: true,
+        mouseWheel: true,
+        checkDOMChanges: true
+      });
+    }), 200);
+  });
+})();

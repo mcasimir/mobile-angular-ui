@@ -153,13 +153,15 @@ angular.forEach([
 
             end: (coords, event) ->
               if validSwipe(coords)
+                
                 scope.$apply ->
                   element.triggerHandler eventName
                   swipeHandler scope,
                     $event: event
 
                   return
-
+                event.stopPropagation()
+                return false
               return
 
           return

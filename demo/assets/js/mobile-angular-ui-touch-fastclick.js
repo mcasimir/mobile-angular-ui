@@ -921,6 +921,8 @@ angular.forEach([
                   $event: event
                 });
               });
+              event.stopPropagation();
+              return false;
             }
           }
         });

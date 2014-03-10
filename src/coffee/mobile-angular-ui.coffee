@@ -8,4 +8,5 @@ angular.module("mobile-angular-ui", [
   'mobile-angular-ui.directives.capture'
   'mobile-angular-ui.directives.sidebars'
   'mobile-angular-ui.directives.navbars'
+  'mobile-angular-ui.directives.carousel'
  ])

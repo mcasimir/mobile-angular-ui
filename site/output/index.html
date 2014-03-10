@@ -234,7 +234,6 @@ Docs
 <ul>
 <li>breadcrumbs and pagination: they are just not the best way to navigate a mobile app</li>
 <li>tooltips: unlikely to be useful with small screens and touch devices, popovers should be enough</li>
-<li>carousels</li>
 <li>modals: are replaced by overlays</li>
 </ul>
 <h2 class="section-title">
@@ -736,6 +735,101 @@ The content to take place in the placeholder.
     <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href</span><span class="kw">&gt;</span>Separated link<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
   <span class="kw">&lt;/ul&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
+<h3>Carousels</h3>
+<p>Carousels have the same markup that bootstrap but their behaviour is achieved with 2 functions available to <code>$rootScope</code>: <code>carouselPrev(id)</code> and <code>carouselNext(id)</code>.</p>
+<p>This is a basic example that uses <code>ngSwipeLeft</code> and <code>ngSwipeRight</code>.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">"carousel-example"</span><span class="ot"> class=</span><span class="st">"carousel"</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"carousel-inner"</span><span class="ot"> ng-swipe-left=</span><span class="st">"carouselPrev('carousel-example')"</span><span class="ot"> ng-swipe-right=</span><span class="st">"carouselNext('carousel-example')"</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;div</span><span class="ot"> href=</span><span class="st">""</span><span class="ot"> class=</span><span class="st">"item active"</span><span class="kw">&gt;</span>
+          <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"carousel-example-content"</span><span class="kw">&gt;</span>1<span class="kw">&lt;/div&gt;</span>
+        <span class="kw">&lt;/div&gt;</span>
+        <span class="kw">&lt;div</span><span class="ot"> href=</span><span class="st">""</span><span class="ot"> class=</span><span class="st">"item"</span><span class="kw">&gt;</span>
+          <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"carousel-example-content"</span><span class="kw">&gt;</span>2<span class="kw">&lt;/div&gt;</span>
+        <span class="kw">&lt;/div&gt;</span>
+        <span class="kw">&lt;div</span><span class="ot"> href=</span><span class="st">""</span><span class="ot"> class=</span><span class="st">"item"</span><span class="kw">&gt;</span>
+          <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"carousel-example-content"</span><span class="kw">&gt;</span>3<span class="kw">&lt;/div&gt;</span>
+        <span class="kw">&lt;/div&gt;</span>
+      <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<p>To create more fancy effects and touch friendly experience you can use <code>$swipe</code> service direclty. <code>$swipe</code> service is provided by <code>angular-touch</code> and is included in both <code>mobile-angular-ui-touch-fastclick</code> and <code>mobile-angular-ui-touch-ng</code>.</p>
+<p>This is a more complete example to explain how to build a swipe friendly carousel.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">"carousel-example"</span><span class="ot"> class=</span><span class="st">"carousel"</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"carousel-inner"</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;div</span><span class="ot"> href=</span><span class="st">""</span><span class="ot"> class=</span><span class="st">"item active"</span><span class="ot"> carousel-example-item</span><span class="kw">&gt;</span>
+          <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"carousel-example-content"</span><span class="kw">&gt;</span>1
+            <span class="kw">&lt;br&gt;&lt;small&gt;</span>Swipe me!<span class="kw">&lt;/small&gt;</span>
+          <span class="kw">&lt;/div&gt;</span>
+        <span class="kw">&lt;/div&gt;</span>
+        <span class="kw">&lt;div</span><span class="ot"> href=</span><span class="st">""</span><span class="ot"> class=</span><span class="st">"item"</span><span class="ot"> carousel-example-item</span><span class="kw">&gt;</span>
+          <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"carousel-example-content"</span><span class="kw">&gt;</span>2
+            <span class="kw">&lt;br&gt;&lt;small&gt;</span>Swipe me!<span class="kw">&lt;/small&gt;</span>
+          <span class="kw">&lt;/div&gt;</span>
+        <span class="kw">&lt;/div&gt;</span>
+        <span class="kw">&lt;div</span><span class="ot"> href=</span><span class="st">""</span><span class="ot"> class=</span><span class="st">"item"</span><span class="ot"> carousel-example-item</span><span class="kw">&gt;</span>
+          <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"carousel-example-content"</span><span class="kw">&gt;</span>3
+            <span class="kw">&lt;br&gt;&lt;small&gt;</span>Swipe me!<span class="kw">&lt;/small&gt;</span>
+          <span class="kw">&lt;/div&gt;</span>
+        <span class="kw">&lt;/div&gt;</span>
+      <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<p>Lets define the <code>carouselExampleItem</code> directive.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">app</span>.<span class="fu">directive</span>( <span class="st">"carouselExampleItem"</span>, <span class="kw">function</span>($rootScope, $swipe){
+  <span class="kw">return</span> <span class="kw">function</span>(scope, element, attrs){
+      <span class="kw">var</span> startX = <span class="kw">null</span>;
+      <span class="kw">var</span> startY = <span class="kw">null</span>;
+      <span class="kw">var</span> endAction = <span class="st">"cancel"</span>;
+      <span class="kw">var</span> carouselId = <span class="ot">element</span>.<span class="fu">parent</span>().<span class="fu">parent</span>().<span class="fu">attr</span>(<span class="st">"id"</span>);
+
+      <span class="kw">var</span> translateAndRotate = <span class="kw">function</span>(x, y, z, deg){
+        element[<span class="dv">0</span>].<span class="fu">style</span>[<span class="st">"-webkit-transform"</span>] =
+           <span class="st">"translate3d("</span>+x+<span class="st">"px,"</span>+ y +<span class="st">"px,"</span> + z + <span class="st">"px) rotate("</span>+ deg +<span class="st">"deg)"</span>;
+        element[<span class="dv">0</span>].<span class="fu">style</span>[<span class="st">"-moz-transform"</span>] =
+           <span class="st">"translate3d("</span>+x+<span class="st">"px,"</span> + y +<span class="st">"px,"</span> + z + <span class="st">"px) rotate("</span>+ deg +<span class="st">"deg)"</span>;
+        element[<span class="dv">0</span>].<span class="fu">style</span>[<span class="st">"-ms-transform"</span>] =
+           <span class="st">"translate3d("</span>+x+<span class="st">"px,"</span> + y + <span class="st">"px,"</span> + z + <span class="st">"px) rotate("</span>+ deg +<span class="st">"deg)"</span>;
+        element[<span class="dv">0</span>].<span class="fu">style</span>[<span class="st">"-o-transform"</span>] =
+           <span class="st">"translate3d("</span>+x+<span class="st">"px,"</span> + y  + <span class="st">"px,"</span> + z + <span class="st">"px) rotate("</span>+ deg +<span class="st">"deg)"</span>;
+        element[<span class="dv">0</span>].<span class="fu">style</span>[<span class="st">"transform"</span>] =
+           <span class="st">"translate3d("</span>+x+<span class="st">"px,"</span> + y + <span class="st">"px,"</span> + z + <span class="st">"px) rotate("</span>+ deg +<span class="st">"deg)"</span>;
+      }
+
+      <span class="ot">$swipe</span>.<span class="fu">bind</span>(element, {
+        <span class="dt">start</span>: <span class="kw">function</span>(coords) {
+          startX = <span class="ot">coords</span>.<span class="fu">x</span>;
+          startY = <span class="ot">coords</span>.<span class="fu">y</span>;
+        },
+
+        <span class="dt">cancel</span>: <span class="kw">function</span>(e) {
+          <span class="fu">translateAndRotate</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>);
+          <span class="ot">e</span>.<span class="fu">stopPropagation</span>();
+        },
+
+        <span class="dt">end</span>: <span class="kw">function</span>(coords, e) {
+          <span class="kw">if</span> (endAction == <span class="st">"prev"</span>) {
+            <span class="ot">$rootScope</span>.<span class="fu">carouselPrev</span>(carouselId);
+          } <span class="kw">else</span> <span class="kw">if</span> (endAction == <span class="st">"next"</span>) {
+            <span class="ot">$rootScope</span>.<span class="fu">carouselNext</span>(carouselId);
+          }
+          <span class="fu">translateAndRotate</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>);
+          <span class="ot">e</span>.<span class="fu">stopPropagation</span>();
+        },
+
+        <span class="dt">move</span>: <span class="kw">function</span>(coords) {
+          <span class="kw">if</span>( startX != <span class="kw">null</span>) {
+            <span class="kw">var</span> deltaX = <span class="ot">coords</span>.<span class="fu">x</span> - startX;
+            <span class="kw">var</span> deltaXRatio = deltaX / element[<span class="dv">0</span>].<span class="fu">clientWidth</span>;
+            <span class="kw">if</span> (deltaXRatio &amp;gt; <span class="fl">0.3</span>) {
+              endAction = <span class="st">"next"</span>;
+            } <span class="kw">else</span> <span class="kw">if</span> (deltaXRatio &amp;lt; -<span class="fl">0.3</span>){
+              endAction = <span class="st">"prev"</span>;
+            }
+            <span class="fu">translateAndRotate</span>(deltaXRatio * <span class="dv">200</span>, <span class="dv">0</span>, <span class="dv">0</span>, deltaXRatio * <span class="dv">15</span>);
+          }
+        }
+      });
+    }
+});</code></pre>
+<p>Now swiping items we will see them moving and rotating. When releasing an item if the swipe lenght was at least 3/10 of the item width then carouselPrev/carouselNext are invoked according to swipe direction.</p>
 <h2 class="section-title">
   
 <i class="fa fa-wrench"></i> <br> Utils
