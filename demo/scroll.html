@@ -3,8 +3,8 @@
 <div class="scrollable">
   <div class="scrollable-content">
     <div class="list-group">
-      <a ng-repeat="n in [] | range:100" href="#" class="list-group-item">Item {{$index}}
-        <i class="fa fa-chevron-right pull-right"></i>
+      <a ng-repeat="item in scrollItems" href="#" class="list-group-item">
+        {{ item }} <i class="fa fa-chevron-right pull-right"></i>
       </a>
     </div>
   </div>

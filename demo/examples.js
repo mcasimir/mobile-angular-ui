@@ -15,16 +15,32 @@ app.config(function($routeProvider, $locationProvider) {
   $routeProvider.when('/forms',     {templateUrl: "forms.html"});
 });
 
-app.filter('range', function() {
-  return function(input, total) {
-    total = parseInt(total);
-    for (var i=0; i<total; i++)
-      input.push(i);
-    return input;
-  };
-});
+app.service('analytics', [
+  '$rootScope', '$window', '$location', function($rootScope, $window, $location) {
+    var send = function(evt, data) {
+      ga('send', evt, data);
+    }
+  }
+]);
 
-app.controller('MainController', function($rootScope, $scope){
+app.controller('MainController', function($rootScope, $scope, analytics){
+
+  $rootScope.$on("$routeChangeStart", function(){
+    $rootScope.loading = true;
+  });
+
+  $rootScope.$on("$routeChangeSuccess", function(){
+    $rootScope.loading = false;
+  });
+
+  var scrollItems = [];
+
+  for (var i=1; i<=100; i++) {
+    scrollItems.push("Item " + i);
+  }
+
+  $scope.scrollItems = scrollItems;
+
   $scope.userAgent =  navigator.userAgent;
   $scope.chatUsers = [
     { name: "Carlos  Flowers", online: true },
