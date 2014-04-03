@@ -452,7 +452,6 @@
   };
   return angular.module("mobile-angular-ui.scrollable", []).run([
     "$window", function($window) {
-      adjustScrollablesHeight();
       return $window.onresize = adjustScrollablesHeight;
     }
   ]).directive("scrollableContent", function() {

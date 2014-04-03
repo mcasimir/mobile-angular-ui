@@ -1,3 +1,7 @@
+#
+# eg. grunt prerelease --msg='Added carousels;'
+#
+
 exec = require("child_process").exec
 path = require("path")
 semver = require("semver")

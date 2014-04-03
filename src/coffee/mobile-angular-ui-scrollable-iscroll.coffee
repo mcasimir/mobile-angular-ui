@@ -27,7 +27,6 @@
   ])
 
   .run( ["$window", ($window) -> 
-    adjustScrollablesHeight()
     $window.onresize = adjustScrollablesHeight
   ])
 
