@@ -387,8 +387,8 @@ angular.module('mobile-angular-ui.directives.sidebars', []).directive('sidebarLe
     };
 
     Toggleable.prototype.toggleStateChanged = function() {
-      this.notifyToggleState();
-      return Toggle.helpers.updateElemClasses(this.elem, this.attrs, this.getToggleState());
+      Toggle.helpers.updateElemClasses(this.elem, this.attrs, this.getToggleState());
+      return this.notifyToggleState();
     };
 
     Toggleable.prototype.runCommand = function(command) {

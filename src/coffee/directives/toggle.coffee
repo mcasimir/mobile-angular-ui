@@ -155,9 +155,9 @@
     notifyToggleState: () ->
       @rootScope.$emit(Toggle.events.toggleableToggled, @id, @getToggleState(), @exclusionGroup)
 
-    toggleStateChanged: ->
-      @notifyToggleState()    
+    toggleStateChanged: ->    
       Toggle.helpers.updateElemClasses(@elem, @attrs, @getToggleState())
+      @notifyToggleState()
 
     runCommand: (command) ->
       oldState = @getToggleState()
