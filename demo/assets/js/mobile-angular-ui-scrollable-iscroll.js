@@ -2016,7 +2016,6 @@ if ( typeof module != 'undefined' && module.exports ) {
     }
   ]).run([
     "$window", function($window) {
-      adjustScrollablesHeight();
       return $window.onresize = adjustScrollablesHeight;
     }
   ]).directive("scrollableContent", function() {
