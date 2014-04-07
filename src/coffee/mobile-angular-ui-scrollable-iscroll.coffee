@@ -34,12 +34,12 @@
     replace: false
     restrict: "C"
     link: (scope, element, attr) ->
-    adjustScrollableHeight(element.parent()[0])
-    setTimeout (->
-      [].slice.call(document.querySelectorAll("input, select, button, textarea")).forEach (el) ->
-        el.addEventListener (if ("ontouchstart" of window) then "touchstart" else "mousedown"), (e) ->
-          e.stopPropagation()
- 
-      iscroll = new IScroll(element[0], {scrollbars: true, mouseWheel:true, checkDOMChanges: true})
-    ), 200
+      adjustScrollableHeight(element.parent()[0])
+      setTimeout (->
+        [].slice.call(document.querySelectorAll("input, select, button, textarea")).forEach (el) ->
+          el.addEventListener (if ("ontouchstart" of window) then "touchstart" else "mousedown"), (e) ->
+            e.stopPropagation()
+   
+        iscroll = new IScroll(element[0], {scrollbars: true, mouseWheel:true, checkDOMChanges: true})
+      ), 200
 )()
