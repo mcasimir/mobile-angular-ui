@@ -10,14 +10,13 @@
 
      <div bs-panel title="Invoice">
        <input type="text" ng-model="invoice.customer"    label="Customer" bs-input />
-       <input type="checkbox" ng-model="invoice.payed"   label="Payed" bs-input />
+       <switch            ng-model="invoice.payed"     label="Payed" bs-input></switch>
        <input type="number" ng-model="invoice.amount"    label="Amount" bs-input />
        <input type="date" ng-model="invoice.date"        label="Date" bs-input />
-
      </div>
 
      <div bs-panel title="Notes">
-       <textarea type="text" ng-model="customer.mailing_address" label="Address" bs-textarea></textarea>
+       <textarea type="text" ng-model="customer.mailing_address" label="Address" bs-input></textarea>
      </div>
       
     <div bs-panel class="form-actions">

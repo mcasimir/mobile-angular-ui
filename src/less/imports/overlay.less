@@ -1,0 +1,69 @@
+[overlay],[data-overlay] {
+    display: none;
+}
+
+.overlay {
+    display: none;
+    position: absolute;
+    left:0;
+    top:0;
+    bottom: 0;
+    right: 0;
+
+    .overlay-inner {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        >.overlay-background {
+            position: absolute;
+            left:0;
+            top:0;
+            bottom: 0;
+            right: 0;
+            margin: -5px -5px -5px -5px;
+            background: rgba(255, 255, 255, .8);
+            z-index: @zindex-modal-background;
+        }
+        >.overlay-dismiss {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            z-index: @zindex-modal + 1;
+            font-size: 24px;
+        }
+        >.overlay-content {
+            width: 100%;
+            box-sizing: border-box;
+            display: table;
+            background: transparent;
+            text-align: center;
+            color: #000;
+            height: 100%;
+            z-index: @zindex-modal;
+            position: absolute;
+            left:0;
+            top:0;
+            bottom: 0;
+            right: 0;
+            padding: 20px;
+            >.overlay-body {
+                display: table-cell;
+                vertical-align: middle;
+            }       
+        }
+
+    }
+}
+
+.overlay-in>.overlay-show {
+  display: block;
+}
+
+.overlay-in>.app,.overlay-in>.sidebar {  
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);            
+    filter: blur(5px);
+}

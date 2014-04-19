@@ -1,0 +1,42 @@
+{
+  "name": "mobile-angular-ui",
+  "homepage": "https://github.com/mcasimir/mobile-angular-ui",
+  "authors": [
+    "mcasimir <maurizio.cas@gmail.com>"
+  ],
+  "description": "Mobile UI for Bootstrap 3 and Angular JS",
+  "main": "dist/mobile-angular-ui.min.js",
+  "keywords": [
+    "mobile-angular-ui",
+    "angularjs",
+    "boostrap3",
+    "angular-mobile",
+    "mobile-ui",
+    "boostrap3-mobile"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "demo",
+    "site",
+    "experiments",
+    "gh-pages",
+    "logo.ai",
+    "tmp"
+  ],
+  "dependencies": {
+    "angular": "~1.2.1",
+    "font-awesome": "~4.0.3",
+    "bootstrap": "3.0",
+    "angular-touch": "~1.2.2",
+    "angular-route": "~1.2.2",
+    "iscroll": "~5.1.1",
+    "fastclick": "~1.0.0",
+    "overthrow": "~0.7.0",
+    "angular-toggle-switch": "~0.3.0"
+  }
+}
