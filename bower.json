@@ -36,6 +36,7 @@
     "angular-route": "~1.2.2",
     "iscroll": "~5.1.1",
     "fastclick": "~1.0.0",
-    "overthrow": "~0.7.0"
+    "overthrow": "~0.7.0",
+    "angular-toggle-switch": "~0.3.0"
   }
 }

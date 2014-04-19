@@ -7,7 +7,9 @@ angular.module('mobile-angular-ui.directives.forms', [])
 
     link: (scope, elem, attrs) ->      
       attrs.id ?= attrs.ngModel.replace(".", "_") + "_input"
-      elem.addClass("form-control")
+      unless attrs.type in ["checkbox", "radio"]
+        elem.addClass("form-control")
+
       ll = angular.element("""<label for="#{attrs.id}" class="control-label col-sm-2">#{attrs.label}</label>""")
       w1 = angular.element("""<div class="form-group container-fluid"></div>""")
       w2 = angular.element("""<div class="row"></div>""")
@@ -17,26 +19,25 @@ angular.module('mobile-angular-ui.directives.forms', [])
   }
 )
 
-.directive( "bsTextarea", -> 
-  return {
-    replace: true
-    require: "ngModel"
-    template: (elem, attrs) -> 
-      inputId = attrs.ngModel.replace(".", "_") + "_input"
-      """
-        <div class="form-group container-fluid">
-          <div class="row">
-            <label for="#{inputId}" class="control-label col-sm-2">#{attrs.label}</label>
-            <div class="col-sm-10">
-              <textarea id="#{inputId}" ng-model="#{attrs.ngModel}" class="form-control #{attrs.class or ''}"></textarea>
-            </div>
-          </div>
-        </div>
-      """
+.directive "switch", ->
+  restrict: "EA"
+  replace: true
+  scope:
+    model: "=ngModel"
+    disabled: "@"
 
-    link: (scope, element, attrs) ->
-      element.removeAttr('label')
-             .removeAttr('ng-model')
-             .attr('class', "form-group")
-  }
-)
+  template: """
+    <div class="switch" ng-click="toggle()" ng-class="{ 'active': model }">
+        <div class="switch-handle"></div>
+    </div>
+  """
+
+  controller: [
+    "$scope"
+    ($scope) ->
+      $scope.toggle = toggle = ->
+        $scope.model = not $scope.model  unless $scope.disabled
+  ]
+  compile: (element, attrs) ->
+    attrs.disabled = false  unless attrs.disabled
+

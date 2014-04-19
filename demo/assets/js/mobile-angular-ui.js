@@ -140,11 +140,13 @@ angular.module('mobile-angular-ui.directives.forms', []).directive("bsInput", fu
     replace: true,
     require: "ngModel",
     link: function(scope, elem, attrs) {
-      var ll, w1, w2, w3;
+      var ll, w1, w2, w3, _ref;
       if (attrs.id == null) {
         attrs.id = attrs.ngModel.replace(".", "_") + "_input";
       }
-      elem.addClass("form-control");
+      if ((_ref = attrs.type) !== "checkbox" && _ref !== "radio") {
+        elem.addClass("form-control");
+      }
       ll = angular.element("<label for=\"" + attrs.id + "\" class=\"control-label col-sm-2\">" + attrs.label + "</label>");
       w1 = angular.element("<div class=\"form-group container-fluid\"></div>");
       w2 = angular.element("<div class=\"row\"></div>");
@@ -153,17 +155,29 @@ angular.module('mobile-angular-ui.directives.forms', []).directive("bsInput", fu
       return w2.prepend(ll);
     }
   };
-}).directive("bsTextarea", function() {
+}).directive("switch", function() {
   return {
+    restrict: "EA",
     replace: true,
-    require: "ngModel",
-    template: function(elem, attrs) {
-      var inputId;
-      inputId = attrs.ngModel.replace(".", "_") + "_input";
-      return "<div class=\"form-group container-fluid\">\n  <div class=\"row\">\n    <label for=\"" + inputId + "\" class=\"control-label col-sm-2\">" + attrs.label + "</label>\n    <div class=\"col-sm-10\">\n      <textarea id=\"" + inputId + "\" ng-model=\"" + attrs.ngModel + "\" class=\"form-control " + (attrs["class"] || '') + "\"></textarea>\n    </div>\n  </div>\n</div>";
+    scope: {
+      model: "=ngModel",
+      disabled: "@"
     },
-    link: function(scope, element, attrs) {
-      return element.removeAttr('label').removeAttr('ng-model').attr('class', "form-group");
+    template: "<div class=\"switch\" ng-click=\"toggle()\" ng-class=\"{ 'active': model }\">\n    <div class=\"switch-handle\"></div>\n</div>",
+    controller: [
+      "$scope", function($scope) {
+        var toggle;
+        return $scope.toggle = toggle = function() {
+          if (!$scope.disabled) {
+            return $scope.model = !$scope.model;
+          }
+        };
+      }
+    ],
+    compile: function(element, attrs) {
+      if (!attrs.disabled) {
+        return attrs.disabled = false;
+      }
     }
   };
 });
@@ -211,6 +225,9 @@ angular.module("mobile-angular-ui.directives.panels", []).directive("bsPanel", f
     replace: true,
     scope: false,
     transclude: true,
+    link: function(scope, elem, attrs) {
+      return elem.removeAttr('title');
+    },
     template: function(elems, attrs) {
       var heading;
       heading = "";

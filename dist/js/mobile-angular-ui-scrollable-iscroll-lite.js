@@ -961,24 +961,25 @@ if ( typeof module != 'undefined' && module.exports ) {
       return $window.onresize = adjustScrollablesHeight;
     }
   ]).directive("scrollableContent", function() {
-    ({
+    return {
       replace: false,
       restrict: "C",
-      link: function(scope, element, attr) {}
-    });
-    adjustScrollableHeight(element.parent()[0]);
-    return setTimeout((function() {
-      var iscroll;
-      [].slice.call(document.querySelectorAll("input, select, button, textarea")).forEach(function(el) {
-        return el.addEventListener(("ontouchstart" in window ? "touchstart" : "mousedown"), function(e) {
-          return e.stopPropagation();
-        });
-      });
-      return iscroll = new IScroll(element[0], {
-        scrollbars: true,
-        mouseWheel: true,
-        checkDOMChanges: true
-      });
-    }), 200);
+      link: function(scope, element, attr) {
+        adjustScrollableHeight(element.parent()[0]);
+        return setTimeout((function() {
+          var iscroll;
+          [].slice.call(document.querySelectorAll("input, select, button, textarea")).forEach(function(el) {
+            return el.addEventListener(("ontouchstart" in window ? "touchstart" : "mousedown"), function(e) {
+              return e.stopPropagation();
+            });
+          });
+          return iscroll = new IScroll(element[0], {
+            scrollbars: true,
+            mouseWheel: true,
+            checkDOMChanges: true
+          });
+        }), 200);
+      }
+    };
   });
 })();

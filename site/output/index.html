@@ -20,16 +20,18 @@
   </head>
   <body>
     <div class="navbar navbar-top">
+
         <h1 class="navbar-brand">
           Mobile Angular UI
         </h1>
-
         <ul class="nav navbar-nav pull-right">
           <li><iframe class="star-repo" src="http://ghbtns.com/github-btn.html?user=mcasimir&amp;repo=mobile-angular-ui&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="152px" height="30px"></iframe>
           </li>
           <li><a href="demo" class="btn btn-primary"><i class="fa fa-eye"></i> Demo</a></li>
           <li><a class="nav-github" href="https://github.com/mcasimir/mobile-angular-ui" target="_blank"><i class="fa fa-github"></i></a></li>
         </ul>
+
+
     </div>
 
     <div id="main">
@@ -70,7 +72,7 @@
 </div>
 
 <p><strong>Mobile Angular UI</strong> is <strong><em>a mobile UI framework</em></strong> just like Sencha Touch or jQuery Mobile but is based on <strong><em>trending technologies you already know and love</em></strong> like Angular.js and Twitter Bootstrap.</p>
-<p><br><a href="https://github.com/mcasimir/mobile-angular-ui/archive/master.zip" class="btn btn-primary btn-lg"><i class="fa fa-download"></i> Download</a> <a href="demo" class="btn btn-warning btn-lg"><i class="fa fa-eye"></i> Demo</a></p>
+<p><br><a href="https://github.com/mcasimir/mobile-angular-ui/archive/master.zip" class="btn btn-primary btn-lg"><i class="fa fa-download"></i> Download</a> <a href="demo" class="btn btn-warning btn-lg"><i class="fa fa-eye"></i> Demo</a> <a class="btn btn-success btn-lg" href="https://pledgie.com/campaigns/24868"><i class="fa fa-usd"> Donate</i></a></p>
 </div>
 
 
@@ -668,11 +670,9 @@ The content to take place in the placeholder.
 <p>Accordion component is achieved via <code>toggle</code> and <code>toggleable</code> directives. <code>exclusion-group</code> parameter is used to inactivate other panels but the active one.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-group"</span><span class="ot"> id=</span><span class="st">"accordion"</span><span class="kw">&gt;</span>
   <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel panel-default"</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-heading"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-heading"</span><span class="ot"> toggle target=</span><span class="st">"collapseOne"</span><span class="kw">&gt;</span>
       <span class="kw">&lt;h4</span><span class="ot"> class=</span><span class="st">"panel-title"</span><span class="kw">&gt;</span>
-        <span class="kw">&lt;a</span><span class="ot"> href toggle target=</span><span class="st">"collapseOne"</span><span class="kw">&gt;</span>
           Collapsible Group Item #1
-        <span class="kw">&lt;/a&gt;</span>
       <span class="kw">&lt;/h4&gt;</span>
     <span class="kw">&lt;/div&gt;</span>
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">"collapseOne"</span><span class="ot"> toggleable active-class=</span><span class="st">"in"</span><span class="ot"> exclusion-group=</span><span class="st">"accordion1"</span><span class="ot"> default=</span><span class="st">"active"</span><span class="ot"> class=</span><span class="st">"panel-collapse collapse"</span><span class="kw">&gt;</span>
@@ -682,11 +682,9 @@ The content to take place in the placeholder.
     <span class="kw">&lt;/div&gt;</span>
   <span class="kw">&lt;/div&gt;</span>
   <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel panel-default"</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-heading"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-heading"</span><span class="ot"> toggle target=</span><span class="st">"collapseTwo"</span><span class="kw">&gt;</span>
       <span class="kw">&lt;h4</span><span class="ot"> class=</span><span class="st">"panel-title"</span><span class="kw">&gt;</span>
-        <span class="kw">&lt;a</span><span class="ot"> href toggle target=</span><span class="st">"collapseTwo"</span><span class="kw">&gt;</span>
           Collapsible Group Item #2
-        <span class="kw">&lt;/a&gt;</span>
       <span class="kw">&lt;/h4&gt;</span>
     <span class="kw">&lt;/div&gt;</span>
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">"collapseTwo"</span><span class="ot"> toggleable active-class=</span><span class="st">"in"</span><span class="ot"> exclusion-group=</span><span class="st">"accordion1"</span><span class="ot"> class=</span><span class="st">"panel-collapse collapse"</span><span class="kw">&gt;</span>
@@ -696,11 +694,9 @@ The content to take place in the placeholder.
     <span class="kw">&lt;/div&gt;</span>
   <span class="kw">&lt;/div&gt;</span>
   <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel panel-default"</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-heading"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-heading"</span><span class="ot"> toggle target=</span><span class="st">"collapseThree"</span><span class="kw">&gt;</span>
       <span class="kw">&lt;h4</span><span class="ot"> class=</span><span class="st">"panel-title"</span><span class="kw">&gt;</span>
-        <span class="kw">&lt;a</span><span class="ot"> href toggle target=</span><span class="st">"collapseThree"</span><span class="kw">&gt;</span>
           Collapsible Group Item #3
-        <span class="kw">&lt;/a&gt;</span>
       <span class="kw">&lt;/h4&gt;</span>
     <span class="kw">&lt;/div&gt;</span>
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">"collapseThree"</span><span class="ot"> toggleable active-class=</span><span class="st">"in"</span><span class="ot"> exclusion-group=</span><span class="st">"accordion1"</span><span class="ot"> class=</span><span class="st">"panel-collapse collapse"</span><span class="kw">&gt;</span>
@@ -832,6 +828,9 @@ The content to take place in the placeholder.
     }
 });</code></pre>
 <p>Now swiping items we will see them moving and rotating. When releasing an item if the swipe lenght was at least 3/10 of the item width then carouselPrev/carouselNext are invoked according to swipe direction.</p>
+<h3>Toggle Switch</h3>
+<figure class="full-width-figure"><img src="figs/switch.png" alt=""></figure><p>The <code>switch</code> directive (not to be confused with <code>ng-switch</code>) lets you create a toggle switch control bound to a boolean <code>ngModel</code> value.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;switch</span><span class="ot"> ng-model=</span><span class="st">"invoice.payed"</span><span class="kw">&gt;&lt;/switch&gt;</span></code></pre>
 <h2 class="section-title">
   
 <i class="fa fa-wrench"></i> <br> Utils
@@ -858,17 +857,9 @@ The content to take place in the placeholder.
 <span class="kw">&lt;/div&gt;</span>
   <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<h4><code>bs-textarea</code></h4>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;textarea</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"customer.mailing_address"</span><span class="ot"> label=</span><span class="st">"Address"</span><span class="ot"> bs-textarea</span><span class="kw">&gt;&lt;/textarea&gt;</span></code></pre>
-<p>That translates to</p>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"form-group"</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> bs-textarea=</span><span class="st">""</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"row"</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">"customer_mailing_address_input"</span><span class="ot"> class=</span><span class="st">"control-label col-sm-2"</span><span class="kw">&gt;</span>Address<span class="kw">&lt;/label&gt;</span>
-    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"col-sm-10"</span><span class="kw">&gt;</span>
-      <span class="kw">&lt;textarea</span><span class="ot"> id=</span><span class="st">"customer_mailing_address_input"</span><span class="ot"> ng-model=</span><span class="st">"customer.mailing_address"</span><span class="ot"> class=</span><span class="st">"form-control  ng-pristine ng-valid"</span><span class="kw">&gt;&lt;/textarea&gt;</span>
-<span class="kw">&lt;/div&gt;</span>
-  <span class="kw">&lt;/div&gt;</span>
-<span class="kw">&lt;/div&gt;</span></code></pre>
+<p>Note that this directive only wraps target element with some html. This lets you apply it to any type of control, even custom one.</p>
+<p>So for instance you can apply it to <code>textarea</code> or <code>switch</code> as well.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;switch</span><span class="ot"> ng-model=</span><span class="st">"invoice.payed"</span><span class="ot"> label=</span><span class="st">"Payed"</span><span class="ot"> bs-input</span><span class="kw">&gt;&lt;/switch&gt;&lt;textarea</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"customer.mailing_address"</span><span class="ot"> label=</span><span class="st">"Address"</span><span class="ot"> bs-input</span><span class="kw">&gt;&lt;/textarea&gt;</span></code></pre>
 <h3>Panel Helpers</h3>
 <h4> <code>bs-panel</code>
 </h4>

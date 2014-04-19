@@ -6,6 +6,9 @@ angular.module("mobile-angular-ui.directives.panels", [])
     replace: true
     scope: false
     transclude: true
+    link: (scope, elem, attrs) ->
+      elem.removeAttr('title')
+
     template: (elems, attrs) -> 
       heading = ""
       

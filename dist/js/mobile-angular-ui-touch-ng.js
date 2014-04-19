@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.2.15-build.2378+sha.9335378
+ * @license AngularJS v1.2.17-build.119+sha.227822d
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -187,12 +187,15 @@ ngTouch.factory('$swipe', [function() {
  * upon tap. (Event object is available as `$event`)
  *
  * @example
-    <example>
+    <example module="ngClickExample" deps="angular-touch.js">
       <file name="index.html">
         <button ng-click="count = count + 1" ng-init="count=0">
           Increment
         </button>
         count: {{ count }}
+      </file>
+      <file name="script.js">
+        angular.module('ngClickExample', ['ngTouch']);
       </file>
     </example>
  */
@@ -215,6 +218,7 @@ ngTouch.directive('ngClick', ['$parse', '$timeout', '$rootElement',
   var ACTIVE_CLASS_NAME = 'ng-click-active';
   var lastPreventedTime;
   var touchCoordinates;
+  var lastLabelClickCoordinates;
 
 
   // TAP EVENTS AND GHOST CLICKS
@@ -286,9 +290,22 @@ ngTouch.directive('ngClick', ['$parse', '$timeout', '$rootElement',
     var y = touches[0].clientY;
     // Work around desktop Webkit quirk where clicking a label will fire two clicks (on the label
     // and on the input element). Depending on the exact browser, this second click we don't want
-    // to bust has either (0,0) or negative coordinates.
+    // to bust has either (0,0), negative coordinates, or coordinates equal to triggering label
+    // click event
     if (x < 1 && y < 1) {
       return; // offscreen
+    }
+    if (lastLabelClickCoordinates &&
+        lastLabelClickCoordinates[0] === x && lastLabelClickCoordinates[1] === y) {
+      return; // input click triggered by label click
+    }
+    // reset label click coordinates on first subsequent click
+    if (lastLabelClickCoordinates) {
+      lastLabelClickCoordinates = null;
+    }
+    // remember label click coordinates to prevent click busting of trigger click event on input
+    if (event.target.tagName.toLowerCase() === 'label') {
+      lastLabelClickCoordinates = [x, y];
     }
 
     // Look for an allowable region containing this click.
@@ -455,7 +472,7 @@ ngTouch.directive('ngClick', ['$parse', '$timeout', '$rootElement',
  * upon left swipe. (Event object is available as `$event`)
  *
  * @example
-    <example>
+    <example module="ngSwipeLeftExample" deps="angular-touch.js">
       <file name="index.html">
         <div ng-show="!showActions" ng-swipe-left="showActions = true">
           Some list content, like an email in the inbox
@@ -464,6 +481,9 @@ ngTouch.directive('ngClick', ['$parse', '$timeout', '$rootElement',
           <button ng-click="reply()">Reply</button>
           <button ng-click="delete()">Delete</button>
         </div>
+      </file>
+      <file name="script.js">
+        angular.module('ngSwipeLeftExample', ['ngTouch']);
       </file>
     </example>
  */
@@ -485,7 +505,7 @@ ngTouch.directive('ngClick', ['$parse', '$timeout', '$rootElement',
  * upon right swipe. (Event object is available as `$event`)
  *
  * @example
-    <example>
+    <example module="ngSwipeRightExample" deps="angular-touch.js">
       <file name="index.html">
         <div ng-show="!showActions" ng-swipe-left="showActions = true">
           Some list content, like an email in the inbox
@@ -494,6 +514,9 @@ ngTouch.directive('ngClick', ['$parse', '$timeout', '$rootElement',
           <button ng-click="reply()">Reply</button>
           <button ng-click="delete()">Delete</button>
         </div>
+      </file>
+      <file name="script.js">
+        angular.module('ngSwipeRightExample', ['ngTouch']);
       </file>
     </example>
  */

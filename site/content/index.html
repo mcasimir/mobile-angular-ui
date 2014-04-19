@@ -37,7 +37,10 @@ title: Angular JS Mobile UI framework with Bootstrap 3 Css
 
 <br />
 
-<a href="https://github.com/mcasimir/mobile-angular-ui/archive/master.zip" class="btn btn-primary btn-lg"><i class="fa fa-download"></i> Download</a> <a href="demo" class="btn btn-warning btn-lg"><i class="fa fa-eye"></i> Demo</a>
+<a href="https://github.com/mcasimir/mobile-angular-ui/archive/master.zip" class="btn btn-primary btn-lg"><i class="fa fa-download"></i> Download</a>
+<a href="demo" class="btn btn-warning btn-lg"><i class="fa fa-eye"></i> Demo</a>
+<a class="btn btn-success btn-lg" href='https://pledgie.com/campaigns/24868'><i class="fa fa-usd"> Donate</i></a>
+
 
 </div>
 
@@ -733,11 +736,9 @@ Accordion component is achieved via `toggle` and `toggleable` directives. `exclu
 ``` html
 <div class="panel-group" id="accordion">
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading" toggle target="collapseOne">
       <h4 class="panel-title">
-        <a href toggle target="collapseOne">
           Collapsible Group Item #1
-        </a>
       </h4>
     </div>
     <div id="collapseOne" toggleable active-class="in" exclusion-group="accordion1" default="active" class="panel-collapse collapse">
@@ -747,11 +748,9 @@ Accordion component is achieved via `toggle` and `toggleable` directives. `exclu
     </div>
   </div>
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading" toggle target="collapseTwo">
       <h4 class="panel-title">
-        <a href toggle target="collapseTwo">
           Collapsible Group Item #2
-        </a>
       </h4>
     </div>
     <div id="collapseTwo" toggleable active-class="in" exclusion-group="accordion1" class="panel-collapse collapse">
@@ -761,11 +760,9 @@ Accordion component is achieved via `toggle` and `toggleable` directives. `exclu
     </div>
   </div>
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading" toggle target="collapseThree">
       <h4 class="panel-title">
-        <a href toggle target="collapseThree">
           Collapsible Group Item #3
-        </a>
       </h4>
     </div>
     <div id="collapseThree" toggleable active-class="in" exclusion-group="accordion1" class="panel-collapse collapse">
@@ -930,6 +927,19 @@ app.directive( "carouselExampleItem", function($rootScope, $swipe){
 
 Now swiping items we will see them moving and rotating. When releasing an item if the swipe lenght was at least 3/10 of the item width then carouselPrev/carouselNext are invoked according to swipe direction.
 
+
+### Toggle Switch
+
+<figure class="full-width-figure">
+  <img src="figs/switch.png" alt=""/>
+</figure>
+
+The `switch` directive (not to be confused with `ng-switch`) lets you create a toggle switch control bound to a boolean `ngModel` value. 
+
+``` html
+<switch  ng-model="invoice.payed"></switch>
+```
+
 <h2 class="section-title">
   <i class="fa fa-wrench"></i>
   <br/>
@@ -976,24 +986,13 @@ That translates to
 </div>
 ```
 
+Note that this directive only wraps target element with some html. This lets you apply it to any type of control, even custom one.
 
-#### `bs-textarea`
+So for instance you can apply it to `textarea` or `switch` as well.
 
-``` html
-<textarea type="text" ng-model="customer.mailing_address" label="Address" bs-textarea></textarea>
-```
-
-That translates to
-
-``` html
-<div class="form-group" type="text" bs-textarea="">
-  <div class="row">
-    <label for="customer_mailing_address_input" class="control-label col-sm-2">Address</label>
-    <div class="col-sm-10">
-      <textarea id="customer_mailing_address_input" ng-model="customer.mailing_address" class="form-control  ng-pristine ng-valid"></textarea>
-    </div>
-  </div>
-</div>
+```html
+<switch            ng-model="invoice.payed"     label="Payed" bs-input></switch>
+<textarea type="text" ng-model="customer.mailing_address" label="Address" bs-input></textarea>
 ```
 
 ### Panel Helpers
