@@ -6761,8 +6761,12 @@ textarea.ng-invalid {
   cursor: pointer;
 }
 
-.panel-group .panel-heading {
-  padding: 10px;
+html .panel-group .panel-heading {
+  padding: 0 15px;
+}
+
+html .panel-group .panel-title {
+  line-height: 40px;
 }
 
 .panel-heading,
