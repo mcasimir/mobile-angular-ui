@@ -95,7 +95,7 @@ app.controller('MainController', function($rootScope, $scope, analytics){
   }
 
   $scope.scrollItems = scrollItems;
-  $scope.invoice = {};
+  $scope.invoice = {payed: true};
   
   $scope.userAgent =  navigator.userAgent;
   $scope.chatUsers = [

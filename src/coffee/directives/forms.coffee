@@ -32,12 +32,11 @@ angular.module('mobile-angular-ui.directives.forms', [])
     </div>
   """
 
-  controller: [
-    "$scope"
-    ($scope) ->
-      $scope.toggle = toggle = ->
-        $scope.model = not $scope.model  unless $scope.disabled
-  ]
-  compile: (element, attrs) ->
-    attrs.disabled = false  unless attrs.disabled
+  link: (scope, elem, attrs) ->
+    scope.toggle = toggle = ->
+      unless attrs.disabled?
+        scope.model = not scope.model
 
+    setTimeout (-> 
+      elem.addClass('switch-transition-enabled')
+      ), 200 

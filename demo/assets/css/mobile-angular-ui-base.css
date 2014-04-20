@@ -6276,9 +6276,6 @@ input[type="search"] {
   background-color: #fff;
   border: 1px solid #cccccc;
   border-radius: 999px;
-  -webkit-transition: background-color 200ms ease, border 200ms ease;
-  -moz-transition: background-color 200ms ease, border 200ms ease;
-  transition: background-color 200ms ease, border 200ms ease;
 }
 
 .switch .switch-handle {
@@ -6291,9 +6288,6 @@ input[type="search"] {
   background-color: #fff;
   border: 1px solid #cccccc;
   border-radius: 100px;
-  -webkit-transition: -webkit-transform 200ms ease, background-color 200ms ease;
-  -moz-transition: -moz-transform 200ms ease, background-color 200ms ease;
-  transition: transform 200ms ease, background-color 200ms ease;
 }
 
 .switch.active {
@@ -6306,6 +6300,18 @@ input[type="search"] {
   -webkit-transform: translate3d(25px, 0, 0);
   -moz-transform: translate3d(25px, 0, 0);
   transform: translate3d(25px, 0, 0);
+}
+
+.switch-transition-enabled {
+  -webkit-transition: background-color 200ms ease, border 200ms ease;
+  -moz-transition: background-color 200ms ease, border 200ms ease;
+  transition: background-color 200ms ease, border 200ms ease;
+}
+
+.switch-transition-enabled > .switch-handle {
+  -webkit-transition: -webkit-transform 200ms ease, background-color 200ms ease;
+  -moz-transition: -moz-transform 200ms ease, background-color 200ms ease;
+  transition: transform 200ms ease, background-color 200ms ease;
 }
 
 .btn.active,

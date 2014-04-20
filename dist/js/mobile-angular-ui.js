@@ -164,20 +164,16 @@ angular.module('mobile-angular-ui.directives.forms', []).directive("bsInput", fu
       disabled: "@"
     },
     template: "<div class=\"switch\" ng-click=\"toggle()\" ng-class=\"{ 'active': model }\">\n    <div class=\"switch-handle\"></div>\n</div>",
-    controller: [
-      "$scope", function($scope) {
-        var toggle;
-        return $scope.toggle = toggle = function() {
-          if (!$scope.disabled) {
-            return $scope.model = !$scope.model;
-          }
-        };
-      }
-    ],
-    compile: function(element, attrs) {
-      if (!attrs.disabled) {
-        return attrs.disabled = false;
-      }
+    link: function(scope, elem, attrs) {
+      var toggle;
+      scope.toggle = toggle = function() {
+        if (attrs.disabled == null) {
+          return scope.model = !scope.model;
+        }
+      };
+      return setTimeout((function() {
+        return elem.addClass('switch-transition-enabled');
+      }), 200);
     }
   };
 });

@@ -38,10 +38,6 @@ input[type="search"] {
 
 .switch {
   cursor: pointer;
-  -webkit-transition: background-color 200ms ease, border 200ms ease;
-  -moz-transition: background-color 200ms ease, border 200ms ease;
-  transition: background-color 200ms ease, border 200ms ease;
-
   position: relative;
   display: block;
   width: @switch-width;
@@ -61,9 +57,6 @@ input[type="search"] {
     background-color: #fff;
     border: 1px solid @input-border;
     border-radius: 100px;
-    -webkit-transition: -webkit-transform 200ms ease, background-color 200ms ease;
-    -moz-transition: -moz-transform 200ms ease, background-color 200ms ease;
-    transition: transform 200ms ease, background-color 200ms ease;
   }
 
 
@@ -79,6 +72,17 @@ input[type="search"] {
       transform: translate3d(@switch-handle-diameter,0,0);
     }
   }
+}
+
+.switch-transition-enabled {
+  -webkit-transition: background-color 200ms ease, border 200ms ease;
+  -moz-transition: background-color 200ms ease, border 200ms ease;
+  transition: background-color 200ms ease, border 200ms ease;
+}
+.switch-transition-enabled>.switch-handle{
+  -webkit-transition: -webkit-transform 200ms ease, background-color 200ms ease;
+  -moz-transition: -moz-transform 200ms ease, background-color 200ms ease;
+  transition: transform 200ms ease, background-color 200ms ease;
 }
 
 
