@@ -1,6 +1,10 @@
 body {
-  font-family: 'Source Sans Pro', sans-serif;
   font-size: 16px;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: geometricPrecision;
+  font-family: "Roboto", arial, sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -19,45 +23,37 @@ b, strong {
 }
 
 .navbar {
-  margin-bottom: 0;
-  background: #5899d0;
-  color: #fff;
+  background: #FFFFFF;
+  border-bottom: 1px solid #EBEBEB;
+  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, .2);
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, .2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, .2);
+  color: #333;
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
   border-radius: 0;
   position: relative;
+  padding: 15px;
+  z-index: 1000;
 }
-
-.navbar-top:after {
-  content: "";
-  display: block;
-  position: absolute;
-  bottom: 0;
-  margin-bottom: -15px;
-  top: auto;
-  left: 50%;
-  right: auto;
-  width: 0px;
-  height: 0px;
-  margin-left: -25px;
-  border-style: solid;
-  border-width: 15px 25px 0 25px;
-  border-color: #5899d0 transparent transparent transparent;
-  z-index: 200;
-}
-
 
 .navbar-nav {
   margin: 0;
   padding-right: 15px; 
 }
 
-.navbar-nav>li>a {
+.navbar-default .navbar-nav>li>a {
   margin-top: 2px;
   padding-top: 10px;
   padding-bottom: 10px;
-  color: white;
-  text-transform: uppercase;
+  color: #666;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+  color: #3498d9;
+  background: transparent;
 }
 
 .navbar-nav .nav-github {
@@ -70,8 +66,11 @@ b, strong {
 }
 
 .navbar-brand {
-  text-transform: uppercase;
   margin: 0;
+}
+
+.navbar-brand a, .navbar-brand a:hover{
+  color: #333;
 }
 
 .navbar-nav>li>a:hover {
@@ -84,25 +83,15 @@ b, strong {
   position: relative;
   font-size: 30px;
   line-height: 48px;
+  margin-top: -20px;
+  background-image: -o-linear-gradient(179deg, #30BDED 0%, #2085C5 100%);
+  background-image: -moz-linear-gradient(179deg, #30BDED 0%, #2085C5 100%);
+  background-image: -ms-linear-gradient(179deg, #30BDED 0%, #2085C5 100%);
+  background-image: linear-gradient(89deg, #30BDED 0%, #2085C5 100%);
+  color: #fff;
+  font-weight: 300;
 }
 
-.jumbotron:after {
-  content: "";
-  display: block;
-  position: absolute;
-  bottom: 0;
-  margin-bottom: -15px;
-  top: auto;
-  left: 50%;
-  right: auto;
-  width: 0px;
-  height: 0px;
-  margin-left: -25px;
-  border-style: solid;
-  border-width: 15px 25px 0 25px;
-  border-color: #ecf0f1 transparent transparent transparent;
-  z-index: 200;
-}
 
 .feature-image {
   padding: 20px;

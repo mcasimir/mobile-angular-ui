@@ -9,30 +9,47 @@
 
     <title>Mobile Angular UI: Angular JS Mobile UI framework with Bootstrap 3 Css</title>
     <meta name="description" content="Mobile Angular UI is an HTML5 mobile UI framework that will let you use Angular Js and Bootstrap 3 for mobile app development." />
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500' rel='stylesheet' type='text/css'>
+
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-    <link rel="shortcut icon" href="favicon.png">
-    <link rel="stylesheet" href="style.css">
-
-    <!-- you don't need to keep this, but it's cool for stats! -->
-    <meta name="generator" content="nanoc <%= Nanoc::VERSION %>">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="stylesheet" href="/style.css">
   </head>
   <body>
-    <div class="navbar navbar-top">
+    <nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
 
-        <h1 class="navbar-brand">
-          Mobile Angular UI
-        </h1>
-        <ul class="nav navbar-nav pull-right">
-          <li><iframe class="star-repo" src="http://ghbtns.com/github-btn.html?user=mcasimir&amp;repo=mobile-angular-ui&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="152px" height="30px"></iframe>
-          </li>
-          <li><a href="demo" class="btn btn-primary"><i class="fa fa-eye"></i> Demo</a></li>
-          <li><a class="nav-github" href="https://github.com/mcasimir/mobile-angular-ui" target="_blank"><i class="fa fa-github"></i></a></li>
-        </ul>
-
-
+      <h1 class="navbar-brand"><a href="/">Mobile Angular UI</a></h1>
     </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+            <li><a href="/demo">Demo</a></li>
+            <li><a href="/docs">Docs</a></li>
+            <li><a href="/apps">Apps</a></li>
+            <li><a href="/apps">Blog</a></li>
+            <li><a href="/apps">Roadmap</a></li>
+            <li><a href="https://github.com/mcasimir/mobile-angular-ui" target="_blank"><i class="fa fa-github"></i> Sources</a>
+            </li>
+            <li><iframe class="star-repo" src="http://ghbtns.com/github-btn.html?user=mcasimir&amp;repo=mobile-angular-ui&amp;type=watch&amp;count=true&amp;size=small" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
 
     <div id="main">
       <%= yield %>
@@ -58,7 +75,7 @@
 
     <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    <script src="js/jquery-toc-min.js"></script>
+    <script src="/js/jquery-toc-min.js"></script>
 
     <script>
 
@@ -73,17 +90,18 @@
     var sidebarContainer = $("#sidebar-container");
     var sidebar = $("#sidebar");
     
-
     adjustSidebar = function(e) {
-      var tocOffsetTop = sidebarContainer.offset().top;
-      if($(window).scrollTop() >= tocOffsetTop) {
-        sidebar.addClass("fix");
-        sidebar.css("left", sidebarContainer.offset().left);
-        sidebar.css("width", sidebarContainer.width());
-      } else {
-        sidebar.removeClass("fix");
-        sidebar.css("left", 'auto');
-      }
+      if (sidebarContainer.length > 0) {
+        var tocOffsetTop = sidebarContainer.offset().top;
+        if($(window).scrollTop() >= tocOffsetTop) {
+          sidebar.addClass("fix");
+          sidebar.css("left", sidebarContainer.offset().left);
+          sidebar.css("width", sidebarContainer.width());
+        } else {
+          sidebar.removeClass("fix");
+          sidebar.css("left", 'auto');
+        }        
+      };
     };
 
     $(window).scroll(adjustSidebar);

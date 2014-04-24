@@ -23,7 +23,9 @@
   angular.module("mobile-angular-ui.scrollable", [])
 
   .run( ["$window", ($window) -> 
-      $window.onresize = adjustScrollablesHeight
+      adjustScrollablesHeight()
+      angular.element($window).bind 'resize', ->
+        adjustScrollablesHeight()
     ])
 
   .directive "scrollableContent", ->
