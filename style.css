@@ -423,7 +423,7 @@ h2 {
   margin: 80px 0;
 }
 
-.feature-row h2 {
+.feature-row h2, .sec-help h2 {
   margin: 0 0 20px;
   line-height: 60px;
 }

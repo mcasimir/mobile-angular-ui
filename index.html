@@ -31,7 +31,7 @@
         <span class="icon-bar"></span>
       </button>
 
-      <h1 class="navbar-brand"><a href="/">Mobile Angular UI</a></h1>
+      <h1 class="navbar-brand"><a href="/">Mobile Angular UI <small id="current-version"></small></a></h1>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -304,6 +304,61 @@ Mobile Angular UI it’s an Open Source project. So it needs you! You can suppor
     <script src="/js/jquery-toc-min.js"></script>
 
     <script>
+
+    if ($('#current-version').length) {
+      $.get('https://api.github.com/repos/mcasimir/mobile-angular-ui/tags?callback', function(data){
+          var versions = $.map(data, function(ver) {
+            // i.e. 1.1.0-beta.5
+
+            var name = ver.name.replace(/^v/, "").split('-');
+            var base = name[0].split('.');
+            var label = name[1]
+            res = {
+              major: parseInt(base[0]),
+              minor: parseInt(base[1]),
+              patch: parseInt(base[2]),
+              label: label
+            }
+            return res;
+          });
+          
+          var labelToFloat = function(label) {
+            if (label == null) {
+              return 0;
+            };
+            return parseFloat(label.replace(/rc/i, "3").replace(/beta/i, "2").replace(/alpha/i, "1"));
+          }
+
+          versions = versions.sort(function(v1, v2){
+            if (v1.major == v2.major) {
+              if (v1.minor == v2.minor) {
+                if (v1.patch == v2.patch) {
+                  return labelToFloat(v1.label) - labelToFloat(v2.label);
+                } else {
+                  return v1.patch - v2.patch;
+                }
+              } else {
+                return v1.minor - v2.minor;
+              }
+            } else {
+              return v1.major - v2.major;
+            }
+          });
+
+          var last = versions[versions.length - 1];
+          var number = $.grep([last.major, last.minor, last.patch], function(e){
+            return e != null;
+          }).join('.');
+
+          if(last.label != null) {
+            number += ("-" + last.label);
+          }
+
+          $('#current-version').text(number);
+          
+        
+      });
+    };
 
     $('#toc').toc({
         'selectors': 'h2,h3', //elements to use as headings
