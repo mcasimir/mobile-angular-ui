@@ -5,8 +5,9 @@ angular.module('mobile-angular-ui.directives.overlay', [])
   link: (scope, elem, attrs) ->
     body = elem.html()
     id = attrs.overlay
+    active = "default='#{attrs.default}'" if attrs.default?
     html = """
-      <div class="overlay" id="#{id}" toggleable parent-active-class="overlay-in" active-class="overlay-show">
+      <div class="overlay" id="#{id}" toggleable #{active} parent-active-class="overlay-in" active-class="overlay-show">
         <div class="overlay-inner">
           <div class="overlay-background"></div>
           <a href="##{id}" toggle="off" class="overlay-dismiss">
