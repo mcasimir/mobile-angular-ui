@@ -117,6 +117,10 @@ b, strong {
   font-weight: 300;
 }
 
+.embedded-forum-container {
+  margin-top: -20px;
+  min-height: 600px;
+}
 
 .feature-image {
   padding: 20px;
