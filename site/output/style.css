@@ -1,25 +1,29 @@
 body {
   font-size: 16px;
-  line-height: 1;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
   text-rendering: geometricPrecision;
   font-family: "Roboto", arial, sans-serif;
+  font-weight: 300;
+}
+
+img {
+  max-width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: 'Source Sans Pro', sans-serif; 
+  font-family: 'Roboto', sans-serif; 
   font-weight: normal;
 }
 
 h4, h5, h6, .h4, .h5, .h6 {
   padding: 20px 0 10px;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: normal;
 }
 
 b, strong {
-  font-weight: 600; 
+  font-weight: normal; 
 }
 
 .navbar {
@@ -51,6 +55,21 @@ b, strong {
   font-weight: 300;
 }
 
+.navbar-default .navbar-brand {
+  padding: 8px 0;
+}
+
+.navbar-default .navbar-brand a {
+  font-family: Roboto;
+  font-weight: 300;
+  font-size: 24px;
+  color: #595959;
+  line-height: 30px;
+  background: url(/navbar-logo.png) no-repeat center left;
+  padding: 0 0 0 60px;
+  margin-top: 5px;
+}
+
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
   color: #3498d9;
   background: transparent;
@@ -70,7 +89,13 @@ b, strong {
 }
 
 .navbar-brand a, .navbar-brand a:hover{
-  color: #333;
+  text-decoration: none;
+}
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+  background: #fff;
+  border-color: #aaa;
+  outline: none;
 }
 
 .navbar-nav>li>a:hover {
@@ -92,6 +117,10 @@ b, strong {
   font-weight: 300;
 }
 
+.embedded-forum-container {
+  margin-top: -20px;
+  min-height: 600px;
+}
 
 .feature-image {
   padding: 20px;
@@ -137,12 +166,16 @@ html .page-header {
 .carousel-inner>.item>img, .carousel-inner>.item>a>img {
   display: inline;
   display: inline-block;
+}
+
+.carousel-shadow {
   box-shadow: 0 0 20px rgba(0,0,0,.5);
 }
 
 .carousel-indicators {
 bottom: -50px !important;
 }
+
 
 .carousel-indicators li {
   border-color: #888;
@@ -153,8 +186,14 @@ bottom: -50px !important;
 }
 
 .carousel-control.left, .carousel-control.right {
+  display: none;
   background-image: none;
 }
+
+#carousel-example-generic:hover .carousel-control.left,#carousel-example-generic:hover .carousel-control.right { 
+  display: block;
+}
+
 
 .logo img {
   margin-top: -10px;
@@ -162,15 +201,17 @@ bottom: -50px !important;
 
 .footer {
   margin-top: 40px;
-  padding: 15px;
-  background: #5899d0;
+  padding: 40px 0;
+  background: #333333;
   overflow: hidden;
   z-index: 100000;
   position: relative;
+  color: #fff;
+
 }
 
 .footer a {
-  color: #2a6496;
+  color: #fff;
 }
 
 .footer-title {
@@ -219,7 +260,6 @@ position: relative;
 
 
 .section-title .fa {
-  background: #ccc;
   padding: inherit;
   border-radius: 50px;
   line-height: 50px;
@@ -306,5 +346,150 @@ html .sidebar .toc-h4 a {
 }
 
 .star-repo {
-  margin-top: 9px;
+  margin-top: 12px;
+  margin-left: 14px;
+}
+
+.claim {
+  text-align: center;
+  max-width: 300px;
+  margin: 0 auto 20px;
+}
+
+@media (min-width: 768px) {
+  .claim {
+    text-align: left;
+  }
+}
+
+.claim-buttons {
+  text-align: center;
+}
+
+.btn-claim {
+  border-radius: 13px;
+  border: 1px solid #fff;
+  color: #fff;
+  font-family: Roboto;
+  font-weight: 300;
+  font-size: 24px;
+  color: #FFFFFF;
+  line-height: 32px;
+  padding: 18px 36px;
+  width: 255px;
+  margin: 10px;
+}
+
+.btn-claim:hover {
+  background: rgba(255, 255, 255, .4);
+  color: #fff;
+}
+
+.subclaim {
+  font-family: Roboto;
+  font-weight: 100;
+  font-size: 30px;
+  color: #333333;
+  line-height: 42px;
+}
+
+.feature-row .col-sm-4 {
+  text-align: center;
+}
+
+.feature-row .col-sm-4 img {
+  margin-bottom: 20px;
+}
+
+.feature-row .col-sm-4.pull-right {
+  float: none !important;
+}
+
+@media (min-width: 768px) {
+  .feature-row .col-sm-4.pull-right {
+    float: right !important;
+  }
+}
+
+.sec-help {
+  text-align: center; 
+}
+
+h2 {
+  font-family: Roboto;
+  font-size: 48px;
+  color: #8B8B8B;
+  font-weight: 100;
+
+}
+
+.feature-row {
+  margin: 80px 0;
+}
+
+.feature-row h2, .sec-help h2 {
+  margin: 0 0 20px;
+  line-height: 60px;
+}
+
+.feature-row p, p.big-para {
+  font-family: Roboto;
+  font-weight: 300;
+  font-size: 22px;
+  color: #333333;
+  line-height: 30px;
+}
+
+html .sec-help .btn {
+  border-radius: 13px;
+  border: 1px solid #4A4A4A;
+  font-family: Roboto;
+  font-weight: 100 !important;
+  font-size: 24px;
+  line-height: 32px;
+  padding: 18px 36px;
+  width: 255px;
+  margin: 10px;
+  color: #4A4A4A;
+}
+
+html .sec-help .btn:hover {
+  background: #f8f8f8;
+/*  color: #aaa;
+  border-color: #aaa;
+*/  
+}
+
+.sec-btns {
+  margin-top: 40px;
+}
+
+.carousel img {
+   -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottombottom, from(transparent), color-stop(70%, transparent) , to(rgba(250, 250, 250, 0.1)));
+}
+
+.carousel-container h2 {
+  text-align: center;
+}
+
+.carousel-container h3 {
+  font-weight: 300;
+  max-width: 600px;
+  margin: 0 auto 40px;
+}
+
+.sec-help {
+  margin: 60px 0;
+}
+
+.avatar {
+  border-radius: 100px;
+}
+
+.carousel .item {
+  height: 500px; 
+}
+
+.carousel .item img {
+  max-height: 400px;
 }

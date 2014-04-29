@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
     <link rel="shortcut icon" href="/favicon.png">
     <link rel="stylesheet" href="/style.css">
+
+    <!-- you don't need to keep this, but it's cool for stats! -->
+    <meta name="generator" content="nanoc 3.6.6">
   </head>
   <body>
     <nav class="navbar navbar-default" role="navigation">
@@ -28,7 +31,7 @@
         <span class="icon-bar"></span>
       </button>
 
-      <h1 class="navbar-brand"><a href="/">Mobile Angular UI</a></h1>
+      <h1 class="navbar-brand"><a href="/">Mobile Angular UI <small id="current-version"></small></a></h1>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -36,10 +39,10 @@
       <ul class="nav navbar-nav navbar-right">
             <li><a href="/demo">Demo</a></li>
             <li><a href="/docs">Docs</a></li>
-            <li><a href="/apps">Apps</a></li>
-            <li><a href="/apps">Blog</a></li>
-            <li><a href="/apps">Roadmap</a></li>
-            <li><a href="https://github.com/mcasimir/mobile-angular-ui" target="_blank"><i class="fa fa-github"></i> Sources</a>
+            <li><a href="/forum">Forum</a></li>
+            <!-- <li><a href="/apps">Apps</a></li>
+            <li><a href="/blog">Blog</a></li> -->
+            <li><a href="https://github.com/mcasimir/mobile-angular-ui/issues/4">Roadmap</a></li>
             </li>
             <li><iframe class="star-repo" src="http://ghbtns.com/github-btn.html?user=mcasimir&amp;repo=mobile-angular-ui&amp;type=watch&amp;count=true&amp;size=small" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe></li>
           </ul>
@@ -186,12 +189,10 @@ Docs
 <ol style="list-style-type: decimal">
 <li><p>It uses font-awesome in place of glyphicons</p></li>
 <li><p>responsive css rules for <em>-sm, </em>-md, *-lg are moved out of the default bundle</p></li>
-<li><p>removed/unsupported components:</p></li>
+<li>removed/unsupported components:</li>
 </ol>
 <ul>
 <li>breadcrumbs and pagination: they are just not the best way to navigate a mobile app</li>
-<li>tooltips: unlikely to be useful with small screens and touch devices, popovers should be enough</li>
-<li>modals: are replaced by overlays</li>
 </ul>
 <h2 class="section-title">
 <div class="section-icon">
@@ -839,9 +840,14 @@ The content to take place in the placeholder.
     </div>
 
     <footer class="footer">
-      <div>
-        <h4 class="footer-title">Mobile Angular Ui</h4>
-        <p class="footer-credits">made for you by <a href="https://github.com/mcasimir" target="_blank">mcasimir</a></p>
+      <div class="container">
+        <div class="media">
+          <img src="https://avatars1.githubusercontent.com/u/334881?s=100" alt="" class="pull-left avatar">
+          <div class="media-body">
+            <h4 class="footer-title">Mobile Angular Ui</h4>
+            <p class="footer-credits">made for you by <a href="https://github.com/mcasimir" target="_blank">mcasimir</a></p>            
+          </div>
+        </div>
       </div>
     </footer>
 
@@ -861,6 +867,61 @@ The content to take place in the placeholder.
     <script src="/js/jquery-toc-min.js"></script>
 
     <script>
+
+    if ($('#current-version').length) {
+      $.get('https://api.github.com/repos/mcasimir/mobile-angular-ui/tags?callback', function(data){
+          var versions = $.map(data, function(ver) {
+            // i.e. 1.1.0-beta.5
+
+            var name = ver.name.replace(/^v/, "").split('-');
+            var base = name[0].split('.');
+            var label = name[1]
+            res = {
+              major: parseInt(base[0]),
+              minor: parseInt(base[1]),
+              patch: parseInt(base[2]),
+              label: label
+            }
+            return res;
+          });
+          
+          var labelToFloat = function(label) {
+            if (label == null) {
+              return 0;
+            };
+            return parseFloat(label.replace(/rc/i, "3").replace(/beta/i, "2").replace(/alpha/i, "1"));
+          }
+
+          versions = versions.sort(function(v1, v2){
+            if (v1.major == v2.major) {
+              if (v1.minor == v2.minor) {
+                if (v1.patch == v2.patch) {
+                  return labelToFloat(v1.label) - labelToFloat(v2.label);
+                } else {
+                  return v1.patch - v2.patch;
+                }
+              } else {
+                return v1.minor - v2.minor;
+              }
+            } else {
+              return v1.major - v2.major;
+            }
+          });
+
+          var last = versions[versions.length - 1];
+          var number = $.grep([last.major, last.minor, last.patch], function(e){
+            return e != null;
+          }).join('.');
+
+          if(last.label != null) {
+            number += ("-" + last.label);
+          }
+
+          $('#current-version').text(number);
+          
+        
+      });
+    };
 
     $('#toc').toc({
         'selectors': 'h2,h3', //elements to use as headings

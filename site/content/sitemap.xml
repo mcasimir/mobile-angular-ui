@@ -5,5 +5,11 @@
    <url>
       <loc>http://mobileangularui.com/</loc>
    </url>
+   <url>
+      <loc>http://mobileangularui.com/demo</loc>
+   </url>
+   <url>
+      <loc>http://mobileangularui.com/docs</loc>
+   </url>
 
 </urlset> 
