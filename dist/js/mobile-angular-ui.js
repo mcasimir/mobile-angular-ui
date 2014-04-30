@@ -200,10 +200,13 @@ angular.module('mobile-angular-ui.directives.overlay', []).directive('overlay', 
   "$compile", function($compile) {
     return {
       link: function(scope, elem, attrs) {
-        var body, html, id, sameId;
+        var active, body, html, id, sameId;
         body = elem.html();
         id = attrs.overlay;
-        html = "<div class=\"overlay\" id=\"" + id + "\" toggleable parent-active-class=\"overlay-in\" active-class=\"overlay-show\">\n  <div class=\"overlay-inner\">\n    <div class=\"overlay-background\"></div>\n    <a href=\"#" + id + "\" toggle=\"off\" class=\"overlay-dismiss\">\n      <i class=\"fa fa-times-circle-o\"></i>\n    </a>\n    <div class=\"overlay-content\">\n      <div class=\"overlay-body\">\n        " + body + "\n      </div>\n    </div>\n  </div>\n</div>";
+        if (attrs["default"] != null) {
+          active = "default='" + attrs["default"] + "'";
+        }
+        html = "<div class=\"overlay\" id=\"" + id + "\" toggleable " + active + " parent-active-class=\"overlay-in\" active-class=\"overlay-show\">\n  <div class=\"overlay-inner\">\n    <div class=\"overlay-background\"></div>\n    <a href=\"#" + id + "\" toggle=\"off\" class=\"overlay-dismiss\">\n      <i class=\"fa fa-times-circle-o\"></i>\n    </a>\n    <div class=\"overlay-content\">\n      <div class=\"overlay-body\">\n        " + body + "\n      </div>\n    </div>\n  </div>\n</div>";
         elem.remove();
         sameId = angular.element(document.getElementById(id));
         if (sameId.length > 0 && sameId.hasClass('overlay')) {
