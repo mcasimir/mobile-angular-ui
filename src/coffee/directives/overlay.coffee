@@ -28,7 +28,10 @@ angular.module('mobile-angular-ui.directives.overlay', [])
     if sameId.length > 0 and sameId.hasClass('overlay')
       sameId.remove()
 
-    angular.element(document.body)
-      .prepend($compile( html )( scope )) # moves elem where it overlays everithing
+    body = angular.element(document.body)
+    body.prepend($compile( html )( scope )) # moves elem where it overlays everithing
+
+    if attrs.default is "active"
+      body.addClass('overlay-in')
 
 ])

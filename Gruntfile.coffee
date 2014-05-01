@@ -12,6 +12,25 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON("package.json")
 
+    concurrent:
+      devel: 
+        tasks: ['connect', 'watch']
+        options:
+          limit: 2
+          logConcurrentOutput: true
+
+      site: 
+        tasks: ['connect', 'site-guard']
+        options:
+          limit: 2
+          logConcurrentOutput: true
+
+      all: 
+        tasks: ['connect', 'watch', 'site-guard']
+        options:
+          limit: 3
+          logConcurrentOutput: true
+
     smq: # Split Css by Media Queries
       bootstrap:
         src:  "tmp/mobile.css"
@@ -21,6 +40,7 @@ module.exports = (grunt) ->
     clean: 
       dev: ["tmp", "dist", "demo/assets"]
       site: ["gh-pages"]
+      site_out: ["site/output"]
       tmp_gh_pages_git: ["tmp/gh_pages_git"]
 
     copy:
@@ -66,11 +86,11 @@ module.exports = (grunt) ->
         src: ["**"],
         dest: "gh-pages/.git"
 
-      gh_pages_demo:
+      demo_to_site_out:
         expand: true,
         cwd: "demo/"
         src: ["**"],
-        dest: "gh-pages/demo"
+        dest: "site/output/demo"
 
       gh_pages_site:
         expand: true,
@@ -198,7 +218,8 @@ module.exports = (grunt) ->
       server:
         options:
           hostname: '0.0.0.0'
-          port: 3001
+          port: 3000
+          base: 'site/output'
           keepalive: true
 
     githubPages:
@@ -218,6 +239,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-watch"
   grunt.loadNpmTasks "grunt-github-pages"
   grunt.loadNpmTasks "grunt-recess"
+  grunt.loadNpmTasks "grunt-concurrent"
 
   grunt.task.loadTasks "tasks"
 
@@ -233,15 +255,18 @@ module.exports = (grunt) ->
                                 "copy:demo"
                                 "copy:demo_angular"
                                 "copy:demo_angular_route"
+                                "copy:demo_to_site_out"
                               ]
 
-
-  grunt.registerTask "site", [ 
+  grunt.registerTask "devel",      ["build", "concurrent:devel"]
+  grunt.registerTask "devel-site", ["clean:site_out", "build", "concurrent:site"]
+  grunt.registerTask "default",    ["clean:site_out", "build", "concurrent:all"]
+  
+  grunt.registerTask "push-site", [ 
       "copy:backup_gh_pages_git"
       "clean:site"
       "copy:restore_gh_pages_git"
       "clean:tmp_gh_pages_git"
-      "copy:gh_pages_demo"
       "copy:gh_pages_site"
       "copy:gh_pages_cname"
       "githubPages:site"

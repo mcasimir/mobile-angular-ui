@@ -212,7 +212,11 @@ angular.module('mobile-angular-ui.directives.overlay', []).directive('overlay', 
         if (sameId.length > 0 && sameId.hasClass('overlay')) {
           sameId.remove();
         }
-        return angular.element(document.body).prepend($compile(html)(scope));
+        body = angular.element(document.body);
+        body.prepend($compile(html)(scope));
+        if (attrs["default"] === "active") {
+          return body.addClass('overlay-in');
+        }
       }
     };
   }

@@ -1,3 +1,6 @@
+<%= include_css 'font-awesome' %>
+<%= include_css 'bootstrap' %>
+
 body {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
@@ -299,6 +302,11 @@ position: relative;
   #sidebar-container {
     margin-top: -20px;
   }
+
+  #sidebar {
+    overflow-y: auto;
+    padding-bottom: 20px; 
+  }
 }
 
 .sidebar ul {
@@ -325,6 +333,11 @@ position: relative;
   border-left: 2px solid #5899d0;
   font-weight: 600;
   margin-left: -2px;
+}
+
+html .sidebar .toc-h2 a {
+  text-transform: uppercase;
+  margin-top: 10px;
 }
 
 html .sidebar .toc-h3 a {
@@ -493,3 +506,15 @@ html .sec-help .btn:hover {
 .carousel .item img {
   max-height: 400px;
 }
+
+#docs h2 {
+  margin-bottom: 40px;
+  border-bottom: 1px solid #8B8B8B;
+  padding-bottom: 10px;
+  margin-top: 80px;
+}
+
+#docs #toc0+h2 {
+  margin-top: 0;
+}
+

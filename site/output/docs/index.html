@@ -1,30 +1,25 @@
 <!DOCTYPE HTML>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
-    <title>Mobile Angular UI: Angular JS Mobile UI framework with Bootstrap 3 Css</title>
-    <meta name="description" content="Mobile Angular UI is an HTML5 mobile UI framework that will let you use Angular Js and Bootstrap 3 for mobile app development." />
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500' rel='stylesheet' type='text/css'>
-
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-    <link rel="shortcut icon" href="/favicon.png">
-    <link rel="stylesheet" href="/style.css">
-
-    <!-- you don't need to keep this, but it's cool for stats! -->
-    <meta name="generator" content="nanoc 3.6.6">
-  </head>
-  <body>
+  <title>Mobile Angular UI: Angular JS Mobile UI framework with Bootstrap 3 Css</title>
+  <meta name="description" content="Mobile Angular UI is an HTML5 mobile UI framework that will let you use Angular Js and Bootstrap 3 for mobile app development." />
+  
+  
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500' rel='stylesheet' type='text/css'>
+  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="stylesheet" href="/style.css">
+</head>
+  <body>    
     <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar-collapse">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -34,52 +29,39 @@
       <h1 class="navbar-brand"><a href="/">Mobile Angular UI <small id="current-version"></small></a></h1>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="collapse navbar-collapse" id="main-navbar-collapse">
       <ul class="nav navbar-nav navbar-right">
             <li><a href="/demo">Demo</a></li>
             <li><a href="/docs">Docs</a></li>
             <li><a href="/forum">Forum</a></li>
-            <!-- <li><a href="/apps">Apps</a></li>
-            <li><a href="/blog">Blog</a></li> -->
             <li><a href="https://github.com/mcasimir/mobile-angular-ui/issues/4">Roadmap</a></li>
             </li>
             <li><iframe class="star-repo" src="http://ghbtns.com/github-btn.html?user=mcasimir&amp;repo=mobile-angular-ui&amp;type=watch&amp;count=true&amp;size=small" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe></li>
           </ul>
         </li>
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+    </div>
+  </div>
 </nav>
-
-
 
     <div id="main">
       <div class="container">
-<div id="docs" class="row">
-<div class="col-xs-12 pull-right col-sm-3 col-md-3 col-lg-3">
-<div id="sidebar-container">
-<div id="sidebar">
-<h4 class="sidebar-title">
-Docs
-</h4>
-<div id="toc" class="nav sidebar"></div>
-</div>  
-</div>
-<br>
-</div>
-<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-<h2 class="section-title first-section-title">
-<i class="fa fa-coffee"></i><br> Getting Started
-</h2>
-
-<h3>Installation</h3>
+      <div class="row" id="docs">
+      <div class="col-xs-12 pull-right col-sm-3 col-md-3 col-lg-3">
+      <div id="sidebar-container">
+      <div id="sidebar">
+      <h4 class="sidebar-title">Docs</h4>
+      <div id="toc" class="nav sidebar"></div></div>  
+      </div>
+      <br/>
+      </div>
+      <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+        <h2 id="getting-started">Getting Started</h2>
+<h3 id="installation">Installation</h3>
 <p>Either install via <code>bower</code> or download it</p>
 <pre class="sh"><code>bower install --save mobile-angular-ui</code></pre>
 <p>Load files in the head section of your html</p>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;link</span><span class="ot"> rel=</span><span class="st">"stylesheet"</span><span class="ot"> href=</span><span class="st">"mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css"</span><span class="kw">&gt;</span>
-<span class="kw">&lt;link</span><span class="ot"> rel=</span><span class="st">"stylesheet"</span><span class="ot"> href=</span><span class="st">"mobile-angular-ui/dist/css/mobile-angular-ui-desktop.min.css"</span><span class="kw">&gt;</span>
-<span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">"angular.min.js"</span><span class="kw">&gt;</span>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;link</span><span class="ot"> rel=</span><span class="st">"stylesheet"</span><span class="ot"> href=</span><span class="st">"mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css"</span><span class="kw">&gt;&lt;link</span><span class="ot"> rel=</span><span class="st">"stylesheet"</span><span class="ot"> href=</span><span class="st">"mobile-angular-ui/dist/css/mobile-angular-ui-desktop.min.css"</span><span class="kw">&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"angular.min.js"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;/script&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"angular-route.min.js"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;/script&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"mobile-angular-ui/dist/js/mobile-angular-ui.min.js"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;/script&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"mobile-angular-ui/dist/js/mobile-angular-ui-touch-fastclick.min.js"</span><span class="kw">&gt;</span>
@@ -87,7 +69,7 @@ Docs
 <span class="kw">&lt;/script&gt;</span></code></pre>
 <p>The <code>base</code> css includes only the mobile css (it has no media queries), while the <code>desktop</code> css contains just a few lines of code to make sidebars always visible on desktop. So with these two files you can only work with the <code>.*-xs</code> classes from Bootstrap. If you need more you can include other files from the distribution package to fit your needs. eg. you could add <code>mobile-angular-ui-max-width-767px.css</code> to use <code>(max-width: 767px)</code> media queries from Bootstrap.</p>
 <p>In the example above some other modules are included along with the core js <code>mobile-angular-ui.min.js</code>.</p>
-<h3>mobile-angular-ui.touch</h3>
+<h3 id="mobile-angular-ui.touch">mobile-angular-ui.touch</h3>
 <p><code>mobile-angular-ui-touch-[implementation].js</code> provides touch events and <code>swipeLeft</code>, <code>swipeRight</code> directives.</p>
 <p>Available implemetations are:</p>
 <ul>
@@ -95,8 +77,7 @@ Docs
 <code>mobile-angular-ui-touch-fastclick.min.js</code> (using <code>fastclick.js</code>)</li>
 <li>
 <code>mobile-angular-ui-touch-ng.min.js</code> (using <code>angular-touch</code>)</li>
-</ul>
-<h3>mobile-angular-ui.scrollable</h3>
+</ul><h3 id="mobile-angular-ui.scrollable">mobile-angular-ui.scrollable</h3>
 <p><code>mobile-angular-ui-scrollable-[implementation].min.js</code> will enable <code>[scrollable]</code> directive.</p>
 <p>Available implemetations are:</p>
 <ul>
@@ -106,8 +87,7 @@ Docs
 <code>mobile-angular-ui-scrollable-iscroll.min.js</code> (using <code>iscroll</code>)</li>
 <li>
 <code>mobile-angular-ui-scrollable-iscroll-lite.min.js</code> (using <code>iscroll-lite</code>)</li>
-</ul>
-<h3>Initialization</h3>
+</ul><h3 id="initialization">Initialization</h3>
 <p>Then you can initialize your Angular application declaring <code>mobile-angular-ui</code> as a dependence.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">angular</span>.<span class="fu">module</span>(<span class="st">'myApp'</span>, [<span class="st">"mobile-angular-ui"</span>]);</code></pre>
 <p>This will not load ngRoute, touch events and scrollable modules by default.</p>
@@ -135,7 +115,7 @@ Docs
   <span class="st">'mobile-angular-ui.directives.sidebars'</span>
   <span class="st">'mobile-angular-ui.directives.navbars'</span>
  ]);</code></pre>
-<h3>Basic Layout</h3>
+<h3 id="basic-layout">Basic Layout</h3>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="co">&lt;!-- Sidebars --&gt;</span>
 
 <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"sidebar sidebar-left"</span><span class="ot"> toggleable parent-active-class=</span><span class="st">"sidebar-left-in"</span><span class="ot"> id=</span><span class="st">"mainSidebar"</span><span class="kw">&gt;</span>
@@ -185,23 +165,14 @@ Docs
       <span class="kw">&lt;ng-view</span><span class="ot"> class=</span><span class="st">"app-content"</span><span class="kw">&gt;&lt;/ng-view&gt;</span>
 <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<h3>Differences with Bootstrap 3</h3>
+<h3 id="differences-with-bootstrap-3">Differences with Bootstrap 3</h3>
 <ol style="list-style-type: decimal">
 <li><p>It uses font-awesome in place of glyphicons</p></li>
 <li><p>responsive css rules for <em>-sm, </em>-md, *-lg are moved out of the default bundle</p></li>
 <li>removed/unsupported components:</li>
-</ol>
-<ul>
+</ol><ul>
 <li>breadcrumbs and pagination: they are just not the best way to navigate a mobile app</li>
-</ul>
-<h2 class="section-title">
-<div class="section-icon">
-  
-<i class="fa fa-gears"></i>
-</div>
-Angular Directives<br>
-</h2>
-
+</ul><h2 id="angular-directives">Angular Directives</h2>
 <p>Before going ahead with components you may want to familiarize with some basic mobile angular ui directives.</p>
 <h3 class="page-header">
 <code>scrollable</code>
@@ -294,8 +265,7 @@ The <code>class</code> the parent of the element will acquire when corresponding
 </td>
     </tr>
 </tbody>
-</table>
-<table class="table table-bordered">
+</table><table class="table table-bordered">
 <thead><tr><th colspan="2">
 <code>toggleable</code> directive parameters
 </th></tr></thead>
@@ -350,8 +320,7 @@ The <code>class</code> the parent of the element will acquire when is inactive a
 </td>
     </tr>
 </tbody>
-</table>
-<p>To understand how it works consider the following example:</p>
+</table><p>To understand how it works consider the following example:</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;p</span><span class="ot"> toggleable id=</span><span class="st">"lightbulb"</span><span class="ot"> active-class=</span><span class="st">"text-primary"</span><span class="ot"> class=</span><span class="st">"text-default"</span><span class="kw">&gt;</span>
   <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-lightbulb-o"</span><span class="kw">&gt;&lt;/i&gt;</span>
 <span class="kw">&lt;/p&gt;</span>
@@ -372,7 +341,7 @@ The <code>class</code> the parent of the element will acquire when is inactive a
 <p>The first <code>[toggle]</code> turns on and off the <code>#lightbulb</code> depending of its state. It also reflects the <code>#lightbulb</code> activation since when lightbulb is active it takes the <code>active</code> class.</p>
 <p>Second and third <code>[toggle]</code> are only sending <code>on</code> or <code>off</code> commands to <code>#lightbulb</code>.</p>
 <p><a href="demo/#/toggle">Try this example in the demo</a></p>
-<h4>Programmatic API</h4>
+<h4 id="programmatic-api">Programmatic API</h4>
 <p>Toggle module exposes the <code>toggle</code> and <code>toggleByClass</code> functions through <code>$rootScope</code> to interact with <code>[toggleable]</code> in a programmatic way. This will let you do something like that:</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> ng-swipe-left=</span><span class="st">"toggle('mainSidebar', 'off')"</span><span class="ot"> ng-swipe-right=</span><span class="st">"toggle('mainSidebar', 'on')"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;div&gt;</span></code></pre>
@@ -468,8 +437,7 @@ The default content. Default content is restored each time on <code>$routeChange
 </td>
     </tr>
 </tbody>
-</table>
-<table class="table table-bordered">
+</table><table class="table table-bordered">
 <thead><tr><th colspan="2">
 <code>contentFor</code> directive parameters
 </th></tr></thead>
@@ -502,13 +470,8 @@ The content to take place in the placeholder.
 </td>
     </tr>
 </tbody>
-</table>
-<h2 class="section-title">
-  
-<i class="fa fa-code"></i> <br> Components
-</h2>
-
-<h3>Navbars</h3>
+</table><h2 id="components">Components</h2>
+<h3 id="navbars">Navbars</h3>
 <p>Bootstrap default navbars are awesome for responsive websites, but are not the best to interact with in a small screen. Plus fixed positioning is not an option to create navbars standing in top or bottom of the screen.</p>
 <p>Mobile Angular Ui offers an alternative to bootstrap navbars that is better suitable for mobile.</p>
 <p>It uses scrollable areas to avoid scroll issues. In the following figure you can see the difference between fixed navbars and navbars with absolute positioning.</p>
@@ -527,7 +490,7 @@ The content to take place in the placeholder.
 <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <p>As you can notice the base class is <code>.navbar-app</code> while the positioning is obtained adding either <code>.navbar-absolute-top</code> or <code>.navbar-absolute-bottom</code> class.</p>
-<h4>Mobile Navbar Layout</h4>
+<h4 id="mobile-navbar-layout">Mobile Navbar Layout</h4>
 <p>Top navbar in mobile design most of the times follows a clear pattern: a centered title surrounded by one or two action buttons, the <em>back</em> or the <em>menu</em> buttons are two common examples.</p>
 <p>Twitter Bootstrap ships with a different arrangement of components for navbars since they are supposed to host an horizontal navigation menu.</p>
 <p><code>.navbar-app</code> is specifically designed to support this different type of interaction and arrangement.</p>
@@ -551,7 +514,7 @@ The content to take place in the placeholder.
   <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <p>As you can see the markup is pretty straightforward: there is a <code>.navbar-brand</code> with its new specification, <code>.navbar-brand-center</code>, that will render the title centered and below the two button groups. Note that <code>.navbar-brand-center</code> will position the title with absolute positioning ensuring that it will never cover the buttons, which would cause interaction problems.</p>
-<h3>Sidebar</h3>
+<h3 id="sidebar">Sidebar</h3>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"sidebar sidebar-left"</span><span class="ot"> toggleable parent-active-class=</span><span class="st">"sidebar-left-in"</span><span class="ot"> id=</span><span class="st">"mainSidebar"</span><span class="kw">&gt;</span>
 
 <span class="kw">&lt;h1</span><span class="ot"> class=</span><span class="st">"app-name"</span><span class="kw">&gt;</span>Mobile Angular UI<span class="kw">&lt;/h1&gt;</span>
@@ -584,7 +547,7 @@ The content to take place in the placeholder.
     <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-bars"</span><span class="kw">&gt;&lt;/i&gt;</span> Menu
   <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<h3> Tabs</h3>
+<h3 id="tabs"> Tabs</h3>
 <p>Tabs component is realized via <code>toggle</code> and <code>toggleable</code> directives using <code>exclusion-group</code> parameter to inactivate other tabs but the active one.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">"nav nav-tabs"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">"#Tab1"</span><span class="ot"> toggle=</span><span class="st">"on"</span><span class="ot"> parent-active-class=</span><span class="st">"active"</span><span class="kw">&gt;</span>Tab 1<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
@@ -620,7 +583,7 @@ The content to take place in the placeholder.
   <span class="kw">&lt;/a&gt;</span>
   
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<h3> Accordion and Collapse</h3>
+<h3 id="accordion-and-collapse"> Accordion and Collapse</h3>
 <p>Accordion component is achieved via <code>toggle</code> and <code>toggleable</code> directives. <code>exclusion-group</code> parameter is used to inactivate other panels but the active one.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-group"</span><span class="ot"> id=</span><span class="st">"accordion"</span><span class="kw">&gt;</span>
   <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel panel-default"</span><span class="kw">&gt;</span>
@@ -660,7 +623,7 @@ The content to take place in the placeholder.
     <span class="kw">&lt;/div&gt;</span>
   <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<h3>Overlays</h3>
+<h3 id="overlays">Overlays</h3>
 <p>An overlay is an attempt to replace modals with a component better following mobile patterns.</p>
 <p>This is the basic markup for an <code>overlay</code>. An <code>overlay</code> directive implicitly sets up a <code>toggleable</code> using its argument as <code>id</code>.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> overlay=</span><span class="st">"myOverlay"</span><span class="kw">&gt;</span>
@@ -673,7 +636,7 @@ The content to take place in the placeholder.
     <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">"btn btn-default"</span><span class="kw">&gt;</span>Cancel<span class="kw">&lt;/span&gt;</span>
   <span class="kw">&lt;/p&gt;</span>  
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<h3>Dropdowns</h3>
+<h3 id="dropdowns">Dropdowns</h3>
 <p>Dropdowns are also achieved with <code>toggle</code> and <code>toggleable</code>.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group pull-right toggleable-dropdown"</span><span class="ot"> active-class=</span><span class="st">"open"</span><span class="ot"> id=</span><span class="st">"myDropdown"</span><span class="ot"> toggleable</span><span class="kw">&gt;</span>
   <span class="kw">&lt;button</span><span class="ot"> type=</span><span class="st">"button"</span><span class="ot"> class=</span><span class="st">"btn btn-default dropdown-toggle"</span><span class="ot"> toggle target=</span><span class="st">"myDropdown"</span><span class="kw">&gt;</span>
@@ -687,7 +650,7 @@ The content to take place in the placeholder.
     <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href</span><span class="kw">&gt;</span>Separated link<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
   <span class="kw">&lt;/ul&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<h3>Carousels</h3>
+<h3 id="carousels">Carousels</h3>
 <p>Carousels have the same markup of bootstrap but their behaviour is achieved with 2 functions available to <code>$rootScope</code>: <code>carouselPrev(id)</code> and <code>carouselNext(id)</code>.</p>
 <p>This is a basic example that uses <code>ngSwipeLeft</code> and <code>ngSwipeRight</code>.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">"carousel-example"</span><span class="ot"> class=</span><span class="st">"carousel"</span><span class="kw">&gt;</span>
@@ -782,15 +745,11 @@ The content to take place in the placeholder.
     }
 });</code></pre>
 <p>Now swiping items we will see them moving and rotating. When releasing an item if the swipe lenght was at least 3/10 of the item width then carouselPrev/carouselNext are invoked according to swipe direction.</p>
-<h3>Toggle Switch</h3>
+<h3 id="toggle-switch">Toggle Switch</h3>
 <figure class="full-width-figure"><img src="../figs/switch.png" alt=""></figure><p>The <code>switch</code> directive (not to be confused with <code>ng-switch</code>) lets you create a toggle switch control bound to a boolean <code>ngModel</code> value.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;switch</span><span class="ot"> ng-model=</span><span class="st">"invoice.payed"</span><span class="kw">&gt;&lt;/switch&gt;</span></code></pre>
-<h2 class="section-title">
-  
-<i class="fa fa-wrench"></i> <br> Utils
-</h2>
-
-<h3>Justified Blocks</h3>
+<h2 id="utils">Utils</h2>
+<h3 id="justified-blocks">Justified Blocks</h3>
 <p>Mobile screens are small and it's common to have 2 or three buttons justified. To achieve this behaviour you can use the <code>.justified</code> class in any parent block of a group of items. This will apply a <code>table</code> layout to parent and a <code>table-cell</code> layout to its children.</p>
 <figure class="full-width-figure"><img src="../figs/justify.png" alt=""></figure><p>Example:</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group justified nav-tabs"</span><span class="kw">&gt;</span>
@@ -798,9 +757,9 @@ The content to take place in the placeholder.
   <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"btn"</span><span class="kw">&gt;</span>Tab 2<span class="kw">&lt;/a&gt;</span>
   <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"btn"</span><span class="kw">&gt;</span>Tab 3<span class="kw">&lt;/a&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<h3>Form helpers</h3>
+<h3 id="form-helpers">Form helpers</h3>
 <p>Mobile angular Ui provides some markup savers to create form inputs.</p>
-<h4><code>bs-input</code></h4>
+<h4 id="bs-input"><code>bs-input</code></h4>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"invoice.customer"</span><span class="ot"> label=</span><span class="st">"Customer"</span><span class="ot"> bs-input</span><span class="kw">&gt;</span></code></pre>
 <p>That translates to</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"form-group container-fluid"</span><span class="kw">&gt;</span>
@@ -814,8 +773,8 @@ The content to take place in the placeholder.
 <p>Note that this directive only wraps target element with some html. This lets you apply it to any type of control, even custom one.</p>
 <p>So for instance you can apply it to <code>textarea</code> or <code>switch</code> as well.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;switch</span><span class="ot"> ng-model=</span><span class="st">"invoice.payed"</span><span class="ot"> label=</span><span class="st">"Payed"</span><span class="ot"> bs-input</span><span class="kw">&gt;&lt;/switch&gt;&lt;textarea</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"customer.mailing_address"</span><span class="ot"> label=</span><span class="st">"Address"</span><span class="ot"> bs-input</span><span class="kw">&gt;&lt;/textarea&gt;</span></code></pre>
-<h3>Panel Helpers</h3>
-<h4> <code>bs-panel</code>
+<h3 id="panel-helpers">Panel Helpers</h3>
+<h4 id="bs-panel"> <code>bs-panel</code>
 </h4>
 <p>A super simple directive minimizing the markup to use bootstrap panels.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> bs-panel title=</span><span class="st">"My Panel"</span><span class="kw">&gt;</span>
@@ -832,126 +791,35 @@ The content to take place in the placeholder.
      <span class="co">&lt;!-- Content --&gt;</span>
   <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
-</div>
-</div>
-</div>
 
 
-    </div>
-
-    <footer class="footer">
-      <div class="container">
-        <div class="media">
-          <img src="https://avatars1.githubusercontent.com/u/334881?s=100" alt="" class="pull-left avatar">
-          <div class="media-body">
-            <h4 class="footer-title">Mobile Angular Ui</h4>
-            <p class="footer-credits">made for you by <a href="https://github.com/mcasimir" target="_blank">mcasimir</a></p>            
-          </div>
-        </div>
       </div>
-    </footer>
+      </div>
+      </div>
+    </div>
+    <footer class="footer">
+  <div class="container">
+    <div class="media">
+      <img src="https://avatars1.githubusercontent.com/u/334881?s=100" alt="" class="pull-left avatar">
+      <div class="media-body">
+        <h4 class="footer-title">Mobile Angular Ui</h4>
+        <p class="footer-credits">made for you by <a href="https://github.com/mcasimir" target="_blank">mcasimir</a></p>            
+      </div>
+    </div>
+  </div>
+</footer>
 
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-48036416-1', 'mobileangularui.com');
-      ga('send', 'pageview');
+  ga('create', 'UA-48036416-1', 'mobileangularui.com');
+  ga('send', 'pageview');
+</script>
 
-    </script>
-
-    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    <script src="/js/jquery-toc-min.js"></script>
-
-    <script>
-
-    if ($('#current-version').length) {
-      $.get('https://api.github.com/repos/mcasimir/mobile-angular-ui/tags?callback', function(data){
-          var versions = $.map(data, function(ver) {
-            // i.e. 1.1.0-beta.5
-
-            var name = ver.name.replace(/^v/, "").split('-');
-            var base = name[0].split('.');
-            var label = name[1]
-            res = {
-              major: parseInt(base[0]),
-              minor: parseInt(base[1]),
-              patch: parseInt(base[2]),
-              label: label
-            }
-            return res;
-          });
-          
-          var labelToFloat = function(label) {
-            if (label == null) {
-              return 0;
-            };
-            return parseFloat(label.replace(/rc/i, "3").replace(/beta/i, "2").replace(/alpha/i, "1"));
-          }
-
-          versions = versions.sort(function(v1, v2){
-            if (v1.major == v2.major) {
-              if (v1.minor == v2.minor) {
-                if (v1.patch == v2.patch) {
-                  return labelToFloat(v1.label) - labelToFloat(v2.label);
-                } else {
-                  return v1.patch - v2.patch;
-                }
-              } else {
-                return v1.minor - v2.minor;
-              }
-            } else {
-              return v1.major - v2.major;
-            }
-          });
-
-          var last = versions[versions.length - 1];
-          var number = $.grep([last.major, last.minor, last.patch], function(e){
-            return e != null;
-          }).join('.');
-
-          if(last.label != null) {
-            number += ("-" + last.label);
-          }
-
-          $('#current-version').text(number);
-          
-        
-      });
-    };
-
-    $('#toc').toc({
-        'selectors': 'h2,h3', //elements to use as headings
-        'container': '#docs', //element to find all selectors in
-        'smoothScrolling': true, //enable or disable smooth scrolling on click
-        'highlightOnScroll': true, //add class to heading that is currently in focus
-        'highlightOffset': 100, //offset to trigger the next headline
-    });
-
-    var sidebarContainer = $("#sidebar-container");
-    var sidebar = $("#sidebar");
-    
-    adjustSidebar = function(e) {
-      if (sidebarContainer.length > 0) {
-        var tocOffsetTop = sidebarContainer.offset().top;
-        if($(window).scrollTop() >= tocOffsetTop) {
-          sidebar.addClass("fix");
-          sidebar.css("left", sidebarContainer.offset().left);
-          sidebar.css("width", sidebarContainer.width());
-        } else {
-          sidebar.removeClass("fix");
-          sidebar.css("left", 'auto');
-        }        
-      };
-    };
-
-    $(window).scroll(adjustSidebar);
-    $(window).resize(adjustSidebar);
-
-    </script>
+<script src="/scripts.js"></script>
 
   </body>
 </html>

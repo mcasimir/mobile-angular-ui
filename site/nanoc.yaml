@@ -35,6 +35,10 @@ prune:
 # “layout/” directories in the site directory.
 data_sources:
   -
+    type: static
+    items_root: /
+    allow_periods_in_identifiers: true
+  -
     # The type is the identifier of the data source. By default, this will be
     # `filesystem_unified`.
     type: filesystem_unified
