@@ -97,3 +97,6 @@ bower_components
 experiments
 site/output
 site/tmp
+
+site/crash.log
+site/Gemfile.lock
