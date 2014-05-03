@@ -6477,9 +6477,16 @@ img {
   max-width: 100%;
 }
 
-html,
-body {
+html {
+  width: 100%;
   height: 100%;
+  overflow: hidden;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .form-control:focus {
@@ -6622,18 +6629,6 @@ a.list-group-item .fa.pull-right {
   margin-bottom: 0;
 }
 
-html {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
 .app {
   position: relative;
   z-index: 2;
@@ -6667,6 +6662,7 @@ body {
 }
 
 .app-search {
+  position: relative;
   z-index: 1029;
   width: 100%;
   border-width: 0 0 1px;
@@ -6806,9 +6802,13 @@ body {
   transition: transform 400ms ease;
 }
 
+.sidebar-header,
 .app-name {
+  position: relative;
+  z-index: 10;
+  width: 100%;
   padding: 0 10px;
-  margin-bottom: 0;
+  margin: 0;
   font-size: 23px;
   line-height: 70px;
   color: #fff;
@@ -6874,28 +6874,29 @@ body {
 }
 
 .scrollable {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.scrollable-content {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: auto;
-  padding: 0;
-  overflow: hidden;
-  -webkit-transition-duration: .2s, .2s;
-  transition-duration: .2s, .2s;
-  -webkit-transition-property: top, bottom;
-  transition-property: top, bottom;
-  -webkit-transition-timing-function: linear, linear;
-  transition-timing-function: linear, linear;
+  height: 100%;
+}
+
+.scrollable-content {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sidebar-header + .scrollable,
+.app-name + .scrollable {
+  padding-top: 70px;
+}
+
+.app-search + .scrollable {
+  padding-top: 34px;
 }
 
 [overlay],
