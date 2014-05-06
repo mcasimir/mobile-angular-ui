@@ -1,6 +1,6 @@
 # Mobile Angular Ui Changelog
 
-### v.
+### v. 1.1.0-beta.17
 
 _Tue May  6 13:59:57 2014_
 
@@ -15,4 +15,5 @@ _Tue May  6 13:59:57 2014_
 - Removed $swipe service from fastclick touch implementation (just use ngTouch for that)
 - Included everything else in the same distribution file
 - Renamed bsInput to bsFormControl
-- Sidebars closes by default on outer clicks (customizable)
+- Sidebars closes by default on outer clicks (customizable). Fix #45.
+- Fixes bsFormControl label disappearing with jquery. Fix #42.
