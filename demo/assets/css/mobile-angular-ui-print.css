@@ -1,11 +1,4 @@
 @media print {
-  .hidden-print,
-  tr.hidden-print,
-  th.hidden-print,
-  td.hidden-print {
-    display: none !important;
-  }
-
   th.visible-print,
   td.visible-print {
     display: table-cell !important;
@@ -21,5 +14,9 @@
 
   .visible-print {
     display: block !important;
+  }
+
+  .hidden-print {
+    display: none !important;
   }
 }

@@ -64,57 +64,23 @@
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;link</span><span class="ot"> rel=</span><span class="st">"stylesheet"</span><span class="ot"> href=</span><span class="st">"mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css"</span><span class="kw">&gt;&lt;link</span><span class="ot"> rel=</span><span class="st">"stylesheet"</span><span class="ot"> href=</span><span class="st">"mobile-angular-ui/dist/css/mobile-angular-ui-desktop.min.css"</span><span class="kw">&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"angular.min.js"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;/script&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"angular-route.min.js"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;/script&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"mobile-angular-ui/dist/js/mobile-angular-ui.min.js"</span><span class="kw">&gt;</span>
-<span class="kw">&lt;/script&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"mobile-angular-ui/dist/js/mobile-angular-ui-touch-fastclick.min.js"</span><span class="kw">&gt;</span>
-<span class="kw">&lt;/script&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"mobile-angular-ui/dist/js/mobile-angular-ui-scrollable-overthrow.min.js"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;/script&gt;</span></code></pre>
 <p>The <code>base</code> css includes only the mobile css (it has no media queries), while the <code>desktop</code> css contains just a few lines of code to make sidebars always visible on desktop. So with these two files you can only work with the <code>.*-xs</code> classes from Bootstrap. If you need more you can include other files from the distribution package to fit your needs. eg. you could add <code>mobile-angular-ui-max-width-767px.css</code> to use <code>(max-width: 767px)</code> media queries from Bootstrap.</p>
-<p>In the example above some other modules are included along with the core js <code>mobile-angular-ui.min.js</code>.</p>
-<h3 id="mobile-angular-ui.touch">mobile-angular-ui.touch</h3>
-<p><code>mobile-angular-ui-touch-[implementation].js</code> provides touch events and <code>swipeLeft</code>, <code>swipeRight</code> directives.</p>
-<p>Available implemetations are:</p>
-<ul>
-<li>
-<code>mobile-angular-ui-touch-fastclick.min.js</code> (using <code>fastclick.js</code>)</li>
-<li>
-<code>mobile-angular-ui-touch-ng.min.js</code> (using <code>angular-touch</code>)</li>
-</ul><h3 id="mobile-angular-ui.scrollable">mobile-angular-ui.scrollable</h3>
-<p><code>mobile-angular-ui-scrollable-[implementation].min.js</code> will enable <code>[scrollable]</code> directive.</p>
-<p>Available implemetations are:</p>
-<ul>
-<li>
-<code>mobile-angular-ui-scrollable-overthrow.min.js</code> (using <code>overthrow.js</code>)</li>
-<li>
-<code>mobile-angular-ui-scrollable-iscroll.min.js</code> (using <code>iscroll</code>)</li>
-<li>
-<code>mobile-angular-ui-scrollable-iscroll-lite.min.js</code> (using <code>iscroll-lite</code>)</li>
-</ul><h3 id="initialization">Initialization</h3>
-<p>Then you can initialize your Angular application declaring <code>mobile-angular-ui</code> as a dependence.</p>
+<h3 id="initialization">Initialization</h3>
+<p>You can initialize your Angular application declaring <code>mobile-angular-ui</code> as a dependence.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">angular</span>.<span class="fu">module</span>(<span class="st">'myApp'</span>, [<span class="st">"mobile-angular-ui"</span>]);</code></pre>
-<p>This will not load ngRoute, touch events and scrollable modules by default.</p>
-<p>A more complete initialization would be like that:</p>
+<p>Here is a more complete example including ngRoute:</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">angular</span>.<span class="fu">module</span>(<span class="st">'myApp'</span>, [
   <span class="st">"ngRoute"</span>,
   <span class="st">"mobile-angular-ui"</span>,
-  <span class="st">"mobile-angular-ui.touch"</span>,
-  <span class="st">"mobile-angular-ui.scrollable"</span>
 ]).<span class="fu">config</span>(<span class="kw">function</span>($routeProvider) {
       <span class="ot">$routeProvider</span>.<span class="fu">when</span>(<span class="st">'/'</span>, { 
         <span class="co">// ...</span>
       });
       <span class="co">// ...</span>
   });</code></pre>
-<p>If you wish you can avoid to load <code>mobile-angular-ui</code> at all and pick a subset of the loaded modules to fit your needs. This is how the <code>mobile-angular-ui</code> module is defined with its dependencies.</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">angular</span>.<span class="fu">module</span>(<span class="st">"mobile-angular-ui"</span>, [
-  <span class="st">'mobile-angular-ui.pointer-events'</span>
-  <span class="st">'mobile-angular-ui.active-links'</span>
-  <span class="st">'mobile-angular-ui.directives.toggle'</span>
-  <span class="st">'mobile-angular-ui.directives.overlay'</span>
-  <span class="st">'mobile-angular-ui.directives.forms'</span>
-  <span class="st">'mobile-angular-ui.directives.panels'</span>
-  <span class="st">'mobile-angular-ui.directives.capture'</span>
-  <span class="st">'mobile-angular-ui.directives.sidebars'</span>
-  <span class="st">'mobile-angular-ui.directives.navbars'</span>
- ]);</code></pre>
+<p>If you wish you can avoid to load whole <code>mobile-angular-ui</code> modules at all and pick a subset of the loaded modules to fit your needs. This is how the <code>mobile-angular-ui</code> module is defined with its dependencies.</p>
+<p><code>javascript angular.module("mobile-angular-ui", [   'mobile-angular-ui.pointer-events',     // prevents actions on disabled elements   'mobile-angular-ui.active-links',       // add .active class to active links   'mobile-angular-ui.fastclick',          // provides touch events with fastclick   'mobile-angular-ui.scrollable',         // polyfills overflow:auto with overthrow   'mobile-angular-ui.directives.toggle',   'mobile-angular-ui.directives.overlay',   'mobile-angular-ui.directives.forms',   'mobile-angular-ui.directives.panels',   'mobile-angular-ui.directives.capture',   'mobile-angular-ui.directives.sidebars',   'mobile-angular-ui.directives.navbars',   'mobile-angular-ui.directives.carousel'  ]);</code></p>
 <h3 id="basic-layout">Basic Layout</h3>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="co">&lt;!-- Sidebars --&gt;</span>
 
@@ -171,7 +137,7 @@
 <li><p>responsive css rules for <em>-sm, </em>-md, *-lg are moved out of the default bundle</p></li>
 <li>removed/unsupported components:</li>
 </ol><ul>
-<li>breadcrumbs and pagination: they are just not the best way to navigate a mobile app</li>
+<li>breadcrumbs and pagination: they are just not the best way to navigate a mobile app, their are only included in desktop .css</li>
 </ul><h2 id="angular-directives">Angular Directives</h2>
 <p>Before going ahead with components you may want to familiarize with some basic mobile angular ui directives.</p>
 <h3 class="page-header">
@@ -180,13 +146,13 @@
 
 <p>First of all: one thing you'll always have to deal with approaching mobile web app development is scroll and <code>position:fixed</code> bugs.</p>
 <p>Due to the lack of support in some devices fixed positioned elements may bounce or disappear during scroll. Also mobile interaction often leverages horizontal scroll eg. in carousels or sliders.</p>
-<p>We use scrollable areas to solve any problems related to scroll. Since it is not always available in touch devices we bundle an implementation of scrollable with <a href="https://github.com/cubiq/iscroll">iScroll</a> or <a href="http://filamentgroup.github.io/Overthrow/">Overthrow</a>.</p>
-<p>To use it include either <code>mobile-angular-ui-scrollable-iscroll.js</code>, <code>mobile-angular-ui-scrollable-iscroll-lite.js</code> or <code>mobile-angular-ui-scrollable-overthrow.js</code>.</p>
+<p>We use <code>overflow:auto</code> to create scrollable areas and solve any problems related to scroll.</p>
+<p>Since <code>overflow:auto</code> is not always available in touch devices we use <a href="http://filamentgroup.github.io/Overthrow/">Overthrow</a> to polyfill that.</p>
 <p>Markup for any scrollable areas is as simple as:</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"scrollable"</span><span class="kw">&gt;</span>
   <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"scrollable-content"</span><span class="kw">&gt;</span>...<span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<p>This piece of code will trigger a directive that properly setup a new iScroll or <code>Overthrow</code> instance for the <code>.scrollable</code> node.</p>
+<p>This piece of code will trigger a directive that properly setup a new <code>Overthrow</code> instance for the <code>.scrollable</code> node.</p>
 <h3 class="page-header">
 <code>toggle</code> and <code>toggleable</code>
 </h3>
@@ -514,7 +480,7 @@ The content to take place in the placeholder.
   <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <p>As you can see the markup is pretty straightforward: there is a <code>.navbar-brand</code> with its new specification, <code>.navbar-brand-center</code>, that will render the title centered and below the two button groups. Note that <code>.navbar-brand-center</code> will position the title with absolute positioning ensuring that it will never cover the buttons, which would cause interaction problems.</p>
-<h3 id="sidebar">Sidebar</h3>
+<h3 id="sidebars">Sidebars</h3>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"sidebar sidebar-left"</span><span class="ot"> toggleable parent-active-class=</span><span class="st">"sidebar-left-in"</span><span class="ot"> id=</span><span class="st">"mainSidebar"</span><span class="kw">&gt;</span>
 
 <span class="kw">&lt;h1</span><span class="ot"> class=</span><span class="st">"app-name"</span><span class="kw">&gt;</span>Mobile Angular UI<span class="kw">&lt;/h1&gt;</span>
@@ -547,6 +513,7 @@ The content to take place in the placeholder.
     <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-bars"</span><span class="kw">&gt;&lt;/i&gt;</span> Menu
   <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
+<p>By default sidebar are closed by clicking/tapping outside them. To prevent this behavior just add <code>close-on-outer-clicks='false'</code> to <code>.sidebar</code> element.</p>
 <h3 id="tabs"> Tabs</h3>
 <p>Tabs component is realized via <code>toggle</code> and <code>toggleable</code> directives using <code>exclusion-group</code> parameter to inactivate other tabs but the active one.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">"nav nav-tabs"</span><span class="kw">&gt;</span>
@@ -624,7 +591,7 @@ The content to take place in the placeholder.
   <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <h3 id="overlays">Overlays</h3>
-<p>An overlay is an attempt to replace modals with a component better following mobile patterns.</p>
+<p>Overlay are similar to modals but looks more native in mobile devices.</p>
 <p>This is the basic markup for an <code>overlay</code>. An <code>overlay</code> directive implicitly sets up a <code>toggleable</code> using its argument as <code>id</code>.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> overlay=</span><span class="st">"myOverlay"</span><span class="kw">&gt;</span>
   <span class="kw">&lt;h4</span><span class="ot"> class=</span><span class="st">"overlay-title"</span><span class="kw">&gt;</span>My Overlay<span class="kw">&lt;/h4&gt;</span>    
@@ -636,6 +603,7 @@ The content to take place in the placeholder.
     <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">"btn btn-default"</span><span class="kw">&gt;</span>Cancel<span class="kw">&lt;/span&gt;</span>
   <span class="kw">&lt;/p&gt;</span>  
 <span class="kw">&lt;/div&gt;</span></code></pre>
+<p>You can show an overlay by default adding <code>default='active'</code> to the <code>[overlay]</code> element.</p>
 <h3 id="dropdowns">Dropdowns</h3>
 <p>Dropdowns are also achieved with <code>toggle</code> and <code>toggleable</code>.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group pull-right toggleable-dropdown"</span><span class="ot"> active-class=</span><span class="st">"open"</span><span class="ot"> id=</span><span class="st">"myDropdown"</span><span class="ot"> toggleable</span><span class="kw">&gt;</span>
@@ -652,7 +620,7 @@ The content to take place in the placeholder.
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <h3 id="carousels">Carousels</h3>
 <p>Carousels have the same markup of bootstrap but their behaviour is achieved with 2 functions available to <code>$rootScope</code>: <code>carouselPrev(id)</code> and <code>carouselNext(id)</code>.</p>
-<p>This is a basic example that uses <code>ngSwipeLeft</code> and <code>ngSwipeRight</code>.</p>
+<p>This is a basic example that uses <code>ngSwipeLeft</code> and <code>ngSwipeRight</code> from <code>ngTouch</code>.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">"carousel-example"</span><span class="ot"> class=</span><span class="st">"carousel"</span><span class="kw">&gt;</span>
       <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"carousel-inner"</span><span class="ot"> ng-swipe-left=</span><span class="st">"carouselPrev('carousel-example')"</span><span class="ot"> ng-swipe-right=</span><span class="st">"carouselNext('carousel-example')"</span><span class="kw">&gt;</span>
         <span class="kw">&lt;div</span><span class="ot"> href=</span><span class="st">""</span><span class="ot"> class=</span><span class="st">"item active"</span><span class="kw">&gt;</span>
@@ -666,7 +634,7 @@ The content to take place in the placeholder.
         <span class="kw">&lt;/div&gt;</span>
       <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<p>To create more fancy effects and touch friendly experience you can use <code>$swipe</code> service direclty. <code>$swipe</code> service is provided by <code>angular-touch</code> and is included in both <code>mobile-angular-ui-touch-fastclick</code> and <code>mobile-angular-ui-touch-ng</code>.</p>
+<p>To create more fancy effects and touch friendly experience you can use <code>$swipe</code> service direclty. <code>$swipe</code> service is provided by <code>angular-touch</code>.</p>
 <p>This is a more complete example to explain how to build a swipe friendly carousel.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">"carousel-example"</span><span class="ot"> class=</span><span class="st">"carousel"</span><span class="kw">&gt;</span>
       <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"carousel-inner"</span><span class="kw">&gt;</span>
@@ -759,20 +727,21 @@ The content to take place in the placeholder.
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <h3 id="form-helpers">Form helpers</h3>
 <p>Mobile angular Ui provides some markup savers to create form inputs.</p>
-<h4 id="bs-input"><code>bs-input</code></h4>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"invoice.customer"</span><span class="ot"> label=</span><span class="st">"Customer"</span><span class="ot"> bs-input</span><span class="kw">&gt;</span></code></pre>
+<h4 id="bs-form-control"><code>bs-form-control</code></h4>
+<p>NOTE: former <code>bs-input</code>.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"invoice.customer"</span><span class="ot"> label=</span><span class="st">"Customer"</span><span class="ot"> bs-form-control</span><span class="kw">&gt;</span></code></pre>
 <p>That translates to</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"form-group container-fluid"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"row"</span><span class="kw">&gt;</span>
   <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">"invoice_customer_input"</span><span class="ot"> class=</span><span class="st">"control-label col-sm-2"</span><span class="kw">&gt;</span>Customer<span class="kw">&lt;/label&gt;</span>
   <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"col-sm-10"</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"invoice.customer"</span><span class="ot"> label=</span><span class="st">"Customer"</span><span class="ot"> bs-input=</span><span class="st">""</span><span class="ot"> class=</span><span class="st">"ng-scope ng-pristine ng-valid form-control"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"invoice.customer"</span><span class="ot"> label=</span><span class="st">"Customer"</span><span class="ot"> bs-form-control=</span><span class="st">""</span><span class="ot"> class=</span><span class="st">"ng-scope ng-pristine ng-valid form-control"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;/div&gt;</span>
   <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <p>Note that this directive only wraps target element with some html. This lets you apply it to any type of control, even custom one.</p>
 <p>So for instance you can apply it to <code>textarea</code> or <code>switch</code> as well.</p>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;switch</span><span class="ot"> ng-model=</span><span class="st">"invoice.payed"</span><span class="ot"> label=</span><span class="st">"Payed"</span><span class="ot"> bs-input</span><span class="kw">&gt;&lt;/switch&gt;&lt;textarea</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"customer.mailing_address"</span><span class="ot"> label=</span><span class="st">"Address"</span><span class="ot"> bs-input</span><span class="kw">&gt;&lt;/textarea&gt;</span></code></pre>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;switch</span><span class="ot"> ng-model=</span><span class="st">"invoice.payed"</span><span class="ot"> label=</span><span class="st">"Payed"</span><span class="ot"> bs-form-control</span><span class="kw">&gt;&lt;/switch&gt;&lt;textarea</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"customer.mailing_address"</span><span class="ot"> label=</span><span class="st">"Address"</span><span class="ot"> bs-form-control</span><span class="kw">&gt;&lt;/textarea&gt;</span></code></pre>
 <h3 id="panel-helpers">Panel Helpers</h3>
 <h4 id="bs-panel"> <code>bs-panel</code>
 </h4>

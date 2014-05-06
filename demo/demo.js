@@ -1,8 +1,7 @@
 var app = angular.module('MobileAngularUiExamples', [
   "ngRoute",
-  "mobile-angular-ui",
-  "mobile-angular-ui.touch",
-  "mobile-angular-ui.scrollable"
+  "ngTouch",
+  "mobile-angular-ui"
 ]);
 
 app.config(function($routeProvider, $locationProvider) {
