@@ -1,0 +1,40 @@
+// Buttons
+
+.btn {
+  &.active {
+    &, &:hover, &:focus, &:active {
+      .box-shadow(none);
+    }
+  }
+}
+
+
+
+.btn-group {
+
+  &.justified > .btn {
+    &:not(:last-child) { // Trick for IE8: IE8 should ignore :not thus rendering the 1px border anyway
+      border-right-width: 0;
+    }
+
+    &:last-child, &.active {
+      border-right-width: 1px;
+    }
+
+    &:not(:last-child).active+.btn {
+      border-left-width: 0; 
+    }
+  }
+
+  &.nav-tabs {
+    border: 0 none;
+  }
+
+  >.btn-default.active, 
+  >.btn-default.active:hover, 
+  >.btn-default.active:focus {
+    color: @btn-primary-color;
+    background-color: @btn-primary-bg;
+    border-color: @btn-primary-border;
+  }
+}

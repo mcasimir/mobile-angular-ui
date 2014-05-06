@@ -1,0 +1,44 @@
+.section {
+  background: @body-bg;
+  padding-top: floor(@line-height-computed / 2);
+  padding-bottom: floor(@line-height-computed / 2);
+}
+
+.section.section-condensed {
+  padding-top: 0; padding-bottom: 0; 
+}
+
+.section.section-break {
+  margin-bottom: @line-height-computed;
+  .box-shadow(~"0 -1px rgba(0, 0, 0, 0.08), 0 1px rgba(0, 0, 0, 0.07), 0 1px 1px rgba(0, 0, 0, 0.05)");
+}
+
+.section-default {
+  background-color: @label-default-bg;
+  color: @label-color;
+}
+
+.section-primary {
+  background-color: @label-primary-bg;
+  color: @label-color;
+}
+
+.section-success {
+  background-color: @label-success-bg;
+  color: @label-color;
+}
+
+.section-info {
+  background-color: @label-info-bg;
+  color: @label-color;
+}
+
+.section-warning {
+  background-color: @label-warning-bg;
+  color: @label-color;
+}
+
+.section-danger {
+  background-color: @label-danger-bg;
+  color: @label-color;
+}

@@ -1,0 +1,55 @@
+.sidebar {
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: block;
+  
+  .translate3d(0, 0, 0);
+  .transition-transform(~"400ms ease");
+}
+
+.sidebar-left {
+  background: @sidebar-left-background;
+  width: @sidebar-left-width;
+  left: 0;
+  right: auto;
+}
+
+.sidebar-right {
+  background: @sidebar-right-background;
+  width: @sidebar-right-width;
+  left: auto;
+  right: 0;
+  .opacity(1);
+  .transition(~"opacity  600ms cubic-bezier(1, 0, 1, 0)");
+}
+
+.sidebar-left-in .sidebar-right {
+  z-index: -100;
+  .opacity(0);
+  .transition(~"opacity  600ms cubic-bezier(1, 0, 1, 0)");
+}
+
+.sidebar-left-in .app {
+  width: 100%;
+  .translate3d(@sidebar-left-width, 0, 0);
+  .transition-transform(~"400ms ease");
+}
+
+.sidebar-right-in .app {
+  width: 100%;
+  .translate3d(-@sidebar-right-width, 0, 0);
+  .transition-transform(~"400ms ease");
+}
+
+.sidebar-header, .app-name {
+  position: relative;
+  width: 100%;
+  line-height: @sidebar-header-height;
+  padding: @sidebar-header-padding;
+  font-size: @sidebar-header-font-size;
+  color: @sidebar-header-color;
+  margin: 0;
+  z-index: @zindex-sidebar-header;
+}

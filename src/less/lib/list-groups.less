@@ -1,0 +1,25 @@
+// List Groups
+.list-group-item, a.list-group-item {
+  margin-bottom: 0;
+  border: 0 none;
+  border-bottom: 1px solid @list-group-border;
+
+  &:first-child {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+  }
+
+  &:last-child {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .fa.pull-right, .icon.pull-right {
+    line-height: @line-height-base;
+  }
+}
+
+.list-group-item.media {
+  margin-bottom: 0;
+  margin-top: 0;
+}

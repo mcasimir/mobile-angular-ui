@@ -1,0 +1,33 @@
+.app {
+  height: 100%;
+  position: relative;
+  z-index: @zindex-app;
+  width: 100%;
+  background: @gray-light;
+  overflow: hidden;
+  .translate3d(0,0,0);
+  .transition-transform(~"400ms ease");
+  .box-shadow(@app-shadow);
+}
+
+.app-body {
+  display: block;
+  height: 100%;
+  padding: 0;
+}
+
+.app-content {
+  display: block;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+}
+
+.app-search {
+  position: relative;
+  border-width: 0 0 1px;
+  z-index: @zindex-app-search;
+  width: 100%;
+}

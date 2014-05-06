@@ -9,14 +9,14 @@
    <form action="" id="">
 
      <div bs-panel title="Invoice">
-       <input type="text" ng-model="invoice.customer"    label="Customer" bs-input />
-       <switch            ng-model="invoice.payed"     label="Payed" bs-input></switch>
-       <input type="number" ng-model="invoice.amount"    label="Amount" bs-input />
-       <input type="date" ng-model="invoice.date"        label="Date" bs-input />
+       <input type="text" ng-model="invoice.customer"    label="Customer" bs-form-control />
+       <switch            ng-model="invoice.payed"     label="Payed" bs-form-control></switch>
+       <input type="number" ng-model="invoice.amount"    label="Amount" bs-form-control />
+       <input type="date" ng-model="invoice.date"        label="Date" bs-form-control />
      </div>
 
      <div bs-panel title="Notes">
-       <textarea type="text" ng-model="customer.mailing_address" label="Address" bs-input></textarea>
+       <textarea type="text" ng-model="customer.mailing_address" label="Address" bs-form-control></textarea>
      </div>
       
     <div bs-panel class="form-actions">

@@ -31,11 +31,13 @@
     "grunt-contrib-cssmin": "~0.7.0",
     "grunt-contrib-uglify": "~0.2.7",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-recess": "~0.4.0",
+    "grunt-recess": "~0.6.1",
+    "less": "~1.4.2",
     "kexec": "~0.1.1",
     "parameterize": "0.0.7",
     "grunt-github-pages": "0.0.4",
     "semver": "~2.2.1",
-    "grunt-concurrent": "^0.5.0"
+    "grunt-concurrent": "^0.5.0",
+    "grunt-contrib-less": "^0.11.0"
   }
 }

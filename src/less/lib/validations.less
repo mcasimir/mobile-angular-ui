@@ -1,0 +1,11 @@
+input.ng-invalid, textarea.ng-invalid {
+  border-color: @brand-warning;
+}
+
+.ng-dirty input.ng-invalid { 
+  border-color: @brand-warning;
+}
+
+.ng-dirty input.ng-invalid ~ span.ko {
+  color: @brand-danger; 
+}

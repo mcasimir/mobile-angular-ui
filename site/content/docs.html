@@ -19,53 +19,24 @@ Load files in the head section of your html
 </script>
 <script src="mobile-angular-ui/dist/js/mobile-angular-ui.min.js">
 </script>
-<script src="mobile-angular-ui/dist/js/mobile-angular-ui-touch-fastclick.min.js">
-</script>
-<script src="mobile-angular-ui/dist/js/mobile-angular-ui-scrollable-overthrow.min.js">
-</script>
 ```
 
 The `base` css includes only the mobile css (it has no media queries), while the `desktop` css contains just a few lines of code to make sidebars always visible on desktop. So with these two files you can  only work with the `.*-xs` classes from Bootstrap. If you need more you can include other files from the distribution package to fit your needs. eg. you could add `mobile-angular-ui-max-width-767px.css` to use `(max-width: 767px)` media queries from Bootstrap.
 
-In the example above some other modules are included along with the core js `mobile-angular-ui.min.js`.
-
-### mobile-angular-ui.touch
-
-`mobile-angular-ui-touch-[implementation].js` provides touch events and `swipeLeft`, `swipeRight` directives.
-
-Available implemetations are:
-
-- `mobile-angular-ui-touch-fastclick.min.js` (using `fastclick.js`)
-- `mobile-angular-ui-touch-ng.min.js` (using `angular-touch`)
-
-### mobile-angular-ui.scrollable
-
-`mobile-angular-ui-scrollable-[implementation].min.js` will enable `[scrollable]` directive.
-
-Available implemetations are:
-
-- `mobile-angular-ui-scrollable-overthrow.min.js` (using `overthrow.js`)
-- `mobile-angular-ui-scrollable-iscroll.min.js` (using `iscroll`)
-- `mobile-angular-ui-scrollable-iscroll-lite.min.js` (using `iscroll-lite`)
-
 ### Initialization
 
-Then you can initialize your Angular application declaring `mobile-angular-ui` as a dependence.
+You can initialize your Angular application declaring `mobile-angular-ui` as a dependence.
 
 ``` javascript
 angular.module('myApp', ["mobile-angular-ui"]);
 ```
 
-This will not load ngRoute, touch events and scrollable modules by default.
-
-A more complete initialization would be like that:
+Here is a more complete example including ngRoute:
 
 ``` javascript
 angular.module('myApp', [
   "ngRoute",
   "mobile-angular-ui",
-  "mobile-angular-ui.touch",
-  "mobile-angular-ui.scrollable"
 ]).config(function($routeProvider) {
       $routeProvider.when('/', { 
         // ...
@@ -75,21 +46,24 @@ angular.module('myApp', [
 ```
 
 
-If you wish you can avoid to load `mobile-angular-ui` at all and pick a subset of the loaded modules to fit your needs. This is how the `mobile-angular-ui` module is defined with its dependencies. 
+If you wish you can avoid to load whole `mobile-angular-ui` modules at all and pick a subset of the loaded modules to fit your needs. This is how the `mobile-angular-ui` module is defined with its dependencies. 
 
 ``` javascript
 angular.module("mobile-angular-ui", [
-  'mobile-angular-ui.pointer-events'
-  'mobile-angular-ui.active-links'
-  'mobile-angular-ui.directives.toggle'
-  'mobile-angular-ui.directives.overlay'
-  'mobile-angular-ui.directives.forms'
-  'mobile-angular-ui.directives.panels'
-  'mobile-angular-ui.directives.capture'
-  'mobile-angular-ui.directives.sidebars'
-  'mobile-angular-ui.directives.navbars'
+  'mobile-angular-ui.pointer-events',     // prevents actions on disabled elements
+  'mobile-angular-ui.active-links',       // add .active class to active links
+  'mobile-angular-ui.fastclick',          // provides touch events with fastclick
+  'mobile-angular-ui.scrollable',         // polyfills overflow:auto with overthrow
+  'mobile-angular-ui.directives.toggle',
+  'mobile-angular-ui.directives.overlay',
+  'mobile-angular-ui.directives.forms',
+  'mobile-angular-ui.directives.panels',
+  'mobile-angular-ui.directives.capture',
+  'mobile-angular-ui.directives.sidebars',
+  'mobile-angular-ui.directives.navbars',
+  'mobile-angular-ui.directives.carousel'
  ]);
-```
+ ```
 
 ### Basic Layout
 
@@ -152,7 +126,8 @@ angular.module("mobile-angular-ui", [
 2. responsive css rules for *-sm, *-md, *-lg are moved out of the default bundle
 
 3. removed/unsupported components:
-  - breadcrumbs and pagination: they are just not the best way to navigate a mobile app
+  - breadcrumbs and pagination: they are just not the best way to navigate a mobile app,
+    their are only included in desktop .css  
 
 ## Angular Directives  
 
@@ -166,9 +141,9 @@ First of all: one thing you'll always have to deal with approaching mobile web a
 
 Due to the lack of support in some devices fixed positioned elements may bounce or disappear during scroll. Also mobile interaction often leverages horizontal scroll eg. in carousels or sliders.
 
-We use scrollable areas to solve any problems related to scroll. Since it is not always available in touch devices we bundle an implementation of scrollable with [iScroll](https://github.com/cubiq/iscroll) or [Overthrow](http://filamentgroup.github.io/Overthrow/).
+We use `overflow:auto` to create scrollable areas and solve any problems related to scroll.
 
-To use it include either `mobile-angular-ui-scrollable-iscroll.js`, `mobile-angular-ui-scrollable-iscroll-lite.js` or `mobile-angular-ui-scrollable-overthrow.js`.
+Since `overflow:auto` is not always available in touch devices we use [Overthrow](http://filamentgroup.github.io/Overthrow/) to polyfill that.
 
 Markup for any scrollable areas is as simple as:
 
@@ -178,10 +153,10 @@ Markup for any scrollable areas is as simple as:
 </div>
 ```
 
-This piece of code will trigger a directive that properly setup a new iScroll or `Overthrow` instance for the `.scrollable` node.
+This piece of code will trigger a directive that properly setup a new `Overthrow` instance for the `.scrollable` node.
 
 <h3 class="page-header">
-`toggle` and `toggleable` 
+`toggle` and `toggleable`
 </h3>
 
 Toggle module is the basic to implement tabs, accordions, collapsibles and all the other components that need to be selectively or exclusively switched on or off.
@@ -510,7 +485,7 @@ Consider the following example:
 
 As you can see the markup is pretty straightforward: there is a `.navbar-brand` with its new specification, `.navbar-brand-center`, that will render the title centered and below the two button groups. Note that `.navbar-brand-center` will position the title with absolute positioning ensuring that it will never cover the buttons, which would cause interaction problems.
 
-### Sidebar
+### Sidebars
 
 ``` html
 <div class="sidebar sidebar-left" toggleable parent-active-class="sidebar-left-in" id="mainSidebar">
@@ -556,6 +531,8 @@ Sidebars can be toggled using the `toggle` directive either as an attribute or p
   </div>
 </div>
 ```
+
+By default sidebar are closed by clicking/tapping outside them. To prevent this behavior just add `close-on-outer-clicks='false'` to `.sidebar` element.
 
 ### Tabs
 
@@ -668,7 +645,7 @@ Accordion component is achieved via `toggle` and `toggleable` directives. `exclu
 
 ### Overlays
 
-An overlay is an attempt to replace modals with a component better following mobile patterns.
+Overlay are similar to modals but looks more native in mobile devices.
 
 This is the basic markup for an `overlay`. An `overlay` directive implicitly sets up a `toggleable` using its argument as `id`.
 
@@ -684,6 +661,8 @@ This is the basic markup for an `overlay`. An `overlay` directive implicitly set
   </p>  
 </div>
 ```
+
+You can show an overlay by default adding `default='active'` to the `[overlay]` element.
 
 ### Dropdowns
 
@@ -710,7 +689,7 @@ Dropdowns are also achieved with `toggle` and `toggleable`.
 
 Carousels have the same markup of bootstrap but their behaviour is achieved with 2 functions available to `$rootScope`: `carouselPrev(id)` and `carouselNext(id)`.
 
-This is a basic example that uses `ngSwipeLeft` and `ngSwipeRight`. 
+This is a basic example that uses `ngSwipeLeft` and `ngSwipeRight` from `ngTouch`. 
 
 ``` html
 <div id="carousel-example" class="carousel">
@@ -729,7 +708,7 @@ This is a basic example that uses `ngSwipeLeft` and `ngSwipeRight`.
 </div>
 ```
 
-To create more fancy effects and touch friendly experience you can use `$swipe` service direclty. `$swipe` service is provided by `angular-touch` and is included in both `mobile-angular-ui-touch-fastclick` and `mobile-angular-ui-touch-ng`.
+To create more fancy effects and touch friendly experience you can use `$swipe` service direclty. `$swipe` service is provided by `angular-touch`.
 
 This is a more complete example to explain how to build a swipe friendly carousel.
 
@@ -856,10 +835,12 @@ Example:
 
 Mobile angular Ui provides some markup savers to create form inputs.
 
-#### `bs-input` 
+#### `bs-form-control` 
+
+NOTE: former `bs-input`.
 
 ``` html
-<input type="text" ng-model="invoice.customer"    label="Customer" bs-input />
+<input type="text" ng-model="invoice.customer"    label="Customer" bs-form-control />
 ```
 
 That translates to
@@ -869,7 +850,7 @@ That translates to
 <div class="row">
   <label for="invoice_customer_input" class="control-label col-sm-2">Customer</label>
   <div class="col-sm-10">
-    <input type="text" ng-model="invoice.customer" label="Customer" bs-input="" class="ng-scope ng-pristine ng-valid form-control"></div>
+    <input type="text" ng-model="invoice.customer" label="Customer" bs-form-control="" class="ng-scope ng-pristine ng-valid form-control"></div>
   </div>
 </div>
 ```
@@ -879,8 +860,8 @@ Note that this directive only wraps target element with some html. This lets you
 So for instance you can apply it to `textarea` or `switch` as well.
 
 ```html
-<switch            ng-model="invoice.payed"     label="Payed" bs-input></switch>
-<textarea type="text" ng-model="customer.mailing_address" label="Address" bs-input></textarea>
+<switch            ng-model="invoice.payed"     label="Payed" bs-form-control></switch>
+<textarea type="text" ng-model="customer.mailing_address" label="Address" bs-form-control></textarea>
 ```
 
 ### Panel Helpers

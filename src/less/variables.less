@@ -1,0 +1,75 @@
+@import "font-awesome/less/variables";
+@import "bootstrap/less/variables.less";
+
+
+// Bootstrap Overrides
+@brand-primary: #007aff;
+@brand-success: #4cd964;
+@brand-warning: #fc0;
+@brand-danger: #ff3b30;
+@brand-info: #34aadc;
+
+@headings-font-family:    @font-family-base;
+@headings-font-weight:    normal;
+@btn-font-weight:         normal;
+@alert-link-font-weight:  normal;
+@badge-font-weight:       normal;
+@close-font-weight:       normal;
+
+@navbar-default-color:                     @brand-primary;
+@navbar-default-bg:                        #f7f7f7;
+@navbar-default-link-color:                @brand-primary;
+@navbar-default-link-hover-color:          darken(@brand-primary, 5%);
+@navbar-default-link-active-color:         lighten(@brand-primary, 5%);
+@navbar-default-link-disabled-color:       lighten(@brand-primary, 20%);
+@navbar-default-toggle-icon-bar-bg:        #ccc;
+@navbar-default-border: #ccc;
+
+// Globals
+@font-weight: 200;
+@active-link-opacity: .6;
+@page-header-margin-top: 10px;
+
+// App
+@zindex-app: 2;
+@zindex-app-search: 1029;
+@app-shadow: 0 0 4px rgba(0,0,0,0.4);
+
+// Forms
+@form-actions-margin-top: -20px;
+@search-input-border-radius: 0;
+
+// Switch
+@switch-handle-diameter: @line-height-computed + @padding-base-vertical - 1;
+@switch-width: @switch-handle-diameter * 2;
+@switch-height: @switch-handle-diameter;
+@switch-active-color: @brand-primary;
+@zindex-switch-handle: 2;
+
+// Navbars
+@btn-icon-only-font-size: 22px;
+@navbar-app-height: 50px;
+
+// Overlays
+@overlay-margin: -5px -5px -5px -5px;
+@overlay-background: rgba(255, 255, 255, .8);
+@overlay-content-padding: 20px;
+@overlay-dismiss-font-size: 24px;
+@overlay-dismiss-margin: @overlay-content-padding / 2;
+@overlay-dismiss-margin-top: @overlay-dismiss-margin;
+@overlay-dismiss-margin-right: @overlay-dismiss-margin;
+@overlay-content-color: #000;
+@overlay-blur: 5px;
+
+// Sidebars
+@sidebar-width: 80%;
+@sidebar-left-width: @sidebar-width;
+@sidebar-right-width: @sidebar-width;
+@sidebar-header-height: 70px;
+@sidebar-header-font-size: 23px;
+@zindex-sidebar-header: 10;
+@sidebar-header-padding: 0 10px;
+@sidebar-header-color: #fff;
+@sidebar-background: @gray;
+@sidebar-left-background: @sidebar-background;
+@sidebar-right-background: @sidebar-background;
