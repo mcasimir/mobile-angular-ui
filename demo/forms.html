@@ -4,15 +4,54 @@
 
 
 <div class="scrollable">
- <div class="scrollable-content container section">
+ <div class="scrollable-content section">
    
    <form action="" id="">
 
      <div bs-panel title="Invoice">
-       <input type="text" ng-model="invoice.customer"    label="Customer" bs-form-control />
-       <switch            ng-model="invoice.payed"     label="Payed" bs-form-control></switch>
-       <input type="number" ng-model="invoice.amount"    label="Amount" bs-form-control />
-       <input type="date" ng-model="invoice.date"        label="Date" bs-form-control />
+
+       <input
+        bs-form-control
+        
+        type="text" 
+        ng-model="invoice.customer"
+        label="Customer" 
+        label-class="col-xs-3 col-sm-2 col-lg-1" 
+        class="col-xs-9 col-sm-10 col-lg-11"
+        placeholder="Customer Name"
+       />
+
+       <switch
+        bs-form-control
+        ng-change="switchChanged()"
+        ng-model="invoice.payed"
+        ng-click="switchClicked()"
+        label="Payed"
+        label-class="col-xs-3 col-sm-2 col-lg-1"
+        class="col-xs-9 col-sm-10 col-lg-11" 
+        >
+        </switch>
+
+       <input 
+        bs-form-control
+        
+        type="number" 
+        ng-model="invoice.amount"
+        label="Amount" 
+        label-class="col-xs-3 col-sm-2 col-lg-1"
+        class="col-xs-9 col-sm-10 col-lg-11" 
+        
+        />
+       
+       <input
+        bs-form-control
+        type="date" 
+        ng-model="invoice.date"
+        label="Date"
+        label-class="col-xs-3 col-sm-2 col-lg-1"
+        class="col-xs-9 col-sm-10 col-lg-11"
+        
+        />
      </div>
 
      <div bs-panel title="Notes">
