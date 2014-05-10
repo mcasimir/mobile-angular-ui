@@ -21,7 +21,11 @@ Load files in the head section of your html
 </script>
 ```
 
-The `base` css includes only the mobile css (it has no media queries), while the `desktop` css contains just a few lines of code to make sidebars always visible on desktop. So with these two files you can  only work with the `.*-xs` classes from Bootstrap. If you need more you can include other files from the distribution package to fit your needs. eg. you could add `mobile-angular-ui-max-width-767px.css` to use `(max-width: 767px)` media queries from Bootstrap.
+`mobile-angular-ui-base.css` includes only the mobile css part, it has no media queries except for `col-sm-*` grid. It is intended to target phones and tablets.
+
+`mobile-angular-ui-desktop.css` contains `col-md-*`/`col-lg-*` grid along with some pieces of bootstrap.css for components that are only meaningful on large screens (breadcrumbs, pagination..) and a few lines of code to make sidebars always visible.
+
+No other responsive stuffs are included from `bootstrap.css`.
 
 ### Initialization
 
@@ -45,7 +49,6 @@ angular.module('myApp', [
   });
 ```
 
-
 If you wish you can avoid to load whole `mobile-angular-ui` modules at all and pick a subset of the loaded modules to fit your needs. This is how the `mobile-angular-ui` module is defined with its dependencies. 
 
 ``` javascript
@@ -63,7 +66,7 @@ angular.module("mobile-angular-ui", [
   'mobile-angular-ui.directives.navbars',
   'mobile-angular-ui.directives.carousel'
  ]);
- ```
+```
 
 ### Basic Layout
 
@@ -120,16 +123,14 @@ angular.module("mobile-angular-ui", [
 ```
 
 ### Differences with Bootstrap 3
+
 1. It has different mobile-friendly style for default components
 2. It adds new components like sidebars, absolute-positioned navbars, switches, overlays, scrollables ..
 3. It does not rely on jQuery or bootstrap.js at all (most of the interactions can be reproduced with [toggle] angular directive)
 4. It uses font-awesome in place of glyphicons
-5. Responsive css rules for *-sm, *-md, *-lg are moved out of the default bundle. Responsive grid only is included in desktop.css.
-6. removed/unsupported components:
-  - breadcrumbs and pagination: they are just not the best way to navigate a mobile app,
-    their are only included in desktop.css.
-
-7. `.container` is always fluid
+5. Responsive css rules for components *-sm, *-md, *-lg are moved out of the default bundle. 6. Responsive grid is divided in two parts: `.col-xs-*` and `.col-sm-*` classes are included in base.css, `.col-md-*` and `.col-lg-*` classes are included in desktop.css.
+7. Breadcrumbs and pagination are just not the best way to navigate a mobile app so their are only included in desktop.css.
+8. `.container` is always fluid.
 
 ## Angular Directives  
 

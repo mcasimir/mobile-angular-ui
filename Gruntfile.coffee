@@ -34,7 +34,7 @@ module.exports = (grunt) ->
     smq: # Split Css by Media Queries
       bootstrap:
         src:  "tmp/mobile.css"
-        dest: "dist/css"
+        dest: "tmp/sqm"
         basename: "mobile-angular-ui"
 
     clean: 
@@ -44,7 +44,7 @@ module.exports = (grunt) ->
       tmp_gh_pages_git: ["tmp/gh_pages_git"]
 
     copy:
-      desktop:
+      css_to_dist:
         expand: true
         cwd:  "tmp/"
         src:  ["mobile-angular-ui-desktop.css"]
@@ -118,9 +118,16 @@ module.exports = (grunt) ->
 
         files:
           "tmp/mobile.css": "src/less/mobile-angular-ui.less"
+          "tmp/sm-grid.css": "src/less/sm-grid.less"
           "tmp/mobile-angular-ui-desktop.css": "src/less/mobile-angular-ui-desktop.less"
 
     concat:
+      css: 
+        files:
+          "dist/css/mobile-angular-ui-base.css": [
+            "tmp/sqm/mobile-angular-ui-base.css"
+            "tmp/sm-grid.css"
+          ]
       js:
         files:
           "dist/js/mobile-angular-ui.js": [
@@ -190,7 +197,7 @@ module.exports = (grunt) ->
                                 "less"
                                 "smq"
                                 "concat"
-                                "copy:desktop"
+                                "copy:css_to_dist"
                                 "copy:fa"
                                 "uglify"
                                 "cssmin"

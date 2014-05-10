@@ -1,5 +1,10 @@
 # Mobile Angular Ui Changelog
 
+### v. 1.1.0-beta.19
+_Sat May  10 15:10:38 2014_
+
+- Changed css distribution policy. Now base.css includes .sm grid and desktop.css includes .md+ grid. No other styles are distributed.
+
 ### v. 1.1.0-beta.18
 
 _Fri May  9 19:21:56 2014_

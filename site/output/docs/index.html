@@ -65,7 +65,9 @@
 <span class="kw">&lt;/script&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"angular-route.min.js"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;/script&gt;&lt;script</span><span class="ot"> src=</span><span class="st">"mobile-angular-ui/dist/js/mobile-angular-ui.min.js"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;/script&gt;</span></code></pre>
-<p>The <code>base</code> css includes only the mobile css (it has no media queries), while the <code>desktop</code> css contains just a few lines of code to make sidebars always visible on desktop. So with these two files you can only work with the <code>.*-xs</code> classes from Bootstrap. If you need more you can include other files from the distribution package to fit your needs. eg. you could add <code>mobile-angular-ui-max-width-767px.css</code> to use <code>(max-width: 767px)</code> media queries from Bootstrap.</p>
+<p><code>mobile-angular-ui-base.css</code> includes only the mobile css part, it has no media queries except for <code>col-sm-*</code> grid. It is intended to target phones and tablets.</p>
+<p><code>mobile-angular-ui-desktop.css</code> contains <code>col-md-*</code>/<code>col-lg-*</code> grid along with some pieces of bootstrap.css for components that are only meaningful on large screens (breadcrumbs, pagination..) and a few lines of code to make sidebars always visible.</p>
+<p>No other responsive stuffs are included from <code>bootstrap.css</code>.</p>
 <h3 id="initialization">Initialization</h3>
 <p>You can initialize your Angular application declaring <code>mobile-angular-ui</code> as a dependence.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">angular</span>.<span class="fu">module</span>(<span class="st">'myApp'</span>, [<span class="st">"mobile-angular-ui"</span>]);</code></pre>
@@ -80,7 +82,20 @@
       <span class="co">// ...</span>
   });</code></pre>
 <p>If you wish you can avoid to load whole <code>mobile-angular-ui</code> modules at all and pick a subset of the loaded modules to fit your needs. This is how the <code>mobile-angular-ui</code> module is defined with its dependencies.</p>
-<p><code>javascript angular.module("mobile-angular-ui", [   'mobile-angular-ui.pointer-events',     // prevents actions on disabled elements   'mobile-angular-ui.active-links',       // add .active class to active links   'mobile-angular-ui.fastclick',          // provides touch events with fastclick   'mobile-angular-ui.scrollable',         // polyfills overflow:auto with overthrow   'mobile-angular-ui.directives.toggle',   'mobile-angular-ui.directives.overlay',   'mobile-angular-ui.directives.forms',   'mobile-angular-ui.directives.panels',   'mobile-angular-ui.directives.capture',   'mobile-angular-ui.directives.sidebars',   'mobile-angular-ui.directives.navbars',   'mobile-angular-ui.directives.carousel'  ]);</code></p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">angular</span>.<span class="fu">module</span>(<span class="st">"mobile-angular-ui"</span>, [
+  <span class="st">'mobile-angular-ui.pointer-events'</span>,     <span class="co">// prevents actions on disabled elements</span>
+  <span class="st">'mobile-angular-ui.active-links'</span>,       <span class="co">// add .active class to active links</span>
+  <span class="st">'mobile-angular-ui.fastclick'</span>,          <span class="co">// provides touch events with fastclick</span>
+  <span class="st">'mobile-angular-ui.scrollable'</span>,         <span class="co">// polyfills overflow:auto with overthrow</span>
+  <span class="st">'mobile-angular-ui.directives.toggle'</span>,
+  <span class="st">'mobile-angular-ui.directives.overlay'</span>,
+  <span class="st">'mobile-angular-ui.directives.forms'</span>,
+  <span class="st">'mobile-angular-ui.directives.panels'</span>,
+  <span class="st">'mobile-angular-ui.directives.capture'</span>,
+  <span class="st">'mobile-angular-ui.directives.sidebars'</span>,
+  <span class="st">'mobile-angular-ui.directives.navbars'</span>,
+  <span class="st">'mobile-angular-ui.directives.carousel'</span>
+ ]);</code></pre>
 <h3 id="basic-layout">Basic Layout</h3>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="co">&lt;!-- Sidebars --&gt;</span>
 
@@ -137,13 +152,10 @@
 <li>It adds new components like sidebars, absolute-positioned navbars, switches, overlays, scrollables ..</li>
 <li>It does not rely on jQuery or bootstrap.js at all (most of the interactions can be reproduced with [toggle] angular directive)</li>
 <li>It uses font-awesome in place of glyphicons</li>
-<li>Responsive css rules for <em>-sm, </em>-md, *-lg are moved out of the default bundle. Responsive grid only is included in desktop.css.</li>
-<li>removed/unsupported components:</li>
-</ol><ul>
-<li>breadcrumbs and pagination: they are just not the best way to navigate a mobile app, their are only included in desktop.css.</li>
-</ul><ol start="7" style="list-style-type: decimal">
+<li>Responsive css rules for components <em>-sm, </em>-md, *-lg are moved out of the default bundle. 6. Responsive grid is divided in two parts: <code>.col-xs-*</code> and <code>.col-sm-*</code> classes are included in base.css, <code>.col-md-*</code> and <code>.col-lg-*</code> classes are included in desktop.css.</li>
+<li>Breadcrumbs and pagination are just not the best way to navigate a mobile app so their are only included in desktop.css.</li>
 <li>
-<code>.container</code> is always fluid</li>
+<code>.container</code> is always fluid.</li>
 </ol><h2 id="angular-directives">Angular Directives</h2>
 <p>Before going ahead with components you may want to familiarize with some basic mobile angular ui directives.</p>
 <h3 class="page-header">
