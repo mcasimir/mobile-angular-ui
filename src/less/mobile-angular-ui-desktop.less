@@ -4,6 +4,16 @@
 @import "bootstrap/less/pagination.less";
 @import "bootstrap/less/jumbotron.less";
 
+@media (min-width: @screen-sm-min) {
+  .make-grid(sm);
+}
+@media (min-width: @screen-md-min) {
+  .make-grid(md);
+}
+@media (min-width: @screen-lg-min) {
+  .make-grid(lg);
+}
+
 @media (min-width: @screen-desktop) {
   .sidebar-toggle {
     display: none;

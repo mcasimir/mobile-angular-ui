@@ -1,5 +1,14 @@
 # Mobile Angular Ui Changelog
 
+### v. 1.1.0-beta.18
+
+_Fri May  9 19:21:56 2014_
+
+- Changed `bs-form-control` directive to obtain a flexible behaviour with grids
+- Added responsive .sm+ grid style to desktop.css version (it won't affect containers, they stay always fluid).
+- Improved form style to look consitently both in horizontal and vertical layout
+- Switch now supports ng-change and ng-click (fixes #46)
+
 ### v. 1.1.0-beta.17
 
 _Tue May  6 13:59:57 2014_

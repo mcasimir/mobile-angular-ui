@@ -120,14 +120,16 @@ angular.module("mobile-angular-ui", [
 ```
 
 ### Differences with Bootstrap 3
-
-1. It uses font-awesome in place of glyphicons
-
-2. responsive css rules for *-sm, *-md, *-lg are moved out of the default bundle
-
-3. removed/unsupported components:
+1. It has different mobile-friendly style for default components
+2. It adds new components like sidebars, absolute-positioned navbars, switches, overlays, scrollables ..
+3. It does not rely on jQuery or bootstrap.js at all (most of the interactions can be reproduced with [toggle] angular directive)
+4. It uses font-awesome in place of glyphicons
+5. Responsive css rules for *-sm, *-md, *-lg are moved out of the default bundle. Responsive grid only is included in desktop.css.
+6. removed/unsupported components:
   - breadcrumbs and pagination: they are just not the best way to navigate a mobile app,
-    their are only included in desktop .css  
+    their are only included in desktop.css.
+
+7. `.container` is always fluid
 
 ## Angular Directives  
 
@@ -805,7 +807,9 @@ Now swiping items we will see them moving and rotating. When releasing an item i
   <img src="/figs/switch.png" alt=""/>
 </figure>
 
-The `switch` directive (not to be confused with `ng-switch`) lets you create a toggle switch control bound to a boolean `ngModel` value. 
+The `switch` directive (not to be confused with `ng-switch`) lets you create a toggle switch control bound to a boolean `ngModel` value.
+
+It requires `ngModel`. You can also use `ngChange` in conjunction with `[switch]` to trigger functions in response to model changes.
 
 ``` html
 <switch  ng-model="invoice.payed"></switch>
@@ -840,20 +844,30 @@ Mobile angular Ui provides some markup savers to create form inputs.
 NOTE: former `bs-input`.
 
 ``` html
-<input type="text" ng-model="invoice.customer"    label="Customer" bs-form-control />
+<input
+ bs-form-control
+ 
+ type="text" 
+ ng-model="invoice.customer"
+ label="Customer" 
+ label-class="col-xs-3 col-sm-2 col-lg-1" 
+ class="col-xs-9 col-sm-10 col-lg-11"
+ placeholder="Customer Name"
+/>
 ```
 
 That translates to
 
 ``` html
-<div class="form-group container-fluid">
-<div class="row">
-  <label for="invoice_customer_input" class="control-label col-sm-2">Customer</label>
-  <div class="col-sm-10">
-    <input type="text" ng-model="invoice.customer" label="Customer" bs-form-control="" class="ng-scope ng-pristine ng-valid form-control"></div>
+<div class="form-group row">
+  <label for="invoice_customer_input" class="control-label col-xs-3 col-sm-2 col-lg-1" />Customer</label>
+  <div class="form-control-wrapper col-xs-9 col-sm-10 col-lg-11">
+    <input type="text" ng-model="invoice.customer" class="form-control" placeholder="Customer Name" id="invoice_customer_input" />
   </div>
 </div>
 ```
+
+If you don't assing a grid class to label or element they will get `.col-xs-12`. This way you're always able to mix horizontal and vertical controls without the need to use `form-horizontal` or change markup and style.
 
 Note that this directive only wraps target element with some html. This lets you apply it to any type of control, even custom one.
 

@@ -1,10 +1,3 @@
-@panel-padding: 10px 15px;
-@panel-title-font-size: 16px;
-@panel-group-panel-heading-padding: 0 15px;
-@panel-title-line-height: @line-height-computed * 2;
-@panel-default-panel-heading-padding: 0 0 10px 0;
-@panel-default-panel-body-padding: 15px;
-
 .panel {
   .box-shadow(none);
   border-radius: 0;
@@ -47,7 +40,22 @@ html .panel-group {
 }
 
 .panel-title {
-  font-size: @panel-title-font-size; 
+  color: @gray-light;
+  font-weight: @panel-title-font-weight;
+  font-size: @panel-title-font-size;
+}
+
+form {
+  .panel-heading {
+    margin-bottom: 0;
+    padding-bottom: @line-height-computed / 2; 
+  }
+
+  .panel-body {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
 }
 
 .panel-group .panel-heading + .panel-collapse .panel-body {

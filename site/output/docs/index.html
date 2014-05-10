@@ -133,12 +133,18 @@
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <h3 id="differences-with-bootstrap-3">Differences with Bootstrap 3</h3>
 <ol style="list-style-type: decimal">
-<li><p>It uses font-awesome in place of glyphicons</p></li>
-<li><p>responsive css rules for <em>-sm, </em>-md, *-lg are moved out of the default bundle</p></li>
+<li>It has different mobile-friendly style for default components</li>
+<li>It adds new components like sidebars, absolute-positioned navbars, switches, overlays, scrollables ..</li>
+<li>It does not rely on jQuery or bootstrap.js at all (most of the interactions can be reproduced with [toggle] angular directive)</li>
+<li>It uses font-awesome in place of glyphicons</li>
+<li>Responsive css rules for <em>-sm, </em>-md, *-lg are moved out of the default bundle. Responsive grid only is included in desktop.css.</li>
 <li>removed/unsupported components:</li>
 </ol><ul>
-<li>breadcrumbs and pagination: they are just not the best way to navigate a mobile app, their are only included in desktop .css</li>
-</ul><h2 id="angular-directives">Angular Directives</h2>
+<li>breadcrumbs and pagination: they are just not the best way to navigate a mobile app, their are only included in desktop.css.</li>
+</ul><ol start="7" style="list-style-type: decimal">
+<li>
+<code>.container</code> is always fluid</li>
+</ol><h2 id="angular-directives">Angular Directives</h2>
 <p>Before going ahead with components you may want to familiarize with some basic mobile angular ui directives.</p>
 <h3 class="page-header">
 <code>scrollable</code>
@@ -715,6 +721,7 @@ The content to take place in the placeholder.
 <p>Now swiping items we will see them moving and rotating. When releasing an item if the swipe lenght was at least 3/10 of the item width then carouselPrev/carouselNext are invoked according to swipe direction.</p>
 <h3 id="toggle-switch">Toggle Switch</h3>
 <figure class="full-width-figure"><img src="../figs/switch.png" alt=""></figure><p>The <code>switch</code> directive (not to be confused with <code>ng-switch</code>) lets you create a toggle switch control bound to a boolean <code>ngModel</code> value.</p>
+<p>It requires <code>ngModel</code>. You can also use <code>ngChange</code> in conjunction with <code>[switch]</code> to trigger functions in response to model changes.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;switch</span><span class="ot"> ng-model=</span><span class="st">"invoice.payed"</span><span class="kw">&gt;&lt;/switch&gt;</span></code></pre>
 <h2 id="utils">Utils</h2>
 <h3 id="justified-blocks">Justified Blocks</h3>
@@ -729,16 +736,15 @@ The content to take place in the placeholder.
 <p>Mobile angular Ui provides some markup savers to create form inputs.</p>
 <h4 id="bs-form-control"><code>bs-form-control</code></h4>
 <p>NOTE: former <code>bs-input</code>.</p>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"invoice.customer"</span><span class="ot"> label=</span><span class="st">"Customer"</span><span class="ot"> bs-form-control</span><span class="kw">&gt;</span></code></pre>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;input</span><span class="ot"> bs-form-control type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"invoice.customer"</span><span class="ot"> label=</span><span class="st">"Customer"</span><span class="ot"> label-class=</span><span class="st">"col-xs-3 col-sm-2 col-lg-1"</span><span class="ot"> class=</span><span class="st">"col-xs-9 col-sm-10 col-lg-11"</span><span class="ot"> placeholder=</span><span class="st">"Customer Name"</span><span class="kw">&gt;</span></code></pre>
 <p>That translates to</p>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"form-group container-fluid"</span><span class="kw">&gt;</span>
-<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"row"</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">"invoice_customer_input"</span><span class="ot"> class=</span><span class="st">"control-label col-sm-2"</span><span class="kw">&gt;</span>Customer<span class="kw">&lt;/label&gt;</span>
-  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"col-sm-10"</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"invoice.customer"</span><span class="ot"> label=</span><span class="st">"Customer"</span><span class="ot"> bs-form-control=</span><span class="st">""</span><span class="ot"> class=</span><span class="st">"ng-scope ng-pristine ng-valid form-control"</span><span class="kw">&gt;</span>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"form-group row"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">"invoice_customer_input"</span><span class="ot"> class=</span><span class="st">"control-label col-xs-3 col-sm-2 col-lg-1"</span><span class="kw">&gt;&lt;/label&gt;</span>Customer
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"form-control-wrapper col-xs-9 col-sm-10 col-lg-11"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"invoice.customer"</span><span class="ot"> class=</span><span class="st">"form-control"</span><span class="ot"> placeholder=</span><span class="st">"Customer Name"</span><span class="ot"> id=</span><span class="st">"invoice_customer_input"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;/div&gt;</span>
-  <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
+<p>If you don't assing a grid class to label or element they will get <code>.col-xs-12</code>. This way you're always able to mix horizontal and vertical controls without the need to use <code>form-horizontal</code> or change markup and style.</p>
 <p>Note that this directive only wraps target element with some html. This lets you apply it to any type of control, even custom one.</p>
 <p>So for instance you can apply it to <code>textarea</code> or <code>switch</code> as well.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;switch</span><span class="ot"> ng-model=</span><span class="st">"invoice.payed"</span><span class="ot"> label=</span><span class="st">"Payed"</span><span class="ot"> bs-form-control</span><span class="kw">&gt;&lt;/switch&gt;&lt;textarea</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"customer.mailing_address"</span><span class="ot"> label=</span><span class="st">"Address"</span><span class="ot"> bs-form-control</span><span class="kw">&gt;&lt;/textarea&gt;</span></code></pre>

@@ -6561,6 +6561,16 @@ body {
   overflow: hidden;
 }
 
+textarea,
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="url"] {
+  -webkit-appearance: none;
+}
+
 .form-control:focus {
   outline: 0;
   -webkit-box-shadow: none;
@@ -6571,14 +6581,24 @@ body {
   border-radius: 0;
   -webkit-box-shadow: none;
   box-shadow: none;
+  border: 1px solid #cccccc;
+}
+
+.form-group {
+  margin-bottom: 0;
+  padding: 10px 0;
 }
 
 .input-group-addon {
   background: #ffffff;
 }
 
+.control-label {
+  line-height: 34px;
+  margin: 0;
+}
+
 input[type="search"] {
-  -webkit-appearance: none;
   border-radius: 0;
 }
 
@@ -6590,8 +6610,8 @@ input[type="search"] {
   cursor: pointer;
   position: relative;
   display: block;
-  width: 50px;
-  height: 25px;
+  width: 68px;
+  height: 34px;
   background-color: #ffffff;
   border: 1px solid #cccccc;
   border-radius: 999px;
@@ -6602,8 +6622,8 @@ input[type="search"] {
   top: -1px;
   left: -1px;
   z-index: 2;
-  width: 25px;
-  height: 25px;
+  width: 34px;
+  height: 34px;
   background-color: #ffffff;
   border: 1px solid #cccccc;
   border-radius: 100px;
@@ -6616,8 +6636,8 @@ input[type="search"] {
 
 .switch.active .switch-handle {
   border-color: #007aff;
-  -webkit-transform: translate3d(25px, 0, 0);
-  transform: translate3d(25px, 0, 0);
+  -webkit-transform: translate3d(34px, 0, 0);
+  transform: translate3d(34px, 0, 0);
 }
 
 .switch-transition-enabled {
@@ -7093,7 +7113,19 @@ html .panel-group .panel-title {
 }
 
 .panel-title {
-  font-size: 16px;
+  color: #999999;
+  font-weight: 200;
+  font-size: 20px;
+}
+
+form .panel-heading {
+  margin-bottom: 0;
+  padding-bottom: 10px;
+}
+
+form .panel-body {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .panel-group .panel-heading + .panel-collapse .panel-body {

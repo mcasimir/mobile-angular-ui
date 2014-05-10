@@ -42,11 +42,13 @@ app.directive( "carouselExampleItem", function($rootScope, $swipe){
 
       $swipe.bind(element, {
         start: function(coords) {
+          endAction = null;
           startX = coords.x;
           startY = coords.y;
         },
 
         cancel: function(e) {
+          endAction = null;
           translateAndRotate(0, 0, 0, 0);
           e.stopPropagation();
         },
@@ -69,6 +71,8 @@ app.directive( "carouselExampleItem", function($rootScope, $swipe){
               endAction = "next";
             } else if (deltaXRatio < -0.3){
               endAction = "prev";
+            } else {
+              endAction = null;
             }
             translateAndRotate(deltaXRatio * 200, 0, 0, deltaXRatio * 15);
           }
@@ -123,6 +127,6 @@ app.controller('MainController', function($rootScope, $scope, analytics){
     { name: "Joe Barker", online: false },
     { name: "Lee Norman", online: false },
     { name: "Ebony Rice", online: false }
-  ]
+  ];
 
 });

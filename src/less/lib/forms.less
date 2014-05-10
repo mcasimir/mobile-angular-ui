@@ -1,5 +1,15 @@
 // Forms
 
+textarea,
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="url"] {
+  -webkit-appearance: none;
+}
+
 .form-control:focus {
   outline: 0;
   .box-shadow(none);
@@ -8,14 +18,24 @@
 .form-control {
   border-radius: 0;
   .box-shadow(none);
+  border: 1px solid @input-border;
+}
+
+.form-group {
+  margin-bottom: 0;
+  padding: @line-height-computed/2 0; 
 }
 
 .input-group-addon {
   background: @input-bg;
 }
 
+.control-label {
+  line-height: @input-height-base;
+  margin: 0;
+}
+
 input[type="search"] {
-  -webkit-appearance: none;
   border-radius: @search-input-border-radius;
 }
 
