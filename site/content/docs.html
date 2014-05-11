@@ -667,9 +667,11 @@ This is the basic markup for an `overlay`. An `overlay` directive implicitly set
 
 You can show an overlay by default adding `default='active'` to the `[overlay]` element.
 
+To interact with overlays from controllers you can use `$rootScope.toggle()` function: i.e `$rootScope.toggle('myOverlay', 'on');` or `$rootScope.toggle('myOverlay', 'off');`.
+
 ### Dropdowns
 
-Dropdowns are also achieved with `toggle` and `toggleable`.
+Dropdowns are also achieved using `toggle` and `toggleable`.
 
 ``` html
 <div class="btn-group pull-right toggleable-dropdown" active-class="open" id="myDropdown" toggleable>

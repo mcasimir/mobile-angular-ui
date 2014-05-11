@@ -1,13 +1,20 @@
 # Mobile Angular Ui Changelog
 
+### v. 1.1.0-beta.20
+
+_Sun May  11 12:54 2014_
+
+- Drop angular.js dependencies
+- grunt/grunt connect now serves both from "." and "site/output" simplifying demo testing
+
 ### v. 1.1.0-beta.19
-_Sat May  10 15:10:38 2014_
+_Sat May  10 15:10 2014_
 
 - Changed css distribution policy. Now base.css includes .sm grid and desktop.css includes .md+ grid. No other styles are distributed.
 
 ### v. 1.1.0-beta.18
 
-_Fri May  9 19:21:56 2014_
+_Fri May  9 19:21 2014_
 
 - Changed `bs-form-control` directive to obtain a flexible behaviour with grids
 - Added responsive .sm+ grid style to desktop.css version (it won't affect containers, they stay always fluid).
@@ -16,7 +23,7 @@ _Fri May  9 19:21:56 2014_
 
 ### v. 1.1.0-beta.17
 
-_Tue May  6 13:59:57 2014_
+_Tue May  6 13:59 2014_
 
 - Added this changelog :)
 - Updated to latest bootstrap (3.1.1) and angular.js (1.2.17)

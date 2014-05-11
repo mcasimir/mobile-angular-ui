@@ -28,12 +28,9 @@
     "tmp"
   ],
   "dependencies": {
-    "angular": "~1.2.17",
     "font-awesome": "~4.0.3",
     "bootstrap": "~3.1.1",
-    "angular-route": "~1.2.2",
     "fastclick": "~1.0.0",
     "overthrow": "~0.7.0",
-    "angular-touch": "~1.2.16"
   }
 }

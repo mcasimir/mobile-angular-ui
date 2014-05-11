@@ -56,30 +56,6 @@ module.exports = (grunt) ->
         src: ["**"], 
         dest: 'dist/fonts'
 
-      demo:
-        expand: true,
-        cwd: "dist/"
-        src: ["**"],
-        dest: "demo/assets"
-
-      demo_angular:
-        expand: true,
-        cwd: "bower_components/angular"
-        src: ["angular.js", "angular.min.js"],
-        dest: "demo/assets/js"
-
-      demo_angular_touch:
-        expand: true,
-        cwd: "bower_components/angular-touch"
-        src: ["angular-touch.js", "angular-touch.min.js"],
-        dest: "demo/assets/js"
-
-      demo_angular_route:
-        expand: true,
-        cwd: "bower_components/angular-route"
-        src: ["angular-route.js", "angular-route.min.js"],
-        dest: "demo/assets/js"
-
       backup_gh_pages_git:
         expand: true,
         cwd: "gh-pages/.git"
@@ -92,12 +68,18 @@ module.exports = (grunt) ->
         src: ["**"],
         dest: "gh-pages/.git"
 
-      demo_to_site_out:
+      gh_pages_demo:
         expand: true,
         cwd: "demo/"
         src: ["**"],
-        dest: "site/output/demo"
+        dest: "gh-pages/demo"
 
+      gh_pages_dist:
+          expand: true,
+          cwd: "dist/"
+          src: ["**"],
+          dest: "gh-pages/dist"
+      
       gh_pages_site:
         expand: true,
         cwd: "site/output"
@@ -161,16 +143,13 @@ module.exports = (grunt) ->
       all:
         files: "src/**/*"
         tasks: ["build"]
-      demo:
-        files: "demo/*"
-        tasks: ["copy:demo_to_site_out"]
 
     connect:
       server:
         options:
           hostname: '0.0.0.0'
           port: 3000
-          base: 'site/output'
+          base: ['site/output', '.']
           keepalive: true
 
     githubPages:
@@ -201,24 +180,24 @@ module.exports = (grunt) ->
                                 "copy:fa"
                                 "uglify"
                                 "cssmin"
-                                "copy:demo"
-                                "copy:demo_angular"
-                                "copy:demo_angular_route"
-                                "copy:demo_angular_touch"
-                                "copy:demo_to_site_out"
                               ]
 
   grunt.registerTask "devel",      ["build", "concurrent:devel"]
   grunt.registerTask "devel-site", ["clean:site_out", "build", "concurrent:site"]
   grunt.registerTask "default",    ["clean:site_out", "build", "concurrent:all"]
   
-  grunt.registerTask "push-site", [ 
-      "copy:backup_gh_pages_git"
-      "clean:site"
-      "copy:restore_gh_pages_git"
-      "clean:tmp_gh_pages_git"
-      "copy:gh_pages_site"
-      "copy:gh_pages_cname"
-      "githubPages:site"
+  grunt.registerTask "build-gh-pages", [
+    "copy:backup_gh_pages_git"
+    "clean:site"
+    "copy:restore_gh_pages_git"
+    "clean:tmp_gh_pages_git"
+    "copy:gh_pages_site"
+    "copy:gh_pages_cname"
+    "copy:gh_pages_demo"
+    "copy:gh_pages_dist"
     ]
 
+  grunt.registerTask "push-site", [ 
+    "build-gh-pages"
+    "githubPages:site"
+    ]

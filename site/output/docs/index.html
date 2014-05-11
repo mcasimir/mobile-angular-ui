@@ -622,8 +622,9 @@ The content to take place in the placeholder.
   <span class="kw">&lt;/p&gt;</span>  
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <p>You can show an overlay by default adding <code>default='active'</code> to the <code>[overlay]</code> element.</p>
+<p>To interact with overlays from controllers you can use <code>$rootScope.toggle()</code> function: i.e <code>$rootScope.toggle('myOverlay', 'on');</code> or <code>$rootScope.toggle('myOverlay', 'off');</code>.</p>
 <h3 id="dropdowns">Dropdowns</h3>
-<p>Dropdowns are also achieved with <code>toggle</code> and <code>toggleable</code>.</p>
+<p>Dropdowns are also achieved using <code>toggle</code> and <code>toggleable</code>.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group pull-right toggleable-dropdown"</span><span class="ot"> active-class=</span><span class="st">"open"</span><span class="ot"> id=</span><span class="st">"myDropdown"</span><span class="ot"> toggleable</span><span class="kw">&gt;</span>
   <span class="kw">&lt;button</span><span class="ot"> type=</span><span class="st">"button"</span><span class="ot"> class=</span><span class="st">"btn btn-default dropdown-toggle"</span><span class="ot"> toggle target=</span><span class="st">"myDropdown"</span><span class="kw">&gt;</span>
     <span class="kw">&lt;i</span><span class="ot"> class=</span><span class="st">"fa fa-gear"</span><span class="kw">&gt;&lt;/i&gt;</span> <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">"caret"</span><span class="kw">&gt;&lt;/span&gt;</span>
