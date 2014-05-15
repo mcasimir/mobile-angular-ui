@@ -1,13 +1,27 @@
-<iframe id="forum_embed"
-  src="javascript:void(0)"
-  scrolling="no"
-  frameborder="0"
-  width="900"
-  height="700">
-</iframe>
-<script type="text/javascript">
-  document.getElementById('forum_embed').src =
-     'https://groups.google.com/forum/embed/?place=forum/mobile-angular-ui-forum'
-     + '&showsearch=true&showpopout=true&showtabs=false'
-     + '&parenturl=' + encodeURIComponent(window.location.href);
-</script>
+<div class="container">
+  <div class="label label-info" id="loading"><i class="fa fa-spinner fa-spin"></i> Loading forum ... 
+  </div>
+  <iframe id="forum_embed"
+    src="javascript:void(0)"
+    scrolling="no"
+    frameborder="0"
+    width="100%"
+    height="900"
+    onload="hideLoading();">
+  </iframe>
+  <script type="text/javascript">
+    function hideLoading() {
+      console.log("hideLoading");
+      var loadingEl = document.getElementById('loading');
+      loadingEl.parentNode.removeChild(loadingEl);
+    }
+    document.getElementById('forum_embed').src =
+       'https://groups.google.com/forum/embed/?place=forum/mobile-angular-ui-forum'
+       + '&showsearch=true&showpopout=true&showtabs=false&hideforumtitle=true&hidesubject=true'
+       + '&parenturl=' + encodeURIComponent(window.location.href);
+  </script>
+
+
+  <a href="https://muut.com/mobileangularui" target="_blank">Read the old forum (please don't post there).</a>
+</div>
+

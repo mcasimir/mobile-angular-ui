@@ -24,35 +24,35 @@
   .sidebar-left {
     display: block;
     left: 0;
-    width: 280px;
+    width: @sidebar-left-width-md;
   }
 
   .sidebar-right {
     display: block;
     right: 0;
     left: auto;
-    width: 280px;
+    width: @sidebar-right-width-md;
   }
 
   .sidebar-right-in .sidebar-left {
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0) !important;
+    -moz-transform: translate3d(0, 0, 0) !important;
+    transform: translate3d(0, 0, 0) !important;
   }
 
   .sidebar-left-in .sidebar-right {
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0) !important;
+    -moz-transform: translate3d(0, 0, 0) !important;
+    transform: translate3d(0, 0, 0) !important;
   }
 
   .has-sidebar-left .app, .sidebar-left-in .app {
     width: auto;
-    margin-left: 280px;
+    margin-left: @sidebar-left-width-md;
     left: 0;
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0) !important;
+    -moz-transform: translate3d(0, 0, 0) !important;
+    transform: translate3d(0, 0, 0) !important;
     position: relative;
     -webkit-transition: -webkit-transform 0 ease;
     -moz-transition: -moz-transform 0 ease;
@@ -61,15 +61,30 @@
 
   .sidebar-right-in .app {
     width: auto;
-    margin-right: 280px;
+    margin-right: @sidebar-right-width-md;
     right: 0;
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0) !important;
+    -moz-transform: translate3d(0, 0, 0) !important;
+    transform: translate3d(0, 0, 0) !important;
     position: relative;
     -webkit-transition: -webkit-transform 0 ease;
     -moz-transition: -moz-transform 0 ease;
     transition: transform 0 ease;
+  }
+}
+
+@media (min-width: @screen-lg-min) {
+  .sidebar-left {
+    width: @sidebar-left-width-lg;
+  }
+  .sidebar-right {
+    width: @sidebar-right-width-lg;
+  }
+  .has-sidebar-left .app, .sidebar-left-in .app {
+    margin-left: @sidebar-left-width-lg;
+  }
+  .sidebar-right-in .app {
+    margin-right: @sidebar-right-width-lg;
   }
 }
 

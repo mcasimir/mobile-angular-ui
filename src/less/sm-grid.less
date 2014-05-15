@@ -4,3 +4,38 @@
 @media (min-width: @screen-sm-min) {
   .make-grid(sm);
 }
+
+
+@media (min-width: @screen-xs-min) {
+  .sidebar-left {
+    width: @sidebar-left-width-xs;
+  }
+  .sidebar-right {
+    width: @sidebar-right-width-xs;
+  }
+  .sidebar-left-in .app {
+    .translate3d(@sidebar-left-width-xs, 0, 0);
+  }
+  .sidebar-right-in .app {
+    .translate3d(-@sidebar-right-width-xs, 0, 0);
+  }
+}
+
+@media (min-width: @screen-sm-min) {
+  .sidebar-left {
+    width: @sidebar-left-width-sm;
+  }
+  .sidebar-right {
+    width: @sidebar-right-width-sm;
+  }
+  .sidebar-left-in .app {
+    .translate3d(@sidebar-left-width-sm, 0, 0);
+  }
+  .sidebar-right-in .app {
+    .translate3d(-@sidebar-right-width-sm, 0, 0);
+  }
+}
+
+
+
+

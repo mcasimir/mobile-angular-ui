@@ -1,5 +1,9 @@
 # Mobile Angular Ui Changelog
 
+### v. 1.1.0-beta.21
+
+- Fixes #53: Android devices bad rendering box model with %-based translate3d. Switched to fixed sidebars width and media-queries.
+
 ### v. 1.1.0-beta.20
 
 _Sun May  11 12:54 2014_
