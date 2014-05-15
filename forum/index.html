@@ -45,14 +45,16 @@
 </nav>
 
     <div id="main">
-      <iframe id="forum_embed" src="javascript:void(0)" scrolling="no" frameborder="0" width="900" height="700">
-</iframe>
-<script type="text/javascript">
-  document.getElementById('forum_embed').src =
-     'https://groups.google.com/forum/embed/?place=forum/mobile-angular-ui-forum'
-     + '&showsearch=true&showpopout=true&showtabs=false'
-     + '&parenturl=' + encodeURIComponent(window.location.href);
-</script>
+      <div class="container">
+  <iframe id="forum_embed" src="javascript:void(0)" scrolling="no" frameborder="0" width="100%" height="100%">
+  </iframe>
+  <script type="text/javascript">
+    document.getElementById('forum_embed').src =
+       'https://groups.google.com/forum/embed/?place=forum/mobile-angular-ui-forum'
+       + '&showsearch=true&showpopout=true&showtabs=false'
+       + '&parenturl=' + encodeURIComponent(window.location.href);
+  </script>
+</div>
     </div>
     <footer class="footer">
   <div class="container">
