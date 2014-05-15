@@ -23,8 +23,6 @@ app.service('analytics', [
   }
 ]);
 
-
-
 app.directive( "carouselExampleItem", function($rootScope, $swipe){
   return function(scope, element, attrs){
       var startX = null;

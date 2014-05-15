@@ -6737,6 +6737,7 @@ a.list-group-item .icon.pull-right {
   display: block;
   height: 100%;
   padding: 0;
+  overflow: hidden;
 }
 
 .app-content {
