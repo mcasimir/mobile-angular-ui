@@ -112,6 +112,7 @@ b, strong {
   font-size: 30px;
   line-height: 48px;
   margin-top: -20px;
+  background-color: #30BDED;
   background-image: -o-linear-gradient(179deg, #30BDED 0%, #2085C5 100%);
   background-image: -moz-linear-gradient(179deg, #30BDED 0%, #2085C5 100%);
   background-image: -ms-linear-gradient(179deg, #30BDED 0%, #2085C5 100%);

@@ -45,10 +45,14 @@
 </nav>
 
     <div id="main">
-      <div class="embedded-forum-container">
-<a class="muut" href="https://muut.com/i/mobileangularui"></a>
-<script src="//cdn.muut.com/1/moot.min.js"></script>
-</div>
+      <iframe id="forum_embed" src="javascript:void(0)" scrolling="no" frameborder="0" width="900" height="700">
+</iframe>
+<script type="text/javascript">
+  document.getElementById('forum_embed').src =
+     'https://groups.google.com/forum/embed/?place=forum/mobile-angular-ui-forum'
+     + '&showsearch=true&showpopout=true&showtabs=false'
+     + '&parenturl=' + encodeURIComponent(window.location.href);
+</script>
     </div>
     <footer class="footer">
   <div class="container">
