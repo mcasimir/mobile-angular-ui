@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  <title>How to create dropdowns | Mobile Angular UI</title>
+  <meta name="description" content="A tutorial to create dropdowns with Mobile Angular UI and [toggle] directive." />
+  
+  
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500' rel='stylesheet' type='text/css'>
+  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="stylesheet" href="/style.css">
+</head>
+  <body>
+    <nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <h1 class="navbar-brand"><a href="/">Mobile Angular UI <small id="current-version"></small></a></h1>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+            <li><a href="/demo">Demo</a></li>
+            <li><a href="/docs">Docs</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/forum">Forum</a></li>
+            <li><a href="https://github.com/mcasimir/mobile-angular-ui/issues/4">Roadmap</a></li>
+            </li>
+            <li><iframe class="star-repo" src="http://ghbtns.com/github-btn.html?user=mcasimir&amp;repo=mobile-angular-ui&amp;type=watch&amp;count=true&amp;size=small" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div id="main">
+      <div class="container">
+<div class="page-header">
+  <div class="btn-group pull-right">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      <i class="fa fa-share"></i> <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+    <li><a href="https://twitter.com/intent/tweet?url=http://mobileangularui.com/2014/05/how-to-create-dropdowns/" class="share-btn" target="_blank"><i class='fa fa-twitter-square'></i> Twitter</a></li>
+    <li><a href="https://www.facebook.com/sharer/sharer.php?u=http://mobileangularui.com/2014/05/how-to-create-dropdowns/" class="share-btn" target="_blank"><i class='fa fa-facebook-square'></i> Facebook</a></li>
+    <li><a href="https://plus.google.com/share?url=http://mobileangularui.com/2014/05/how-to-create-dropdowns/" class="share-btn" target="_blank"><i class='fa fa-google-plus-square'></i> Google+</a></li>
+    </ul>
+  </div>
+
+  <h1 class="post-title">How to create dropdowns</h1>
+
+  <div class="description post-description">A tutorial to create dropdowns with Mobile Angular UI and [toggle] directive.</div>
+</div>
+<div class="post-content"><p>Bootstrap Dropdown Buttons can be created using <code>[toggle]</code> and <code>[toggleables]</code> directives in Mobile Angular UI.</p>
+<p>To clarify how to realize dropdown interaction we should resort to the original Bootstrap behavior and markup.</p>
+<p>This is the basic markup to create a dropdown with Boostrap (css only, no interaction).</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;button</span><span class="ot"> type=</span><span class="st">"button"</span> 
+<span class="ot">    class=</span><span class="st">"btn btn-default dropdown-toggle"</span><span class="kw">&gt;</span>
+    Action <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">"caret"</span><span class="kw">&gt;&lt;/span&gt;</span>
+  <span class="kw">&lt;/button&gt;</span>
+
+  <span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">"dropdown-menu"</span><span class="kw">&gt;</span>
+    <span class="co">&lt;!-- ... --&gt;</span>
+  <span class="kw">&lt;/ul&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<p>With the markup above we will see only a button, since the dropdown is closed.</p>
+<p>To make the dropdown appear we need to add just the <code>.open</code> class to the outer element <code>.btn-group</code>.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group open"</span><span class="kw">&gt;</span>
+  <span class="co">&lt;!-- ... --&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<p>That's all we need to replicate the Bootstrap dropdown style.</p>
+<h3 id="lets-add-some-interaction">Lets add some interaction</h3>
+<p>According to what we said above we should alternately add/remove the <code>.open</code> class on <code>.btn-group</code> element when the button is clicked.</p>
+<p>Basically we can achieve this behavior through a toggleable element.</p>
+<p>A toggleable element listen for commands sent to it, and react changing it's state between active/inactive according to the command received.</p>
+<p>When a toggleable changes it's state its activation/inactivation state can be reflected applying a class to the element itself or to its parent with the apposite attributes: <code>active-class</code>, <code>inactive-class</code>, <code>parent-active-class</code>, <code>parent-inactive-class</code>.</p>
+<p>That said we can setup toggleable on <code>btn-group</code> element, having the <code>open</code> class applyed in response to its active state:</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group"</span><span class="ot"> toggleable active-class=</span><span class="st">'open'</span><span class="kw">&gt;</span>
+  <span class="co">&lt;!-- ... --&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<h3 id="sending-commands-to-toggleables">Sending commands to toggleables</h3>
+<p>Now that we know how to make an element respond to its activation we should learn how to send activation commands to it.</p>
+<p>For this <code>mobile-angular-ui.directives.toggle</code> module sets up two functions in <code>$rootScope</code>: <code>toggle(id, command)</code> and <code>toggleByClass(className, command)</code>.</p>
+<p>The first thing you notice is that we should know the id or the class of the target toggleable, so lets add one to our:</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group"</span><span class="ot"> toggleable active-class=</span><span class="st">'open'</span><span class="ot"> id=</span><span class="st">"myToggleableDropdown"</span><span class="kw">&gt;</span>
+  <span class="co">&lt;!-- ... --&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<p>Now in our controller we could simply call:</p>
+<pre class="js"><code>$rootScope.toggle('myToggleableDropdown', 'on');</code></pre>
+<p>To make the dropdown show.</p>
+<p>Anyway we can realize the whole interaction without javascript, using the [toggle] directive.</p>
+<h3 id="seting-up-toggle-command-triggers-with-markup">Seting up toggle command triggers with markup</h3>
+<p>To create a trigger element for toggle commands we should setup the toggle directive on the desired element.</p>
+<p>When a <code>[toggle]</code> element is clicked (or tapped). A message is sent according to toggle directive parameters.</p>
+<p>Toggle commands are <code>on</code>, <code>off</code> or <code>toggle</code> (default to <code>toggle</code>) and can be passed directly to the <code>toggle</code> attribute.</p>
+<p>So to make the button send a <code>toggle</code> command (alternate <code>on</code> and <code>off</code>) we can just add <code>toggle</code> attribute specifing the recipient toggleable id in the <code>target</code> attribute:</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;button</span><span class="ot"> type=</span><span class="st">"button"</span> 
+<span class="ot">  class=</span><span class="st">"btn btn-default dropdown-toggle"</span><span class="ot"> toggle target=</span><span class="st">"myToggleableDropdown"</span><span class="kw">&gt;</span>
+  <span class="co">&lt;!-- ... --&gt;</span>
+<span class="kw">&lt;/button&gt;</span></code></pre>
+<p>Now clicking on the button we should see the dropdown opening and closing. That's all of the basics of toggle and toggleables directives. But..</p>
+<h3 id="making-dropdown-closes-clicking-links">Making dropdown closes clicking links</h3>
+<p>To make the dropdown close by clicking on any of its inner links we should setup <code>[toggle]</code> directive on menu items parent also.</p>
+<p>This time clicking on any element inside the menu the dropdown should always receive the 'off' message, this can be specified defining <code>toggle='off'</code> attribute.</p>
+<ul class="dropdown-menu" toggle="off" target="myToggleableDropdown"><!-- ... --></ul><p>This should be enough but you should notice that this way links would be never activated.</p>
+<p>Using the <code>bubble</code> attribute of <code>toggle</code> directive is required here to make click events propagate the inner links, otherwise they would be catched by <code>[toggle]</code> element:</p>
+<ul class="dropdown-menu" toggle="off" target="myToggleableDropdown" bubble><!-- ... --></ul><p>Here is the complete snippet of code.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group"</span><span class="ot"> toggleable id=</span><span class="st">"myToggleableDropdown"</span><span class="ot"> active-class=</span><span class="st">"open"</span><span class="kw">&gt;</span>
+
+  <span class="kw">&lt;button</span><span class="ot"> type=</span><span class="st">"button"</span> 
+<span class="ot">    class=</span><span class="st">"btn btn-default dropdown-toggle"</span><span class="ot"> toggle target=</span><span class="st">"myToggleableDropdown"</span><span class="kw">&gt;</span>
+    Action <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">"caret"</span><span class="kw">&gt;&lt;/span&gt;</span>
+  <span class="kw">&lt;/button&gt;</span>
+
+  <span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">"dropdown-menu"</span><span class="ot"> toggle=</span><span class="st">"off"</span><span class="ot"> target=</span><span class="st">"myToggleableDropdown"</span><span class="ot"> bubble</span><span class="kw">&gt;</span>
+    <span class="co">&lt;!-- ... --&gt;</span>
+  <span class="kw">&lt;/ul&gt;</span>
+
+<span class="kw">&lt;/div&gt;</span></code></pre></div>
+
+<hr />
+
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        
+        var disqus_shortname = 'mobileangularui'; // required: replace example with your forum shortname
+
+        
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>    
+
+    </div>
+    </div>
+    <footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="media">
+          <img src="https://avatars1.githubusercontent.com/u/334881?s=100" alt="" class="pull-left avatar">
+          <div class="media-body">
+            <h4 class="footer-title">Mobile Angular Ui</h4>
+            <p class="footer-credits">made for you by <a href="https://github.com/mcasimir" target="_blank"><b>mcasimir</b></a></p>
+            <small><br/>Published under the <a href="https://raw.githubusercontent.com/mcasimir/mobile-angular-ui/master/LICENSE">MIT license.</a></small>         
+          </div>
+        </div>
+        <hr class="visible-xs" />
+      </div>
+      <div class="col-sm-3">
+        <ul class="list-unstyled">
+          <li><a href="/demo">Demo</a></li>
+          <li><a href="/docs">Docs</a></li>
+          <li><a href="/forum">Forum</a></li>
+        </ul>
+        <hr class="visible-xs" />
+      </div>
+      <div class="col-sm-3">
+        <ul class="list-unstyled">
+          <li><a target="blank" href="https://github.com/mcasimir/mobile-angular-ui"><i class="fa fa-github"></i> Github</a></li>
+          <li><a target="blank" href="https://plus.google.com/+MobileangularuiGp"><i class="fa fa-google-plus"></i> Google+</a></li>
+          <li><a target="blank" href="https://twitter.com/mobileangularui"><i class="fa fa-twitter"></i> Twitter</a></li>
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48036416-1', 'mobileangularui.com');
+  ga('send', 'pageview');
+</script>
+
+<script src="/scripts.js"></script>
+
+  </body>
+</html>
