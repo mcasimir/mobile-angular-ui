@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
   <title>How to create dropdowns | Mobile Angular UI</title>
-  <meta name="description" content="A tutorial to create dropdowns with Mobile Angular UI and [toggle] directive." />
+  <meta name="description" content="A tutorial to create dropdowns with Mobile Angular UI and togglable/toggle directive." />
   
   
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500' rel='stylesheet' type='text/css'>
@@ -61,7 +61,7 @@
 
   <h1 class="post-title">How to create dropdowns</h1>
 
-  <div class="description post-description">A tutorial to create dropdowns with Mobile Angular UI and [toggle] directive.</div>
+  <div class="description post-description">A tutorial to create dropdowns with Mobile Angular UI and togglable/toggle directive.</div>
 </div>
 <div class="post-content"><p>Bootstrap Dropdown Buttons can be created using <code>[toggle]</code> and <code>[toggleables]</code> directives in Mobile Angular UI.</p>
 <p>To clarify how to realize dropdown interaction we should resort to the original Bootstrap behavior and markup.</p>
@@ -77,7 +77,7 @@
   <span class="kw">&lt;/ul&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <p>With the markup above we will see only a button, since the dropdown is closed.</p>
-<p>To make the dropdown appear we need to add just the <code>.open</code> class to the outer element <code>.btn-group</code>.</p>
+<p>To make the dropdown appear we have to add the <code>.open</code> class to the outer element <code>.btn-group</code>.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group open"</span><span class="kw">&gt;</span>
   <span class="co">&lt;!-- ... --&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
@@ -85,7 +85,7 @@
 <h3 id="lets-add-some-interaction">Lets add some interaction</h3>
 <p>According to what we said above we should alternately add/remove the <code>.open</code> class on <code>.btn-group</code> element when the button is clicked.</p>
 <p>Basically we can achieve this behavior through a toggleable element.</p>
-<p>A toggleable element listen for commands sent to it, and react changing it's state between active/inactive according to the command received.</p>
+<p>A toggleable element listen for commands sent to it and react changing it's state between active/inactive according to the command received.</p>
 <p>When a toggleable changes it's state its activation/inactivation state can be reflected applying a class to the element itself or to its parent with the apposite attributes: <code>active-class</code>, <code>inactive-class</code>, <code>parent-active-class</code>, <code>parent-inactive-class</code>.</p>
 <p>That said we can setup toggleable on <code>btn-group</code> element, having the <code>open</code> class applyed in response to its active state:</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group"</span><span class="ot"> toggleable active-class=</span><span class="st">'open'</span><span class="kw">&gt;</span>
@@ -99,24 +99,24 @@
   <span class="co">&lt;!-- ... --&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <p>Now in our controller we could simply call:</p>
-<pre class="js"><code>$rootScope.toggle('myToggleableDropdown', 'on');</code></pre>
-<p>To make the dropdown show.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">$rootScope</span>.<span class="fu">toggle</span>(<span class="st">'myToggleableDropdown'</span>, <span class="st">'on'</span>);</code></pre>
+<p>to make the dropdown show.</p>
 <p>Anyway we can realize the whole interaction without javascript, using the [toggle] directive.</p>
-<h3 id="seting-up-toggle-command-triggers-with-markup">Seting up toggle command triggers with markup</h3>
+<h3 id="setting-up-toggle-command-triggers-with-markup">Setting up toggle command triggers with markup</h3>
 <p>To create a trigger element for toggle commands we should setup the toggle directive on the desired element.</p>
-<p>When a <code>[toggle]</code> element is clicked (or tapped). A message is sent according to toggle directive parameters.</p>
-<p>Toggle commands are <code>on</code>, <code>off</code> or <code>toggle</code> (default to <code>toggle</code>) and can be passed directly to the <code>toggle</code> attribute.</p>
-<p>So to make the button send a <code>toggle</code> command (alternate <code>on</code> and <code>off</code>) we can just add <code>toggle</code> attribute specifing the recipient toggleable id in the <code>target</code> attribute:</p>
+<p>When a <code>[toggle]</code> element is clicked (or tapped). A message is sent to toggleables according to its parameters.</p>
+<p>A toggle command can be one of: <code>on</code>, <code>off</code> or <code>toggle</code> (default to <code>toggle</code>). Command to be sent is specified as value for <code>toggle</code> attribute.</p>
+<p>So in order to make the button send a <code>toggle</code> command (alternate <code>on</code> and <code>off</code>) we can just add <code>toggle</code> attribute specifing the recipient toggleable id in the <code>target</code> attribute:</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;button</span><span class="ot"> type=</span><span class="st">"button"</span> 
 <span class="ot">  class=</span><span class="st">"btn btn-default dropdown-toggle"</span><span class="ot"> toggle target=</span><span class="st">"myToggleableDropdown"</span><span class="kw">&gt;</span>
   <span class="co">&lt;!-- ... --&gt;</span>
 <span class="kw">&lt;/button&gt;</span></code></pre>
-<p>Now clicking on the button we should see the dropdown opening and closing. That's all of the basics of toggle and toggleables directives. But..</p>
+<p>Now clicking on the button we should see the dropdown opening and closing.</p>
 <h3 id="making-dropdown-closes-clicking-links">Making dropdown closes clicking links</h3>
 <p>To make the dropdown close by clicking on any of its inner links we should setup <code>[toggle]</code> directive on menu items parent also.</p>
 <p>This time clicking on any element inside the menu the dropdown should always receive the 'off' message, this can be specified defining <code>toggle='off'</code> attribute.</p>
 <ul class="dropdown-menu" toggle="off" target="myToggleableDropdown"><!-- ... --></ul><p>This should be enough but you should notice that this way links would be never activated.</p>
-<p>Using the <code>bubble</code> attribute of <code>toggle</code> directive is required here to make click events propagate the inner links, otherwise they would be catched by <code>[toggle]</code> element:</p>
+<p>Using the <code>bubble</code> attribute of <code>toggle</code> directive is required here to make click events propagate to inner links, otherwise clicks are catched by <code>[toggle]</code> elements:</p>
 <ul class="dropdown-menu" toggle="off" target="myToggleableDropdown" bubble><!-- ... --></ul><p>Here is the complete snippet of code.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group"</span><span class="ot"> toggleable id=</span><span class="st">"myToggleableDropdown"</span><span class="ot"> active-class=</span><span class="st">"open"</span><span class="kw">&gt;</span>
 
