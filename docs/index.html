@@ -758,7 +758,7 @@ The content to take place in the placeholder.
 <h3 id="toggle-switch">Toggle Switch</h3>
 <figure class="full-width-figure"><img src="../figs/switch.png" alt=""></figure><p>The <code>switch</code> directive (not to be confused with <code>ng-switch</code>) lets you create a toggle switch control bound to a boolean <code>ngModel</code> value.</p>
 <p>It requires <code>ngModel</code>. You can also use <code>ngChange</code> in conjunction with <code>[switch]</code> to trigger functions in response to model changes.</p>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;switch</span><span class="ot"> ng-model=</span><span class="st">"invoice.payed"</span><span class="kw">&gt;&lt;/switch&gt;</span></code></pre>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;switch</span><span class="ot"> ng-model=</span><span class="st">"invoice.paid"</span><span class="kw">&gt;&lt;/switch&gt;</span></code></pre>
 <h2 id="utils">Utils</h2>
 <h3 id="justified-blocks">Justified Blocks</h3>
 <p>Mobile screens are small and it's common to have 2 or three buttons justified. To achieve this behaviour you can use the <code>.justified</code> class in any parent block of a group of items. This will apply a <code>table</code> layout to parent and a <code>table-cell</code> layout to its children.</p>
@@ -783,7 +783,7 @@ The content to take place in the placeholder.
 <p>If you don't assing a grid class to label or element they will get <code>.col-xs-12</code>. This way you're always able to mix horizontal and vertical controls without the need to use <code>form-horizontal</code> or change markup and style.</p>
 <p>Note that this directive only wraps target element with some html. This lets you apply it to any type of control, even custom one.</p>
 <p>So for instance you can apply it to <code>textarea</code> or <code>switch</code> as well.</p>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;switch</span><span class="ot"> ng-model=</span><span class="st">"invoice.payed"</span><span class="ot"> label=</span><span class="st">"Payed"</span><span class="ot"> bs-form-control</span><span class="kw">&gt;&lt;/switch&gt;&lt;textarea</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"customer.mailing_address"</span><span class="ot"> label=</span><span class="st">"Address"</span><span class="ot"> bs-form-control</span><span class="kw">&gt;&lt;/textarea&gt;</span></code></pre>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;switch</span><span class="ot"> ng-model=</span><span class="st">"invoice.paid"</span><span class="ot"> label=</span><span class="st">"Paid"</span><span class="ot"> bs-form-control</span><span class="kw">&gt;&lt;/switch&gt;&lt;textarea</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"customer.mailing_address"</span><span class="ot"> label=</span><span class="st">"Address"</span><span class="ot"> bs-form-control</span><span class="kw">&gt;&lt;/textarea&gt;</span></code></pre>
 <h3 id="panel-helpers">Panel Helpers</h3>
 <h4 id="bs-panel"> <code>bs-panel</code>
 </h4>
