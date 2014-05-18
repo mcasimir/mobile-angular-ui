@@ -8,7 +8,7 @@ Mobile Angular UI is an HTML5 mobile UI framework that will let you use Angular 
 
 Check out the website http://mobileangularui.com with *Demo*, *Docs* and *Getting Started* now.
 
-![](http://mobileangularui.com/logo.png)
+![](http://mobileangularui.com/og-logo.png)
 
 Mobile Angular UI glues together: 
 
@@ -23,7 +23,7 @@ Mobile Angular UI glues together:
 - Mobile only Bootstrap 3
 - Scalable Icons with FontAwesome
 - Base css stripped out of responsive media queries that are put apart in separate files (just include what you need)
-- Scrollable areas with iScroll
+- Scrollable areas with Overthrow.js
 - Slide-out/slide-in Sidebar
 - Bottom navbar
 - Justified Buttons
