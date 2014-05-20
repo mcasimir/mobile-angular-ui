@@ -57,10 +57,17 @@ angular.module("mobile-angular-ui.directives.capture", [])
 .directive("contentFor", [
   "CaptureService", function(CaptureService) {
     return {
-      link: function(scope, elem, attrs) {
-        CaptureService.setContentFor(attrs.contentFor, elem.html(), scope);
-        if (attrs.duplicate == null) {
-          elem.remove();
+      compile: function(tElem, tAttrs) {
+        var rawContent = tElem.html();
+        if(tAttrs.duplicate == null) {
+          // no need to compile anything!
+          tElem.html("");
+        }
+        return function postLink(scope, elem, attrs) {
+          CaptureService.setContentFor(attrs.contentFor, rawContent, scope);
+          if (attrs.duplicate == null) {
+            elem.remove();
+          }
         }
       }
     };
