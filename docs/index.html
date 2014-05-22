@@ -79,8 +79,14 @@ Mobile Angular UI Documentation
 </div>
 </div>
 
-<h2 id="getting-started">Getting Started</h2>
-<h3 id="installation">Installation</h3>
+<h2 data-toc="getting-started">
+Getting Started
+</h2>
+
+<h3 data-toc="installation">
+Installation
+</h3>
+
 <p>Either install via <code>bower</code> or download it</p>
 <pre class="sh"><code>bower install --save mobile-angular-ui</code></pre>
 <p>Load files in the head section of your html</p>
@@ -91,7 +97,10 @@ Mobile Angular UI Documentation
 <p><code>mobile-angular-ui-base.css</code> includes only the mobile css part, it has no media queries except for <code>col-sm-*</code> grid. It is intended to target phones and tablets.</p>
 <p><code>mobile-angular-ui-desktop.css</code> contains <code>col-md-*</code>/<code>col-lg-*</code> grid along with some pieces of bootstrap.css for components that are only meaningful on large screens (breadcrumbs, pagination..) and a few lines of code to make sidebars always visible.</p>
 <p>No other responsive stuffs are included from <code>bootstrap.css</code>.</p>
-<h3 id="initialization">Initialization</h3>
+<h3 data-toc="initialization">
+Initialization
+</h3>
+
 <p>You can initialize your Angular application declaring <code>mobile-angular-ui</code> as a dependence.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">angular</span>.<span class="fu">module</span>(<span class="st">'myApp'</span>, [<span class="st">"mobile-angular-ui"</span>]);</code></pre>
 <p>Here is a more complete example including ngRoute:</p>
@@ -119,7 +128,10 @@ Mobile Angular UI Documentation
   <span class="st">'mobile-angular-ui.directives.navbars'</span>,
   <span class="st">'mobile-angular-ui.directives.carousel'</span>
  ]);</code></pre>
-<h3 id="basic-layout">Basic Layout</h3>
+<h3 data-toc="basic-layout">
+Basic Layout
+</h3>
+
 <pre class="sourceCode html"><code class="sourceCode html"><span class="co">&lt;!-- Sidebars --&gt;</span>
 
 <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"sidebar sidebar-left"</span><span class="ot"> toggleable parent-active-class=</span><span class="st">"sidebar-left-in"</span><span class="ot"> id=</span><span class="st">"mainSidebar"</span><span class="kw">&gt;</span>
@@ -169,7 +181,10 @@ Mobile Angular UI Documentation
       <span class="kw">&lt;ng-view</span><span class="ot"> class=</span><span class="st">"app-content"</span><span class="kw">&gt;&lt;/ng-view&gt;</span>
 <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<h3 id="differences-with-bootstrap-3">Differences with Bootstrap 3</h3>
+<h3 data-toc="bs3-diff">
+Differences with Bootstrap 3
+</h3>
+
 <ol style="list-style-type: decimal">
 <li>It has different mobile-friendly style for default components</li>
 <li>It adds new components like sidebars, absolute-positioned navbars, switches, overlays, scrollables ..</li>
@@ -179,9 +194,12 @@ Mobile Angular UI Documentation
 <li>Breadcrumbs and pagination are just not the best way to navigate a mobile app so their are only included in desktop.css.</li>
 <li>
 <code>.container</code> is always fluid.</li>
-</ol><h2 id="angular-directives">Angular Directives</h2>
+</ol><h2 data-toc="angular-directives">
+Angular Directives
+</h2>  
+
 <p>Before going ahead with components you may want to familiarize with some basic mobile angular ui directives.</p>
-<h3 class="page-header">
+<h3 class="page-header" data-toc="scrollable">
 <code>scrollable</code>
 </h3>
 
@@ -194,7 +212,7 @@ Mobile Angular UI Documentation
   <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"scrollable-content"</span><span class="kw">&gt;</span>...<span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <p>This piece of code will trigger a directive that properly setup a new <code>Overthrow</code> instance for the <code>.scrollable</code> node.</p>
-<h3 class="page-header">
+<h3 class="page-header" data-toc="toggle-toggleable">
 <code>toggle</code> and <code>toggleable</code>
 </h3>
 
@@ -354,7 +372,7 @@ The <code>class</code> the parent of the element will acquire when is inactive a
 <span class="kw">&lt;div&gt;</span></code></pre>
 <p><code>toggle</code> method takes 2 parameters: the <code>[toggleable]</code> id and the command to send (one of <code>toggle</code>, <code>on</code> or <code>off</code>).</p>
 <p><code>toggleByClass</code> method takes also 2 parameters: the <code>[toggleable]</code> class and the command to send.</p>
-<h3 class="page-header">
+<h3 class="page-header" data-toc="content-for-yield-to">
 <code>contentFor</code> and <code>yieldTo</code><br>
 </h3>
 
@@ -477,8 +495,14 @@ The content to take place in the placeholder.
 </td>
     </tr>
 </tbody>
-</table><h2 id="components">Components</h2>
-<h3 id="navbars">Navbars</h3>
+</table><h2 data-toc="components">
+Components
+</h2>
+
+<h3 data-toc="navbars">
+Navbars
+</h3>
+
 <p>Bootstrap default navbars are awesome for responsive websites, but are not the best to interact with in a small screen. Plus fixed positioning is not an option to create navbars standing in top or bottom of the screen.</p>
 <p>Mobile Angular Ui offers an alternative to bootstrap navbars that is better suitable for mobile.</p>
 <p>It uses scrollable areas to avoid scroll issues. In the following figure you can see the difference between fixed navbars and navbars with absolute positioning.</p>
@@ -521,7 +545,10 @@ The content to take place in the placeholder.
   <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <p>As you can see the markup is pretty straightforward: there is a <code>.navbar-brand</code> with its new specification, <code>.navbar-brand-center</code>, that will render the title centered and below the two button groups. Note that <code>.navbar-brand-center</code> will position the title with absolute positioning ensuring that it will never cover the buttons, which would cause interaction problems.</p>
-<h3 id="sidebars">Sidebars</h3>
+<h3 data-toc="sidebars">
+Sidebars
+</h3>
+
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"sidebar sidebar-left"</span><span class="ot"> toggleable parent-active-class=</span><span class="st">"sidebar-left-in"</span><span class="ot"> id=</span><span class="st">"mainSidebar"</span><span class="kw">&gt;</span>
 
 <span class="kw">&lt;h1</span><span class="ot"> class=</span><span class="st">"app-name"</span><span class="kw">&gt;</span>Mobile Angular UI<span class="kw">&lt;/h1&gt;</span>
@@ -555,7 +582,10 @@ The content to take place in the placeholder.
   <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <p>By default sidebar are closed by clicking/tapping outside them. To prevent this behavior just add <code>close-on-outer-clicks='false'</code> to <code>.sidebar</code> element.</p>
-<h3 id="tabs"> Tabs</h3>
+<h3 data-toc="tabs">
+Tabs
+</h3>
+
 <p>Tabs component is realized via <code>toggle</code> and <code>toggleable</code> directives using <code>exclusion-group</code> parameter to inactivate other tabs but the active one.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">"nav nav-tabs"</span><span class="kw">&gt;</span>
 <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">"#Tab1"</span><span class="ot"> toggle=</span><span class="st">"on"</span><span class="ot"> parent-active-class=</span><span class="st">"active"</span><span class="kw">&gt;</span>Tab 1<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
@@ -591,7 +621,10 @@ The content to take place in the placeholder.
   <span class="kw">&lt;/a&gt;</span>
   
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<h3 id="accordion-and-collapse"> Accordion and Collapse</h3>
+<h3 data-toc="accordion-and-collapse">
+Accordion and Collapse
+</h3>
+
 <p>Accordion component is achieved via <code>toggle</code> and <code>toggleable</code> directives. <code>exclusion-group</code> parameter is used to inactivate other panels but the active one.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel-group"</span><span class="ot"> id=</span><span class="st">"accordion"</span><span class="kw">&gt;</span>
   <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"panel panel-default"</span><span class="kw">&gt;</span>
@@ -631,7 +664,10 @@ The content to take place in the placeholder.
     <span class="kw">&lt;/div&gt;</span>
   <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<h3 id="overlays">Overlays</h3>
+<h3 data-toc="overlays">
+Overlays
+</h3>
+
 <p>Overlay are similar to modals but looks more native in mobile devices.</p>
 <p>This is the basic markup for an <code>overlay</code>. An <code>overlay</code> directive implicitly sets up a <code>toggleable</code> using its argument as <code>id</code>.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> overlay=</span><span class="st">"myOverlay"</span><span class="kw">&gt;</span>
@@ -646,7 +682,10 @@ The content to take place in the placeholder.
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <p>You can show an overlay by default adding <code>default='active'</code> to the <code>[overlay]</code> element.</p>
 <p>To interact with overlays from controllers you can use <code>$rootScope.toggle()</code> function: i.e <code>$rootScope.toggle('myOverlay', 'on');</code> or <code>$rootScope.toggle('myOverlay', 'off');</code>.</p>
-<h3 id="dropdowns">Dropdowns</h3>
+<h3 data-toc="dropdowns">
+Dropdowns
+</h3>
+
 <p>Dropdowns are also achieved using <code>toggle</code> and <code>toggleable</code>.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group pull-right toggleable-dropdown"</span><span class="ot"> active-class=</span><span class="st">"open"</span><span class="ot"> id=</span><span class="st">"myDropdown"</span><span class="ot"> toggleable</span><span class="kw">&gt;</span>
   <span class="kw">&lt;button</span><span class="ot"> type=</span><span class="st">"button"</span><span class="ot"> class=</span><span class="st">"btn btn-default dropdown-toggle"</span><span class="ot"> toggle target=</span><span class="st">"myDropdown"</span><span class="kw">&gt;</span>
@@ -660,7 +699,10 @@ The content to take place in the placeholder.
     <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href</span><span class="kw">&gt;</span>Separated link<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
   <span class="kw">&lt;/ul&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<h3 id="carousels">Carousels</h3>
+<h3 data-toc="carousels">
+Carousels
+</h3>
+
 <p>Carousels have the same markup of bootstrap but their behaviour is achieved with 2 functions available to <code>$rootScope</code>: <code>carouselPrev(id)</code> and <code>carouselNext(id)</code>.</p>
 <p>This is a basic example that uses <code>ngSwipeLeft</code> and <code>ngSwipeRight</code> from <code>ngTouch</code>.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">"carousel-example"</span><span class="ot"> class=</span><span class="st">"carousel"</span><span class="kw">&gt;</span>
@@ -755,12 +797,21 @@ The content to take place in the placeholder.
     }
 });</code></pre>
 <p>Now swiping items we will see them moving and rotating. When releasing an item if the swipe lenght was at least 3/10 of the item width then carouselPrev/carouselNext are invoked according to swipe direction.</p>
-<h3 id="toggle-switch">Toggle Switch</h3>
+<h3 data-toc="toggle-switch">
+Toggle Switch
+</h3>
+
 <figure class="full-width-figure"><img src="../figs/switch.png" alt=""></figure><p>The <code>switch</code> directive (not to be confused with <code>ng-switch</code>) lets you create a toggle switch control bound to a boolean <code>ngModel</code> value.</p>
 <p>It requires <code>ngModel</code>. You can also use <code>ngChange</code> in conjunction with <code>[switch]</code> to trigger functions in response to model changes.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;switch</span><span class="ot"> ng-model=</span><span class="st">"invoice.paid"</span><span class="kw">&gt;&lt;/switch&gt;</span></code></pre>
-<h2 id="utils">Utils</h2>
-<h3 id="justified-blocks">Justified Blocks</h3>
+<h2 data-toc="utils">
+Utils
+</h2>
+
+<h3 data-toc="justified-blocks">
+Justified Blocks
+</h3>
+
 <p>Mobile screens are small and it's common to have 2 or three buttons justified. To achieve this behaviour you can use the <code>.justified</code> class in any parent block of a group of items. This will apply a <code>table</code> layout to parent and a <code>table-cell</code> layout to its children.</p>
 <figure class="full-width-figure"><img src="../figs/justify.png" alt=""></figure><p>Example:</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">"btn-group justified nav-tabs"</span><span class="kw">&gt;</span>
@@ -768,7 +819,10 @@ The content to take place in the placeholder.
   <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"btn"</span><span class="kw">&gt;</span>Tab 2<span class="kw">&lt;/a&gt;</span>
   <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">"btn"</span><span class="kw">&gt;</span>Tab 3<span class="kw">&lt;/a&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre>
-<h3 id="form-helpers">Form helpers</h3>
+<h3 data-toc="form-helpers">
+Form helpers
+</h3>
+
 <p>Mobile angular Ui provides some markup savers to create form inputs.</p>
 <h4 id="bs-form-control"><code>bs-form-control</code></h4>
 <p>NOTE: former <code>bs-input</code>.</p>
@@ -784,7 +838,10 @@ The content to take place in the placeholder.
 <p>Note that this directive only wraps target element with some html. This lets you apply it to any type of control, even custom one.</p>
 <p>So for instance you can apply it to <code>textarea</code> or <code>switch</code> as well.</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;switch</span><span class="ot"> ng-model=</span><span class="st">"invoice.paid"</span><span class="ot"> label=</span><span class="st">"Paid"</span><span class="ot"> bs-form-control</span><span class="kw">&gt;&lt;/switch&gt;&lt;textarea</span><span class="ot"> type=</span><span class="st">"text"</span><span class="ot"> ng-model=</span><span class="st">"customer.mailing_address"</span><span class="ot"> label=</span><span class="st">"Address"</span><span class="ot"> bs-form-control</span><span class="kw">&gt;&lt;/textarea&gt;</span></code></pre>
-<h3 id="panel-helpers">Panel Helpers</h3>
+<h3 data-toc="panel-helpers">
+Panel Helpers
+</h3>
+
 <h4 id="bs-panel"> <code>bs-panel</code>
 </h4>
 <p>A super simple directive minimizing the markup to use bootstrap panels.</p>
