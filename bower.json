@@ -5,7 +5,7 @@
     "mcasimir <maurizio.cas@gmail.com>"
   ],
   "description": "Mobile UI for Bootstrap 3 and Angular JS",
-  "main": "dist/mobile-angular-ui.min.js",
+  "main": "dist/js/mobile-angular-ui.min.js",
   "keywords": [
     "mobile-angular-ui",
     "angularjs",
