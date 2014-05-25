@@ -2,6 +2,8 @@
 
 ### v. 1.1.0-beta.22
 
+_Sun May 25 2014_
+
 - Fix #60: contentFor directive not compiling already compiled content anymore. You can use directives in contentFor blocks. 
 
 - Fix #64: switch directive:  ngModel changes are now properly reflected in the parent scope and external changes to the linked ngModel are now handled by the directive through ngClass.
