@@ -1,5 +1,13 @@
 # Mobile Angular Ui Changelog
 
+### v. 1.1.0-beta.22
+
+- Fix #60: contentFor directive not compiling already compiled content anymore. You can use directives in contentFor blocks. 
+
+- Fix #64: switch directive:  ngModel changes are now properly reflected in the parent scope and external changes to the linked ngModel are now handled by the directive through ngClass.
+
+- Dropped overthrow.toss.js
+
 ### v. 1.1.0-beta.21
 
 - Fixes #53: Android devices bad rendering box model with %-based translate3d. Switched to fixed sidebars width and media-queries.

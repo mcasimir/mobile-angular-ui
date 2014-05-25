@@ -18,7 +18,7 @@ index_filenames: [ 'index.html' ]
 # site. The diff will contain the differences between the compiled content
 # before and after the last site compilation.
 enable_output_diff: false
-
+base_url: "http://mobileangularui.com"
 prune:
   # Whether to automatically remove files not managed by nanoc from the output
   # directory. For safety reasons, this is turned off by default.

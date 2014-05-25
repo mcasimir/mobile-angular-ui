@@ -1,76 +1,19 @@
+<%= include_js 'es5-shim' %>
 <%= include_js 'jquery' %>
 <%= include_js 'bootstrap' %>
 <%= include_js 'jquery-toc-min' %>
-
+<%= include_js 'jquery-cookie' %>
+<%= include_js 'github-releases' %>
+<%= include_js 'forum' %>
 
 $(document).ready(function(){
-  if ($('#current-version').length) {
-    $.get('https://api.github.com/repos/mcasimir/mobile-angular-ui/tags?callback', function(data){
-        var versions = $.map(data, function(ver) {
-          // i.e. 1.1.0-beta.5
 
-          var name = ver.name.replace(/^v/, "").split('-');
-          var base = name[0].split('.');
-          var label = name[1]
-          res = {
-            major: parseInt(base[0]),
-            minor: parseInt(base[1]),
-            patch: parseInt(base[2]),
-            label: label
-          }
-          return res;
-        });
-        
-        var pad = function(n, width, z) {
-          z = z || '0';
-          n = n + '';
-          return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-        };
-
-        var labelToInt = function(label) {
-          if (label == null) {
-            return 0;
-          };
-
-          var parts = label.split('.')
-          var name = parts[0]
-          var subv = parts[1] || 0
-          var v = parseInt(name.replace(/rc/i, "3").replace(/beta/i, "2").replace(/alpha/i, "1"));
-
-          var res = parseInt(v + pad(subv, 5));
-          return res;
-        };
-
-        versions = versions.sort(function(v1, v2){
-          if (v1.major == v2.major) {
-            if (v1.minor == v2.minor) {
-              if (v1.patch == v2.patch) {
-                return labelToInt(v1.label) - labelToInt(v2.label);
-              } else {
-                return v1.patch - v2.patch;
-              }
-            } else {
-              return v1.minor - v2.minor;
-            }
-          } else {
-            return v1.major - v2.major;
-          }
-        });
-
-        var last = versions[versions.length - 1];
-        var number = $.grep([last.major, last.minor, last.patch], function(e){
-          return e != null;
-        }).join('.');
-
-        if(last.label != null) {
-          number += ("-" + last.label);
-        }
-
-        $('#current-version').text(number);
-        
-      
+  if ($('.current-version, .current-release-link').length) {
+    (new GithubReleases('mcasimir', 'mobile-angular-ui')).fetch(function(releases){
+      $('.current-version').text(releases[0].number);
+      $('.current-release-link').attr('href', releases[0].zipball_url);
     });
-  };
+  }
 
   $('#toc').toc({
       'selectors': 'h2,h3', //elements to use as headings
@@ -78,6 +21,10 @@ $(document).ready(function(){
       'smoothScrolling': true, //enable or disable smooth scrolling on click
       'highlightOnScroll': true, //add class to heading that is currently in focus
       'highlightOffset': 100, //offset to trigger the next headline
+      anchorName: function(i, heading, prefix) { //custom function for anchor name
+          var aname = $(heading).data('toc');
+          return aname || prefix+i;
+      }
   });
 
   var sidebarContainer = $("#sidebar-container");
@@ -106,4 +53,13 @@ $(document).ready(function(){
 
   $(window).scroll(adjustSidebar);
   $(window).resize(adjustSidebar);
+
+  $(window).on('resize', function(){
+    var main = $('#main');
+    if(main.length) {
+      main.css('min-height', $(window).height());
+    }
+  }).trigger('resize');
+
 });
+

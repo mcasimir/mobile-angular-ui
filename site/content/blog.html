@@ -1,0 +1,25 @@
+---
+title: "Blog"
+description: "Mobile Angular UI Latest Updates and Tutorials"
+---
+
+<div class="page-header">
+<h1>Blog</h1>
+<div class="description">Mobile Angular UI Latest Updates and Tutorials</div>
+</div>
+
+<% sorted_articles.each do |post| %>
+  <div class='post'>
+
+    <h2><%= link_to post[:title], post.path %></h2>
+    
+    <p>
+      <em><%= friendly_date(post[:created_at]) %></em> – <%= post[:description] %>
+    </p>
+    <a class="btn btn-default" href="<%= post.path %>">
+      Read More ...
+    </a>
+    <br/>
+    <br/>
+  </div>
+<% end %>

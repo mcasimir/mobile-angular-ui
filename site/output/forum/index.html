@@ -1,19 +1,32 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="en" itemscope itemtype="http://schema.org/Article">
   <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <title>Forum | Mobile Angular UI</title>
+  <meta itemprop="description" name="description" property="og:description" content="Post and Discuss Mobile Angular UI Related Questions" />
 
-  <title>Mobile Angular UI: Angular JS Mobile UI framework with Bootstrap 3 Css</title>
-  <meta name="description" content="Mobile Angular UI is an HTML5 mobile UI framework that will let you use Angular Js and Bootstrap 3 for mobile app development." />
+  <link rel="publisher" href="https://plus.google.com/+MobileangularuiGp"/>
+  <meta itemprop="name" name="twitter:title" property="og:title" content="Forum | Mobile Angular UI" />
+  <meta itemprop="image" property="og:image" content="http://mobileangularui.com/og-logo.png" />
+  <meta name="twitter:card" content="summary_large_image" /> 
+  <meta name="twitter:site" content="@mobileangularui" /> 
+  <meta name="twitter:description" content="Post and Discuss Mobile Angular UI Related Questions" /> 
+  <meta name="twitter:creator" content="@mauriziocas" /> 
+  <meta name="twitter:image:src" content="http://mobileangularui.com/og-logo.png" />
+  <meta property="og:site_name" content="Mobile Angular UI" /> 
+
+
+  <meta property="og:type" content="article" />
+
+  <meta property="og:url"   content="http://mobileangularui.com/forum/" />
   
-  
-  <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500' rel='stylesheet' type='text/css'>
-  <link rel="shortcut icon" href="/favicon.png">
-  <link rel="stylesheet" href="/style.css">
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500' rel='stylesheet' type='text/css' />
+  <link rel="shortcut icon" href="/favicon.png" />
+  <link rel="stylesheet" href="/style.css" />
 </head>
   <body>
     <nav class="navbar navbar-default" role="navigation">
@@ -26,13 +39,14 @@
         <span class="icon-bar"></span>
       </button>
 
-      <h1 class="navbar-brand"><a href="/">Mobile Angular UI <small id="current-version"></small></a></h1>
+      <h1 class="navbar-brand"><a href="/">Mobile Angular UI <small class="current-version"></small></a></h1>
     </div>
 
     <div class="collapse navbar-collapse" id="main-navbar-collapse">
       <ul class="nav navbar-nav navbar-right">
             <li><a href="/demo">Demo</a></li>
             <li><a href="/docs">Docs</a></li>
+            <li><a href="/blog">Blog</a></li>
             <li><a href="/forum">Forum</a></li>
             <li><a href="https://github.com/mcasimir/mobile-angular-ui/issues/4">Roadmap</a></li>
             </li>
@@ -45,32 +59,59 @@
 </nav>
 
     <div id="main">
-      <div class="container">
-  <div class="label label-info" id="loading">
-<i class="fa fa-spinner fa-spin"></i> Loading forum ... 
-  </div>
-  <iframe id="forum_embed" src="javascript:void(0)" scrolling="no" frameborder="0" width="100%" height="900" onload="hideLoading();">
-  </iframe>
-  <script type="text/javascript">
-    function hideLoading() {
-      console.log("hideLoading");
-      var loadingEl = document.getElementById('loading');
-      loadingEl.parentNode.removeChild(loadingEl);
-    }
-    document.getElementById('forum_embed').src =
-       'https://groups.google.com/forum/embed/?place=forum/mobile-angular-ui-forum'
-       + '&showsearch=true&showpopout=true&showtabs=false&hideforumtitle=true&hidesubject=true'
-       + '&parenturl=' + encodeURIComponent(window.location.href);
-  </script><a href="https://muut.com/mobileangularui" target="_blank">Read the old forum (please don't post there).</a>
+      <div id="forum">
+<div id="alert"></div>
+
+<div class="container">
+<div class="page-header">
+<h1>Forum</h1>
+<div class="description">Post and Discuss Mobile Angular UI Related Questions</div>
+</div>
+  <div id="loading">
+    <br><div class="text-center lead">
+    <span class="label label-info">
+      <i class="fa fa-spinner fa-spin"></i> <span id="loading-forum-txt"></span>
+    </span>
+    </div>
+    <br>
+</div>
+
+  <iframe id="forum_embed" src="javascript:void(0)" scrolling="no" frameborder="0" width="100%" height="900">
+  </iframe>  
+  <br><a href="https://muut.com/mobileangularui" target="_blank">Read the old forum (please don't post there).</a>
+</div>
+  
 </div>
     </div>
     <footer class="footer">
   <div class="container">
-    <div class="media">
-      <img src="https://avatars1.githubusercontent.com/u/334881?s=100" alt="" class="pull-left avatar">
-      <div class="media-body">
-        <h4 class="footer-title">Mobile Angular Ui</h4>
-        <p class="footer-credits">made for you by <a href="https://github.com/mcasimir" target="_blank">mcasimir</a></p>            
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="media">
+          <img src="https://avatars1.githubusercontent.com/u/334881?s=100" alt="" class="pull-left avatar">
+          <div class="media-body">
+            <h4 class="footer-title">Mobile Angular Ui</h4>
+            <p class="footer-credits">made for you by <a href="https://github.com/mcasimir" target="_blank"><b>mcasimir</b></a></p>
+            <small><br/>Published under the <a href="https://raw.githubusercontent.com/mcasimir/mobile-angular-ui/master/LICENSE">MIT license.</a></small>         
+          </div>
+        </div>
+        <hr class="visible-xs" />
+      </div>
+      <div class="col-sm-3">
+        <ul class="list-unstyled">
+          <li><a href="/demo">Demo</a></li>
+          <li><a href="/docs">Docs</a></li>
+          <li><a href="/forum">Forum</a></li>
+        </ul>
+        <hr class="visible-xs" />
+      </div>
+      <div class="col-sm-3">
+        <ul class="list-unstyled">
+          <li><a target="blank" href="https://github.com/mcasimir/mobile-angular-ui"><i class="fa fa-github"></i> Github</a></li>
+          <li><a target="blank" href="https://plus.google.com/+MobileangularuiGp"><i class="fa fa-google-plus"></i> Google+</a></li>
+          <li><a target="blank" href="https://twitter.com/mobileangularui"><i class="fa fa-twitter"></i> Twitter</a></li>
+        </ul>
+        
       </div>
     </div>
   </div>

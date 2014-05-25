@@ -33,6 +33,7 @@ compile 'fonts/*' do
 end
 
 compile '/sitemap/' do
+  filter :erb
   # don’t filter or layout
 end
 
@@ -42,6 +43,20 @@ compile '/docs/' do
   filter :pandoc
   filter :colorize_syntax, :default_colorizer => :pygmentsrb
   layout 'docs'
+end
+
+compile '/posts/*' do
+  filter :pandoc
+  filter :colorize_syntax, :default_colorizer => :pygmentsrb
+  filter :prepend_title_and_desc, {:item => item}
+  filter :wrap_in_container
+  layout 'default'
+end
+
+compile '/blog/' do
+  filter :erb
+  filter :wrap_in_container
+  layout 'default'
 end
 
 compile '*' do
@@ -54,6 +69,11 @@ compile '*' do
   end
 end
 
+route '/posts/*' do
+  y,m,d,slug = /([0-9]+)\-([0-9]+)\-([0-9]+)\-([^\/]+)/.match(item.identifier).captures
+
+  "/#{y}/#{m}/#{slug}/index.html"
+end
 
 route '/assets/js/main' do
   '/scripts.js'

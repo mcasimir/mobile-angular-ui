@@ -1,27 +1,36 @@
+---
+title: "Forum"
+description: "Post and Discuss Mobile Angular UI Related Questions"
+---
+
+<div id="forum">
+<div id="alert"></div>
+
 <div class="container">
-  <div class="label label-info" id="loading"><i class="fa fa-spinner fa-spin"></i> Loading forum ... 
+<div class="page-header">
+<h1>Forum</h1>
+<div class="description">Post and Discuss Mobile Angular UI Related Questions</div>
+</div>
+  <div id="loading" >
+    <br/>
+    <div class="text-center lead">
+    <span class="label label-info">
+      <i class="fa fa-spinner fa-spin"></i> <span id="loading-forum-txt"></span>
+    </span>
+    </div>
+    <br />
   </div>
+
   <iframe id="forum_embed"
     src="javascript:void(0)"
     scrolling="no"
     frameborder="0"
     width="100%"
-    height="900"
-    onload="hideLoading();">
-  </iframe>
-  <script type="text/javascript">
-    function hideLoading() {
-      console.log("hideLoading");
-      var loadingEl = document.getElementById('loading');
-      loadingEl.parentNode.removeChild(loadingEl);
-    }
-    document.getElementById('forum_embed').src =
-       'https://groups.google.com/forum/embed/?place=forum/mobile-angular-ui-forum'
-       + '&showsearch=true&showpopout=true&showtabs=false&hideforumtitle=true&hidesubject=true'
-       + '&parenturl=' + encodeURIComponent(window.location.href);
-  </script>
-
-
+    height="900">
+  </iframe>  
+  <br/>
   <a href="https://muut.com/mobileangularui" target="_blank">Read the old forum (please don't post there).</a>
+</div>
+  
 </div>
 

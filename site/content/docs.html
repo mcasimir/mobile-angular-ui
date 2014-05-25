@@ -1,6 +1,16 @@
-## Getting Started
+---
+title: "Docs"
+description: "Mobile Angular UI Documentation"
+---
 
-### Installation
+<div class="page-header">
+<h1>Docs</h1>
+<div class="description">Mobile Angular UI Documentation</div>
+</div>
+
+<h2 data-toc="getting-started" class="first-doc-header">Getting Started</h2>
+
+<h3 data-toc="installation">Installation</h3>
 
 Either install via `bower` or download it
 
@@ -27,7 +37,7 @@ Load files in the head section of your html
 
 No other responsive stuffs are included from `bootstrap.css`.
 
-### Initialization
+<h3 data-toc="initialization">Initialization</h3>
 
 You can initialize your Angular application declaring `mobile-angular-ui` as a dependence.
 
@@ -68,7 +78,7 @@ angular.module("mobile-angular-ui", [
  ]);
 ```
 
-### Basic Layout
+<h3 data-toc="basic-layout">Basic Layout</h3>
 
 ``` html
 <!-- Sidebars -->
@@ -122,21 +132,22 @@ angular.module("mobile-angular-ui", [
 </div>
 ```
 
-### Differences with Bootstrap 3
+<h3 data-toc="bs3-diff">Differences with Bootstrap 3</h3>
 
 1. It has different mobile-friendly style for default components
 2. It adds new components like sidebars, absolute-positioned navbars, switches, overlays, scrollables ..
 3. It does not rely on jQuery or bootstrap.js at all (most of the interactions can be reproduced with [toggle] angular directive)
 4. It uses font-awesome in place of glyphicons
-5. Responsive css rules for components *-sm, *-md, *-lg are moved out of the default bundle. 6. Responsive grid is divided in two parts: `.col-xs-*` and `.col-sm-*` classes are included in base.css, `.col-md-*` and `.col-lg-*` classes are included in desktop.css.
+5. Responsive css rules for components *-sm, *-md, *-lg are moved out of the default bundle
+6. Responsive grid is divided in two parts: `.col-xs-*` and `.col-sm-*` classes are included in base.css, `.col-md-*` and `.col-lg-*` classes are included in desktop.css.
 7. Breadcrumbs and pagination are just not the best way to navigate a mobile app so their are only included in desktop.css.
 8. `.container` is always fluid.
 
-## Angular Directives  
+<h2 data-toc="angular-directives">Angular Directives</h2>  
 
 Before going ahead with components you may want to familiarize with some basic mobile angular ui directives.
 
-<h3 class="page-header">
+<h3 class="page-header" data-toc="scrollable">
 `scrollable`
 </h3>
 
@@ -158,7 +169,7 @@ Markup for any scrollable areas is as simple as:
 
 This piece of code will trigger a directive that properly setup a new `Overthrow` instance for the `.scrollable` node.
 
-<h3 class="page-header">
+<h3 class="page-header" data-toc="toggle-toggleable">
 `toggle` and `toggleable`
 </h3>
 
@@ -285,7 +296,7 @@ Toggle module exposes the `toggle` and `toggleByClass` functions through `$rootS
 
 `toggleByClass` method takes also 2 parameters: the `[toggleable]` class and the command to send.
 
-<h3 class="page-header">
+<h3 class="page-header" data-toc="content-for-yield-to">
 `contentFor` and `yieldTo`  
 </h3>
 
@@ -420,9 +431,9 @@ If you wish you can also duplicate markup instead of move it. Just add `duplicat
   </tbody>
 </table>
 
-## Components
+<h2 data-toc="components">Components</h2>
 
-### Navbars
+<h3 data-toc="navbars">Navbars</h3>
 
 Bootstrap default navbars are awesome for responsive websites, but are not the best to interact with in a small screen. Plus fixed positioning is not an option to create navbars standing in top or bottom of the screen.
 
@@ -488,7 +499,7 @@ Consider the following example:
 
 As you can see the markup is pretty straightforward: there is a `.navbar-brand` with its new specification, `.navbar-brand-center`, that will render the title centered and below the two button groups. Note that `.navbar-brand-center` will position the title with absolute positioning ensuring that it will never cover the buttons, which would cause interaction problems.
 
-### Sidebars
+<h3 data-toc="sidebars">Sidebars</h3>
 
 ``` html
 <div class="sidebar sidebar-left" toggleable parent-active-class="sidebar-left-in" id="mainSidebar">
@@ -537,7 +548,7 @@ Sidebars can be toggled using the `toggle` directive either as an attribute or p
 
 By default sidebar are closed by clicking/tapping outside them. To prevent this behavior just add `close-on-outer-clicks='false'` to `.sidebar` element.
 
-### Tabs
+<h3 data-toc="tabs">Tabs</h3>
 
 Tabs component is realized via `toggle` and `toggleable` directives using `exclusion-group` parameter to inactivate other tabs but the active one.
 
@@ -601,7 +612,7 @@ Tabs component is realized via `toggle` and `toggleable` directives using `exclu
 </div>
 ```
 
-### Accordion and Collapse
+<h3 data-toc="accordion-and-collapse">Accordion and Collapse</h3>
 
 Accordion component is achieved via `toggle` and `toggleable` directives. `exclusion-group` parameter is used to inactivate other panels but the active one.
 
@@ -646,7 +657,7 @@ Accordion component is achieved via `toggle` and `toggleable` directives. `exclu
 </div>
 ```
 
-### Overlays
+<h3 data-toc="overlays">Overlays</h3>
 
 Overlay are similar to modals but looks more native in mobile devices.
 
@@ -669,7 +680,7 @@ You can show an overlay by default adding `default='active'` to the `[overlay]` 
 
 To interact with overlays from controllers you can use `$rootScope.toggle()` function: i.e `$rootScope.toggle('myOverlay', 'on');` or `$rootScope.toggle('myOverlay', 'off');`.
 
-### Dropdowns
+<h3 data-toc="dropdowns">Dropdowns</h3>
 
 Dropdowns are also achieved using `toggle` and `toggleable`.
 
@@ -690,7 +701,7 @@ Dropdowns are also achieved using `toggle` and `toggleable`.
 </div>
 ```
 
-### Carousels
+<h3 data-toc="carousels">Carousels</h3>
 
 Carousels have the same markup of bootstrap but their behaviour is achieved with 2 functions available to `$rootScope`: `carouselPrev(id)` and `carouselNext(id)`.
 
@@ -804,7 +815,7 @@ app.directive( "carouselExampleItem", function($rootScope, $swipe){
 Now swiping items we will see them moving and rotating. When releasing an item if the swipe lenght was at least 3/10 of the item width then carouselPrev/carouselNext are invoked according to swipe direction.
 
 
-### Toggle Switch
+<h3 data-toc="toggle-switch">Toggle Switch</h3>
 
 <figure class="full-width-figure">
   <img src="/figs/switch.png" alt=""/>
@@ -815,12 +826,12 @@ The `switch` directive (not to be confused with `ng-switch`) lets you create a t
 It requires `ngModel`. You can also use `ngChange` in conjunction with `[switch]` to trigger functions in response to model changes.
 
 ``` html
-<switch  ng-model="invoice.payed"></switch>
+<switch  ng-model="invoice.paid"></switch>
 ```
 
-## Utils
+<h2 data-toc="utils">Utils</h2>
 
-### Justified Blocks
+<h3 data-toc="justified-blocks">Justified Blocks</h3>
 
 Mobile screens are small and it's common to have 2 or three buttons justified. To achieve this behaviour you can use the `.justified` class in any parent block of a group of items. This will apply a `table` layout to parent and a `table-cell` layout to its children.
 
@@ -838,7 +849,7 @@ Example:
 </div>
 ```
 
-### Form helpers
+<h3 data-toc="form-helpers">Form helpers</h3>
 
 Mobile angular Ui provides some markup savers to create form inputs.
 
@@ -877,13 +888,13 @@ Note that this directive only wraps target element with some html. This lets you
 So for instance you can apply it to `textarea` or `switch` as well.
 
 ```html
-<switch            ng-model="invoice.payed"     label="Payed" bs-form-control></switch>
+<switch            ng-model="invoice.paid"     label="Paid" bs-form-control></switch>
 <textarea type="text" ng-model="customer.mailing_address" label="Address" bs-form-control></textarea>
 ```
 
-### Panel Helpers
+<h3 data-toc="panel-helpers">Panel Helpers</h3>
 
-#### `bs-panel`
+#### `bs-panel`
 
 A super simple directive minimizing the markup to use bootstrap panels.
 
@@ -896,6 +907,7 @@ A super simple directive minimizing the markup to use bootstrap panels.
 That translates to
 
 ``` html
+
 <div class="panel">
   <div class="panel-heading">
     <h2 class="panel-title">
@@ -906,4 +918,8 @@ That translates to
      <!-- Content -->
   </div>
 </div>
+
 ```
+
+
+<br/>

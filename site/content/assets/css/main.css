@@ -154,8 +154,9 @@ b, strong {
   margin-bottom: 20px;
 }
 
-html .page-header {
-  font-weight: 600;
+.page-header .description {
+  font-weight: 400;
+  color: #777;
 }
 
 #carousel-example-generic {
@@ -166,6 +167,14 @@ html .page-header {
   text-align: center;
   padding: 20px;
 }
+.carousel-container {
+  background: #333;
+  -moz-box-shadow: 0 0 8px #000 inset;
+  -webkit-box-shadow: 0 0 8px #000 inset;
+  -ms-box-shadow:  0 0 8px #000 inset;
+  box-shadow: 0 0 8px #000 inset;
+  padding-bottom: 30px;
+}
 
 .carousel-inner>.item>img, .carousel-inner>.item>a>img {
   display: inline;
@@ -173,6 +182,9 @@ html .page-header {
 }
 
 .carousel-shadow {
+  -moz-box-shadow: 0 0 20px rgba(0,0,0,.5);
+  -webkit-box-shadow: 0 0 20px rgba(0,0,0,.5);
+  -ms-box-shadow: 0 0 20px rgba(0,0,0,.5);
   box-shadow: 0 0 20px rgba(0,0,0,.5);
 }
 
@@ -182,11 +194,19 @@ bottom: -50px !important;
 
 
 .carousel-indicators li {
-  border-color: #888;
+  border: 0 solid transparent;
+  margin: 0 5px;
+  width: 10px;
+  height: 10px;
+  background-color: #777;
 }
 
 .carousel-indicators .active {
-  background-color: #888;
+  background-color: #bbb;
+  margin: 0 5px;
+  border: 0 solid transparent;
+  width: 10px;
+  height: 10px;
 }
 
 .carousel-control.left, .carousel-control.right {
@@ -205,22 +225,28 @@ bottom: -50px !important;
 
 .footer {
   margin-top: 40px;
-  padding: 40px 0;
+  padding: 80px 0;
   background: #333333;
   overflow: hidden;
   z-index: 100000;
   position: relative;
-  color: #fff;
+  color: #eee;
 
 }
 
 .footer a {
-  color: #fff;
+  color: #eee;
+  font-weight: 500;
+}
+
+.footer hr {
+  border-top: 1px solid #555;
 }
 
 .footer-title {
-  color: #fff;
+  color: #eee;
   margin: 0;
+  padding: 4px 0;
 }
 
 .footer-credits {
@@ -454,11 +480,16 @@ h2 {
   line-height: 30px;
 }
 
-html .sec-help .btn {
+
+.sec-btns {
+  text-align: center;
+}
+
+html .sec-btns .btn {
   border-radius: 13px;
   border: 1px solid #4A4A4A;
   font-family: Roboto;
-  font-weight: 100 !important;
+  font-weight: 300 !important;
   font-size: 24px;
   line-height: 32px;
   padding: 18px 36px;
@@ -467,29 +498,30 @@ html .sec-help .btn {
   color: #4A4A4A;
 }
 
-html .sec-help .btn:hover {
+
+@media(max-width: 991px) {
+  html .sec-btns .btn {
+    margin: 10px auto;
+    display: block;
+    float: none;
+  }
+}
+
+html .sec-btns .btn:hover {
   background: #f8f8f8;
-/*  color: #aaa;
-  border-color: #aaa;
-*/  
-}
-
-.sec-btns {
-  margin-top: 40px;
-}
-
-.carousel img {
-   -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottombottom, from(transparent), color-stop(70%, transparent) , to(rgba(250, 250, 250, 0.1)));
 }
 
 .carousel-container h2 {
   text-align: center;
+  color: #aaa;
+  padding: 20px;
 }
 
 .carousel-container h3 {
   font-weight: 300;
   max-width: 600px;
   margin: 0 auto 40px;
+  color: #ddd;
 }
 
 .sec-help {
@@ -510,11 +542,47 @@ html .sec-help .btn:hover {
 
 #docs h2 {
   margin-bottom: 40px;
-  border-bottom: 1px solid #8B8B8B;
+  border-bottom: 10px solid #eee;
   padding-bottom: 10px;
   margin-top: 80px;
 }
 
-#docs #toc0+h2 {
-  margin-top: 0;
+#docs h3 {
+  margin-top: 80px; 
+}
+
+#docs h2+span+h3 {
+margin-top: 10px;
+}
+
+#docs .first-doc-header {
+  margin-top: 40px;
+}
+
+.alert-top {
+  margin-top: -20px;
+}
+
+.dropdown-menu>li>a.share-btn {
+  line-height: 40px;
+  display: block;
+}
+
+.current-release-link small {
+  display: block;
+  font-size: 14px;
+  line-height: 0;
+  position: relative;
+  top: 29px;
+}
+
+code {
+  text-transform: none;
+}
+
+.carousel-control .icon-prev, .carousel-control .glyphicon-chevron-left {
+  left: 20px;
+}
+.carousel-control .icon-next, .carousel-control .glyphicon-chevron-right {
+  right: 20px;
 }
