@@ -1,133 +1,143 @@
 <!DOCTYPE HTML>
 <html lang="en" itemscope itemtype="http://schema.org/Article">
   <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <title>Forum | Mobile Angular UI</title>
-  <meta itemprop="description" name="description" property="og:description" content="Post and Discuss Mobile Angular UI Related Questions" />
+    <meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Maurizio Casimirri (http://github.com/mcasimir)">
 
-  <link rel="publisher" href="https://plus.google.com/+MobileangularuiGp"/>
-  <meta itemprop="name" name="twitter:title" property="og:title" content="Forum | Mobile Angular UI" />
-  <meta itemprop="image" property="og:image" content="http://mobileangularui.com/og-logo.png" />
-  <meta name="twitter:card" content="summary_large_image" /> 
-  <meta name="twitter:site" content="@mobileangularui" /> 
-  <meta name="twitter:description" content="Post and Discuss Mobile Angular UI Related Questions" /> 
-  <meta name="twitter:creator" content="@mauriziocas" /> 
-  <meta name="twitter:image:src" content="http://mobileangularui.com/og-logo.png" />
-  <meta property="og:site_name" content="Mobile Angular UI" /> 
+<title>Forum | Mobile Angular UI</title>
 
 
-  <meta property="og:type" content="article" />
+<meta itemprop="description" name="description" property="og:description" content="Post and Discuss Mobile Angular UI Related Questions" />
+<meta name="twitter:description" content="Post and Discuss Mobile Angular UI Related Questions" />
 
-  <meta property="og:url"   content="http://mobileangularui.com/forum/" />
-  
-  <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500' rel='stylesheet' type='text/css' />
-  <link rel="shortcut icon" href="/favicon.png" />
-  <link rel="stylesheet" href="/style.css" />
-</head>
+
+
+<link rel="publisher" href="https://plus.google.com/+MobileangularuiGp"/>
+
+<meta name="twitter:image:src" itemprop="image" property="og:image" content="/assets/img/og-logo.png" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@mobileangularui" />
+<meta name="twitter:creator" content="@mauriziocas" />
+<meta property="og:site_name" content="Mobile Angular UI" />
+
+<meta property="og:type" content="article" />
+
+<meta property="og:url"   content="http://mobileangularui.com/forum/" />
+<link href="/assets/css/main.css" rel="stylesheet" />
+<link rel="shortcut icon" href="/assets/img/favicon.png" />
+<!--[if lt IE 9]>
+  <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+  </head>
   <body>
-    <nav class="navbar navbar-default" role="navigation">
-  <div class="container-fluid">
+    <div class="navbar navbar-default">
+  <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-nav">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-
-      <h1 class="navbar-brand"><a href="/">Mobile Angular UI <small class="current-version"></small></a></h1>
+      <a class="navbar-brand" href="/">
+        <span class="logo">
+          Mobile Angular UI
+        </span>
+      </a>
     </div>
-
-    <div class="collapse navbar-collapse" id="main-navbar-collapse">
+    <div class="collapse navbar-collapse navbar-collapse-nav">
       <ul class="nav navbar-nav navbar-right">
-            <li><a href="/demo">Demo</a></li>
-            <li><a href="/docs">Docs</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/forum">Forum</a></li>
-            <li><a href="https://github.com/mcasimir/mobile-angular-ui/issues/4">Roadmap</a></li>
-            </li>
-            <li><iframe class="star-repo" src="http://ghbtns.com/github-btn.html?user=mcasimir&amp;repo=mobile-angular-ui&amp;type=watch&amp;count=true&amp;size=small" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe></li>
-          </ul>
-        </li>
+        <li><a href="/demo">Demo</a></li>
+<li><a href="/docs">Docs</a></li>
+<li><a href="/blog">Blog</a></li>
+<li><a href="/forum">Forum</a></li>
+
+        <li><a href="https://github.com/stackticjs/stacktic" target="blank"><i class="fa fa-github"></i> Sources</a></li>
       </ul>
     </div>
   </div>
-</nav>
-
-    <div id="main">
-      <div id="forum">
-<div id="alert"></div>
-
-<div class="container">
-<div class="page-header">
-<h1>Forum</h1>
-<div class="description">Post and Discuss Mobile Angular UI Related Questions</div>
 </div>
-  <div id="loading">
-    <br><div class="text-center lead">
+
+    
+    
+    <div class="container">
+    
+    
+      <div class="content" role="main">
+        
+      <div class="page-header"><h1>Forum</h1></div>
+        
+        
+
+<div id="forum">
+  <div id="alert"></div>
+
+  <div id="loading" >
+    <br/>
+    <div class="text-center lead">
     <span class="label label-info">
       <i class="fa fa-spinner fa-spin"></i> <span id="loading-forum-txt"></span>
     </span>
     </div>
-    <br>
+    <br />
+  </div>
+
+  <iframe id="forum_embed"
+    src="javascript:void(0)"
+    scrolling="no"
+    frameborder="0"
+    width="100%"
+    height="900">
+  </iframe>
+  <br/>
 </div>
 
-  <iframe id="forum_embed" src="javascript:void(0)" scrolling="no" frameborder="0" width="100%" height="900">
-  </iframe>  
-  <br><a href="https://muut.com/mobileangularui" target="_blank">Read the old forum (please don't post there).</a>
-</div>
-  
-</div>
+      </div>
+    
     </div>
     <footer class="footer">
   <div class="container">
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="media">
-          <img src="https://avatars1.githubusercontent.com/u/334881?s=100" alt="" class="pull-left avatar">
-          <div class="media-body">
-            <h4 class="footer-title">Mobile Angular Ui</h4>
-            <p class="footer-credits">made for you by <a href="https://github.com/mcasimir" target="_blank"><b>mcasimir</b></a></p>
-            <small><br/>Published under the <a href="https://raw.githubusercontent.com/mcasimir/mobile-angular-ui/master/LICENSE">MIT license.</a></small>         
-          </div>
-        </div>
-        <hr class="visible-xs" />
-      </div>
-      <div class="col-sm-3">
-        <ul class="list-unstyled">
-          <li><a href="/demo">Demo</a></li>
-          <li><a href="/docs">Docs</a></li>
-          <li><a href="/forum">Forum</a></li>
-        </ul>
-        <hr class="visible-xs" />
-      </div>
-      <div class="col-sm-3">
-        <ul class="list-unstyled">
-          <li><a target="blank" href="https://github.com/mcasimir/mobile-angular-ui"><i class="fa fa-github"></i> Github</a></li>
-          <li><a target="blank" href="https://plus.google.com/+MobileangularuiGp"><i class="fa fa-google-plus"></i> Google+</a></li>
-          <li><a target="blank" href="https://twitter.com/mobileangularui"><i class="fa fa-twitter"></i> Twitter</a></li>
-        </ul>
-        
-      </div>
-    </div>
+    <p>
+      Mobile Angular Ui is made for you by <a href="https://github.com/mcasimir" target="_blank">mcasimir</a>
+    </p>
+    <p>
+      <ul class="list-inline">
+        <li><a href="/demo">Demo</a></li>
+<li><a href="/docs">Docs</a></li>
+<li><a href="/blog">Blog</a></li>
+<li><a href="/forum">Forum</a></li>
+
+      </ul>
+      <ul class="list-inline">
+        <li><a target="blank" href="https://github.com/mcasimir/mobile-angular-ui"><i class="fa fa-github"></i> Github</a></li>
+        <li><a target="blank" href="https://plus.google.com/+MobileangularuiGp"><i class="fa fa-google-plus"></i> Google+</a></li>
+        <li><a target="blank" href="https://twitter.com/mobileangularui"><i class="fa fa-twitter"></i> Twitter</a></li>
+        <li><a href="mailto:mobileangularui@gmail.com"><i class="fa fa-envelope"></i> Mail</a></li>
+      </ul>
+    </p>
+    <p>
+      Published under the
+      <a
+        href="https://raw.githubusercontent.com/mcasimir/mobile-angular-ui/master/LICENSE"
+      >MIT license</a>.
+    </p>
   </div>
 </footer>
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-48036416-1', 'mobileangularui.com');
-  ga('send', 'pageview');
-</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-<script src="/scripts.js"></script>
-
+      ga('create', 'UA-48036416-1', 'mobileangularui.com');
+      ga('send', 'pageview');
+    </script>
+    <script src="/assets/js/main.js"></script>
   </body>
 </html>

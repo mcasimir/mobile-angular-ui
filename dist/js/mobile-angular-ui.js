@@ -1178,10 +1178,17 @@ angular.module("mobile-angular-ui.directives.capture", [])
 .directive("contentFor", [
   "CaptureService", function(CaptureService) {
     return {
-      link: function(scope, elem, attrs) {
-        CaptureService.setContentFor(attrs.contentFor, elem.html(), scope);
-        if (attrs.duplicate == null) {
-          elem.remove();
+      compile: function(tElem, tAttrs) {
+        var rawContent = tElem.html();
+        if(tAttrs.duplicate == null) {
+          // no need to compile anything!
+          tElem.html("");
+        }
+        return function postLink(scope, elem, attrs) {
+          CaptureService.setContentFor(attrs.contentFor, rawContent, scope);
+          if (attrs.duplicate == null) {
+            elem.remove();
+          }
         }
       }
     };
@@ -1405,19 +1412,13 @@ angular.module('mobile-angular-ui.directives.forms', [])
       changeExpr: "@ngChange",
       disabled: "@"
     },
-    template: "<div class='switch'><div class='switch-handle'></div></div>",
+    template: "<div class='switch' ng-class='{active: model}'><div class='switch-handle'></div></div>",
     link: function(scope, elem, attrs) {
-
-      function updateClass(model) {
-        if (model) { elem.addClass('active'); } else { elem.removeClass('active'); }
-      }
-
-      updateClass(scope.model);
 
       elem.on('click tap', function(){
         if (attrs.disabled == null) {
           scope.model = !scope.model;
-          updateClass(scope.model);
+          scope.$apply();
 
           if (scope.changeExpr != null) {
             scope.$parent.$eval(scope.changeExpr);
@@ -1429,7 +1430,6 @@ angular.module('mobile-angular-ui.directives.forms', [])
     }
   };
 });
-
 angular.module('mobile-angular-ui.directives.navbars', [])
 
 .directive('navbarAbsoluteTop', function() {
