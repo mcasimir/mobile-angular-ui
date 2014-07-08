@@ -85,8 +85,50 @@
 <p>Either install via <code>bower</code> or download it</p>
 <pre><code class="lang-sh">bower install <span class="hljs-subst">--</span>save mobile<span class="hljs-attribute">-angular</span><span class="hljs-attribute">-ui</span>
 </code></pre>
-<p>Load files in the head section of your html</p>
+<h4 id="html-head-section-setup">Html head section setup</h4>
+<h5 id="distributed-package-content">Distributed package content</h5>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dist/css/mobile-angular-ui-base.css</code></td>
+<td>Mobile only css. it has no media queries except for <code>col-sm-*</code> grid. It also hasn&apos;t :hover styles. It is intended to target phones and tablets.</td>
+</tr>
+<tr>
+<td><code>dist/css/mobile-angular-ui-hover.css</code></td>
+<td>The <code>:hover</code> css rules stripped out from <code>base.css</code>.</td>
+</tr>
+<tr>
+<td><code>dist/css/mobile-angular-ui-desktop.css</code></td>
+<td>Responsive css. Contains <code>col-md-*</code>/<code>col-lg-*</code> grid along with some pieces of bootstrap.css for components that are only meaningful on large screens (breadcrumbs, pagination..) and a few lines of code to make sidebars always visible. No other responsive stuffs are included from <code>bootstrap.css</code>.</td>
+</tr>
+<tr>
+<td><code>dist/js/mobile-angular-ui.min.js</code></td>
+<td><code>mobile-angular-ui</code> itself as well as overthrow.js and fastclicks.js releases. <code>angular.js</code> is not bundled in <code>mobile-angular-ui</code>.</td>
+</tr>
+<tr>
+<td><code>dist/fonts/fontawesome*</code></td>
+<td>Fonts from FontAwesome icons toolkit</td>
+</tr>
+</tbody>
+</table>
+<h5 id="setup-a-mobile-only-app">Setup a mobile only app</h5>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">&quot;stylesheet&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;angular.min.js&quot;</span>&gt;</span><span class="javascript">
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;angular-route.min.js&quot;</span>&gt;</span><span class="javascript">
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/js/mobile-angular-ui.min.js&quot;</span>&gt;</span><span class="javascript">
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<h5 id="setup-a-responsive-app">Setup a responsive app</h5>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">&quot;stylesheet&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/css/mobile-angular-ui-hover.min.css&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">&quot;stylesheet&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css&quot;</span> /&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">&quot;stylesheet&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/css/mobile-angular-ui-desktop.min.css&quot;</span> /&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;angular.min.js&quot;</span>&gt;</span><span class="javascript">
 </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
@@ -95,10 +137,6 @@
 <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/js/mobile-angular-ui.min.js&quot;</span>&gt;</span><span class="javascript">
 </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 </code></pre>
-<p><code>mobile-angular-ui-base.css</code> includes only the mobile css part, it has no media queries except for <code>col-sm-*</code> grid. It is intended to target phones and tablets.</p>
-<p><code>mobile-angular-ui-desktop.css</code> contains <code>col-md-*</code>/<code>col-lg-*</code> grid along with some pieces of bootstrap.css for components that are only meaningful on large screens (breadcrumbs, pagination..) and a few lines of code to make sidebars always visible.</p>
-<p>No other responsive stuffs are included from <code>bootstrap.css</code>.</p>
-<p><br><br></p>
 <h3 id="initialization">Initialization</h3>
 <p>You can initialize your Angular application declaring <code>mobile-angular-ui</code> as a dependence.</p>
 <pre><code class="lang-javascript">angular.<span class="hljs-keyword">module</span>(<span class="hljs-string">&apos;myApp&apos;</span>, [<span class="hljs-string">&quot;mobile-angular-ui&quot;</span>]);
@@ -130,7 +168,6 @@
   <span class="hljs-string">&apos;mobile-angular-ui.directives.carousel&apos;</span>
  ]);
 </code></pre>
-<p><br><br></p>
 <h3 id="basic-layout">Basic Layout</h3>
 <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Sidebars --&gt;</span>
 
@@ -182,7 +219,6 @@
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<p><br><br></p>
 <h3 id="differences-with-bootstrap-3">Differences with Bootstrap 3</h3>
 <ol>
 <li>It has different mobile-friendly style for default components</li>
@@ -194,7 +230,6 @@
 <li>Breadcrumbs and pagination are just not the best way to navigate a mobile app so their are only included in desktop.css.</li>
 <li><code>.container</code> is always fluid.</li>
 </ol>
-<p><br><br></p>
 
 </section>
 
@@ -212,7 +247,6 @@
 &lt;/div&gt;
 </code></pre>
 <p>This piece of code will trigger a directive that properly setup a new <code>Overthrow</code> instance for the <code>.scrollable</code> node.</p>
-<p><br><br></p>
 <h3 id="-toggle-and-toggleable-"><code>toggle</code> and <code>toggleable</code></h3>
 <p>Toggle module is the basic to implement tabs, accordions, collapsibles and all the other components that need to be selectively or exclusively switched on or off.</p>
 <p>Toggle module defines two directives: <code>toggle</code> and <code>toggleable</code>. These two directives replaces almost all of the bootstrap 3 jquery stuffs.</p>
@@ -319,7 +353,6 @@
 </code></pre>
 <p><code>toggle</code> method takes 2 parameters: the <code>[toggleable]</code> id and the command to send (one of <code>toggle</code>, <code>on</code> or <code>off</code>).</p>
 <p><code>toggleByClass</code> method takes also 2 parameters: the <code>[toggleable]</code> class and the command to send.</p>
-<p><br><br></p>
 <h3 id="-contentfor-and-yieldto-"><code>contentFor</code> and <code>yieldTo</code></h3>
 <p>The capture module exposes directives to let you extract markup which can be used in other parts of a template.</p>
 <p>It provides a way to move or clone a block of markup to other parts of the document.</p>
@@ -430,7 +463,6 @@
   </tbody>
 </table>
 
-<p><br><br></p>
 
 </section>
 
@@ -485,7 +517,6 @@
 &lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 <p>As you can see the markup is pretty straightforward: there is a <code>.navbar-brand</code> with its new specification, <code>.navbar-brand-center</code>, that will render the title centered and below the two button groups. Note that <code>.navbar-brand-center</code> will position the title with absolute positioning ensuring that it will never cover the buttons, which would cause interaction problems.</p>
-<p><br><br></p>
 <h3 id="sidebars">Sidebars</h3>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;sidebar sidebar-left&quot;</span> <span class="hljs-attribute">toggleable</span> <span class="hljs-attribute">parent-active-class</span>=<span class="hljs-value">&quot;sidebar-left-in&quot;</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">&quot;mainSidebar&quot;</span>&gt;</span>
 
@@ -523,7 +554,6 @@
 &lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 <p>By default sidebar are closed by clicking/tapping outside them. To prevent this behavior just add <code>close-on-outer-clicks=&apos;false&apos;</code> to <code>.sidebar</code> element.</p>
-<p><br><br></p>
 <h3 id="tabs">Tabs</h3>
 <p>Tabs component is realized via <code>toggle</code> and <code>toggleable</code> directives using <code>exclusion-group</code> parameter to inactivate other tabs but the active one.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">ul</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;nav nav-tabs&quot;</span>&gt;</span>
@@ -584,7 +614,6 @@
 
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<p><br><br></p>
 <h3 id="accordion-and-collapse">Accordion and Collapse</h3>
 <p>Accordion component is achieved via <code>toggle</code> and <code>toggleable</code> directives. <code>exclusion-group</code> parameter is used to inactivate other panels but the active one.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-group&quot;</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">&quot;accordion&quot;</span>&gt;</span>
@@ -626,7 +655,6 @@
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<p><br><br></p>
 <h3 id="overlays">Overlays</h3>
 <p>Overlay are similar to modals but looks more native in mobile devices.</p>
 <p>This is the basic markup for an <code>overlay</code>. An <code>overlay</code> directive implicitly sets up a <code>toggleable</code> using its argument as <code>id</code>.</p>
@@ -643,7 +671,6 @@
 </code></pre>
 <p>You can show an overlay by default adding <code>default=&apos;active&apos;</code> to the <code>[overlay]</code> element.</p>
 <p>To interact with overlays from controllers you can use <code>$rootScope.toggle()</code> function: i.e <code>$rootScope.toggle(&apos;myOverlay&apos;, &apos;on&apos;);</code> or <code>$rootScope.toggle(&apos;myOverlay&apos;, &apos;off&apos;);</code>.</p>
-<p><br><br></p>
 <h3 id="dropdowns">Dropdowns</h3>
 <p>Dropdowns are also achieved using <code>toggle</code> and <code>toggleable</code>.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn-group pull-right toggleable-dropdown&quot;</span> <span class="hljs-attribute">active-class</span>=<span class="hljs-value">&quot;open&quot;</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">&quot;myDropdown&quot;</span> <span class="hljs-attribute">toggleable</span>&gt;</span>
@@ -661,7 +688,6 @@
   <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<p><br><br></p>
 <h3 id="carousels">Carousels</h3>
 <p>Carousels have the same markup of bootstrap but their behaviour is achieved with 2 functions available to <code>$rootScope</code>: <code>carouselPrev(id)</code> and <code>carouselNext(id)</code>.</p>
 <p>This is a basic example that uses <code>ngSwipeLeft</code> and <code>ngSwipeRight</code> from <code>ngTouch</code>.</p>
@@ -761,7 +787,6 @@
 });
 </code></pre>
 <p>Now swiping items we will see them moving and rotating. When releasing an item if the swipe lenght was at least 3/10 of the item width then carouselPrev/carouselNext are invoked according to swipe direction.</p>
-<p><br><br></p>
 <h3 id="toggle-switch">Toggle Switch</h3>
 <figure class="full-width-figure">
   <img src="/assets/img/figs/switch.png" alt="">
@@ -790,7 +815,6 @@
   <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn&quot;</span>&gt;</span>Tab 3<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<p><br></p>
 <h3 id="form-helpers">Form helpers</h3>
 <p>Mobile angular Ui provides some markup savers to create form inputs.</p>
 <h4 id="-bs-form-control-"><code>bs-form-control</code></h4>
@@ -820,7 +844,6 @@
 <pre><code class="lang-html"><span class="hljs-subst">&lt;</span>switch            ng<span class="hljs-attribute">-model</span><span class="hljs-subst">=</span><span class="hljs-string">&quot;invoice.paid&quot;</span>     label<span class="hljs-subst">=</span><span class="hljs-string">&quot;Paid&quot;</span> bs<span class="hljs-attribute">-form</span><span class="hljs-attribute">-control</span><span class="hljs-subst">&gt;&lt;</span>/switch<span class="hljs-subst">&gt;</span>
 <span class="hljs-subst">&lt;</span>textarea <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">&quot;text&quot;</span> ng<span class="hljs-attribute">-model</span><span class="hljs-subst">=</span><span class="hljs-string">&quot;customer.mailing_address&quot;</span> label<span class="hljs-subst">=</span><span class="hljs-string">&quot;Address&quot;</span> bs<span class="hljs-attribute">-form</span><span class="hljs-attribute">-control</span><span class="hljs-subst">&gt;&lt;</span>/textarea<span class="hljs-subst">&gt;</span>
 </code></pre>
-<p><br></p>
 <h3 id="panel-helpers">Panel Helpers</h3>
 <h4 id="-bs-panel-"><code>bs-panel</code></h4>
 <p>A super simple directive minimizing the markup to use bootstrap panels.</p>
