@@ -1,7 +1,0 @@
-source 'https://rubygems.org'
-
-gem "rainpress"
-gem "uglifier"
-gem "nanoc"
-gem "nokogiri"
-gem "pandoc-ruby"

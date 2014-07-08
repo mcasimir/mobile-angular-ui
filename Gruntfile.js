@@ -2,8 +2,8 @@ var lodash = require('lodash');
 
 module.exports = function(grunt) {
   grunt.initConfig({
-    pkg: grunt.file.readJSON("package.json"),    
-    
+    pkg: grunt.file.readJSON("package.json"),
+
     concurrent: {
       devel: {
         tasks: ['connect', 'watch'],
@@ -11,23 +11,9 @@ module.exports = function(grunt) {
           limit: 2,
           logConcurrentOutput: true
         }
-      },
-      site: {
-        tasks: ['connect', 'site-guard'],
-        options: {
-          limit: 2,
-          logConcurrentOutput: true
-        }
-      },
-      all: {
-        tasks: ['connect', 'watch', 'site-guard'],
-        options: {
-          limit: 3,
-          logConcurrentOutput: true
-        }
       }
     },
-    
+
     smq: {
       bootstrap: {
         src: "tmp/mobile.css",
@@ -35,14 +21,11 @@ module.exports = function(grunt) {
         basename: "mobile-angular-ui"
       }
     },
-    
+
     clean: {
-      dev: ["tmp", "dist", "demo/assets"],
-      site: ["gh-pages"],
-      site_out: ["site/output"],
-      tmp_gh_pages_git: ["tmp/gh_pages_git"]
+      dev: ["tmp", "dist", "demo/assets"]
     },
-    
+
     copy: {
       css_to_dist: {
         expand: true,
@@ -55,45 +38,9 @@ module.exports = function(grunt) {
         cwd: "bower_components/font-awesome/fonts",
         src: ["**"],
         dest: 'dist/fonts'
-      },
-      backup_gh_pages_git: {
-        expand: true,
-        cwd: "gh-pages/.git",
-        src: ["**"],
-        dest: "tmp/gh_pages_git"
-      },
-      restore_gh_pages_git: {
-        expand: true,
-        cwd: "tmp/gh_pages_git",
-        src: ["**"],
-        dest: "gh-pages/.git"
-      },
-      gh_pages_demo: {
-        expand: true,
-        cwd: "demo/",
-        src: ["**"],
-        dest: "gh-pages/demo"
-      },
-      gh_pages_dist: {
-        expand: true,
-        cwd: "dist/",
-        src: ["**"],
-        dest: "gh-pages/dist"
-      },
-      gh_pages_site: {
-        expand: true,
-        cwd: "site/output",
-        src: ["**"],
-        dest: "gh-pages"
-      },
-      gh_pages_cname: {
-        expand: true,
-        cwd: "site",
-        src: ["CNAME"],
-        dest: "gh-pages"
       }
     },
-    
+
     less: {
       dist: {
         options: {
@@ -106,7 +53,7 @@ module.exports = function(grunt) {
         }
       }
     },
-    
+
     concat: {
       css: {
         files: {
@@ -119,7 +66,7 @@ module.exports = function(grunt) {
         }
       }
     },
-    
+
     uglify: {
       minify: {
         options: {
@@ -130,7 +77,7 @@ module.exports = function(grunt) {
         }
       }
     },
-    
+
     cssmin: {
       minify: {
         options: {
@@ -143,33 +90,25 @@ module.exports = function(grunt) {
         ext: '.min.css'
       }
     },
-    
+
     watch: {
       all: {
         files: "src/**/*",
         tasks: ["build"]
       }
     },
-    
+
     connect: {
       server: {
         options: {
           hostname: '0.0.0.0',
           port: 3000,
-          base: ['site/output', '.'],
+          base: ['.', 'demo'],
           keepalive: true
         }
       }
-    },
-    
-    githubPages: {
-      site: {
-        options: {
-          commitMessage: "push"
-        },
-        src: "gh-pages"
-      }
     }
+
   });
 
   grunt.loadNpmTasks("grunt-contrib-clean");
@@ -179,13 +118,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-cssmin");
   grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-contrib-watch");
-  grunt.loadNpmTasks("grunt-github-pages");
   grunt.loadNpmTasks("grunt-contrib-less");
   grunt.loadNpmTasks("grunt-concurrent");
   grunt.task.loadTasks("tasks");
 
-  grunt.registerTask("build", 
-                              [ "clean:dev",
+  grunt.registerTask("build", [ "clean:dev",
                                 "less",
                                 "smq",
                                 "concat",
@@ -194,31 +131,6 @@ module.exports = function(grunt) {
                                 "uglify",
                                 "cssmin"]);
 
-  grunt.registerTask("devel",   
-                                [ "build",
+  grunt.registerTask("default", [ "build",
                                   "concurrent:devel"]);
-
-  grunt.registerTask("devel-site", 
-                                   [ "clean:site_out",
-                                     "build",
-                                     "concurrent:site"]);
-  grunt.registerTask("default", 
-                                [ "clean:site_out",
-                                  "build",
-                                  "concurrent:all"]);
-
-  grunt.registerTask("build-gh-pages", 
-                              [ "copy:backup_gh_pages_git",
-                                "clean:site",
-                                "copy:restore_gh_pages_git",
-                                "clean:tmp_gh_pages_git",
-                                "copy:gh_pages_site",
-                                "copy:gh_pages_cname",
-                                "copy:gh_pages_demo",
-                                "copy:gh_pages_dist"]);
-
-  grunt.registerTask("push-site",
-                                [ "build-gh-pages",
-                                  "githubPages:site"]);
-
 };
