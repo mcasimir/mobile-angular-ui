@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<!-- 
+<!--
   ** NOTE **
-  
-  Run `grunt connect` then 
+
+  Run `grunt connect` then
   navigate to http://localhost:3000/demo
-  to see this page in browser  
-  
+  to see this page in browser
+
   -->
 <html>
   <head>
@@ -17,6 +17,7 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
     <meta name="apple-mobile-web-app-status-bar-style" content="yes" />
     <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/dist/css/mobile-angular-ui-hover.min.css" />
     <link rel="stylesheet" href="/dist/css/mobile-angular-ui-base.min.css" />
     <link rel="stylesheet" href="/dist/css/mobile-angular-ui-desktop.min.css" />
     <link rel="stylesheet" href="demo.css" />
@@ -27,7 +28,7 @@
     <script src="demo.js"></script>
   </head>
   <body ng-app="MobileAngularUiExamples" ng-controller="MainController">
-    
+
     <!-- Sidebars -->
     <div ng-include="'sidebar.html'" class="sidebar sidebar-left" toggleable parent-active-class="sidebar-left-in" id="mainSidebar"></div>
 
@@ -60,7 +61,7 @@
           <a href="https://github.com/mcasimir/mobile-angular-ui/issues" class="btn btn-navbar"><i class="fa fa-exclamation-circle fa-navbar"></i> Issues</a>
         </div>
       </div>
-      
+
       <!-- App Body -->
       <div class="app-body" ng-class="{loading: loading}">
         <div ng-show="loading" class="app-content-loading">
@@ -76,7 +77,7 @@
        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-       
+
        ga('create', 'UA-48036416-1', 'mobileangularui.com');
        ga('send', 'pageview');
      </script>

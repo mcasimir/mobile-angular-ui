@@ -27,12 +27,6 @@ module.exports = function(grunt) {
     },
 
     copy: {
-      css_to_dist: {
-        expand: true,
-        cwd: "tmp/",
-        src: ["mobile-angular-ui-desktop.css"],
-        dest: "dist/css"
-      },
       fa: {
         expand: true,
         cwd: "bower_components/font-awesome/fonts",
@@ -57,7 +51,9 @@ module.exports = function(grunt) {
     concat: {
       css: {
         files: {
-          "dist/css/mobile-angular-ui-base.css": ["tmp/sqm/mobile-angular-ui-base.css", "tmp/sm-grid.css"]
+          "dist/css/mobile-angular-ui-base.css": ["tmp/sqm/mobile-angular-ui-base.css", "tmp/sm-grid.css"],
+          "dist/css/mobile-angular-ui-desktop.css": ["tmp/mobile-angular-ui-desktop.css"],
+          "dist/css/mobile-angular-ui-hover.css": ["tmp/hover.css"]
         }
       },
       js: {
@@ -107,6 +103,13 @@ module.exports = function(grunt) {
           keepalive: true
         }
       }
+    },
+
+    'split-hover': {
+      all: {
+        src: "tmp/sqm/mobile-angular-ui-base.css",
+        dest: "tmp/hover.css"
+      }
     }
 
   });
@@ -125,8 +128,8 @@ module.exports = function(grunt) {
   grunt.registerTask("build", [ "clean:dev",
                                 "less",
                                 "smq",
+                                "split-hover",
                                 "concat",
-                                "copy:css_to_dist",
                                 "copy:fa",
                                 "uglify",
                                 "cssmin"]);
