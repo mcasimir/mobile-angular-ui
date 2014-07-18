@@ -69,6 +69,11 @@ module.exports = function(grunt) {
         }
       });
 
+      // deletes roules that only had :hover selectors thus having empty selectors now
+      tree.stylesheet.rules = tree.stylesheet.rules.filter(function(rule){
+        return rule.type != 'rule' || (!! rule.selectors.length);
+      });
+
       fs.writeFileSync(ifile, cssStringify(tree));
       fs.writeFileSync(ofile, cssStringify(hoverStylesheet));
     });
