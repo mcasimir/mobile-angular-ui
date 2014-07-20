@@ -1,12 +1,12 @@
 # Mobile Angular UI
 
-![](http://localhost:8080/assets/img/phone.png)
+GettingStarted, Demo, Docs at http://mobileangularui.com.
+
+![](http://mobileangularui.com/assets/img/phone.png)
 
 ## Angular &amp; Bootstrap 3 for Mobile web and applications
 
 Mobile Angular UI is an HTML5 mobile UI framework that will let you use Angular Js and Bootstrap 3 for mobile app development.
-
-Check out the website http://mobileangularui.com with *Demo*, *Docs* and *Getting Started* now.
 
 ### Support development
 
