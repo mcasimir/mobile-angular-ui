@@ -16,7 +16,6 @@ input[type="url"] {
 }
 
 .form-control {
-  border-radius: 0;
   .box-shadow(none);
   border: 1px solid @input-border;
 }
@@ -35,8 +34,8 @@ input[type="url"] {
   margin: 0;
 }
 
-input[type="search"] {
-  border-radius: @search-input-border-radius;
+.app-search {
+  border-radius: @app-search-border-radius;
 }
 
 .form-actions {
@@ -51,7 +50,7 @@ input[type="search"] {
   height: @switch-height;
   background-color: @input-bg;
   border: 1px solid @input-border;
-  border-radius: 999px;
+  border-radius: @switch-border-radius;
 
   // Sliding handle
   .switch-handle {
@@ -63,7 +62,7 @@ input[type="search"] {
     height: @switch-handle-diameter;
     background-color: @input-bg;
     border: 1px solid @input-border;
-    border-radius: 100px;
+    border-radius: @switch-handle-border-radius;
   }
 
 
