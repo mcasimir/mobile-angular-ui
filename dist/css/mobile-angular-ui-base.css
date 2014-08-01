@@ -6699,7 +6699,6 @@ input[type="url"] {
 }
 
 .form-control {
-  border-radius: 0;
   -webkit-box-shadow: none;
   box-shadow: none;
   border: 1px solid #cccccc;
@@ -6719,7 +6718,7 @@ input[type="url"] {
   margin: 0;
 }
 
-input[type="search"] {
+.app-search {
   border-radius: 0;
 }
 
@@ -6747,7 +6746,7 @@ input[type="search"] {
   height: 34px;
   background-color: #ffffff;
   border: 1px solid #cccccc;
-  border-radius: 100px;
+  border-radius: 999px;
 }
 
 .switch.active {
@@ -7191,12 +7190,7 @@ textarea.ng-invalid {
 .panel {
   -webkit-box-shadow: none;
   box-shadow: none;
-  border-radius: 0;
   background: #ffffff;
-}
-
-.panel-group .panel {
-  border-radius: 0;
 }
 
 .panel-group .panel + .panel {

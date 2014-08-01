@@ -466,6 +466,9 @@
   }
   .navbar-brand-center {
     text-align: left;
+    width: auto;
+    float: left;
+    position: relative;
   }
   .sidebar-left {
     display: block;
