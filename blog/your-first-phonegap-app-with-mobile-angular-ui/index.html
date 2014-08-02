@@ -102,7 +102,7 @@ yo mobileangularui
 <pre><code class="lang-bash">gulp build
 </code></pre>
 <h3 id="run-the-application">Run the application</h3>
-<p>Now to be sure that everything is ok lets try to run your app.</p>
+<p>Now to be sure that everything is ok let&apos;s try to run your app.</p>
 <pre><code>phonegap run ios # <span class="hljs-keyword">or</span> android, <span class="hljs-keyword">or</span> whatever <span class="hljs-keyword">is</span> your target
 </code></pre><p>If this is the first time you&apos;ll run phonegap with the choosen target it may complains about missing dependencies.. no fear, just install them and retry.</p>
 <p>If everything went fine you should see something like this:</p>
@@ -149,7 +149,7 @@ yo mobileangularui
 <li>Concat vendor js (including angular and default deps), <code>src/js/**/*.js</code> (automatically sorted according to angular dependency) and minify to <code>www/js/app.min.js</code> using a source map to help debugging.</li>
 </ol>
 <h4 id="configuring-customizing-the-build-process">Configuring/Customizing the build process</h4>
-<p>The build process is realized as a regular <code>gulpfile.js</code> so it is easy to tailor it to your need. Anyway some common options are exposed through a <code>config.js</code> file.</p>
+<p>The build process is realized as a regular <code>gulpfile.js</code>. Anyway some common options are exposed through a <code>config.js</code> file.</p>
 <p><code>config.js</code> content is almost self-explanatory:</p>
 <pre><code>module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(config)</span> {</span>
 
@@ -189,9 +189,9 @@ yo mobileangularui
 <li>Show the result</li>
 </ul>
 <h4 id="wrapping-deviceready-event-">Wrapping <code>deviceready</code> event.</h4>
-<p>You can handle <code>deviceready</code> in many ways, but for now I will just make it more angular-friendly isolating it in a service. <code>deviceready</code> will be exported as a function accepting a callback. </p>
-<p>I will also make it <em>&quot;cordova-independent&quot;</em> invoking callback immediately if cordova is not defined.</p>
-<p>This will be hopefully speed up development since we can use a regular browser to test our app.</p>
+<p>We could handle <code>deviceready</code> in many ways. For now we will just make it more angular-friendly isolating it in a service. <code>deviceready</code> will be exported as a function accepting a callback. </p>
+<p>We will also make it <em>cordova-agnostic</em> invoking the callback immediately when cordova is not running.</p>
+<p>This way we hopefully speed up development using a regular browser to test our app.</p>
 <pre><code class="lang-bash">touch src/js/services/cordova<span class="hljs-preprocessor">.js</span>
 </code></pre>
 <pre><code class="lang-js">angular.module(<span class="hljs-string">&apos;WeatherApp.services.Cordova&apos;</span>, [])
@@ -215,13 +215,12 @@ yo mobileangularui
 <p>Define a Geolocation module for geolocation related services:</p>
 <pre><code class="lang-bash">touch src/js/services/geolocation<span class="hljs-preprocessor">.js</span>
 </code></pre>
-<p>Define the module:</p>
 <pre><code class="lang-js"><span class="hljs-title">angular</span>.<span class="hljs-module"><span class="hljs-keyword">module</span><span class="hljs-container">(&apos;<span class="hljs-type">WeatherApp</span>.<span class="hljs-title">services</span>.<span class="hljs-type">Geolocation</span>&apos;, [
   &apos;<span class="hljs-type">WeatherApp</span>.<span class="hljs-title">services</span>.<span class="hljs-type">Cordova</span>&apos;
 ])</span></span>
 </code></pre>
-<p>Gulp will automatically take care of file ordering according to Angular module dependencies for you, so you can code without concerning about it.</p>
-<p>Define the service:</p>
+<p>Gulp will automatically take care of file ordering according to Angular module dependencies for us, so we can code without concerning about it.</p>
+<p>Define a service to retrieve the current position:</p>
 <pre><code class="lang-js">.factory(<span class="hljs-string">&apos;getCurrentPosition&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(deviceReady, <span class="hljs-variable">$document</span>, <span class="hljs-variable">$window</span>, <span class="hljs-variable">$rootScope</span>)</span>{</span>
   <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span> {</span>
     deviceReady(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
@@ -240,7 +239,7 @@ yo mobileangularui
 </code></pre>
 <p>Here you may have noticed two thing:</p>
 <ol>
-<li><p><code>$rootScope.$apply</code>: since Cordova js yields to underlying native code callbacks will run in a different js turn (they are asynchronous for real), thus to make angular capture them in its event loop we should resort to <code>$apply</code>.   </p>
+<li><p><code>$rootScope.$apply</code>: since Cordova js yields to underlying native code callbacks will run in a different js turn (they are asynchronous for real), thus to make angular capture them in its event loop we have to resort to <code>$apply</code>.</p>
 </li>
 <li><p>This code will work both in HTML5 web browser and in phonegap. This is due to the way we defined <code>deviceReady</code> and because <code>navigator.geolocation.getCurrentPosition</code> is part of HTML5 Geolocation API.</p>
 </li>
@@ -264,9 +263,9 @@ yo mobileangularui
   };
 });
 </code></pre>
-<p>Note that this time we don&apos;t need <code>$apply</code> cause <code>$http</code> handles it for us.</p>
+<p>This time we don&apos;t need <code>$apply</code> cause <code>$http</code> handles it for us.</p>
 <h4 id="put-things-together">Put things together</h4>
-<p>Now that we have defined our service layer we can use it in our main controller.</p>
+<p>Now that we have our service layer we can use it in our main controller.</p>
 <pre><code class="lang-js">angular.module(<span class="hljs-string">&apos;WeatherApp.controllers.Main&apos;</span>, [
   <span class="hljs-string">&apos;WeatherApp.services.Geolocation&apos;</span>,
   <span class="hljs-string">&apos;WeatherApp.services.Forecast&apos;</span>
@@ -285,19 +284,19 @@ yo mobileangularui
 });
 </code></pre>
 <h4 id="displaying-the-results">Displaying the results</h4>
-<p>Let&apos;s display the weather in <code>home.html</code></p>
+<p>Change <code>home.html</code> to make result appear:</p>
 <pre>
 <code class="lang-html">&lt;section class=&quot;section container-fluid&quot;&gt;<br>  &lt;div bs-panel title=&quot;{{location}}&quot;&gt;<br>    {{weather}}<br>  &lt;/div&gt;<br>&lt;/section&gt;</code>
 </pre>
 
 <h3 id="test-debug-in-a-web-browser">Test/Debug in a Web Browser</h3>
 <p>Now that we have done with the code we wish to see our amazing and super-useful app in action.</p>
-<p>Since we coded it wisely now we should be able to use a plain web browser understanding HTML5 to test it.</p>
+<p>Since we coded it wisely now we should be able to use a plain HTML5-ready web browser to test it.</p>
 <p>Go back to our command prompt and issue:</p>
 <pre><code class="lang-bash">gulp
 </code></pre>
 <p>Now we have built our source and have a web server listening on <code>localhost:8000</code>, a weinre server at <code>localhost:8001</code>, and a watch task rebuilding on code changes.</p>
-<p>That said we can open <code>http://localhost:8000/</code> in our browser to see the result of our hard work.</p>
+<p>That said we can open <code>http://localhost:8000/</code> to see the result of our hard work.</p>
 <p><img src="/assets/img/weather-2.png" alt=""></p>
 <p>Be aware that the console should complain for a missing <code>cordova.js</code>. That&apos;s ok since we are not running cordova at all.</p>
 <h3 id="test-debug-in-phonegap">Test/Debug in Phonegap</h3>
@@ -306,7 +305,7 @@ yo mobileangularui
 </code></pre>
 <p>Then in a separate shell issue</p>
 <pre><code>phonegap <span class="hljs-command">run</span> ios <span class="hljs-comment"># or any other target</span>
-</code></pre><p>If everything went fine you should be able to see something like this now:</p>
+</code></pre><p>If everything went fine we should be able to see something like this now:</p>
 <p><img src="/assets/img/weather-3.png" alt=""></p>
 <h4 id="debugging-with-weinre">Debugging with Weinre</h4>
 <p>If errors arises running our app in Phonegap we can use Weinre to figure out what happened.</p>
@@ -316,9 +315,9 @@ yo mobileangularui
 </code></pre><p>or just the default</p>
 <pre><code>gulp
 </code></pre><p>A weinre server is started at <code>localhost:8001</code>.</p>
-<p>All we need to do is point a browser to that address and interact with our app through Weinre UI. Be aware that you have to wrap your code in try/catch and handle error logging manually in order to see runtime errors in Weinre.</p>
-<p>Also you may experience problems with <code>console.log</code>/<code>console.error</code> as well.</p>
-<p>A raw trick to overcome this is to have your error/messages stored in global vars you can dump at any time in weinre:</p>
+<p>All we need to do is point a browser to that address and interact with our app through Weinre UI. Be aware that we have to wrap our code in try/catch and handle error logging manually in order to see runtime errors in Weinre.</p>
+<p>Also we may experience problems with <code>console.log</code>/<code>console.error</code> as well.</p>
+<p>A raw trick to overcome this is to have your error/messages stored in global vars we can dump at any time in weinre:</p>
 <pre><code>.controller(<span class="hljs-string">&apos;MainController&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$scope</span>, getCurrentPosition, getWeather)</span>{</span>
   <span class="hljs-keyword">try</span> {
     getCurrentPosition(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(position)</span>{</span>
