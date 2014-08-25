@@ -738,25 +738,22 @@
       <span class="hljs-keyword">var</span> carouselId = element.<span class="hljs-keyword">parent</span>().<span class="hljs-keyword">parent</span>().attr(<span class="hljs-string">&quot;id&quot;</span>);
 
       <span class="hljs-keyword">var</span> translateAndRotate = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x, y, z, deg)</span>{</span>
-        element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;-webkit-transform&quot;</span>] =
-           <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span>+ y +<span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
-        element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;-moz-transform&quot;</span>] =
-           <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span> + y +<span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
-        element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;-ms-transform&quot;</span>] =
-           <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span> + y + <span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
-        element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;-o-transform&quot;</span>] =
-           <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span> + y  + <span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
-        element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;transform&quot;</span>] =
-           <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span> + y + <span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
+        element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;-webkit-transform&quot;</span>] = <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span>+ y +<span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
+        element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;-moz-transform&quot;</span>] = <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span> + y +<span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
+        element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;-ms-transform&quot;</span>] = <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span> + y + <span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
+        element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;-o-transform&quot;</span>] = <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span> + y  + <span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
+        element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;transform&quot;</span>] = <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span> + y + <span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
       }
 
       <span class="hljs-variable">$swipe</span>.bind(element, {
         start: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(coords)</span> {</span>
+          endAction = <span class="hljs-keyword">null</span>;
           startX = coords.x;
           startY = coords.y;
         },
 
         cancel: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> {</span>
+          endAction = <span class="hljs-keyword">null</span>;
           translateAndRotate(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
           e.stopPropagation();
         },
@@ -779,6 +776,8 @@
               endAction = <span class="hljs-string">&quot;next&quot;</span>;
             } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (deltaXRatio &amp;lt; -<span class="hljs-number">0.3</span>){
               endAction = <span class="hljs-string">&quot;prev&quot;</span>;
+            } <span class="hljs-keyword">else</span> {
+              endAction = <span class="hljs-keyword">null</span>;
             }
             translateAndRotate(deltaXRatio * <span class="hljs-number">200</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, deltaXRatio * <span class="hljs-number">15</span>);
           }
