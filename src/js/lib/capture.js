@@ -1,20 +1,20 @@
-angular.module("mobile-angular-ui.directives.capture", [])
+angular.module("mobileAngularUi.capture", [])
 
 .run([
-  "CaptureService", "$rootScope", function(CaptureService, $rootScope) {
+  "Capture", "$rootScope", function(Capture, $rootScope) {
     $rootScope.$on('$routeChangeStart', function() {
-      CaptureService.resetAll();
+      Capture.resetAll();
     });
   }
 ])
 
-.factory("CaptureService", [
+.factory("Capture", [
   "$compile", function($compile) {
     var yielders = {};
 
     return {
       resetAll: function() {
-        for (name in yielders) {
+        for (var name in yielders) {
           this.resetYielder(name);
         }
       },
@@ -55,34 +55,34 @@ angular.module("mobile-angular-ui.directives.capture", [])
 ])
 
 .directive("contentFor", [
-  "CaptureService", function(CaptureService) {
+  "Capture", function(Capture) {
     return {
       compile: function(tElem, tAttrs) {
         var rawContent = tElem.html();
-        if(tAttrs.duplicate == null) {
+        if(tAttrs.duplicate === null || tAttrs.duplicate === undefined) {
           // no need to compile anything!
           tElem.html("");
         }
         return function postLink(scope, elem, attrs) {
-          CaptureService.setContentFor(attrs.contentFor, rawContent, scope);
-          if (attrs.duplicate == null) {
+          Capture.setContentFor(attrs.contentFor, rawContent, scope);
+          if (attrs.duplicate === null || attrs.duplicate === undefined) {
             elem.remove();
           }
-        }
+        };
       }
     };
   }
 ])
 
 .directive("yieldTo", [
-  "$compile", "CaptureService", function($compile, CaptureService) {
+  "$compile", "Capture", function($compile, Capture) {
     return {
       link: function(scope, element, attr) {
-        CaptureService.putYielder(attr.yieldTo, element, scope, element.html());
+        Capture.putYielder(attr.yieldTo, element, scope, element.html());
         element.contents().remove();
 
         scope.$on('$destroy', function(){
-          CaptureService.removeYielder(attr.yieldTo);
+          Capture.removeYielder(attr.yieldTo);
         });
       }
     };

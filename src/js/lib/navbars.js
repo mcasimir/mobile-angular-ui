@@ -1,21 +1,16 @@
-angular.module('mobile-angular-ui.directives.navbars', [])
+var module = angular.module('mobileAngularUi.navbars', []);
 
-.directive('navbarAbsoluteTop', function() {
+angular.forEach(['top', 'bottom'], function(side) {
+  var directiveName = 'navbarAbsolute' + side.charAt(0).toUpperCase() + side.slice(1);
+  module.directive(directiveName, function($rootElement) {
   return {
-    replace: false,
-    restrict: "C",
-    link: function(scope, elem, attrs) {
-      elem.parent().addClass('has-navbar-top');
-    }
-  };
-})
-
-.directive('navbarAbsoluteBottom', function() {
-  return {
-    replace: false,
-    restrict: "C",
-    link: function(scope, elem, attrs) {
-      elem.parent().addClass('has-navbar-bottom');
-    }
-  };
+    restrict: 'C',
+    link: function(scope, elem) {
+      $rootElement.addClass('has-navbar-' + side);
+      scope.$on('$destroy', function(){
+        $rootElement.removeClass('has-navbar-' + side);
+      });
+      }
+    };
+  });
 });

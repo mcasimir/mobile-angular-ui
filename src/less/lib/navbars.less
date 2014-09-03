@@ -11,7 +11,7 @@
     vertical-align: middle;
   }
 
- .btn-navbar, .btn {
+  .btn {
     background: none;
     border: none;
     line-height: @navbar-app-height;
@@ -23,7 +23,6 @@
       color: @link-color;
     }
   }
-
 }
 
 .navbar-brand-center {
@@ -68,4 +67,24 @@
   bottom: 0;
   border-bottom: 0 none;
   border-top-width: 1px;
+  
+  .btn {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    
+    &:not([ng-click]):active {
+      opacity: 1;
+      filter: alpha(opacity=100);
+    }
+    
+    &:not([ng-click]) {
+      cursor: default;
+    }
+
+    &.active {
+      background: @brand-primary;
+      color: #fff;
+    }
+  }
 }

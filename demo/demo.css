@@ -52,10 +52,15 @@ h1 {
 }
 
 
-.carousel .item {
+.carousel-item {
+  display: block;
   color: #444;
   background: #f4f4f4;
   box-shadow: 0px 0px 3px rgba(0,0,0,0.5);
+  -webkit-transition: opacity 0.3s;
+  -moz-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  opacity: 1;
 }
 
 
@@ -67,10 +72,9 @@ h1 {
 .carousel-inner {
   position: relative;
   overflow: visible;
-
 }
 
-.carousel-inner>.item {
+.carousel>.item, .carousel-item {
   top: 0;
   left: 0;
   position: absolute;
@@ -89,4 +93,40 @@ h1 {
 
 .carousel-inner>.item.active + .item {
   z-index: 1999;
+}
+
+[drag-to-dismiss]{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: opacity 0.3s;
+  -moz-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  opacity: 1;
+}
+
+.notices-container {
+  overflow-x: hidden;
+}
+
+.dismiss {
+  opacity: 0.5;
+  -webkit-transition: opacity 0.3s;
+  -moz-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+
+}
+
+.dismitted {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  -moz-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+ng-view {
+  height: 100%;
 }

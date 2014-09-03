@@ -1,7 +1,7 @@
 var app = angular.module('MobileAngularUiExamples', [
   "ngRoute",
   "ngTouch",
-  "mobile-angular-ui"
+  "mobileAngularUi"
 ]);
 
 app.config(function($routeProvider, $locationProvider) {
@@ -12,71 +12,143 @@ app.config(function($routeProvider, $locationProvider) {
   $routeProvider.when('/accordion', {templateUrl: "accordion.html"}); 
   $routeProvider.when('/overlay',   {templateUrl: "overlay.html"}); 
   $routeProvider.when('/forms',     {templateUrl: "forms.html"});
+  $routeProvider.when('/dropdown',  {templateUrl: "dropdown.html"});
+  $routeProvider.when('/drag',      {templateUrl: "drag.html"});
   $routeProvider.when('/carousel',  {templateUrl: "carousel.html"});
 });
 
-app.service('analytics', [
-  '$rootScope', '$window', '$location', function($rootScope, $window, $location) {
-    var send = function(evt, data) {
-      ga('send', evt, data);
+app.factory('analytics', function() {
+  return function(evt, data) {
+    ga('send', evt, data);
+  };
+});
+
+app.directive('carousel', function(){
+  return {
+    restrict: 'C',
+    scope: {},
+    controller: function($scope) {
+      this.itemCount = 0;
+      this.activeItem = null;
+
+      this.addItem = function(){
+        var newId = this.itemCount++;
+        this.activeItem = this.itemCount == 1 ? newId : this.activeItem;
+        return newId;
+      };
+
+      this.next = function(){
+        this.activeItem = this.activeItem || 0;
+        this.activeItem = this.activeItem == this.itemCount - 1 ? 0 : this.activeItem + 1;
+      };
+
+      this.prev = function(){
+        this.activeItem = this.activeItem || 0;
+        this.activeItem = this.activeItem === 0 ? this.itemCount - 1 : this.activeItem - 1;
+      };
     }
-  }
-]);
+  };
+});
 
-app.directive( "carouselExampleItem", function($rootScope, $swipe){
-  return function(scope, element, attrs){
-      var startX = null;
-      var startY = null;
-      var endAction = "cancel";
-      var carouselId = element.parent().parent().attr("id");
+app.directive('carouselItem', function($drag) {
+  return {
+    restrict: 'C',
+    require: '^carousel',
+    scope: {},
+    transclude: true,
+    template: '<div class="item"><div ng-transclude></div></div>',
+    link: function(scope, elem, attrs, carousel) {
+      scope.carousel = carousel;
+      var id = carousel.addItem();
+      
+      var zIndex = function(){
+        var res = 0;
+        if (id == carousel.activeItem){
+          res = 2000;
+        } else if (carousel.activeItem < id) {
+          res = 2000 - (id - carousel.activeItem);
+        } else {
+          res = 2000 - (carousel.itemCount - 1 - carousel.activeItem + id);
+        }
+        return res;
+      };
 
-      var translateAndRotate = function(x, y, z, deg){
-        element[0].style["-webkit-transform"] = "translate3d("+x+"px,"+ y +"px," + z + "px) rotate("+ deg +"deg)";
-        element[0].style["-moz-transform"] = "translate3d("+x+"px," + y +"px," + z + "px) rotate("+ deg +"deg)";
-        element[0].style["-ms-transform"] = "translate3d("+x+"px," + y + "px," + z + "px) rotate("+ deg +"deg)";
-        element[0].style["-o-transform"] = "translate3d("+x+"px," + y  + "px," + z + "px) rotate("+ deg +"deg)";
-        element[0].style["transform"] = "translate3d("+x+"px," + y + "px," + z + "px) rotate("+ deg +"deg)";
-      }
+      scope.$watch(function(){
+        return carousel.activeItem;
+      }, function(n, o){
+        elem[0].style['z-index']=zIndex();
+      });
+      
 
-      $swipe.bind(element, {
-        start: function(coords) {
-          endAction = null;
-          startX = coords.x;
-          startY = coords.y;
+      $drag.bind(elem, {
+        constraint: { minY: 0, maxY: 0 },
+        move: function(c){
+          if(c.left >= c.width / 4 || c.left <= -(c.width / 4)) {
+            elem.addClass('dismiss');  
+          } else {
+            elem.removeClass('dismiss');  
+          }          
         },
-
-        cancel: function(e) {
-          endAction = null;
-          translateAndRotate(0, 0, 0, 0);
-          e.stopPropagation();
+        cancel: function(){
+          elem.removeClass('dismiss');
         },
-
-        end: function(coords, e) {
-          if (endAction == "prev") {
-            $rootScope.carouselPrev(carouselId);
-          } else if (endAction == "next") {
-            $rootScope.carouselNext(carouselId);
+        end: function(c, undo, reset) {
+          elem.removeClass('dismiss');
+          if(c.left >= c.width / 4) {
+            scope.$apply(function() {
+              carousel.prev();
+            });
+          } else if (c.left <= -(c.width / 4)) {
+            scope.$apply(function() {
+              carousel.next();
+            });
           }
-          translateAndRotate(0, 0, 0, 0);
-          e.stopPropagation();
-        },
-
-        move: function(coords) {
-          if( startX != null) {
-            var deltaX = coords.x - startX;
-            var deltaXRatio = deltaX / element[0].clientWidth;
-            if (deltaXRatio > 0.3) {
-              endAction = "next";
-            } else if (deltaXRatio < -0.3){
-              endAction = "prev";
-            } else {
-              endAction = null;
-            }
-            translateAndRotate(deltaXRatio * 200, 0, 0, deltaXRatio * 15);
-          }
+          reset();
         }
       });
     }
+  };
+});
+
+app.directive('dragToDismiss', function($drag, $parse, $timeout){
+  return {
+    restrict: 'A',
+    compile: function(elem, attrs) {
+      var dismissFn = $parse(attrs.dragToDismiss);
+      return function(scope, elem, attrs){
+        var dismiss = false;
+
+        $drag.bind(elem, {
+          constraint: {
+            minX: 0, 
+            minY: 0, 
+            maxY: 0 
+          },
+          move: function(c) {
+            if( c.left >= c.width / 4) {
+              dismiss = true;
+              elem.addClass('dismiss');
+            } else {
+              dismiss = false;
+              elem.removeClass('dismiss');
+            }
+          },
+          end: function(c, undo, reset) {
+            if (dismiss) {
+              elem.addClass('dismitted');
+              $timeout(function() { 
+                scope.$apply(function() {
+                  dismissFn(scope);  
+                });
+              }, 400);
+            } else {
+              reset();
+            }
+          }
+        });
+      };
+    }
+  };
 });
 
 app.controller('MainController', function($rootScope, $scope, analytics){
@@ -89,6 +161,8 @@ app.controller('MainController', function($rootScope, $scope, analytics){
     $rootScope.loading = false;
   });
 
+  $scope.lorem = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel explicabo, aliquid eaque soluta nihil eligendi adipisci error, illum corrupti nam fuga omnis quod quaerat mollitia expedita impedit dolores ipsam. Obcaecati.';
+
   var scrollItems = [];
 
   for (var i=1; i<=100; i++) {
@@ -96,7 +170,17 @@ app.controller('MainController', function($rootScope, $scope, analytics){
   }
 
   $scope.scrollItems = scrollItems;
-  $scope.invoice = {payed: true};
+  $scope.rememberMe = true;
+  $scope.email = 'me@example.com';
+  
+  $scope.login = function() {
+    alert('Login form submitted');
+  };
+
+  $scope.$on('mobileAngularUi.state.changed.lightbulb', function(e, active){
+    console.log("lightbulb", active ? 'active' : 'inactive');
+  });
+
   
   $scope.userAgent =  navigator.userAgent;
   $scope.chatUsers = [
@@ -126,5 +210,21 @@ app.controller('MainController', function($rootScope, $scope, analytics){
     { name: "Lee Norman", online: false },
     { name: "Ebony Rice", online: false }
   ];
+  
+  $scope.notices = [];
+  
+  for (var j = 0; j < $scope.chatUsers.length; j++) {
+    var user = $scope.chatUsers[j];
+    $scope.notices.push({icon: 'envelope', message: 'Notice ' + j });
+  }
 
+  $scope.deleteNotice = function(notice) {
+    console.log('deleteNotice');
+    var index = $scope.notices.indexOf(notice);
+    console.log(index);
+    if (index > -1) {
+      $scope.notices.splice(index, 1);
+
+    }
+  };
 });

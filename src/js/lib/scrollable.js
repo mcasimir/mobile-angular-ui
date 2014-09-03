@@ -2,20 +2,39 @@
  // Many thanks to pavei (https://github.com/pavei) to submit
  // basic implementation
 
-angular.module("mobile-angular-ui.scrollable", [])
+var module = angular.module('mobileAngularUi.scrollable', []);
 
-.directive("scrollableContent", [
-  function() {
-    return {
-      replace: false,
-      restrict: "C",
-      link: function(scope, element, attr) {
-        if (overthrow.support !== "native") {
-          element.addClass("overthrow");
-          overthrow.forget();
-          return overthrow.set();
-        }
+module.directive('scrollableBody', function() {
+  return {
+    restrict: 'C',
+    link: function(scope, element, attr) {
+      if (overthrow.support !== 'native') {
+        element.addClass('overthrow');
+        overthrow.forget();
+        overthrow.set();
       }
-    };
-  }
-]);
+    }
+  };
+});
+
+angular.forEach({Top: 'scrollableHeader', Bottom: 'scrollableFooter'}, 
+  function(directiveName, side) {
+      module.directive(directiveName, function($window) {
+        return {
+          restrict: 'C',
+          link: function(scope, element, attr) {
+            var el = element[0],
+                styles = $window.getComputedStyle(el),
+                margin = parseInt(styles.marginTop) + parseInt(styles.marginBottom),
+                heightWithMargin = el.offsetHeight + margin,
+                parentStyle = element.parent()[0].style;
+
+            parentStyle['padding' + side] = heightWithMargin + 'px'; 
+
+            scope.$on('$destroy', function(){
+              parentStyle['padding' + side] = '0px';
+            });
+          }
+        };
+      });
+  });

@@ -1,0 +1,34 @@
+<div class="scrollable">
+  <div class="scrollable-body">
+    <div class="section">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="btn-group pull-right">
+            <a ui-turn-on='myDropdown' class='btn'>
+              <i class="fa fa-ellipsis-v"></i>
+            </a>
+            <ul 
+              class="dropdown-menu"
+              outer-click="ui.turnOff('myDropdown')"
+              outer-click-if="ui.active('myDropdown')"
+              role="menu"
+              ng-show="ui.active('myDropdown')" 
+              ui-state="myDropdown"
+              ui-turn-off="myDropdown">
+
+              <li><a>Action</a></li>
+              <li><a>Another action</a></li>
+              <li><a>Something else here</a></li>
+              <li class="divider"></li>
+              <li><a>Separated link</a></li>
+            </ul>
+          </div>
+          <h3 class="panel-title">Note</h3>
+        </div>
+        <div class="panel-body">
+           {{lorem}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

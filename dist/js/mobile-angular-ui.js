@@ -1,315 +1,7 @@
-/*! Overthrow. An overflow:auto polyfill for responsive design. (c) 2012: Scott Jehl, Filament Group, Inc. http://filamentgroup.github.com/Overthrow/license.txt */
-(function( w, undefined ){
-	
-	var doc = w.document,
-		docElem = doc.documentElement,
-		enabledClassName = "overthrow-enabled",
-
-		// Touch events are used in the polyfill, and thus are a prerequisite
-		canBeFilledWithPoly = "ontouchmove" in doc,
-		
-		// The following attempts to determine whether the browser has native overflow support
-		// so we can enable it but not polyfill
-		nativeOverflow = 
-			// Features-first. iOS5 overflow scrolling property check - no UA needed here. thanks Apple :)
-			"WebkitOverflowScrolling" in docElem.style ||
-			// Test the windows scrolling property as well
-			"msOverflowStyle" in docElem.style ||
-			// Touch events aren't supported and screen width is greater than X
-			// ...basically, this is a loose "desktop browser" check. 
-			// It may wrongly opt-in very large tablets with no touch support.
-			( !canBeFilledWithPoly && w.screen.width > 800 ) ||
-			// Hang on to your hats.
-			// Whitelist some popular, overflow-supporting mobile browsers for now and the future
-			// These browsers are known to get overlow support right, but give us no way of detecting it.
-			(function(){
-				var ua = w.navigator.userAgent,
-					// Webkit crosses platforms, and the browsers on our list run at least version 534
-					webkit = ua.match( /AppleWebKit\/([0-9]+)/ ),
-					wkversion = webkit && webkit[1],
-					wkLte534 = webkit && wkversion >= 534;
-					
-				return (
-					/* Android 3+ with webkit gte 534
-					~: Mozilla/5.0 (Linux; U; Android 3.0; en-us; Xoom Build/HRI39) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13 */
-					ua.match( /Android ([0-9]+)/ ) && RegExp.$1 >= 3 && wkLte534 ||
-					/* Blackberry 7+ with webkit gte 534
-					~: Mozilla/5.0 (BlackBerry; U; BlackBerry 9900; en-US) AppleWebKit/534.11+ (KHTML, like Gecko) Version/7.0.0 Mobile Safari/534.11+ */
-					ua.match( / Version\/([0-9]+)/ ) && RegExp.$1 >= 0 && w.blackberry && wkLte534 ||
-					/* Blackberry Playbook with webkit gte 534
-					~: Mozilla/5.0 (PlayBook; U; RIM Tablet OS 1.0.0; en-US) AppleWebKit/534.8+ (KHTML, like Gecko) Version/0.0.1 Safari/534.8+ */   
-					ua.indexOf( "PlayBook" ) > -1 && wkLte534 && !ua.indexOf( "Android 2" ) === -1 ||
-					/* Firefox Mobile (Fennec) 4 and up
-					~: Mozilla/5.0 (Mobile; rv:15.0) Gecko/15.0 Firefox/15.0 */
-					ua.match(/Firefox\/([0-9]+)/) && RegExp.$1 >= 4 ||
-					/* WebOS 3 and up (TouchPad too)
-					~: Mozilla/5.0 (hp-tablet; Linux; hpwOS/3.0.0; U; en-US) AppleWebKit/534.6 (KHTML, like Gecko) wOSBrowser/233.48 Safari/534.6 TouchPad/1.0 */
-					ua.match( /wOSBrowser\/([0-9]+)/ ) && RegExp.$1 >= 233 && wkLte534 ||
-					/* Nokia Browser N8
-					~: Mozilla/5.0 (Symbian/3; Series60/5.2 NokiaN8-00/012.002; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.3.0 Mobile Safari/533.4 3gpp-gba 
-					~: Note: the N9 doesn't have native overflow with one-finger touch. wtf */
-					ua.match( /NokiaBrowser\/([0-9\.]+)/ ) && parseFloat(RegExp.$1) === 7.3 && webkit && wkversion >= 533
-				);
-			})();
-
-	// Expose overthrow API
-	w.overthrow = {};
-
-	w.overthrow.enabledClassName = enabledClassName;
-
-	w.overthrow.addClass = function(){
-		if( docElem.className.indexOf( w.overthrow.enabledClassName ) === -1 ){
-			docElem.className += " " + w.overthrow.enabledClassName;
-		}
-	};
-
-	w.overthrow.removeClass = function(){
-		docElem.className = docElem.className.replace( w.overthrow.enabledClassName, "" );
-	};
-
-	// Enable and potentially polyfill overflow
-	w.overthrow.set = function(){
-			
-		// If nativeOverflow or at least the element canBeFilledWithPoly, add a class to cue CSS that assumes overflow scrolling will work (setting height on elements and such)
-		if( nativeOverflow ){
-			w.overthrow.addClass();
-		}
-
-	};
-
-	// expose polyfillable 
-	w.overthrow.canBeFilledWithPoly = canBeFilledWithPoly;
-
-	// Destroy everything later. If you want to.
-	w.overthrow.forget = function(){
-
-		w.overthrow.removeClass();
-		
-	};
-		
-	// Expose overthrow API
-	w.overthrow.support = nativeOverflow ? "native" : "none";
-		
-})( this );
-
-/*! Overthrow. An overflow:auto polyfill for responsive design. (c) 2012: Scott Jehl, Filament Group, Inc. http://filamentgroup.github.com/Overthrow/license.txt */
-(function( w, undefined ){
-	
-	// Auto-init
-	w.overthrow.set();
-
-}( this ));
-/*! Overthrow. An overflow:auto polyfill for responsive design. (c) 2012: Scott Jehl, Filament Group, Inc. http://filamentgroup.github.com/Overthrow/license.txt */
-(function( w, o, undefined ){
-
-	// o is overthrow reference from overthrow-polyfill.js
-	if( o === undefined ){
-		return;
-	}
-
-	o.scrollIndicatorClassName = "overthrow";
-	
-	var doc = w.document,
-		docElem = doc.documentElement,
-		// o api
-		nativeOverflow = o.support === "native",
-		canBeFilledWithPoly = o.canBeFilledWithPoly,
-		configure = o.configure,
-		set = o.set,
-		forget = o.forget,
-		scrollIndicatorClassName = o.scrollIndicatorClassName;
-
-	// find closest overthrow (elem or a parent)
-	o.closest = function( target, ascend ){
-		return !ascend && target.className && target.className.indexOf( scrollIndicatorClassName ) > -1 && target || o.closest( target.parentNode );
-	};
-		
-	// polyfill overflow
-	var enabled = false;
-	o.set = function(){
-			
-		set();
-
-		// If nativeOverflow or it doesn't look like the browser canBeFilledWithPoly, our job is done here. Exit viewport left.
-		if( enabled || nativeOverflow || !canBeFilledWithPoly ){
-			return;
-		}
-
-		w.overthrow.addClass();
-
-		enabled = true;
-
-		o.support = "polyfilled";
-
-		o.forget = function(){
-			forget();
-			enabled = false;
-			// Remove touch binding (check for method support since this part isn't qualified by touch support like the rest)
-			if( doc.removeEventListener ){
-				doc.removeEventListener( "touchstart", start, false );
-			}
-		};
-
-		// Fill 'er up!
-		// From here down, all logic is associated with touch scroll handling
-			// elem references the overthrow element in use
-		var elem,
-			
-			// The last several Y values are kept here
-			lastTops = [],
-	
-			// The last several X values are kept here
-			lastLefts = [],
-			
-			// lastDown will be true if the last scroll direction was down, false if it was up
-			lastDown,
-			
-			// lastRight will be true if the last scroll direction was right, false if it was left
-			lastRight,
-			
-			// For a new gesture, or change in direction, reset the values from last scroll
-			resetVertTracking = function(){
-				lastTops = [];
-				lastDown = null;
-			},
-			
-			resetHorTracking = function(){
-				lastLefts = [];
-				lastRight = null;
-			},
-		
-			// On webkit, touch events hardly trickle through textareas and inputs
-			// Disabling CSS pointer events makes sure they do, but it also makes the controls innaccessible
-			// Toggling pointer events at the right moments seems to do the trick
-			// Thanks Thomas Bachem http://stackoverflow.com/a/5798681 for the following
-			inputs,
-			setPointers = function( val ){
-				inputs = elem.querySelectorAll( "textarea, input" );
-				for( var i = 0, il = inputs.length; i < il; i++ ) {
-					inputs[ i ].style.pointerEvents = val;
-				}
-			},
-			
-			// For nested overthrows, changeScrollTarget restarts a touch event cycle on a parent or child overthrow
-			changeScrollTarget = function( startEvent, ascend ){
-				if( doc.createEvent ){
-					var newTarget = ( !ascend || ascend === undefined ) && elem.parentNode || elem.touchchild || elem,
-						tEnd;
-							
-					if( newTarget !== elem ){
-						tEnd = doc.createEvent( "HTMLEvents" );
-						tEnd.initEvent( "touchend", true, true );
-						elem.dispatchEvent( tEnd );
-						newTarget.touchchild = elem;
-						elem = newTarget;
-						newTarget.dispatchEvent( startEvent );
-					}
-				}
-			},
-			
-			// Touchstart handler
-			// On touchstart, touchmove and touchend are freshly bound, and all three share a bunch of vars set by touchstart
-			// Touchend unbinds them again, until next time
-			start = function( e ){
-
-				// Stop any throw in progress
-				if( o.intercept ){
-					o.intercept();
-				}
-				
-				// Reset the distance and direction tracking
-				resetVertTracking();
-				resetHorTracking();
-				
-				elem = o.closest( e.target );
-					
-				if( !elem || elem === docElem || e.touches.length > 1 ){
-					return;
-				}			
-
-				setPointers( "none" );
-				var touchStartE = e,
-					scrollT = elem.scrollTop,
-					scrollL = elem.scrollLeft,
-					height = elem.offsetHeight,
-					width = elem.offsetWidth,
-					startY = e.touches[ 0 ].pageY,
-					startX = e.touches[ 0 ].pageX,
-					scrollHeight = elem.scrollHeight,
-					scrollWidth = elem.scrollWidth,
-				
-					// Touchmove handler
-					move = function( e ){
-					
-						var ty = scrollT + startY - e.touches[ 0 ].pageY,
-							tx = scrollL + startX - e.touches[ 0 ].pageX,
-							down = ty >= ( lastTops.length ? lastTops[ 0 ] : 0 ),
-							right = tx >= ( lastLefts.length ? lastLefts[ 0 ] : 0 );
-							
-						// If there's room to scroll the current container, prevent the default window scroll
-						if( ( ty > 0 && ty < scrollHeight - height ) || ( tx > 0 && tx < scrollWidth - width ) ){
-							e.preventDefault();
-						}
-						// This bubbling is dumb. Needs a rethink.
-						else {
-							changeScrollTarget( touchStartE );
-						}
-						
-						// If down and lastDown are inequal, the y scroll has changed direction. Reset tracking.
-						if( lastDown && down !== lastDown ){
-							resetVertTracking();
-						}
-						
-						// If right and lastRight are inequal, the x scroll has changed direction. Reset tracking.
-						if( lastRight && right !== lastRight ){
-							resetHorTracking();
-						}
-						
-						// remember the last direction in which we were headed
-						lastDown = down;
-						lastRight = right;							
-						
-						// set the container's scroll
-						elem.scrollTop = ty;
-						elem.scrollLeft = tx;
-					
-						lastTops.unshift( ty );
-						lastLefts.unshift( tx );
-					
-						if( lastTops.length > 3 ){
-							lastTops.pop();
-						}
-						if( lastLefts.length > 3 ){
-							lastLefts.pop();
-						}
-					},
-				
-					// Touchend handler
-					end = function( e ){
-
-						// Bring the pointers back
-						setPointers( "auto" );
-						setTimeout( function(){
-							setPointers( "none" );
-						}, 450 );
-						elem.removeEventListener( "touchmove", move, false );
-						elem.removeEventListener( "touchend", end, false );
-					};
-				
-				elem.addEventListener( "touchmove", move, false );
-				elem.addEventListener( "touchend", end, false );
-			};
-			
-		// Bind to touch, handle move and end within
-		doc.addEventListener( "touchstart", start, false );
-	};
-		
-})( this, this.overthrow );
-
 /**
  * @preserve FastClick: polyfill to remove click delays on browsers with touch UIs.
  *
- * @version 1.0.2
+ * @version 1.0.3
  * @codingstandard ftlabs-jsv2
  * @copyright The Financial Times Limited [All Rights Reserved]
  * @license MIT License (see LICENSE.txt)
@@ -505,6 +197,12 @@ var deviceIsIOS4 = deviceIsIOS && (/OS 4_\d(_\d)?/).test(navigator.userAgent);
  */
 var deviceIsIOSWithBadTarget = deviceIsIOS && (/OS ([6-9]|\d{2})_\d/).test(navigator.userAgent);
 
+/**
+ * BlackBerry requires exceptions.
+ *
+ * @type boolean
+ */
+var deviceIsBlackBerry10 = navigator.userAgent.indexOf('BB10') > 0;
 
 /**
  * Determine whether a given element requires a native click.
@@ -709,7 +407,10 @@ FastClick.prototype.onTouchStart = function(event) {
 			// with the same identifier as the touch event that previously triggered the click that triggered the alert.
 			// Sadly, there is an issue on iOS 4 that causes some normal touch events to have the same identifier as an
 			// immediately preceeding touch event (issue #52), so this fix is unavailable on that platform.
-			if (touch.identifier === this.lastTouchIdentifier) {
+			// Issue 120: touch.identifier is 0 when Chrome dev tools 'Emulate touch events' is set with an iOS device UA string,
+			// which causes all touch events to be ignored. As this block only applies to iOS, and iOS identifiers are always long,
+			// random integers, it's safe to to continue if the identifier is 0 here.
+			if (touch.identifier && touch.identifier === this.lastTouchIdentifier) {
 				event.preventDefault();
 				return false;
 			}
@@ -1031,6 +732,7 @@ FastClick.notNeeded = function(layer) {
 	'use strict';
 	var metaViewport;
 	var chromeVersion;
+	var blackberryVersion;
 
 	// Devices that don't support touch don't need FastClick
 	if (typeof window.ontouchstart === 'undefined') {
@@ -1059,6 +761,27 @@ FastClick.notNeeded = function(layer) {
 		// Chrome desktop doesn't need FastClick (issue #15)
 		} else {
 			return true;
+		}
+	}
+
+	if (deviceIsBlackBerry10) {
+		blackberryVersion = navigator.userAgent.match(/Version\/([0-9]*)\.([0-9]*)/);
+
+		// BlackBerry 10.3+ does not require Fastclick library.
+		// https://github.com/ftlabs/fastclick/issues/251
+		if (blackberryVersion[1] >= 10 && blackberryVersion[2] >= 3) {
+			metaViewport = document.querySelector('meta[name=viewport]');
+
+			if (metaViewport) {
+				// user-scalable=no eliminates click delay.
+				if (metaViewport.content.indexOf('user-scalable=no') !== -1) {
+					return true;
+				}
+				// width=device-width (or less than device-width) eliminates click delay.
+				if (document.documentElement.scrollWidth <= window.outerWidth) {
+					return true;
+				}
+			}
 		}
 	}
 
@@ -1097,45 +820,1134 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 	window.FastClick = FastClick;
 }
 
-angular.module("mobile-angular-ui.active-links", []).run([
-  "$rootScope", function($rootScope) {
-    return angular.forEach(["$locationChangeSuccess", "$includeContentLoaded"], function(evtName) {
-      return $rootScope.$on(evtName, function() {
-        var newPath;
-        newPath = window.location.href;
-        angular.forEach(document.links, function(domLink) {
-          var link;
-          link = angular.element(domLink);
-          if (domLink.href === newPath) {
-            link.addClass("active");
-          } else {
-            link.removeClass("active");
-          }
-          return link = null;
-        });
-        return newPath = null;
+/*! Overthrow. An overflow:auto polyfill for responsive design. (c) 2012: Scott Jehl, Filament Group, Inc. http://filamentgroup.github.com/Overthrow/license.txt */
+(function( w, undefined ){
+	
+	var doc = w.document,
+		docElem = doc.documentElement,
+		enabledClassName = "overthrow-enabled",
+
+		// Touch events are used in the polyfill, and thus are a prerequisite
+		canBeFilledWithPoly = "ontouchmove" in doc,
+		
+		// The following attempts to determine whether the browser has native overflow support
+		// so we can enable it but not polyfill
+		nativeOverflow = 
+			// Features-first. iOS5 overflow scrolling property check - no UA needed here. thanks Apple :)
+			"WebkitOverflowScrolling" in docElem.style ||
+			// Test the windows scrolling property as well
+			"msOverflowStyle" in docElem.style ||
+			// Touch events aren't supported and screen width is greater than X
+			// ...basically, this is a loose "desktop browser" check. 
+			// It may wrongly opt-in very large tablets with no touch support.
+			( !canBeFilledWithPoly && w.screen.width > 800 ) ||
+			// Hang on to your hats.
+			// Whitelist some popular, overflow-supporting mobile browsers for now and the future
+			// These browsers are known to get overlow support right, but give us no way of detecting it.
+			(function(){
+				var ua = w.navigator.userAgent,
+					// Webkit crosses platforms, and the browsers on our list run at least version 534
+					webkit = ua.match( /AppleWebKit\/([0-9]+)/ ),
+					wkversion = webkit && webkit[1],
+					wkLte534 = webkit && wkversion >= 534;
+					
+				return (
+					/* Android 3+ with webkit gte 534
+					~: Mozilla/5.0 (Linux; U; Android 3.0; en-us; Xoom Build/HRI39) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13 */
+					ua.match( /Android ([0-9]+)/ ) && RegExp.$1 >= 3 && wkLte534 ||
+					/* Blackberry 7+ with webkit gte 534
+					~: Mozilla/5.0 (BlackBerry; U; BlackBerry 9900; en-US) AppleWebKit/534.11+ (KHTML, like Gecko) Version/7.0.0 Mobile Safari/534.11+ */
+					ua.match( / Version\/([0-9]+)/ ) && RegExp.$1 >= 0 && w.blackberry && wkLte534 ||
+					/* Blackberry Playbook with webkit gte 534
+					~: Mozilla/5.0 (PlayBook; U; RIM Tablet OS 1.0.0; en-US) AppleWebKit/534.8+ (KHTML, like Gecko) Version/0.0.1 Safari/534.8+ */   
+					ua.indexOf( "PlayBook" ) > -1 && wkLte534 && !ua.indexOf( "Android 2" ) === -1 ||
+					/* Firefox Mobile (Fennec) 4 and up
+					~: Mozilla/5.0 (Mobile; rv:15.0) Gecko/15.0 Firefox/15.0 */
+					ua.match(/Firefox\/([0-9]+)/) && RegExp.$1 >= 4 ||
+					/* WebOS 3 and up (TouchPad too)
+					~: Mozilla/5.0 (hp-tablet; Linux; hpwOS/3.0.0; U; en-US) AppleWebKit/534.6 (KHTML, like Gecko) wOSBrowser/233.48 Safari/534.6 TouchPad/1.0 */
+					ua.match( /wOSBrowser\/([0-9]+)/ ) && RegExp.$1 >= 233 && wkLte534 ||
+					/* Nokia Browser N8
+					~: Mozilla/5.0 (Symbian/3; Series60/5.2 NokiaN8-00/012.002; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.3.0 Mobile Safari/533.4 3gpp-gba 
+					~: Note: the N9 doesn't have native overflow with one-finger touch. wtf */
+					ua.match( /NokiaBrowser\/([0-9\.]+)/ ) && parseFloat(RegExp.$1) === 7.3 && webkit && wkversion >= 533
+				);
+			})();
+
+	// Expose overthrow API
+	w.overthrow = {};
+
+	w.overthrow.enabledClassName = enabledClassName;
+
+	w.overthrow.addClass = function(){
+		if( docElem.className.indexOf( w.overthrow.enabledClassName ) === -1 ){
+			docElem.className += " " + w.overthrow.enabledClassName;
+		}
+	};
+
+	w.overthrow.removeClass = function(){
+		docElem.className = docElem.className.replace( w.overthrow.enabledClassName, "" );
+	};
+
+	// Enable and potentially polyfill overflow
+	w.overthrow.set = function(){
+			
+		// If nativeOverflow or at least the element canBeFilledWithPoly, add a class to cue CSS that assumes overflow scrolling will work (setting height on elements and such)
+		if( nativeOverflow ){
+			w.overthrow.addClass();
+		}
+
+	};
+
+	// expose polyfillable 
+	w.overthrow.canBeFilledWithPoly = canBeFilledWithPoly;
+
+	// Destroy everything later. If you want to.
+	w.overthrow.forget = function(){
+
+		w.overthrow.removeClass();
+		
+	};
+		
+	// Expose overthrow API
+	w.overthrow.support = nativeOverflow ? "native" : "none";
+		
+})( this );
+
+/*! Overthrow. An overflow:auto polyfill for responsive design. (c) 2012: Scott Jehl, Filament Group, Inc. http://filamentgroup.github.com/Overthrow/license.txt */
+(function( w, undefined ){
+	
+	// Auto-init
+	w.overthrow.set();
+
+}( this ));
+/*! Overthrow. An overflow:auto polyfill for responsive design. (c) 2012: Scott Jehl, Filament Group, Inc. http://filamentgroup.github.com/Overthrow/license.txt */
+(function( w, o, undefined ){
+
+	// o is overthrow reference from overthrow-polyfill.js
+	if( o === undefined ){
+		return;
+	}
+
+	o.scrollIndicatorClassName = "overthrow";
+	
+	var doc = w.document,
+		docElem = doc.documentElement,
+		// o api
+		nativeOverflow = o.support === "native",
+		canBeFilledWithPoly = o.canBeFilledWithPoly,
+		configure = o.configure,
+		set = o.set,
+		forget = o.forget,
+		scrollIndicatorClassName = o.scrollIndicatorClassName;
+
+	// find closest overthrow (elem or a parent)
+	o.closest = function( target, ascend ){
+		return !ascend && target.className && target.className.indexOf( scrollIndicatorClassName ) > -1 && target || o.closest( target.parentNode );
+	};
+		
+	// polyfill overflow
+	var enabled = false;
+	o.set = function(){
+			
+		set();
+
+		// If nativeOverflow or it doesn't look like the browser canBeFilledWithPoly, our job is done here. Exit viewport left.
+		if( enabled || nativeOverflow || !canBeFilledWithPoly ){
+			return;
+		}
+
+		w.overthrow.addClass();
+
+		enabled = true;
+
+		o.support = "polyfilled";
+
+		o.forget = function(){
+			forget();
+			enabled = false;
+			// Remove touch binding (check for method support since this part isn't qualified by touch support like the rest)
+			if( doc.removeEventListener ){
+				doc.removeEventListener( "touchstart", start, false );
+			}
+		};
+
+		// Fill 'er up!
+		// From here down, all logic is associated with touch scroll handling
+			// elem references the overthrow element in use
+		var elem,
+			
+			// The last several Y values are kept here
+			lastTops = [],
+	
+			// The last several X values are kept here
+			lastLefts = [],
+			
+			// lastDown will be true if the last scroll direction was down, false if it was up
+			lastDown,
+			
+			// lastRight will be true if the last scroll direction was right, false if it was left
+			lastRight,
+			
+			// For a new gesture, or change in direction, reset the values from last scroll
+			resetVertTracking = function(){
+				lastTops = [];
+				lastDown = null;
+			},
+			
+			resetHorTracking = function(){
+				lastLefts = [];
+				lastRight = null;
+			},
+		
+			// On webkit, touch events hardly trickle through textareas and inputs
+			// Disabling CSS pointer events makes sure they do, but it also makes the controls innaccessible
+			// Toggling pointer events at the right moments seems to do the trick
+			// Thanks Thomas Bachem http://stackoverflow.com/a/5798681 for the following
+			inputs,
+			setPointers = function( val ){
+				inputs = elem.querySelectorAll( "textarea, input" );
+				for( var i = 0, il = inputs.length; i < il; i++ ) {
+					inputs[ i ].style.pointerEvents = val;
+				}
+			},
+			
+			// For nested overthrows, changeScrollTarget restarts a touch event cycle on a parent or child overthrow
+			changeScrollTarget = function( startEvent, ascend ){
+				if( doc.createEvent ){
+					var newTarget = ( !ascend || ascend === undefined ) && elem.parentNode || elem.touchchild || elem,
+						tEnd;
+							
+					if( newTarget !== elem ){
+						tEnd = doc.createEvent( "HTMLEvents" );
+						tEnd.initEvent( "touchend", true, true );
+						elem.dispatchEvent( tEnd );
+						newTarget.touchchild = elem;
+						elem = newTarget;
+						newTarget.dispatchEvent( startEvent );
+					}
+				}
+			},
+			
+			// Touchstart handler
+			// On touchstart, touchmove and touchend are freshly bound, and all three share a bunch of vars set by touchstart
+			// Touchend unbinds them again, until next time
+			start = function( e ){
+
+				// Stop any throw in progress
+				if( o.intercept ){
+					o.intercept();
+				}
+				
+				// Reset the distance and direction tracking
+				resetVertTracking();
+				resetHorTracking();
+				
+				elem = o.closest( e.target );
+					
+				if( !elem || elem === docElem || e.touches.length > 1 ){
+					return;
+				}			
+
+				setPointers( "none" );
+				var touchStartE = e,
+					scrollT = elem.scrollTop,
+					scrollL = elem.scrollLeft,
+					height = elem.offsetHeight,
+					width = elem.offsetWidth,
+					startY = e.touches[ 0 ].pageY,
+					startX = e.touches[ 0 ].pageX,
+					scrollHeight = elem.scrollHeight,
+					scrollWidth = elem.scrollWidth,
+				
+					// Touchmove handler
+					move = function( e ){
+					
+						var ty = scrollT + startY - e.touches[ 0 ].pageY,
+							tx = scrollL + startX - e.touches[ 0 ].pageX,
+							down = ty >= ( lastTops.length ? lastTops[ 0 ] : 0 ),
+							right = tx >= ( lastLefts.length ? lastLefts[ 0 ] : 0 );
+							
+						// If there's room to scroll the current container, prevent the default window scroll
+						if( ( ty > 0 && ty < scrollHeight - height ) || ( tx > 0 && tx < scrollWidth - width ) ){
+							e.preventDefault();
+						}
+						// This bubbling is dumb. Needs a rethink.
+						else {
+							changeScrollTarget( touchStartE );
+						}
+						
+						// If down and lastDown are inequal, the y scroll has changed direction. Reset tracking.
+						if( lastDown && down !== lastDown ){
+							resetVertTracking();
+						}
+						
+						// If right and lastRight are inequal, the x scroll has changed direction. Reset tracking.
+						if( lastRight && right !== lastRight ){
+							resetHorTracking();
+						}
+						
+						// remember the last direction in which we were headed
+						lastDown = down;
+						lastRight = right;							
+						
+						// set the container's scroll
+						elem.scrollTop = ty;
+						elem.scrollLeft = tx;
+					
+						lastTops.unshift( ty );
+						lastLefts.unshift( tx );
+					
+						if( lastTops.length > 3 ){
+							lastTops.pop();
+						}
+						if( lastLefts.length > 3 ){
+							lastLefts.pop();
+						}
+					},
+				
+					// Touchend handler
+					end = function( e ){
+
+						// Bring the pointers back
+						setPointers( "auto" );
+						setTimeout( function(){
+							setPointers( "none" );
+						}, 450 );
+						elem.removeEventListener( "touchmove", move, false );
+						elem.removeEventListener( "touchend", end, false );
+					};
+				
+				elem.addEventListener( "touchmove", move, false );
+				elem.addEventListener( "touchend", end, false );
+			};
+			
+		// Bind to touch, handle move and end within
+		doc.addEventListener( "touchstart", start, false );
+	};
+		
+})( this, this.overthrow );
+
+var module = angular.module('mobileAngularUi.ui', []);
+
+module.factory('uiBindEvent', function(){
+  return function(scope, element, eventNames, fn){
+    eventNames = eventNames || 'click tap';
+    element.on(eventNames, function(event){
+      scope.$apply(function() {
+        fn(scope, {$event:event});
       });
+    });
+  };
+});
+
+
+module.directive('uiState', function(SharedState, $parse){
+  return {
+    restrict: 'EA',
+    link: function(scope, elem, attrs){
+      var id               = attrs.uiState || attrs.id,
+          defaultValueExpr = attrs.uiDefault || attrs['default'],
+          defaultValue     = defaultValueExpr ? scope.$eval(defaultValueExpr) : undefined;
+
+      SharedState.initialize(scope, id);
+
+      if (defaultValue !== undefined) {
+        scope.$evalAsync(function(){
+          SharedState.set(id, defaultValue);
+        });
+      }
+    }
+  };
+});
+
+angular.forEach(['toggle', 'turnOn', 'turnOff', 'set'], 
+  function(methodName){
+    var directiveName = 'ui' + methodName[0].toUpperCase() + methodName.slice(1);
+    
+    module.directive(directiveName, function($parse, SharedState, uiBindEvent) {
+      var method = SharedState[methodName];
+      return {
+        restrict: 'A',
+        compile: function(elem, attrs) {
+          var fn = methodName === 'set' ?
+            $parse(attrs[directiveName]) :
+              function(scope) {
+                return attrs[directiveName]; 
+              };
+
+          return function(scope, elem, attrs) {
+            var callback = function() {
+              var arg = fn(scope);
+              return method.call(SharedState, arg);
+            };
+            uiBindEvent(scope, elem, attrs.uiTriggers, callback);
+          };
+        }
+      };
+    });
+  });
+
+module.run(function($rootScope, SharedState){
+  $rootScope.ui = SharedState;
+});
+angular.module('mobileAngularUi.transform', [])
+
+.factory('Transform', function($window){
+
+  function matrixHeight(m) {
+    return m.length;
+  }
+
+  function matrixWidth(m) {
+    return m[0] ? m[0].length : 0;
+  }
+
+  function matrixMult(m1, m2) {
+    var width1  = matrixWidth(m1), 
+        width2  = matrixWidth(m2), 
+        height1 = matrixHeight(m1), 
+        height2 = matrixHeight(m2);
+
+    if (width1 != height2) {
+      throw new Error("error: incompatible sizes");
+    }
+  
+    var result = [];
+    for (var i = 0; i < height1; i++) {
+        result[i] = [];
+        for (var j = 0; j < width2; j++) {
+            var sum = 0;
+            for (var k = 0; k < width1; k++) {
+                sum += m1[i][k] * m2[k][j];
+            }
+            result[i][j] = sum;
+        }
+    }
+    return result; 
+  }
+
+  //
+  // Cross-Browser stuffs
+  // 
+  var vendorPrefix,
+      cssPrefix,
+      transformProperty,
+      prefixes = ['', 'webkit', 'Moz', 'O', 'ms'],
+      d = $window.document.createElement('div');
+  
+  for (var i = 0; i < prefixes.length; i++) {
+    var prefix = prefixes[i];
+    if ( (prefix + 'Perspective') in d.style ) {
+      vendorPrefix = prefix;
+      cssPrefix = (prefix === '' ? '' : '-' + prefix.toLowerCase() + '-');
+      transformProperty = cssPrefix + 'transform';
+      break;
+    }
+  }
+
+  d = null;
+
+  //
+  // Represents a 2d transform, 
+  // behind the scene is a transform matrix exposing methods to get/set
+  // meaningfull primitives like rotation, translation and scale.
+  // 
+  // Allows to apply multiple transforms through #merge.
+  //
+  function Transform(matrix) {
+    this.mtx = matrix || [
+      [1,0,0],
+      [0,1,0],
+      [0,0,1]
+    ];
+  }
+
+  Transform.fromElement = function(e) {
+    var tr = $window
+            .getComputedStyle(e, null)
+            .getPropertyValue(transformProperty);
+
+    if (!tr || tr === 'none') {
+      return new Transform();
+    }
+
+    if (tr.match('matrix3d')) {
+      throw new Error('Handling 3d transform is not supported yet');
+    }
+
+    var values = 
+      tr.split('(')[1]
+        .split(')')[0]
+        .split(',')
+        .map(Number);
+
+    var mtx = [
+      [values[0], values[2], values[4]],
+      [values[1], values[3], values[5]],
+      [        0,         0,        0 ],
+    ];
+
+    return new Transform(mtx);
+  };
+
+  Transform.prototype.apply = function(e, options) {
+    var mtx = Transform.fromElement(e).merge(this).mtx;
+    e.style[transformProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
+    return this;
+  };
+
+  Transform.prototype.set = function(e) {
+    var mtx = this.mtx;
+    e.style[transformProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
+    return this;
+  };
+
+  Transform.prototype.rotate = function(a) {
+    var t = [
+      [Math.cos(a), -Math.sin(a),  0],
+      [Math.sin(a),  Math.cos(a),  0],
+      [          0,            0,  1]
+    ];
+    this.mtx = matrixMult(t, this.mtx);
+    return this;
+  };
+
+  Transform.prototype.translate = function(x, y) {
+    y = (y === null || y === undefined) ? x : y;
+    var t = [
+      [1,0,x],
+      [0,1,y],
+      [0,0,1]
+    ];
+    this.mtx = matrixMult(t, this.mtx);
+    return this;
+  };
+
+  Transform.prototype.scale = function(a) {
+    var t = [
+      [a,0,0],
+      [0,a,0],
+      [0,0,1]
+    ];
+    this.mtx = matrixMult(t, this.mtx);
+    return this;
+  };
+
+  Transform.prototype.merge = function(t) {
+    this.mtx = matrixMult(this.mtx, t.mtx);
+    return this;
+  };
+
+  Transform.prototype.toPrimitives = function() {
+    var mtx = this.mtx,
+        a = mtx[0][0],
+        b = mtx[1][0],
+        c = mtx[0][1],
+        d = mtx[1][1],
+        r = Math.round(Math.atan2(b, a) * (180/Math.PI));
+
+    return {
+      translate: {
+        x: mtx[0][2],
+        y: mtx[1][2]
+      },
+      scale: {
+        x: mtx[0][0],
+        y: mtx[1][1]
+      },
+      rotate: r
+    };
+  };
+
+  return Transform;
+});
+angular.module('mobileAngularUi.switch', [])
+
+.directive("switch", function() {
+  return {
+    restrict: "EA",
+    replace: true,
+    scope: {
+      model: "=ngModel",
+      changeExpr: "@ngChange",
+      disabled: "@"
+    },
+    template: "<div class='switch' ng-class='{active: model}'><div class='switch-handle'></div></div>",
+    link: function(scope, elem, attrs) {
+
+      elem.on('click tap', function(){
+        if (!attrs.disabled) {
+          scope.model = !scope.model;
+          scope.$apply();
+
+          if (angular.isDefined(scope.changeExpr)) {
+            scope.$parent.$eval(scope.changeExpr);
+          }
+        }
+      });
+
+      elem.addClass('switch-transition-enabled');
+    }
+  };
+});
+var module = angular.module(
+  'mobileAngularUi.sidebars', [
+    'mobileAngularUi.sharedState',
+    'mobileAngularUi.outerClick'
+  ]
+);
+
+angular.forEach(['left', 'right'], function (side) {
+  var directiveName = 'sidebar' + side.charAt(0).toUpperCase() + side.slice(1);
+  module.directive(directiveName,
+    function (
+      $rootElement,
+      SharedState,
+      bindOuterClick
+    ) {
+      
+      var outerClickCb = function (scope){
+        SharedState.turnOff(directiveName);
+      };
+
+      var outerClickIf = function() {
+        return SharedState.isActive(directiveName);
+      };
+      
+      return {
+        restrict: 'C',
+        link: function (scope, elem, attrs) {
+          var parentClass = 'has-sidebar-' + side;
+          var activeClass = 'sidebar-' + side + '-in';
+
+          $rootElement.addClass(parentClass);
+
+          scope.$on('mobileAngularUi.state.changed.' + directiveName, function (e, active) {
+            if (active) {
+              $rootElement
+                .addClass(activeClass);
+            } else {
+              $rootElement
+                .removeClass(activeClass);
+            }
+          });
+
+          scope.$on('$locationChangeSuccess', function () {
+            SharedState.turnOff(directiveName);
+          });
+
+          scope.$on('$destroy', function () {
+            $rootElement
+              .removeClass(parentClass);
+            $rootElement
+              .removeClass(activeClass);
+          });
+
+          var defaultActive = attrs.active !== undefined && attrs.active !== 'false';          
+          SharedState.initialize(scope, directiveName, defaultActive);
+
+          if (attrs.closeOnOuterClicks !== 'false') {
+            bindOuterClick(scope, elem, outerClickCb, outerClickIf);
+          }
+        }
+      };
+    });
+});
+angular.module('mobileAngularUi.sharedState', [])
+
+.factory('SharedState', function($rootScope){
+  var statuses = {};
+  var scopes = {};
+  return {
+    initialize: function(scope, id, defaultValue) {
+      var isNewScope = scopes[scope] === undefined;
+
+      scopes[scope.$id] = scopes[scope.$id] || [];
+      scopes[scope.$id].push(id);
+
+      if (!statuses[id]) {
+        statuses[id] = {references: 1, defaultValue: defaultValue};
+        $rootScope.$broadcast('mobileAngularUi.state.initialized.' + id, defaultValue);
+        if (defaultValue !== undefined) {
+          $rootScope.$broadcast('mobileAngularUi.state.changed.' + id, defaultValue);
+        }
+      } else if (isNewScope) { // is part of another scope and shoud 
+                               // be garbage collected according to
+                               // its destruction.
+        statuses[id].references++; 
+      }
+      scope.$on('$destroy', function(){
+        var ids = scopes[scope.$id] || [];
+        for (var i = 0; i < ids.length; i++) {
+          var status = statuses[ids[i]];
+          status.references--;
+          if (status.references <= 0) {
+            delete statuses[ids[i]];
+          }
+        }
+        delete scopes[scope.$id];
+      });
+    },
+
+    setOne: function(id, value) {
+      if (statuses[id] !== undefined) {
+        var prev = statuses[id].value;
+        statuses[id].value = value;
+        if (prev != value) {
+          $rootScope.$broadcast('mobileAngularUi.state.changed.' + id, value, prev);
+        }
+        return value;
+      } else {
+        if (console) {
+          console.warn('Warning: Attempt to set uninitialized shared state:', id);
+        }
+      }
+    },
+
+    setMany: function(map) {
+      angular.forEach(map, function(value, id) {
+        this.setOne(id, value);
+      }, this);
+    },
+
+    set: function(idOrMap, value) {
+      if (angular.isObject(idOrMap) && angular.isUndefined(value)) {
+        this.setMany(idOrMap);
+      } else {
+        this.setOne(idOrMap, value);
+      }
+    },
+
+    turnOn: function(id) {
+      return this.setOne(id, true);     
+    },
+
+    turnOff: function(id) {
+      return this.setOne(id, false);     
+    },
+
+    toggle: function(id) {
+      return this.setOne(id, !this.get(id));     
+    },
+
+    get: function(id) {
+      return statuses[id] && statuses[id].value;
+    },
+
+    isActive: function(id) {
+      return !! this.get(id);
+    },
+
+    active: function(id) {
+      return this.isActive(id);
+    },
+
+    isUndefined: function(id) {
+      return statuses[id] === undefined || this.get(id) === undefined;
+    },
+
+    equals: function(id, value) {
+      return this.get(id) === value;
+    },
+
+    eq: function(id, value) {
+      return this.equals(id, value);
+    }
+  };
+});
+ // Provides a scrollable implementation based on Overthrow
+ // Many thanks to pavei (https://github.com/pavei) to submit
+ // basic implementation
+
+var module = angular.module('mobileAngularUi.scrollable', []);
+
+module.directive('scrollableBody', function() {
+  return {
+    restrict: 'C',
+    link: function(scope, element, attr) {
+      if (overthrow.support !== 'native') {
+        element.addClass('overthrow');
+        overthrow.forget();
+        overthrow.set();
+      }
+    }
+  };
+});
+
+angular.forEach({Top: 'scrollableHeader', Bottom: 'scrollableFooter'}, 
+  function(directiveName, side) {
+      module.directive(directiveName, function($window) {
+        return {
+          restrict: 'C',
+          link: function(scope, element, attr) {
+            var el = element[0],
+                styles = $window.getComputedStyle(el),
+                margin = parseInt(styles.marginTop) + parseInt(styles.marginBottom),
+                heightWithMargin = el.offsetHeight + margin,
+                parentStyle = element.parent()[0].style;
+
+            parentStyle['padding' + side] = heightWithMargin + 'px'; 
+
+            scope.$on('$destroy', function(){
+              parentStyle['padding' + side] = '0px';
+            });
+          }
+        };
+      });
+  });
+angular.module('mobileAngularUi.pointerEvents', []).run([
+  '$document', function($document) {
+    return angular.element($document).on("click tap", function(e) {
+      var target;
+      target = angular.element(e.target);
+      if (target.hasClass("disabled")) {
+        e.preventDefault();
+        e.stopPropagation();
+        target = null;
+        return false;
+      } else {
+        target = null;
+        return true;
+      }
     });
   }
 ]);
 
-angular.module("mobile-angular-ui.directives.capture", [])
+angular.module('mobileAngularUi.outerClick', [])
+
+.factory('isAncestorOrSelf', function () {
+  return function (element, target) {
+    var parent = element;
+    while (parent.length > 0) {
+      if (parent[0] === target[0]) {
+        parent = null;
+        return true;
+      }
+      parent = parent.parent();
+    }
+    parent = null;
+    return false;
+  };
+})
+
+.factory('bindOuterClick', function ($document, $timeout, isAncestorOrSelf) {
+  
+  return function (scope, element, outerClickFn, outerClickIf) {
+    var handleOuterClick = function(event){
+      if (!isAncestorOrSelf(angular.element(event.target), element)) {
+        scope.$apply(function() {
+          outerClickFn(scope, {$event:event});
+        });
+      }
+    };
+
+    var stopWatching = angular.noop;
+    var t = null;
+
+    if (outerClickIf) {
+      stopWatching = scope.$watch(outerClickIf, function(value){
+        $timeout.cancel(t);
+
+        if (value) {
+          // prevents race conditions 
+          // activating with other click events
+          t = $timeout(function(scope) {
+            $document.on('click tap', handleOuterClick);
+          }, 0);
+
+        } else {
+          $document.unbind('click tap', handleOuterClick);    
+        }
+      });
+    } else {
+      $timeout.cancel(t);
+      $document.on('click tap', handleOuterClick);
+    }
+
+    scope.$on('$destroy', function(){
+      stopWatching();
+      $document.unbind('click tap', handleOuterClick);
+    });
+  };
+})
+
+.directive('outerClick', function(bindOuterClick, $parse){
+  return {
+    restrict: 'A',
+    compile: function(elem, attrs) {
+      var outerClickFn = $parse(attrs.outerClick);
+      var outerClickIf = attrs.outerClickIf;
+      return function(scope, elem) {
+        bindOuterClick(scope, elem, outerClickFn, outerClickIf);
+      };
+    }
+  };
+});
+var module = angular.module('mobileAngularUi.navbars', []);
+
+angular.forEach(['top', 'bottom'], function(side) {
+  var directiveName = 'navbarAbsolute' + side.charAt(0).toUpperCase() + side.slice(1);
+  module.directive(directiveName, function($rootElement) {
+  return {
+    restrict: 'C',
+    link: function(scope, elem) {
+      $rootElement.addClass('has-navbar-' + side);
+      scope.$on('$destroy', function(){
+        $rootElement.removeClass('has-navbar-' + side);
+      });
+      }
+    };
+  });
+});
+angular.module('mobileAngularUi.modals', [])
+
+.directive('modalOverlay', function($rootElement) {
+  return {
+    restrict: 'C',
+    link: function(scope, elem) {
+      $rootElement.addClass('has-modal-overlay');
+      scope.$on('$destroy', function(){
+        $rootElement.removeClass('has-modal-overlay');
+      });
+    }
+  };
+});
+// Provides touch events via fastclick.js
+var module = angular.module('mobileAngularUi.fastclick', []);
+
+module.run(function($window, $document) {
+    $window.addEventListener("load", (function() {
+       FastClick.attach($document[0].body);
+    }), false);
+});
+
+angular.forEach(['select', 'input', 'textarea'], function(directiveName){
+  module.directive(directiveName, function(){
+    return {
+      restrict: "E",
+      compile: function(elem) {
+        elem.addClass("needsclick");
+      }
+    };
+  });
+});
+angular.module("mobileAngularUi.drag", [
+  'ngTouch',
+  'mobileAngularUi.transform'
+])
+
+// 
+// $drag
+// 
+// A provider to create touch & drag components.
+// 
+// $drag Service wraps ngTouch $swipe to extend its behavior moving one or more
+// target element throug css transform according to the $swipe coords thus creating 
+// a drag effect.
+// 
+// $drag interface is similar to $swipe:
+// 
+// app.controller('MyController', function($drag, $element){
+//   $drag.bind($element, {
+//    start: function(coords, cancel, markers, e){},
+//    move: function(coords, cancel, markers, e){},
+//    end: function(coords, cancel, markers, e){},
+//    cancel: function(coords, markers, e){},
+//    transform: function(x, y, transform) {},
+//    adaptTransform: function(x, y, transform) {},
+//    constraint: fn or {top: y1, left: x1, bottom: y2, right: x2}
+//   });
+// });
+// 
+// Main differences from $swipe are: 
+//  - coords param take into account css transform so you can easily detect collision with other elements.
+//  - start, move, end callback receive a cancel funcion that can be used to cancel the motion and reset
+//    the transform.
+//  - you can configure the transform behavior passing a transform function to options.
+//  - you can constraint the motion through the constraint option (setting relative movement limits) 
+//    or through the track option (setting absolute coords);
+//  - you can setup collision markers being watched and passed to callbacks.
+//  
+// Example (drag to dismiss):
+//  $drag.bind(e, {
+//    move: function(c, cancel, markers){
+//      if(c.left > markers.m1.left) {
+//        e.addClass('willBeDeleted');
+//      } else {
+//        e.removeClass('willBeDeleted');
+//      }
+//    },
+//    end: function(coords, cancel){
+//      if(c.left > markers.m1.left) {
+//        e.addClass('deleting');
+//        delete($scope.myModel).then(function(){
+//          e.remove();
+//        }, function(){
+//          cancel();
+//        });
+//      } else {
+//        cancel();
+//      }
+//    },
+//    cancel: function(){
+//      e.removeClass('willBeDeleted');
+//      e.removeClass('deleting');
+//    },
+//    constraint: { 
+//        minX: 0, 
+//        minY: 0, 
+//        maxY: 0 
+//     },
+//   });
+
+.provider('$drag', function() {
+  this.$get = ['$swipe', 'Transform', function($swipe, Transform) {
+    return {
+      bind: function(elem, options) {
+        var defaults = {
+          constraint: {}
+        };
+
+        options = angular.extend({}, defaults, options || {});
+
+        var
+          e = angular.element(elem)[0],
+          moving = false,
+          deltaXTot = 0, // total movement since elem is bound
+          deltaYTot = 0,
+          x0, y0, // touch coords on start 
+          t0, // transform on start
+          tOrig = Transform.fromElement(e),
+          x, y, // current touch coords
+          t, // current transform
+          minX = options.constraint.minX !== undefined ? options.constraint.minX : Number.NEGATIVE_INFINITY,
+          maxX = options.constraint.maxX !== undefined ? options.constraint.maxX : Number.POSITIVE_INFINITY,
+          minY = options.constraint.minY !== undefined ? options.constraint.minY : Number.NEGATIVE_INFINITY,
+          maxY = options.constraint.maxY !== undefined ? options.constraint.maxY : Number.POSITIVE_INFINITY,
+          scope = elem.scope(),
+          
+          cancelFn = function(){
+            elem.triggerHandler('touchcancel');
+          },
+
+          resetFn = function(){
+            elem.triggerHandler('touchcancel');
+            deltaXTot = 0;
+            deltaYTot = 0;
+            tOrig.set(e);
+          },
+
+          callbacks = {
+            start: function(c) {
+              
+              if (!moving) { // Sometimes $swipe calls start multiple times
+                                // without before end or cancel thus we need
+                                // to ensure this is a fresh start to
+                                // reset everything.
+                t0 = Transform.fromElement(e);
+                x  = x0 = c.x;
+                y  = y0 = c.y; 
+                moving = true;
+                if (options.start) {
+                  options.start(e.getBoundingClientRect(), cancelFn, resetFn);  
+                }
+              }
+                          
+            },
+
+            move: function(c) {
+
+              // total movement shoud match constraints
+              var dx, dy,
+              deltaX, deltaY, r;
+
+              deltaX = Math.max(Math.min(maxX - deltaXTot, c.x - x0), minX - deltaXTot);
+              deltaY = Math.max(Math.min(maxY - deltaYTot, c.y - y0), minY - deltaYTot);
+
+              dx = deltaX - (x - x0);
+              dy = deltaY - (y - y0);
+
+              t = new Transform();
+              if (options.transform) {
+                r = options.transform(t, dx, dy, c.x, c.y, x0, y0);
+                t = r || t;
+              } else {
+                t.translate(dx, dy);
+              }
+
+              if (options.adaptTransform) {
+                r = options.adaptTransform(t, dx, dy, c.x, c.y, x0, y0);
+                t = r || t;
+              }
+              
+              x = deltaX + x0;
+              y = deltaY + y0;
+
+              t.apply(e);
+
+              if (options.move) {
+                options.move(e.getBoundingClientRect(), cancelFn, resetFn);  
+              }
+
+            },
+
+            end: function(c) {
+              var deltaXTotOld = deltaXTot;
+              var deltaYTotOld = deltaYTot;
+
+              var undoFn = function() {
+                deltaXTot = deltaXTotOld;
+                deltaYTot = deltaYTotOld;
+                t0.set(e);
+              };
+
+              deltaXTot = deltaXTot + x - x0;
+              deltaYTot = deltaYTot + y - y0;
+              
+              if (options.end) {
+                options.end(e.getBoundingClientRect(), undoFn, resetFn);
+              }
+
+              moving = false; 
+            
+            },
+
+            cancel: function() {
+              t0.set(e);
+              if (options.cancel) {
+                options.cancel(e.getBoundingClientRect(), resetFn);
+              }
+              moving = false;
+            }
+          };
+
+        scope.$on('$destroy', function() { 
+          callbacks = options = e = moving = deltaXTot = deltaYTot = x0 = y0 = t0 = tOrig = x = y = t = minX = maxX = minY = maxY = scope = null;
+        });
+
+        $swipe.bind(elem, callbacks);
+      }
+    };
+  }];
+});
+angular.module("mobileAngularUi.capture", [])
 
 .run([
-  "CaptureService", "$rootScope", function(CaptureService, $rootScope) {
+  "Capture", "$rootScope", function(Capture, $rootScope) {
     $rootScope.$on('$routeChangeStart', function() {
-      CaptureService.resetAll();
+      Capture.resetAll();
     });
   }
 ])
 
-.factory("CaptureService", [
+.factory("Capture", [
   "$compile", function($compile) {
     var yielders = {};
 
     return {
       resetAll: function() {
-        for (name in yielders) {
+        for (var name in yielders) {
           this.resetYielder(name);
         }
       },
@@ -1176,679 +1988,75 @@ angular.module("mobile-angular-ui.directives.capture", [])
 ])
 
 .directive("contentFor", [
-  "CaptureService", function(CaptureService) {
+  "Capture", function(Capture) {
     return {
       compile: function(tElem, tAttrs) {
         var rawContent = tElem.html();
-        if(tAttrs.duplicate == null) {
+        if(tAttrs.duplicate === null || tAttrs.duplicate === undefined) {
           // no need to compile anything!
           tElem.html("");
         }
         return function postLink(scope, elem, attrs) {
-          CaptureService.setContentFor(attrs.contentFor, rawContent, scope);
-          if (attrs.duplicate == null) {
+          Capture.setContentFor(attrs.contentFor, rawContent, scope);
+          if (attrs.duplicate === null || attrs.duplicate === undefined) {
             elem.remove();
           }
-        }
+        };
       }
     };
   }
 ])
 
 .directive("yieldTo", [
-  "$compile", "CaptureService", function($compile, CaptureService) {
+  "$compile", "Capture", function($compile, Capture) {
     return {
       link: function(scope, element, attr) {
-        CaptureService.putYielder(attr.yieldTo, element, scope, element.html());
+        Capture.putYielder(attr.yieldTo, element, scope, element.html());
         element.contents().remove();
 
         scope.$on('$destroy', function(){
-          CaptureService.removeYielder(attr.yieldTo);
+          Capture.removeYielder(attr.yieldTo);
         });
       }
     };
   }
 ]);
+angular.module("mobileAngularUi.activeLinks", [])
 
-angular.module('mobile-angular-ui.directives.carousel', [])
+.run(function($rootScope, $window, $document){
 
-.run(["$rootScope", function($rootScope) {
-    
-    $rootScope.carouselPrev = function(id) {
-      $rootScope.$emit("mobile-angular-ui.carousel.prev", id);
-    };
-    
-    $rootScope.carouselNext = function(id) {
-      $rootScope.$emit("mobile-angular-ui.carousel.next", id);
-    };
-    
-    var carouselItems = function(id) {
-      var elem = angular.element(document.getElementById(id));
-      var res = angular.element(elem.children()[0]).children();
-      elem = null;
-      return res;
-    };
+  var setupActiveLinks = function() {
+    var newPath  = $window.location.href;
+    var domLinks = $document[0].links;
 
-    var findActiveItemIndex = function(items) {
-      var idx = -1;
-      var found = false;
+    for (var i = 0; i < domLinks.length; i++) {
+      var domLink = domLinks[i];
+      var link    = angular.element(domLink);
 
-      for (var _i = 0; _i < items.length; _i++) {
-        item = items[_i];
-        idx += 1;
-        if (angular.element(item).hasClass('active')) {
-          found = true;
-          break;
-        }
-      }
-
-      if (found) {
-        return idx;
+      if (domLink.href === newPath) {
+        link.addClass('active');
       } else {
-        return -1;
+        link.removeClass('active');
       }
 
-    };
-
-    $rootScope.$on("mobile-angular-ui.carousel.prev", function(e, id) {
-      var items = carouselItems(id);
-      var idx = findActiveItemIndex(items);
-      var lastIdx = items.length - 1;
-
-      if (idx !== -1) {
-        angular.element(items[idx]).removeClass("active");
-      }
-
-      if (idx <= 0) {
-        angular.element(items[lastIdx]).addClass("active");
-      } else {
-        angular.element(items[idx - 1]).addClass("active");
-      }
-
-      items = null;
-      idx = null;
-      lastIdx = null;
-    });
-
-    $rootScope.$on("mobile-angular-ui.carousel.next", function(e, id) {
-      var items = carouselItems(id);
-      var idx = findActiveItemIndex(items);
-      var lastIdx = items.length - 1;
-      
-      if (idx !== -1) {
-        angular.element(items[idx]).removeClass("active");
-      }
-      
-      if (idx === lastIdx) {
-        angular.element(items[0]).addClass("active");
-      } else {
-        angular.element(items[idx + 1]).addClass("active");
-      }
-      
-      items = null;
-      idx = null;
-      lastIdx = null;
-    });
-  }
-]);
-
-// Provides touch events via fastclick.js
-angular.module('mobile-angular-ui.fastclick', [])
-
-.run([
-  '$window', '$document', function($window, $document) {
-    $window.addEventListener("load", (function() {
-       FastClick.attach($document[0].body);
-    }), false);
-  }
-])
-
-.directive("select", function() {
-  return {
-    replace: false,
-    restrict: "E",
-    link: function(scope, element, attr) {
-      element.addClass("needsclick");
     }
   };
-})
 
-.directive("input", function() {
-  return {
-    replace: false,
-    restrict: "E",
-    link: function(scope, element, attr) {
-      element.addClass("needsclick");
-    }
-  };
-})
-
-.directive("textarea", function() {
-  return {
-    replace: false,
-    restrict: "E",
-    link: function(scope, element, attr) {
-      element.addClass("needsclick");
-    }
-  };
-})
-
-angular.module('mobile-angular-ui.directives.forms', [])
-
-.directive("bsFormControl", function() {
-  var bs_col_classes = {};
-  var bs_col_sizes = ['xs', 'sm', 'md', 'lg'];
-  
-  for (var i = 0; i < bs_col_sizes.length; i++) {
-    for (var j = 1; j <= 12; j++) {
-      bs_col_classes['col-' + bs_col_sizes[i] + "-" + j] = true;
-    }
-  };
-  
-  function separeBsColClasses(clss) {
-    var intersection = "";
-    var difference = "";
-
-    for (var i = 0; i < clss.length; i++) {
-        var v = clss[i];
-        if (v in bs_col_classes) { 
-          intersection += (v + " "); 
-        } else {
-          difference += (v + " ");
-        }
-    }
-
-    return {i: intersection.trim(), d: difference.trim()};
-  }
-
-  return {
-    replace: true,
-    require: "ngModel",
-    link: function(scope, elem, attrs) {
-
-      if (attrs.labelClass == null) {
-        attrs.labelClass = "";
-      }
-
-      if (attrs.id == null) {
-        attrs.id = attrs.ngModel.replace(".", "_") + "_input";
-      }
-      
-      if ((elem[0].tagName == "SELECT") || ((elem[0].tagName == "INPUT" || elem[0].tagName == "TEXTAREA") && (attrs.type != "checkbox" && attrs.type != "radio"))) {
-        elem.addClass("form-control");
-      }
-      
-      var label = angular.element("<label for=\"" + attrs.id + "\" class=\"control-label\">" + attrs.label + "</label>");
-      var w1 = angular.element("<div class=\"form-group row\"></div>"); 
-      var w2 = angular.element("<div class=\"form-control-wrapper\"></div>");
-      
-      var labelColClasses = separeBsColClasses(attrs.labelClass.split(/\s+/));
-      if (labelColClasses.i == "") {
-        label.addClass("col-xs-12");
-      }
-      label.addClass(attrs.labelClass);
-
-      var elemColClasses = separeBsColClasses(elem[0].className.split(/\s+/));
-      elem.removeClass(elemColClasses.i);
-      w2.addClass(elemColClasses.i);
-      if (elemColClasses.i == "") {
-        w2.addClass("col-xs-12");
-      }
-      elem.wrap(w1).wrap(w2);
-      elem.parent().parent().prepend(label);
-      elem.attr('id', attrs.id);
-
-      label = w1 = w2 = labelColClasses = elemColClasses = null;
-    }
-  };
-})
-
-.directive("switch", function() {
-  return {
-    restrict: "EA",
-    replace: true,
-    scope: {
-      model: "=ngModel",
-      changeExpr: "@ngChange",
-      disabled: "@"
-    },
-    template: "<div class='switch' ng-class='{active: model}'><div class='switch-handle'></div></div>",
-    link: function(scope, elem, attrs) {
-
-      elem.on('click tap', function(){
-        if (attrs.disabled == null) {
-          scope.model = !scope.model;
-          scope.$apply();
-
-          if (scope.changeExpr != null) {
-            scope.$parent.$eval(scope.changeExpr);
-          };
-        }
-      });
-
-      elem.addClass('switch-transition-enabled');
-    }
-  };
+  $rootScope.$on('$locationChangeSuccess', setupActiveLinks);
+  $rootScope.$on('$includeContentLoaded', setupActiveLinks);
 });
-angular.module('mobile-angular-ui.directives.navbars', [])
-
-.directive('navbarAbsoluteTop', function() {
-  return {
-    replace: false,
-    restrict: "C",
-    link: function(scope, elem, attrs) {
-      elem.parent().addClass('has-navbar-top');
-    }
-  };
-})
-
-.directive('navbarAbsoluteBottom', function() {
-  return {
-    replace: false,
-    restrict: "C",
-    link: function(scope, elem, attrs) {
-      elem.parent().addClass('has-navbar-bottom');
-    }
-  };
-});
-angular.module('mobile-angular-ui.directives.overlay', []).directive('overlay', [
-  "$compile", function($compile) {
-    return {
-        compile: function(tElem, tAttrs) {
-            var rawContent = tElem.html();
-            return function postLink(scope, elem, attrs) {
-                var active = "";
-                var body = rawContent;
-                var id = attrs.overlay;
-
-                if (attrs["default"] != null) {
-                  var active = "default='" + attrs["default"] + "'";
-                }
-
-                var html = "<div class=\"overlay\" id=\"" + id + "\" toggleable " + active + " parent-active-class=\"overlay-in\" active-class=\"overlay-show\">\n  <div class=\"overlay-inner\">\n    <div class=\"overlay-background\"></div>\n    <a href=\"#" + id + "\" toggle=\"off\" class=\"overlay-dismiss\">\n      <i class=\"fa fa-times-circle-o\"></i>\n    </a>\n    <div class=\"overlay-content\">\n      <div class=\"overlay-body\">\n        " + body + "\n      </div>\n    </div>\n  </div>\n</div>";
-                elem.remove();
-
-                var sameId = angular.element(document.getElementById(id));
-
-                if (sameId.length > 0 && sameId.hasClass('overlay')) {
-                  sameId.remove();
-                }
-
-                body = angular.element(document.body);
-                body.prepend($compile(html)(scope));
-
-                if (attrs["default"] === "active") {
-                   body.addClass('overlay-in');
-                }
-            }
-        }
-    };
-  }
-]);
-
-angular.module("mobile-angular-ui.directives.panels", [])
-
-.directive("bsPanel", function() {
-  return {
-    restrict: 'EA',
-    replace: true,
-    scope: false,
-    transclude: true,
-    link: function(scope, elem, attrs) {
-      elem.removeAttr('title');
-    },
-    template: function(elems, attrs) {
-      var heading = "";
-      if (attrs.title) {
-        heading = "<div class=\"panel-heading\">\n  <h2 class=\"panel-title\">\n    " + attrs.title + "\n  </h2>\n</div>";
-      }
-      return "<div class=\"panel\">\n  " + heading + "\n  <div class=\"panel-body\">\n     <div ng-transclude></div>\n  </div>\n</div>";
-    }
-  };
-});
-angular.module('mobile-angular-ui.pointer-events', []).run([
-  '$document', function($document) {
-    return angular.element($document).on("click tap", function(e) {
-      var target;
-      target = angular.element(e.target);
-      if (target.hasClass("disabled")) {
-        e.preventDefault();
-        e.stopPropagation();
-        target = null;
-        return false;
-      } else {
-        target = null;
-        return true;
-      }
-    });
-  }
-]);
-
- // Provides a scrollable implementation based on Overthrow
- // Many thanks to pavei (https://github.com/pavei) to submit
- // basic implementation
-
-angular.module("mobile-angular-ui.scrollable", [])
-
-.directive("scrollableContent", [
-  function() {
-    return {
-      replace: false,
-      restrict: "C",
-      link: function(scope, element, attr) {
-        if (overthrow.support !== "native") {
-          element.addClass("overthrow");
-          overthrow.forget();
-          return overthrow.set();
-        }
-      }
-    };
-  }
-]);
-angular.module('mobile-angular-ui.directives.sidebars', [])
-
-.directive('sidebar', ['$document', '$rootScope', function($document, $rootScope) {
-  return {
-    replace: false,
-    restrict: "C",
-    link: function(scope, elem, attrs) {
-      var shouldCloseOnOuterClicks = true;
-      
-      if( attrs.closeOnOuterClicks == 'false' || attrs.closeOnOuterClicks == '0') {
-        shouldCloseOnOuterClicks = false;
-      }
-
-      if (elem.hasClass('sidebar-left')) {
-        elem.parent().addClass('has-sidebar-left');
-      }
-
-      if (elem.hasClass('sidebar-right')) {
-        elem.parent().addClass('has-sidebar-right');
-      }
-
-      var isAncestorOrSelf = function(element, target) {
-        var parent = element;
-
-        while (parent.length > 0) {
-            if (parent[0] === target[0]) {
-                parent = null;     
-                return true;
-            }
-            parent = parent.parent();
-        }
-
-        parent = null;
-        return false;
-      };
-
-      var closeOnOuterClicks = function(e) {
-        if(! isAncestorOrSelf(angular.element(e.target), elem)) {
-            $rootScope.toggle(attrs.id, 'off');
-            e.preventDefault()
-            return false;
-        }
-      }
-      
-      var clearCb1 = angular.noop();
-      
-      if (shouldCloseOnOuterClicks) {
-        clearCb1 = $rootScope.$on('mobile-angular-ui.toggle.toggled', function(e, id, active){
-          if(id == attrs.id) {
-            if(active) {
-              setTimeout(function(){
-                $document.on('click tap', closeOnOuterClicks);
-              }, 300);
-            } else {
-              $document.unbind('click tap', closeOnOuterClicks);
-            }
-          }
-        });
-      }
-
-      scope.$on('$destroy', function(){
-        clearCb1();
-        $document.unbind('click tap', closeOnOuterClicks);
-      });
-
-    }
-  };
-}]);
-
-angular.module('mobile-angular-ui.directives.toggle', [])
-
-.factory('ToggleHelper', [
-  '$rootScope', function($rootScope) {
-    return {
-      
-      events: {
-        toggle: "mobile-angular-ui.toggle.toggle",
-        toggleByClass: "mobile-angular-ui.toggle.toggleByClass",
-        togglerLinked: "mobile-angular-ui.toggle.linked",
-        toggleableToggled: "mobile-angular-ui.toggle.toggled"
-      },
-
-      commands: {
-        alternate: "toggle",
-        activate: "on",
-        deactivate: "off"
-      },
-
-      toggle: function(target, command) {
-        if (command == null) {
-          command = "toggle";
-        }
-        $rootScope.$emit(this.events.toggle, target, command);
-      },
-
-      toggleByClass: function(targetClass, command) {
-        if (command == null) {
-          command = "toggle";
-        }
-        $rootScope.$emit(this.events.toggleByClass, targetClass, command);
-      },
-
-      notifyToggleState: function(elem, attrs, toggleState) {
-        $rootScope.$emit(this.events.toggleableToggled, attrs.id, toggleState, attrs.exclusionGroup);
-      },
-
-      toggleStateChanged: function(elem, attrs, toggleState) {
-        this.updateElemClasses(elem, attrs, toggleState);
-        this.notifyToggleState(elem, attrs, toggleState);
-      },
-
-      applyCommand: function(command, oldState) {
-        switch (command) {
-          case this.commands.activate:
-            return true;
-          case this.commands.deactivate:
-            return false;
-          case this.commands.alternate:
-            return !oldState;
-        }
-      },
-
-      updateElemClasses: function(elem, attrs, active) {
-
-        if (active) {
-          if (attrs.activeClass) {
-            elem.addClass(attrs.activeClass);
-          }
-          if (attrs.inactiveClass) {
-            elem.removeClass(attrs.inactiveClass);
-          }
-          var parent = elem.parent();
-          if (attrs.parentActiveClass) {
-            parent.addClass(attrs.parentActiveClass);
-          }
-          if (attrs.parentInactiveClass) {
-             parent.removeClass(attrs.parentInactiveClass);
-          }
-        } else {
-          if (attrs.inactiveClass) {
-            elem.addClass(attrs.inactiveClass);
-          }
-          if (attrs.activeClass) {
-            elem.removeClass(attrs.activeClass);
-          }
-          var parent = elem.parent();
-          if (attrs.parentInactiveClass) {
-            parent.addClass(attrs.parentInactiveClass);
-          }
-          if (attrs.parentActiveClass) {
-             parent.removeClass(attrs.parentActiveClass);
-          }
-        }
-      }
-    };
-  }
-])
-
-.run([
-  "$rootScope", "ToggleHelper", function($rootScope, ToggleHelper) {
-    
-    $rootScope.toggle = function(target, command) {
-      if (command == null) {
-        command = "toggle";
-      }
-      ToggleHelper.toggle(target, command);
-    };
-
-    $rootScope.toggleByClass = function(targetClass, command) {
-      if (command == null) {
-        command = "toggle";
-      }
-      ToggleHelper.toggleByClass(targetClass, command);
-    };
-  }
-])
-
-.directive('toggle', [
-  "$rootScope", "ToggleHelper", function($rootScope, ToggleHelper) {
-    return {
-      restrict: "A",
-      link: function(scope, elem, attrs) {
-        var command = attrs.toggle || ToggleHelper.commands.alternate;
-        var target = attrs.target;
-        var targetClass = attrs.targetClass;
-        var bubble = attrs.bubble === "true" || attrs.bubble === "1" || attrs.bubble === 1 || attrs.bubble === "" || attrs.bubble === "bubble";
-        
-        if ((!target) && attrs.href) {
-          target = attrs.href.slice(1);
-        }
-        
-        if (!(target || targetClass)) {
-          throw "'target' or 'target-class' attribute required with 'toggle'";
-        }
-        
-        elem.on("click tap", function(e) {
-          var angularElem = angular.element(e.target);
-          if (!angularElem.hasClass("disabled")) {
-            if (target != null) {
-              ToggleHelper.toggle(target, command);
-            }
-            if (targetClass != null) {
-              ToggleHelper.toggleByClass(targetClass, command);
-            }
-            if (!bubble) {
-              e.preventDefault();
-              return false;
-            } else {
-              return true;
-            }
-          }
-        });
-
-        var unbindUpdateElemClasses = $rootScope.$on(ToggleHelper.events.toggleableToggled, function(e, id, newState) {
-          if (id === target) {
-            ToggleHelper.updateElemClasses(elem, attrs, newState);
-          }
-        });
-
-        if (target != null) {
-          $rootScope.$emit(ToggleHelper.events.togglerLinked, target);
-        }
-
-        scope.$on('$destroy', unbindUpdateElemClasses);
-      }
-    };
-  }
-])
-
-.directive('toggleable', [
-  "$rootScope", "ToggleHelper", function($rootScope, ToggleHelper) {
-    return {
-      restrict: "A",
-      link: function(scope, elem, attrs) {        
-        var toggleState = false;
-        
-        if (attrs["default"]) {
-          switch (attrs["default"]) {
-            case "active":
-              toggleState = true;
-              break;
-            case "inactive":
-              toggleState = false;
-          }
-          ToggleHelper.toggleStateChanged(elem, attrs, toggleState);
-        }
-        
-        var unbindToggle = $rootScope.$on(ToggleHelper.events.toggle, function(e, target, command) {
-          var oldState;
-          if (target === attrs.id) {
-            oldState = toggleState;
-            toggleState = ToggleHelper.applyCommand(command, oldState);
-            if (oldState !== toggleState) {
-              ToggleHelper.toggleStateChanged(elem, attrs, toggleState);
-            }
-          }
-        });
-        
-        var unbindToggleByClass = $rootScope.$on(ToggleHelper.events.toggleByClass, function(e, targetClass, command) {
-          var oldState;
-          if (elem.hasClass(targetClass)) {
-            oldState = toggleState;
-            toggleState = ToggleHelper.applyCommand(command, oldState);
-            if (oldState !== toggleState) {
-              ToggleHelper.toggleStateChanged(elem, attrs, toggleState);
-            }
-          }
-        });
-        
-        var unbindToggleableToggled = $rootScope.$on(ToggleHelper.events.toggleableToggled, function(e, target, newState, sameGroup) {
-          if (newState && (attrs.id !== target) && (attrs.exclusionGroup === sameGroup) && (attrs.exclusionGroup != null)) {
-            toggleState = false;
-            ToggleHelper.toggleStateChanged(elem, attrs, toggleState);
-          }
-        });
-        
-        var unbindTogglerLinked = $rootScope.$on(ToggleHelper.events.togglerLinked, function(e, target) {
-          if (attrs.id === target) {
-            ToggleHelper.notifyToggleState(elem, attrs, toggleState);
-          }
-        });
-        
-        scope.$on('$destroy', function() {
-          unbindToggle();
-          unbindToggleByClass();
-          unbindToggleableToggled();
-          unbindTogglerLinked();
-        });
-      }
-    };
-  }
-]);
-
-angular.module("mobile-angular-ui", [
-  'mobile-angular-ui.pointer-events',
-  'mobile-angular-ui.active-links',
-  'mobile-angular-ui.fastclick',
-  'mobile-angular-ui.scrollable',
-  'mobile-angular-ui.directives.toggle',
-  'mobile-angular-ui.directives.overlay',
-  'mobile-angular-ui.directives.forms',
-  'mobile-angular-ui.directives.panels',
-  'mobile-angular-ui.directives.capture',
-  'mobile-angular-ui.directives.sidebars',
-  'mobile-angular-ui.directives.navbars',
-  'mobile-angular-ui.directives.carousel'
+angular.module("mobileAngularUi", [
+  'mobileAngularUi.sharedState',
+  'mobileAngularUi.pointerEvents',
+  'mobileAngularUi.activeLinks',
+  'mobileAngularUi.fastclick',
+  'mobileAngularUi.scrollable',
+  'mobileAngularUi.switch',
+  'mobileAngularUi.navbars',
+  'mobileAngularUi.sidebars',
+  'mobileAngularUi.capture',
+  'mobileAngularUi.modals',
+  'mobileAngularUi.transform',
+  'mobileAngularUi.drag',
+  'mobileAngularUi.ui'
  ]);

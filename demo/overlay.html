@@ -2,40 +2,69 @@
   <span>Overlays</span>
 </div>
 
-
 <div class="scrollable">
- <div class="scrollable-content">
-   <div class="section section-break container-fluid">
-     <a href="#overlay1" class="btn btn-default" toggle="on">Show Overlay 1</a>
-     <a href="#overlay2" class="btn btn-default" toggle="on">Show Overlay 2</a>
-   </div>
+  <div class="scrollable-body">
+    <div class="section section-break">
+      <a href="" 
+          ui-turn-on="modal1"
+          class="btn btn-default">Show Modal</a>
+      <a href="" 
+          ui-turn-on="modal2"
+          class="btn btn-default">Show Overlay</a>
+    </div>
 
-   <div class="section container">
-     <h4>Title</h4>
-     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, autem, culpa rerum odio sed esse officia quae nulla corporis laudantium necessitatibus dolores dolore nam eum exercitationem aut porro. Autem, nostrum.</p>
-     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, inventore, doloremque debitis accusamus qui pariatur aut ullam id reprehenderit impedit explicabo perspiciatis recusandae blanditiis quasi maiores quas itaque. Nesciunt, natus.</p>
-   </div>
- </div>
+    <div class="section section-break">
+      <p>
+        {{lorem}}
+      </p>
+    </div>
+  </div>
 </div>
 
-<div overlay="overlay1" default="active">
-  <h4 class="overlay-title">First Overlay</h4>    
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, ex eaque possimus ipsa ab quasi quos corporis consequatur laudantium? Ab assumenda delectus quo velit voluptates doloribus. Earum odit facilis qui.
-  </p>
-  <p toggle="off" bubble target="overlay1">
-    <span class="btn btn-primary">Ok</span>
-    <span class="btn btn-default">Cancel</span>
-  </p>  
-</div>
 
-<div overlay="overlay2">
-  <h4 class="overlay-title">Second Overlay</h4>    
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, ex eaque possimus ipsa ab quasi quos corporis consequatur laudantium? Ab assumenda delectus quo velit voluptates doloribus. Earum odit facilis qui.
-  </p>
-  <p toggle="off" bubble target="overlay2">
-    <span class="btn btn-primary">Ok</span>
-    <span class="btn btn-default">Cancel</span>
-  </p>  
+
+<div content-for="modals">
+
+  <ui-state id='modal1'>
+    <div class="modal" ng-if='ui.isActive("modal1")'>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" 
+                    ui-turn-off="modal1">&times;</button>
+            <h4 class="modal-title">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            <p>{{lorem}}</p>
+          </div>
+          <div class="modal-footer">
+            <button ui-turn-off="modal1" class="btn btn-default">Close</button>
+            <button ui-turn-off="modal1" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ui-state>
+
+  <ui-state id='modal2'>
+    <div class="modal modal-overlay" ng-if='ui.isActive("modal2")'>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close"
+                    ui-turn-off="modal2">&times;</button>
+            <h4 class="modal-title">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            <p>{{lorem}}</p>
+          </div>
+          <div class="modal-footer">
+            <button ui-turn-off="modal2" class="btn btn-default">Close</button>
+            <button ui-turn-off="modal2" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ui-state>
+  
 </div>

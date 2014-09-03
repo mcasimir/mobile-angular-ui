@@ -1,4 +1,4 @@
-angular.module('mobile-angular-ui.pointer-events', []).run([
+angular.module('mobileAngularUi.pointerEvents', []).run([
   '$document', function($document) {
     return angular.element($document).on("click tap", function(e) {
       var target;

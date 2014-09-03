@@ -1,5 +1,57 @@
 # Mobile Angular Ui Changelog
 
+### 1.1.0-beta.30
+
+- Fix #92
+- Fix #73 
+- Fix #82, hide the right sidebar
+
+### 1.1.0-beta.29
+_Mon Jul 28 2014_
+
+- fixed navbar-top height without buttons in desktop mode
+
+
+### 1.1.0-beta.28
+_Sat Jul 19 2014_
+
+- fix #100
+- keeping border radius for controls
+
+
+### 1.1.0-beta.27
+_Wed Jul 09 2014_
+
+- fix #98
+
+
+### 1.1.0-beta.26
+_Wed Jul 09 2014_
+
+- fix #77 directives in overlays
+- closes #78
+
+
+### 1.1.0-beta.25
+_Wed Jul 09 2014_
+
+- split :hover css in separate file
+- fix #75
+
+
+### 1.1.0-beta.24
+
+_"Mon Jul 07 2014"_
+
+- fix #74
+
+### 1.1.0-beta.23
+
+_"Mon Jul 07 2014"_
+
+- added demo to bower
+
+
 ### v. 1.1.0-beta.22
 
 _Sun May 25 2014_
