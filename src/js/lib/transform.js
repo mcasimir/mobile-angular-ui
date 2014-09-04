@@ -92,7 +92,7 @@ angular.module('mobileAngularUi.transform', [])
     var mtx = [
       [values[0], values[2], values[4]],
       [values[1], values[3], values[5]],
-      [        0,         0,        0 ],
+      [        0,         0,        1 ],
     ];
 
     return new Transform(mtx);
@@ -111,11 +111,13 @@ angular.module('mobileAngularUi.transform', [])
   };
 
   Transform.prototype.rotate = function(a) {
+    a = a * (Math.PI / 180); // deg2rad
     var t = [
       [Math.cos(a), -Math.sin(a),  0],
       [Math.sin(a),  Math.cos(a),  0],
       [          0,            0,  1]
     ];
+
     this.mtx = matrixMult(t, this.mtx);
     return this;
   };
@@ -146,25 +148,38 @@ angular.module('mobileAngularUi.transform', [])
     return this;
   };
 
-  Transform.prototype.toPrimitives = function() {
-    var mtx = this.mtx,
-        a = mtx[0][0],
-        b = mtx[1][0],
-        c = mtx[0][1],
-        d = mtx[1][1],
-        r = Math.round(Math.atan2(b, a) * (180/Math.PI));
+  Transform.prototype.getRotation = function() {
+    var mtx = this.mtx;
+    return Math.round(Math.atan2(mtx[1][0], mtx[0][0]) * (180/Math.PI)); // rad2deg
+  };
 
+  Transform.prototype.getTranslation = function() {
+    var mtx = this.mtx;
     return {
-      translate: {
-        x: mtx[0][2],
-        y: mtx[1][2]
-      },
-      scale: {
-        x: mtx[0][0],
-        y: mtx[1][1]
-      },
-      rotate: r
+      x: mtx[0][2],
+      y: mtx[1][2]
     };
+  };
+
+  Transform.prototype.getScale = function() {
+    var mtx = this.mtx, a = mtx[0][0], b = mtx[1][0], d = 10;
+    return Math.round( Math.sqrt( a*a + b*b ) * d ) / d;
+  };
+
+  Transform.prototype.matrixToString = function() {
+    var mtx = this.mtx;
+    var res = "";
+    for (var i = 0; i < mtx.length; i++) {
+      for (var j = 0; j < mtx[i].length; j++) {
+        var n = '' + mtx[i][j];
+        res += n;
+        for (var k = 0; k < 5 - n.length; k++) {
+          res += ' ';
+        }
+      }
+      res += '\n';
+    }
+    return res;
   };
 
   return Transform;

@@ -68,7 +68,7 @@ angular.module("mobileAngularUi.drag", [
 //   });
 
 .provider('$drag', function() {
-  this.$get = ['$swipe', 'Transform', function($swipe, Transform) {
+  this.$get = ['$swipe', '$document', 'Transform', function($swipe, $document, Transform) {
     return {
       bind: function(elem, options) {
         var defaults = {
@@ -111,6 +111,7 @@ angular.module("mobileAngularUi.drag", [
                                 // without before end or cancel thus we need
                                 // to ensure this is a fresh start to
                                 // reset everything.
+                console.log('START');
                 t0 = Transform.fromElement(e);
                 x  = x0 = c.x;
                 y  = y0 = c.y; 
@@ -123,7 +124,7 @@ angular.module("mobileAngularUi.drag", [
             },
 
             move: function(c) {
-
+              console.log('MOVE');
               // total movement shoud match constraints
               var dx, dy,
               deltaX, deltaY, r;
@@ -134,7 +135,8 @@ angular.module("mobileAngularUi.drag", [
               dx = deltaX - (x - x0);
               dy = deltaY - (y - y0);
 
-              t = new Transform();
+              t = Transform.fromElement(e); 
+
               if (options.transform) {
                 r = options.transform(t, dx, dy, c.x, c.y, x0, y0);
                 t = r || t;
@@ -150,7 +152,7 @@ angular.module("mobileAngularUi.drag", [
               x = deltaX + x0;
               y = deltaY + y0;
 
-              t.apply(e);
+              t.set(e);
 
               if (options.move) {
                 options.move(e.getBoundingClientRect(), cancelFn, resetFn);  
@@ -159,6 +161,9 @@ angular.module("mobileAngularUi.drag", [
             },
 
             end: function(c) {
+              moving = false; 
+              console.log('END');
+
               var deltaXTotOld = deltaXTot;
               var deltaYTotOld = deltaYTot;
 
@@ -174,25 +179,27 @@ angular.module("mobileAngularUi.drag", [
               if (options.end) {
                 options.end(e.getBoundingClientRect(), undoFn, resetFn);
               }
-
-              moving = false; 
-            
             },
 
             cancel: function() {
-              t0.set(e);
-              if (options.cancel) {
-                options.cancel(e.getBoundingClientRect(), resetFn);
+              if (moving) {
+                console.log('CANCEL');
+                t0.set(e);  
+                if (options.cancel) {
+                  options.cancel(e.getBoundingClientRect(), resetFn);
+                }
+                moving = false;
               }
-              moving = false;
             }
           };
 
         scope.$on('$destroy', function() { 
+          $document.unbind('mouseout', cancelFn);
           callbacks = options = e = moving = deltaXTot = deltaYTot = x0 = y0 = t0 = tOrig = x = y = t = minX = maxX = minY = maxY = scope = null;
         });
 
         $swipe.bind(elem, callbacks);
+        $document.on('mouseout', cancelFn);
       }
     };
   }];

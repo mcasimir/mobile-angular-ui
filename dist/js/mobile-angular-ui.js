@@ -1285,7 +1285,7 @@ angular.module('mobileAngularUi.transform', [])
     var mtx = [
       [values[0], values[2], values[4]],
       [values[1], values[3], values[5]],
-      [        0,         0,        0 ],
+      [        0,         0,        1 ],
     ];
 
     return new Transform(mtx);
@@ -1304,11 +1304,13 @@ angular.module('mobileAngularUi.transform', [])
   };
 
   Transform.prototype.rotate = function(a) {
+    a = a * (Math.PI / 180); // deg2rad
     var t = [
       [Math.cos(a), -Math.sin(a),  0],
       [Math.sin(a),  Math.cos(a),  0],
       [          0,            0,  1]
     ];
+
     this.mtx = matrixMult(t, this.mtx);
     return this;
   };
@@ -1339,25 +1341,38 @@ angular.module('mobileAngularUi.transform', [])
     return this;
   };
 
-  Transform.prototype.toPrimitives = function() {
-    var mtx = this.mtx,
-        a = mtx[0][0],
-        b = mtx[1][0],
-        c = mtx[0][1],
-        d = mtx[1][1],
-        r = Math.round(Math.atan2(b, a) * (180/Math.PI));
+  Transform.prototype.getRotation = function() {
+    var mtx = this.mtx;
+    return Math.round(Math.atan2(mtx[1][0], mtx[0][0]) * (180/Math.PI)); // rad2deg
+  };
 
+  Transform.prototype.getTranslation = function() {
+    var mtx = this.mtx;
     return {
-      translate: {
-        x: mtx[0][2],
-        y: mtx[1][2]
-      },
-      scale: {
-        x: mtx[0][0],
-        y: mtx[1][1]
-      },
-      rotate: r
+      x: mtx[0][2],
+      y: mtx[1][2]
     };
+  };
+
+  Transform.prototype.getScale = function() {
+    var mtx = this.mtx, a = mtx[0][0], b = mtx[1][0], d = 10;
+    return Math.round( Math.sqrt( a*a + b*b ) * d ) / d;
+  };
+
+  Transform.prototype.matrixToString = function() {
+    var mtx = this.mtx;
+    var res = "";
+    for (var i = 0; i < mtx.length; i++) {
+      for (var j = 0; j < mtx[i].length; j++) {
+        var n = '' + mtx[i][j];
+        res += n;
+        for (var k = 0; k < 5 - n.length; k++) {
+          res += ' ';
+        }
+      }
+      res += '\n';
+    }
+    return res;
   };
 
   return Transform;
@@ -1802,7 +1817,7 @@ angular.module("mobileAngularUi.drag", [
 //   });
 
 .provider('$drag', function() {
-  this.$get = ['$swipe', 'Transform', function($swipe, Transform) {
+  this.$get = ['$swipe', '$document', 'Transform', function($swipe, $document, Transform) {
     return {
       bind: function(elem, options) {
         var defaults = {
@@ -1845,6 +1860,7 @@ angular.module("mobileAngularUi.drag", [
                                 // without before end or cancel thus we need
                                 // to ensure this is a fresh start to
                                 // reset everything.
+                console.log('START');
                 t0 = Transform.fromElement(e);
                 x  = x0 = c.x;
                 y  = y0 = c.y; 
@@ -1857,7 +1873,7 @@ angular.module("mobileAngularUi.drag", [
             },
 
             move: function(c) {
-
+              console.log('MOVE');
               // total movement shoud match constraints
               var dx, dy,
               deltaX, deltaY, r;
@@ -1868,7 +1884,8 @@ angular.module("mobileAngularUi.drag", [
               dx = deltaX - (x - x0);
               dy = deltaY - (y - y0);
 
-              t = new Transform();
+              t = Transform.fromElement(e); 
+
               if (options.transform) {
                 r = options.transform(t, dx, dy, c.x, c.y, x0, y0);
                 t = r || t;
@@ -1884,7 +1901,7 @@ angular.module("mobileAngularUi.drag", [
               x = deltaX + x0;
               y = deltaY + y0;
 
-              t.apply(e);
+              t.set(e);
 
               if (options.move) {
                 options.move(e.getBoundingClientRect(), cancelFn, resetFn);  
@@ -1893,6 +1910,9 @@ angular.module("mobileAngularUi.drag", [
             },
 
             end: function(c) {
+              moving = false; 
+              console.log('END');
+
               var deltaXTotOld = deltaXTot;
               var deltaYTotOld = deltaYTot;
 
@@ -1908,25 +1928,27 @@ angular.module("mobileAngularUi.drag", [
               if (options.end) {
                 options.end(e.getBoundingClientRect(), undoFn, resetFn);
               }
-
-              moving = false; 
-            
             },
 
             cancel: function() {
-              t0.set(e);
-              if (options.cancel) {
-                options.cancel(e.getBoundingClientRect(), resetFn);
+              if (moving) {
+                console.log('CANCEL');
+                t0.set(e);  
+                if (options.cancel) {
+                  options.cancel(e.getBoundingClientRect(), resetFn);
+                }
+                moving = false;
               }
-              moving = false;
             }
           };
 
         scope.$on('$destroy', function() { 
+          $document.unbind('mouseout', cancelFn);
           callbacks = options = e = moving = deltaXTot = deltaYTot = x0 = y0 = t0 = tOrig = x = y = t = minX = maxX = minY = maxY = scope = null;
         });
 
         $swipe.bind(elem, callbacks);
+        $document.on('mouseout', cancelFn);
       }
     };
   }];

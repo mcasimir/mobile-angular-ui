@@ -61,6 +61,12 @@ h1 {
   -moz-transition: opacity 0.3s;
   transition: opacity 0.3s;
   opacity: 1;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 

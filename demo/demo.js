@@ -82,6 +82,16 @@ app.directive('carouselItem', function($drag) {
 
       $drag.bind(elem, {
         constraint: { minY: 0, maxY: 0 },
+        adaptTransform: function(t, dx, dy, x, y, x0, y0) {
+          var maxAngle = 15;
+          var velocity = 0.02;
+          var r = t.getRotation();
+          var newRot = r + Math.round(dx * velocity);
+          newRot = Math.min(newRot, maxAngle);
+          newRot = Math.max(newRot, -maxAngle);
+          t.rotate(-r);
+          t.rotate(newRot);
+        },
         move: function(c){
           if(c.left >= c.width / 4 || c.left <= -(c.width / 4)) {
             elem.addClass('dismiss');  
@@ -96,7 +106,7 @@ app.directive('carouselItem', function($drag) {
           elem.removeClass('dismiss');
           if(c.left >= c.width / 4) {
             scope.$apply(function() {
-              carousel.prev();
+              carousel.next();
             });
           } else if (c.left <= -(c.width / 4)) {
             scope.$apply(function() {
@@ -132,6 +142,9 @@ app.directive('dragToDismiss', function($drag, $parse, $timeout){
               dismiss = false;
               elem.removeClass('dismiss');
             }
+          },
+          cancel: function(){
+            elem.removeClass('dismiss');
           },
           end: function(c, undo, reset) {
             if (dismiss) {
@@ -219,12 +232,9 @@ app.controller('MainController', function($rootScope, $scope, analytics){
   }
 
   $scope.deleteNotice = function(notice) {
-    console.log('deleteNotice');
     var index = $scope.notices.indexOf(notice);
-    console.log(index);
     if (index > -1) {
       $scope.notices.splice(index, 1);
-
     }
   };
 });
