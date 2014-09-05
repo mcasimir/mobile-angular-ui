@@ -7,11 +7,12 @@ var module = angular.module(
 
 angular.forEach(['left', 'right'], function (side) {
   var directiveName = 'sidebar' + side.charAt(0).toUpperCase() + side.slice(1);
-  module.directive(directiveName,
+  module.directive(directiveName, [
+    '$rootElement',
+    'SharedState',
+    'bindOuterClick',
     function (
-      $rootElement,
-      SharedState,
-      bindOuterClick
+      $rootElement, SharedState, bindOuterClick
     ) {
       
       var outerClickCb = function (scope){
@@ -59,5 +60,6 @@ angular.forEach(['left', 'right'], function (side) {
           }
         }
       };
-    });
+    }
+  ]);
 });

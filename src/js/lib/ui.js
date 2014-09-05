@@ -12,52 +12,65 @@ module.factory('uiBindEvent', function(){
 });
 
 
-module.directive('uiState', function(SharedState, $parse){
-  return {
-    restrict: 'EA',
-    link: function(scope, elem, attrs){
-      var id               = attrs.uiState || attrs.id,
-          defaultValueExpr = attrs.uiDefault || attrs['default'],
-          defaultValue     = defaultValueExpr ? scope.$eval(defaultValueExpr) : undefined;
+module.directive('uiState', [
+  'SharedState', 
+  '$parse',
+  function(SharedState, $parse){
+    return {
+      restrict: 'EA',
+      link: function(scope, elem, attrs){
+        var id               = attrs.uiState || attrs.id,
+            defaultValueExpr = attrs.uiDefault || attrs['default'],
+            defaultValue     = defaultValueExpr ? scope.$eval(defaultValueExpr) : undefined;
 
-      SharedState.initialize(scope, id);
+        SharedState.initialize(scope, id);
 
-      if (defaultValue !== undefined) {
-        scope.$evalAsync(function(){
-          SharedState.set(id, defaultValue);
-        });
+        if (defaultValue !== undefined) {
+          scope.$evalAsync(function(){
+            SharedState.set(id, defaultValue);
+          });
+        }
       }
-    }
-  };
-});
+    };
+  }
+]);
 
 angular.forEach(['toggle', 'turnOn', 'turnOff', 'set'], 
   function(methodName){
     var directiveName = 'ui' + methodName[0].toUpperCase() + methodName.slice(1);
     
-    module.directive(directiveName, function($parse, SharedState, uiBindEvent) {
-      var method = SharedState[methodName];
-      return {
-        restrict: 'A',
-        compile: function(elem, attrs) {
-          var fn = methodName === 'set' ?
-            $parse(attrs[directiveName]) :
-              function(scope) {
-                return attrs[directiveName]; 
-              };
+    module.directive(directiveName, [
+      '$parse',
+      'SharedState',
+      'uiBindEvent',
+      function($parse, SharedState, uiBindEvent) {
+            var method = SharedState[methodName];
+            return {
+              restrict: 'A',
+              compile: function(elem, attrs) {
+                var fn = methodName === 'set' ?
+                  $parse(attrs[directiveName]) :
+                    function(scope) {
+                      return attrs[directiveName]; 
+                    };
 
-          return function(scope, elem, attrs) {
-            var callback = function() {
-              var arg = fn(scope);
-              return method.call(SharedState, arg);
+                return function(scope, elem, attrs) {
+                  var callback = function() {
+                    var arg = fn(scope);
+                    return method.call(SharedState, arg);
+                  };
+                  uiBindEvent(scope, elem, attrs.uiTriggers, callback);
+                };
+              }
             };
-            uiBindEvent(scope, elem, attrs.uiTriggers, callback);
-          };
-        }
-      };
-    });
+          }
+    ]);
   });
 
-module.run(function($rootScope, SharedState){
-  $rootScope.ui = SharedState;
-});
+module.run([
+  '$rootScope',
+  'SharedState',
+  function($rootScope, SharedState){
+    $rootScope.ui = SharedState;
+  }
+]);

@@ -19,22 +19,25 @@ module.directive('scrollableBody', function() {
 
 angular.forEach({Top: 'scrollableHeader', Bottom: 'scrollableFooter'}, 
   function(directiveName, side) {
-      module.directive(directiveName, function($window) {
-        return {
-          restrict: 'C',
-          link: function(scope, element, attr) {
-            var el = element[0],
-                styles = $window.getComputedStyle(el),
-                margin = parseInt(styles.marginTop) + parseInt(styles.marginBottom),
-                heightWithMargin = el.offsetHeight + margin,
-                parentStyle = element.parent()[0].style;
+      module.directive(directiveName, [
+        '$window',
+        function($window) {
+                return {
+                  restrict: 'C',
+                  link: function(scope, element, attr) {
+                    var el = element[0],
+                        styles = $window.getComputedStyle(el),
+                        margin = parseInt(styles.marginTop) + parseInt(styles.marginBottom),
+                        heightWithMargin = el.offsetHeight + margin,
+                        parentStyle = element.parent()[0].style;
 
-            parentStyle['padding' + side] = heightWithMargin + 'px'; 
+                    parentStyle['padding' + side] = heightWithMargin + 'px'; 
 
-            scope.$on('$destroy', function(){
-              parentStyle['padding' + side] = '0px';
-            });
-          }
-        };
-      });
+                    scope.$on('$destroy', function(){
+                      parentStyle['padding' + side] = '0px';
+                    });
+                  }
+                };
+              }
+      ]);
   });

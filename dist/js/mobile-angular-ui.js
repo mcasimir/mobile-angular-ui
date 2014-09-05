@@ -1142,241 +1142,257 @@ module.factory('uiBindEvent', function(){
 });
 
 
-module.directive('uiState', function(SharedState, $parse){
-  return {
-    restrict: 'EA',
-    link: function(scope, elem, attrs){
-      var id               = attrs.uiState || attrs.id,
-          defaultValueExpr = attrs.uiDefault || attrs['default'],
-          defaultValue     = defaultValueExpr ? scope.$eval(defaultValueExpr) : undefined;
+module.directive('uiState', [
+  'SharedState', 
+  '$parse',
+  function(SharedState, $parse){
+    return {
+      restrict: 'EA',
+      link: function(scope, elem, attrs){
+        var id               = attrs.uiState || attrs.id,
+            defaultValueExpr = attrs.uiDefault || attrs['default'],
+            defaultValue     = defaultValueExpr ? scope.$eval(defaultValueExpr) : undefined;
 
-      SharedState.initialize(scope, id);
+        SharedState.initialize(scope, id);
 
-      if (defaultValue !== undefined) {
-        scope.$evalAsync(function(){
-          SharedState.set(id, defaultValue);
-        });
+        if (defaultValue !== undefined) {
+          scope.$evalAsync(function(){
+            SharedState.set(id, defaultValue);
+          });
+        }
       }
-    }
-  };
-});
+    };
+  }
+]);
 
 angular.forEach(['toggle', 'turnOn', 'turnOff', 'set'], 
   function(methodName){
     var directiveName = 'ui' + methodName[0].toUpperCase() + methodName.slice(1);
     
-    module.directive(directiveName, function($parse, SharedState, uiBindEvent) {
-      var method = SharedState[methodName];
-      return {
-        restrict: 'A',
-        compile: function(elem, attrs) {
-          var fn = methodName === 'set' ?
-            $parse(attrs[directiveName]) :
-              function(scope) {
-                return attrs[directiveName]; 
-              };
+    module.directive(directiveName, [
+      '$parse',
+      'SharedState',
+      'uiBindEvent',
+      function($parse, SharedState, uiBindEvent) {
+            var method = SharedState[methodName];
+            return {
+              restrict: 'A',
+              compile: function(elem, attrs) {
+                var fn = methodName === 'set' ?
+                  $parse(attrs[directiveName]) :
+                    function(scope) {
+                      return attrs[directiveName]; 
+                    };
 
-          return function(scope, elem, attrs) {
-            var callback = function() {
-              var arg = fn(scope);
-              return method.call(SharedState, arg);
+                return function(scope, elem, attrs) {
+                  var callback = function() {
+                    var arg = fn(scope);
+                    return method.call(SharedState, arg);
+                  };
+                  uiBindEvent(scope, elem, attrs.uiTriggers, callback);
+                };
+              }
             };
-            uiBindEvent(scope, elem, attrs.uiTriggers, callback);
-          };
-        }
-      };
-    });
+          }
+    ]);
   });
 
-module.run(function($rootScope, SharedState){
-  $rootScope.ui = SharedState;
-});
+module.run([
+  '$rootScope',
+  'SharedState',
+  function($rootScope, SharedState){
+    $rootScope.ui = SharedState;
+  }
+]);
 angular.module('mobileAngularUi.transform', [])
 
-.factory('Transform', function($window){
+.factory('Transform', [
+  '$window',
+  function($window){
 
-  function matrixHeight(m) {
-    return m.length;
-  }
-
-  function matrixWidth(m) {
-    return m[0] ? m[0].length : 0;
-  }
-
-  function matrixMult(m1, m2) {
-    var width1  = matrixWidth(m1), 
-        width2  = matrixWidth(m2), 
-        height1 = matrixHeight(m1), 
-        height2 = matrixHeight(m2);
-
-    if (width1 != height2) {
-      throw new Error("error: incompatible sizes");
-    }
-  
-    var result = [];
-    for (var i = 0; i < height1; i++) {
-        result[i] = [];
-        for (var j = 0; j < width2; j++) {
-            var sum = 0;
-            for (var k = 0; k < width1; k++) {
-                sum += m1[i][k] * m2[k][j];
-            }
-            result[i][j] = sum;
-        }
-    }
-    return result; 
-  }
-
-  //
-  // Cross-Browser stuffs
-  // 
-  var vendorPrefix,
-      cssPrefix,
-      transformProperty,
-      prefixes = ['', 'webkit', 'Moz', 'O', 'ms'],
-      d = $window.document.createElement('div');
-  
-  for (var i = 0; i < prefixes.length; i++) {
-    var prefix = prefixes[i];
-    if ( (prefix + 'Perspective') in d.style ) {
-      vendorPrefix = prefix;
-      cssPrefix = (prefix === '' ? '' : '-' + prefix.toLowerCase() + '-');
-      transformProperty = cssPrefix + 'transform';
-      break;
-    }
-  }
-
-  d = null;
-
-  //
-  // Represents a 2d transform, 
-  // behind the scene is a transform matrix exposing methods to get/set
-  // meaningfull primitives like rotation, translation and scale.
-  // 
-  // Allows to apply multiple transforms through #merge.
-  //
-  function Transform(matrix) {
-    this.mtx = matrix || [
-      [1,0,0],
-      [0,1,0],
-      [0,0,1]
-    ];
-  }
-
-  Transform.fromElement = function(e) {
-    var tr = $window
-            .getComputedStyle(e, null)
-            .getPropertyValue(transformProperty);
-
-    if (!tr || tr === 'none') {
-      return new Transform();
+    function matrixHeight(m) {
+      return m.length;
     }
 
-    if (tr.match('matrix3d')) {
-      throw new Error('Handling 3d transform is not supported yet');
+    function matrixWidth(m) {
+      return m[0] ? m[0].length : 0;
     }
 
-    var values = 
-      tr.split('(')[1]
-        .split(')')[0]
-        .split(',')
-        .map(Number);
+    function matrixMult(m1, m2) {
+      var width1  = matrixWidth(m1), 
+          width2  = matrixWidth(m2), 
+          height1 = matrixHeight(m1), 
+          height2 = matrixHeight(m2);
 
-    var mtx = [
-      [values[0], values[2], values[4]],
-      [values[1], values[3], values[5]],
-      [        0,         0,        1 ],
-    ];
-
-    return new Transform(mtx);
-  };
-
-  Transform.prototype.apply = function(e, options) {
-    var mtx = Transform.fromElement(e).merge(this).mtx;
-    e.style[transformProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
-    return this;
-  };
-
-  Transform.prototype.set = function(e) {
-    var mtx = this.mtx;
-    e.style[transformProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
-    return this;
-  };
-
-  Transform.prototype.rotate = function(a) {
-    a = a * (Math.PI / 180); // deg2rad
-    var t = [
-      [Math.cos(a), -Math.sin(a),  0],
-      [Math.sin(a),  Math.cos(a),  0],
-      [          0,            0,  1]
-    ];
-
-    this.mtx = matrixMult(t, this.mtx);
-    return this;
-  };
-
-  Transform.prototype.translate = function(x, y) {
-    y = (y === null || y === undefined) ? x : y;
-    var t = [
-      [1,0,x],
-      [0,1,y],
-      [0,0,1]
-    ];
-    this.mtx = matrixMult(t, this.mtx);
-    return this;
-  };
-
-  Transform.prototype.scale = function(a) {
-    var t = [
-      [a,0,0],
-      [0,a,0],
-      [0,0,1]
-    ];
-    this.mtx = matrixMult(t, this.mtx);
-    return this;
-  };
-
-  Transform.prototype.merge = function(t) {
-    this.mtx = matrixMult(this.mtx, t.mtx);
-    return this;
-  };
-
-  Transform.prototype.getRotation = function() {
-    var mtx = this.mtx;
-    return Math.round(Math.atan2(mtx[1][0], mtx[0][0]) * (180/Math.PI)); // rad2deg
-  };
-
-  Transform.prototype.getTranslation = function() {
-    var mtx = this.mtx;
-    return {
-      x: mtx[0][2],
-      y: mtx[1][2]
-    };
-  };
-
-  Transform.prototype.getScale = function() {
-    var mtx = this.mtx, a = mtx[0][0], b = mtx[1][0], d = 10;
-    return Math.round( Math.sqrt( a*a + b*b ) * d ) / d;
-  };
-
-  Transform.prototype.matrixToString = function() {
-    var mtx = this.mtx;
-    var res = "";
-    for (var i = 0; i < mtx.length; i++) {
-      for (var j = 0; j < mtx[i].length; j++) {
-        var n = '' + mtx[i][j];
-        res += n;
-        for (var k = 0; k < 5 - n.length; k++) {
-          res += ' ';
-        }
+      if (width1 != height2) {
+        throw new Error("error: incompatible sizes");
       }
-      res += '\n';
+    
+      var result = [];
+      for (var i = 0; i < height1; i++) {
+          result[i] = [];
+          for (var j = 0; j < width2; j++) {
+              var sum = 0;
+              for (var k = 0; k < width1; k++) {
+                  sum += m1[i][k] * m2[k][j];
+              }
+              result[i][j] = sum;
+          }
+      }
+      return result; 
     }
-    return res;
-  };
 
-  return Transform;
-});
+    //
+    // Cross-Browser stuffs
+    // 
+    var vendorPrefix,
+        cssPrefix,
+        transformProperty,
+        prefixes = ['', 'webkit', 'Moz', 'O', 'ms'],
+        d = $window.document.createElement('div');
+    
+    for (var i = 0; i < prefixes.length; i++) {
+      var prefix = prefixes[i];
+      if ( (prefix + 'Perspective') in d.style ) {
+        vendorPrefix = prefix;
+        cssPrefix = (prefix === '' ? '' : '-' + prefix.toLowerCase() + '-');
+        transformProperty = cssPrefix + 'transform';
+        break;
+      }
+    }
+
+    d = null;
+
+    //
+    // Represents a 2d transform, 
+    // behind the scene is a transform matrix exposing methods to get/set
+    // meaningfull primitives like rotation, translation and scale.
+    // 
+    // Allows to apply multiple transforms through #merge.
+    //
+    function Transform(matrix) {
+      this.mtx = matrix || [
+        [1,0,0],
+        [0,1,0],
+        [0,0,1]
+      ];
+    }
+
+    Transform.fromElement = function(e) {
+      var tr = $window
+              .getComputedStyle(e, null)
+              .getPropertyValue(transformProperty);
+
+      if (!tr || tr === 'none') {
+        return new Transform();
+      }
+
+      if (tr.match('matrix3d')) {
+        throw new Error('Handling 3d transform is not supported yet');
+      }
+
+      var values = 
+        tr.split('(')[1]
+          .split(')')[0]
+          .split(',')
+          .map(Number);
+
+      var mtx = [
+        [values[0], values[2], values[4]],
+        [values[1], values[3], values[5]],
+        [        0,         0,        1 ],
+      ];
+
+      return new Transform(mtx);
+    };
+
+    Transform.prototype.apply = function(e, options) {
+      var mtx = Transform.fromElement(e).merge(this).mtx;
+      e.style[transformProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
+      return this;
+    };
+
+    Transform.prototype.set = function(e) {
+      var mtx = this.mtx;
+      e.style[transformProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
+      return this;
+    };
+
+    Transform.prototype.rotate = function(a) {
+      a = a * (Math.PI / 180); // deg2rad
+      var t = [
+        [Math.cos(a), -Math.sin(a),  0],
+        [Math.sin(a),  Math.cos(a),  0],
+        [          0,            0,  1]
+      ];
+
+      this.mtx = matrixMult(t, this.mtx);
+      return this;
+    };
+
+    Transform.prototype.translate = function(x, y) {
+      y = (y === null || y === undefined) ? x : y;
+      var t = [
+        [1,0,x],
+        [0,1,y],
+        [0,0,1]
+      ];
+      this.mtx = matrixMult(t, this.mtx);
+      return this;
+    };
+
+    Transform.prototype.scale = function(a) {
+      var t = [
+        [a,0,0],
+        [0,a,0],
+        [0,0,1]
+      ];
+      this.mtx = matrixMult(t, this.mtx);
+      return this;
+    };
+
+    Transform.prototype.merge = function(t) {
+      this.mtx = matrixMult(this.mtx, t.mtx);
+      return this;
+    };
+
+    Transform.prototype.getRotation = function() {
+      var mtx = this.mtx;
+      return Math.round(Math.atan2(mtx[1][0], mtx[0][0]) * (180/Math.PI)); // rad2deg
+    };
+
+    Transform.prototype.getTranslation = function() {
+      var mtx = this.mtx;
+      return {
+        x: mtx[0][2],
+        y: mtx[1][2]
+      };
+    };
+
+    Transform.prototype.getScale = function() {
+      var mtx = this.mtx, a = mtx[0][0], b = mtx[1][0], d = 10;
+      return Math.round( Math.sqrt( a*a + b*b ) * d ) / d;
+    };
+
+    Transform.prototype.matrixToString = function() {
+      var mtx = this.mtx;
+      var res = "";
+      for (var i = 0; i < mtx.length; i++) {
+        for (var j = 0; j < mtx[i].length; j++) {
+          var n = '' + mtx[i][j];
+          res += n;
+          for (var k = 0; k < 5 - n.length; k++) {
+            res += ' ';
+          }
+        }
+        res += '\n';
+      }
+      return res;
+    };
+
+    return Transform;
+  }
+]);
 angular.module('mobileAngularUi.switch', [])
 
 .directive("switch", function() {
@@ -1415,11 +1431,12 @@ var module = angular.module(
 
 angular.forEach(['left', 'right'], function (side) {
   var directiveName = 'sidebar' + side.charAt(0).toUpperCase() + side.slice(1);
-  module.directive(directiveName,
+  module.directive(directiveName, [
+    '$rootElement',
+    'SharedState',
+    'bindOuterClick',
     function (
-      $rootElement,
-      SharedState,
-      bindOuterClick
+      $rootElement, SharedState, bindOuterClick
     ) {
       
       var outerClickCb = function (scope){
@@ -1467,110 +1484,114 @@ angular.forEach(['left', 'right'], function (side) {
           }
         }
       };
-    });
+    }
+  ]);
 });
 angular.module('mobileAngularUi.sharedState', [])
 
-.factory('SharedState', function($rootScope){
-  var statuses = {};
-  var scopes = {};
-  return {
-    initialize: function(scope, id, defaultValue) {
-      var isNewScope = scopes[scope] === undefined;
+.factory('SharedState', [
+  '$rootScope',
+  function($rootScope){
+    var statuses = {};
+    var scopes = {};
+    return {
+      initialize: function(scope, id, defaultValue) {
+        var isNewScope = scopes[scope] === undefined;
 
-      scopes[scope.$id] = scopes[scope.$id] || [];
-      scopes[scope.$id].push(id);
+        scopes[scope.$id] = scopes[scope.$id] || [];
+        scopes[scope.$id].push(id);
 
-      if (!statuses[id]) {
-        statuses[id] = {references: 1, defaultValue: defaultValue};
-        $rootScope.$broadcast('mobileAngularUi.state.initialized.' + id, defaultValue);
-        if (defaultValue !== undefined) {
-          $rootScope.$broadcast('mobileAngularUi.state.changed.' + id, defaultValue);
+        if (!statuses[id]) {
+          statuses[id] = {references: 1, defaultValue: defaultValue};
+          $rootScope.$broadcast('mobileAngularUi.state.initialized.' + id, defaultValue);
+          if (defaultValue !== undefined) {
+            $rootScope.$broadcast('mobileAngularUi.state.changed.' + id, defaultValue);
+          }
+        } else if (isNewScope) { // is part of another scope and shoud 
+                                 // be garbage collected according to
+                                 // its destruction.
+          statuses[id].references++; 
         }
-      } else if (isNewScope) { // is part of another scope and shoud 
-                               // be garbage collected according to
-                               // its destruction.
-        statuses[id].references++; 
-      }
-      scope.$on('$destroy', function(){
-        var ids = scopes[scope.$id] || [];
-        for (var i = 0; i < ids.length; i++) {
-          var status = statuses[ids[i]];
-          status.references--;
-          if (status.references <= 0) {
-            delete statuses[ids[i]];
+        scope.$on('$destroy', function(){
+          var ids = scopes[scope.$id] || [];
+          for (var i = 0; i < ids.length; i++) {
+            var status = statuses[ids[i]];
+            status.references--;
+            if (status.references <= 0) {
+              delete statuses[ids[i]];
+            }
+          }
+          delete scopes[scope.$id];
+        });
+      },
+
+      setOne: function(id, value) {
+        if (statuses[id] !== undefined) {
+          var prev = statuses[id].value;
+          statuses[id].value = value;
+          if (prev != value) {
+            $rootScope.$broadcast('mobileAngularUi.state.changed.' + id, value, prev);
+          }
+          return value;
+        } else {
+          if (console) {
+            console.warn('Warning: Attempt to set uninitialized shared state:', id);
           }
         }
-        delete scopes[scope.$id];
-      });
-    },
+      },
 
-    setOne: function(id, value) {
-      if (statuses[id] !== undefined) {
-        var prev = statuses[id].value;
-        statuses[id].value = value;
-        if (prev != value) {
-          $rootScope.$broadcast('mobileAngularUi.state.changed.' + id, value, prev);
+      setMany: function(map) {
+        angular.forEach(map, function(value, id) {
+          this.setOne(id, value);
+        }, this);
+      },
+
+      set: function(idOrMap, value) {
+        if (angular.isObject(idOrMap) && angular.isUndefined(value)) {
+          this.setMany(idOrMap);
+        } else {
+          this.setOne(idOrMap, value);
         }
-        return value;
-      } else {
-        if (console) {
-          console.warn('Warning: Attempt to set uninitialized shared state:', id);
-        }
+      },
+
+      turnOn: function(id) {
+        return this.setOne(id, true);     
+      },
+
+      turnOff: function(id) {
+        return this.setOne(id, false);     
+      },
+
+      toggle: function(id) {
+        return this.setOne(id, !this.get(id));     
+      },
+
+      get: function(id) {
+        return statuses[id] && statuses[id].value;
+      },
+
+      isActive: function(id) {
+        return !! this.get(id);
+      },
+
+      active: function(id) {
+        return this.isActive(id);
+      },
+
+      isUndefined: function(id) {
+        return statuses[id] === undefined || this.get(id) === undefined;
+      },
+
+      equals: function(id, value) {
+        return this.get(id) === value;
+      },
+
+      eq: function(id, value) {
+        return this.equals(id, value);
       }
-    },
-
-    setMany: function(map) {
-      angular.forEach(map, function(value, id) {
-        this.setOne(id, value);
-      }, this);
-    },
-
-    set: function(idOrMap, value) {
-      if (angular.isObject(idOrMap) && angular.isUndefined(value)) {
-        this.setMany(idOrMap);
-      } else {
-        this.setOne(idOrMap, value);
-      }
-    },
-
-    turnOn: function(id) {
-      return this.setOne(id, true);     
-    },
-
-    turnOff: function(id) {
-      return this.setOne(id, false);     
-    },
-
-    toggle: function(id) {
-      return this.setOne(id, !this.get(id));     
-    },
-
-    get: function(id) {
-      return statuses[id] && statuses[id].value;
-    },
-
-    isActive: function(id) {
-      return !! this.get(id);
-    },
-
-    active: function(id) {
-      return this.isActive(id);
-    },
-
-    isUndefined: function(id) {
-      return statuses[id] === undefined || this.get(id) === undefined;
-    },
-
-    equals: function(id, value) {
-      return this.get(id) === value;
-    },
-
-    eq: function(id, value) {
-      return this.equals(id, value);
-    }
-  };
-});
+    };
+  }
+]);
  // Provides a scrollable implementation based on Overthrow
  // Many thanks to pavei (https://github.com/pavei) to submit
  // basic implementation
@@ -1592,27 +1613,31 @@ module.directive('scrollableBody', function() {
 
 angular.forEach({Top: 'scrollableHeader', Bottom: 'scrollableFooter'}, 
   function(directiveName, side) {
-      module.directive(directiveName, function($window) {
-        return {
-          restrict: 'C',
-          link: function(scope, element, attr) {
-            var el = element[0],
-                styles = $window.getComputedStyle(el),
-                margin = parseInt(styles.marginTop) + parseInt(styles.marginBottom),
-                heightWithMargin = el.offsetHeight + margin,
-                parentStyle = element.parent()[0].style;
+      module.directive(directiveName, [
+        '$window',
+        function($window) {
+                return {
+                  restrict: 'C',
+                  link: function(scope, element, attr) {
+                    var el = element[0],
+                        styles = $window.getComputedStyle(el),
+                        margin = parseInt(styles.marginTop) + parseInt(styles.marginBottom),
+                        heightWithMargin = el.offsetHeight + margin,
+                        parentStyle = element.parent()[0].style;
 
-            parentStyle['padding' + side] = heightWithMargin + 'px'; 
+                    parentStyle['padding' + side] = heightWithMargin + 'px'; 
 
-            scope.$on('$destroy', function(){
-              parentStyle['padding' + side] = '0px';
-            });
-          }
-        };
-      });
+                    scope.$on('$destroy', function(){
+                      parentStyle['padding' + side] = '0px';
+                    });
+                  }
+                };
+              }
+      ]);
   });
 angular.module('mobileAngularUi.pointerEvents', []).run([
-  '$document', function($document) {
+  '$document', 
+  function($document) {
     return angular.element($document).on("click tap", function(e) {
       var target;
       target = angular.element(e.target);
@@ -1646,88 +1671,102 @@ angular.module('mobileAngularUi.outerClick', [])
   };
 })
 
-.factory('bindOuterClick', function ($document, $timeout, isAncestorOrSelf) {
-  
-  return function (scope, element, outerClickFn, outerClickIf) {
-    var handleOuterClick = function(event){
-      if (!isAncestorOrSelf(angular.element(event.target), element)) {
-        scope.$apply(function() {
-          outerClickFn(scope, {$event:event});
+.factory('bindOuterClick', [
+  '$document',
+  '$timeout', 
+  'isAncestorOrSelf',
+  function ($document, $timeout, isAncestorOrSelf) {
+    
+    return function (scope, element, outerClickFn, outerClickIf) {
+      var handleOuterClick = function(event){
+        if (!isAncestorOrSelf(angular.element(event.target), element)) {
+          scope.$apply(function() {
+            outerClickFn(scope, {$event:event});
+          });
+        }
+      };
+
+      var stopWatching = angular.noop;
+      var t = null;
+
+      if (outerClickIf) {
+        stopWatching = scope.$watch(outerClickIf, function(value){
+          $timeout.cancel(t);
+
+          if (value) {
+            // prevents race conditions 
+            // activating with other click events
+            t = $timeout(function(scope) {
+              $document.on('click tap', handleOuterClick);
+            }, 0);
+
+          } else {
+            $document.unbind('click tap', handleOuterClick);    
+          }
         });
+      } else {
+        $timeout.cancel(t);
+        $document.on('click tap', handleOuterClick);
+      }
+
+      scope.$on('$destroy', function(){
+        stopWatching();
+        $document.unbind('click tap', handleOuterClick);
+      });
+    };
+  }
+])
+
+.directive('outerClick', [
+  'bindOuterClick', 
+  '$parse',
+  function(bindOuterClick, $parse){
+    return {
+      restrict: 'A',
+      compile: function(elem, attrs) {
+        var outerClickFn = $parse(attrs.outerClick);
+        var outerClickIf = attrs.outerClickIf;
+        return function(scope, elem) {
+          bindOuterClick(scope, elem, outerClickFn, outerClickIf);
+        };
       }
     };
-
-    var stopWatching = angular.noop;
-    var t = null;
-
-    if (outerClickIf) {
-      stopWatching = scope.$watch(outerClickIf, function(value){
-        $timeout.cancel(t);
-
-        if (value) {
-          // prevents race conditions 
-          // activating with other click events
-          t = $timeout(function(scope) {
-            $document.on('click tap', handleOuterClick);
-          }, 0);
-
-        } else {
-          $document.unbind('click tap', handleOuterClick);    
-        }
-      });
-    } else {
-      $timeout.cancel(t);
-      $document.on('click tap', handleOuterClick);
-    }
-
-    scope.$on('$destroy', function(){
-      stopWatching();
-      $document.unbind('click tap', handleOuterClick);
-    });
-  };
-})
-
-.directive('outerClick', function(bindOuterClick, $parse){
-  return {
-    restrict: 'A',
-    compile: function(elem, attrs) {
-      var outerClickFn = $parse(attrs.outerClick);
-      var outerClickIf = attrs.outerClickIf;
-      return function(scope, elem) {
-        bindOuterClick(scope, elem, outerClickFn, outerClickIf);
-      };
-    }
-  };
-});
+  }
+]);
 var module = angular.module('mobileAngularUi.navbars', []);
 
 angular.forEach(['top', 'bottom'], function(side) {
   var directiveName = 'navbarAbsolute' + side.charAt(0).toUpperCase() + side.slice(1);
-  module.directive(directiveName, function($rootElement) {
-  return {
-    restrict: 'C',
-    link: function(scope, elem) {
-      $rootElement.addClass('has-navbar-' + side);
-      scope.$on('$destroy', function(){
-        $rootElement.removeClass('has-navbar-' + side);
-      });
+  module.directive(directiveName, [
+    '$rootElement',
+    function($rootElement) {
+      return {
+        restrict: 'C',
+        link: function(scope, elem) {
+          $rootElement.addClass('has-navbar-' + side);
+          scope.$on('$destroy', function(){
+            $rootElement.removeClass('has-navbar-' + side);
+          });
+          }
+        };
       }
-    };
-  });
+  ]);
 });
 angular.module('mobileAngularUi.modals', [])
 
-.directive('modalOverlay', function($rootElement) {
-  return {
-    restrict: 'C',
-    link: function(scope, elem) {
-      $rootElement.addClass('has-modal-overlay');
-      scope.$on('$destroy', function(){
-        $rootElement.removeClass('has-modal-overlay');
-      });
-    }
-  };
-});
+.directive('modalOverlay', [
+  '$rootElement',
+  function($rootElement) {
+    return {
+      restrict: 'C',
+      link: function(scope, elem) {
+        $rootElement.addClass('has-modal-overlay');
+        scope.$on('$destroy', function(){
+          $rootElement.removeClass('has-modal-overlay');
+        });
+      }
+    };
+}]);
 // Provides touch events via fastclick.js
 var module = angular.module('mobileAngularUi.fastclick', []);
 
@@ -1953,18 +1992,21 @@ angular.module("mobileAngularUi.drag", [
     };
   }];
 });
-angular.module("mobileAngularUi.capture", [])
+angular.module('mobileAngularUi.capture', [])
 
 .run([
-  "Capture", "$rootScope", function(Capture, $rootScope) {
+  'Capture', 
+  '$rootScope', 
+  function(Capture, $rootScope) {
     $rootScope.$on('$routeChangeStart', function() {
       Capture.resetAll();
     });
   }
 ])
 
-.factory("Capture", [
-  "$compile", function($compile) {
+.factory('Capture', [
+  '$compile', 
+  function($compile) {
     var yielders = {};
 
     return {
@@ -1983,7 +2025,7 @@ angular.module("mobileAngularUi.capture", [])
         var yielder = {};
         yielder.name = name;
         yielder.element = element;
-        yielder.defaultContent = defaultContent || "";
+        yielder.defaultContent = defaultContent || '';
         yielder.defaultScope = defaultScope;
         yielders[name] = yielder;
       },
@@ -2009,14 +2051,15 @@ angular.module("mobileAngularUi.capture", [])
   }
 ])
 
-.directive("contentFor", [
-  "Capture", function(Capture) {
+.directive('contentFor', [
+  'Capture', 
+  function(Capture) {
     return {
       compile: function(tElem, tAttrs) {
         var rawContent = tElem.html();
         if(tAttrs.duplicate === null || tAttrs.duplicate === undefined) {
           // no need to compile anything!
-          tElem.html("");
+          tElem.html('');
         }
         return function postLink(scope, elem, attrs) {
           Capture.setContentFor(attrs.contentFor, rawContent, scope);
@@ -2029,8 +2072,8 @@ angular.module("mobileAngularUi.capture", [])
   }
 ])
 
-.directive("yieldTo", [
-  "$compile", "Capture", function($compile, Capture) {
+.directive('yieldTo', [
+  '$compile', 'Capture', function($compile, Capture) {
     return {
       link: function(scope, element, attr) {
         Capture.putYielder(attr.yieldTo, element, scope, element.html());
@@ -2045,28 +2088,33 @@ angular.module("mobileAngularUi.capture", [])
 ]);
 angular.module("mobileAngularUi.activeLinks", [])
 
-.run(function($rootScope, $window, $document){
+.run([
+    '$rootScope', 
+    '$window', 
+    '$document',
+    function($rootScope, $window, $document){
 
-  var setupActiveLinks = function() {
-    var newPath  = $window.location.href;
-    var domLinks = $document[0].links;
+      var setupActiveLinks = function() {
+        var newPath  = $window.location.href;
+        var domLinks = $document[0].links;
 
-    for (var i = 0; i < domLinks.length; i++) {
-      var domLink = domLinks[i];
-      var link    = angular.element(domLink);
+        for (var i = 0; i < domLinks.length; i++) {
+          var domLink = domLinks[i];
+          var link    = angular.element(domLink);
 
-      if (domLink.href === newPath) {
-        link.addClass('active');
-      } else {
-        link.removeClass('active');
-      }
+          if (domLink.href === newPath) {
+            link.addClass('active');
+          } else {
+            link.removeClass('active');
+          }
 
+        }
+      };
+
+      $rootScope.$on('$locationChangeSuccess', setupActiveLinks);
+      $rootScope.$on('$includeContentLoaded', setupActiveLinks);
     }
-  };
-
-  $rootScope.$on('$locationChangeSuccess', setupActiveLinks);
-  $rootScope.$on('$includeContentLoaded', setupActiveLinks);
-});
+]);
 angular.module("mobileAngularUi", [
   'mobileAngularUi.sharedState',
   'mobileAngularUi.pointerEvents',

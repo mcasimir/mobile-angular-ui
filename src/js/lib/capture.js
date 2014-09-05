@@ -1,15 +1,18 @@
-angular.module("mobileAngularUi.capture", [])
+angular.module('mobileAngularUi.capture', [])
 
 .run([
-  "Capture", "$rootScope", function(Capture, $rootScope) {
+  'Capture', 
+  '$rootScope', 
+  function(Capture, $rootScope) {
     $rootScope.$on('$routeChangeStart', function() {
       Capture.resetAll();
     });
   }
 ])
 
-.factory("Capture", [
-  "$compile", function($compile) {
+.factory('Capture', [
+  '$compile', 
+  function($compile) {
     var yielders = {};
 
     return {
@@ -28,7 +31,7 @@ angular.module("mobileAngularUi.capture", [])
         var yielder = {};
         yielder.name = name;
         yielder.element = element;
-        yielder.defaultContent = defaultContent || "";
+        yielder.defaultContent = defaultContent || '';
         yielder.defaultScope = defaultScope;
         yielders[name] = yielder;
       },
@@ -54,14 +57,15 @@ angular.module("mobileAngularUi.capture", [])
   }
 ])
 
-.directive("contentFor", [
-  "Capture", function(Capture) {
+.directive('contentFor', [
+  'Capture', 
+  function(Capture) {
     return {
       compile: function(tElem, tAttrs) {
         var rawContent = tElem.html();
         if(tAttrs.duplicate === null || tAttrs.duplicate === undefined) {
           // no need to compile anything!
-          tElem.html("");
+          tElem.html('');
         }
         return function postLink(scope, elem, attrs) {
           Capture.setContentFor(attrs.contentFor, rawContent, scope);
@@ -74,8 +78,8 @@ angular.module("mobileAngularUi.capture", [])
   }
 ])
 
-.directive("yieldTo", [
-  "$compile", "Capture", function($compile, Capture) {
+.directive('yieldTo', [
+  '$compile', 'Capture', function($compile, Capture) {
     return {
       link: function(scope, element, attr) {
         Capture.putYielder(attr.yieldTo, element, scope, element.html());
