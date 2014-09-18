@@ -5,7 +5,17 @@
     "mcasimir <maurizio.cas@gmail.com>"
   ],
   "description": "Mobile UI for Bootstrap 3 and Angular JS",
-  "main": "dist/js/mobile-angular-ui.min.js",
+  "main": [
+    "dist/css/mobile-angular-ui-hover.css",
+    "dist/css/mobile-angular-ui-base.css",
+    "dist/css/mobile-angular-ui-desktop.css",
+    "dist/js/mobile-angular-ui.min.js",
+    "dist/fonts/FontAwesome.otf",
+    "dist/fonts/fontawesome-webfont.eot",
+    "dist/fonts/fontawesome-webfont.svg",
+    "dist/fonts/fontawesome-webfont.ttf",
+    "dist/fonts/fontawesome-webfont.woff"
+  ],
   "keywords": [
     "mobile-angular-ui",
     "angularjs",
@@ -26,7 +36,7 @@
     "gh-pages",
     "tmp"
   ],
-  "dependencies": {
+  "devDependencies": {
     "font-awesome": "~4.1.0",
     "bootstrap": "~3.1.1",
     "fastclick": "~1.0.0",

@@ -6981,6 +6981,7 @@ a.list-group-item .icon.pull-right {
   filter: alpha(opacity=0);
   -webkit-transition: opacity  600ms cubic-bezier(1, 0, 1, 0), width 400ms ease;
   transition: opacity  600ms cubic-bezier(1, 0, 1, 0), width 400ms ease;
+  width: 0;
 }
 
 .sidebar-left-in .app {
