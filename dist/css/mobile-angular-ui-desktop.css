@@ -75,7 +75,7 @@
     right: 8.33333333%;
   }
   .col-md-pull-0 {
-    right: 0%;
+    right: auto;
   }
   .col-md-push-12 {
     left: 100%;
@@ -114,7 +114,7 @@
     left: 8.33333333%;
   }
   .col-md-push-0 {
-    left: 0%;
+    left: auto;
   }
   .col-md-offset-12 {
     margin-left: 100%;
@@ -233,7 +233,7 @@
     right: 8.33333333%;
   }
   .col-lg-pull-0 {
-    right: 0%;
+    right: auto;
   }
   .col-lg-push-12 {
     left: 100%;
@@ -272,7 +272,7 @@
     left: 8.33333333%;
   }
   .col-lg-push-0 {
-    left: 0%;
+    left: auto;
   }
   .col-lg-offset-12 {
     margin-left: 100%;
@@ -330,7 +330,7 @@
   color: #cccccc;
 }
 .breadcrumb > .active {
-  color: #999999;
+  color: #777777;
 }
 .pagination {
   display: inline-block;
@@ -390,7 +390,7 @@
 .pagination > .disabled > a,
 .pagination > .disabled > a:hover,
 .pagination > .disabled > a:focus {
-  color: #999999;
+  color: #777777;
   background-color: #ffffff;
   border-color: #dddddd;
   cursor: not-allowed;
@@ -439,6 +439,9 @@
   margin-bottom: 15px;
   font-size: 21px;
   font-weight: 200;
+}
+.jumbotron > hr {
+  border-top-color: #d5d5d5;
 }
 .container .jumbotron {
   border-radius: 6px;
