@@ -2,72 +2,58 @@
 <html lang="en" itemscope="" itemtype="http://schema.org/Article">
   <head>
     <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="author" content="Maurizio Casimirri (http://github.com/mcasimir)">
-
-<title>Docs | Mobile Angular UI</title>
-
-
-<meta itemprop="description" name="description" property="og:description" content="Mobile Angular UI Documentation">
-<meta name="twitter:description" content="Mobile Angular UI Documentation">
-
-
-
-<link rel="publisher" href="https://plus.google.com/+MobileangularuiGp">
-
-<meta name="twitter:image:src" itemprop="image" property="og:image" content="/assets/img/og-logo.png">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@mobileangularui">
-<meta name="twitter:creator" content="@mauriziocas">
-<meta property="og:site_name" content="Mobile Angular UI">
-
-<meta property="og:type" content="article">
-
-<meta property="og:url" content="http://mobileangularui.com/docs/">
-<link href="/assets/css/main.css" rel="stylesheet">
-<link rel="shortcut icon" href="/assets/img/favicon.png">
-<!--[if lt IE 9]>
-  <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-  <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-<![endif]-->
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Maurizio Casimirri (http://github.com/mcasimir)">
+    <title>Docs | Mobile Angular UI</title>
+    <meta itemprop="description" name="description" property="og:description" content="Mobile Angular UI Documentation">
+    <meta name="twitter:description" content="Mobile Angular UI Documentation">
+    
+    
+    <link rel="publisher" href="https://plus.google.com/+MobileangularuiGp">
+    <meta name="twitter:image:src" itemprop="image" property="og:image" content="/assets/img/og-logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@mobileangularui">
+    <meta name="twitter:creator" content="@mauriziocas">
+    <meta property="og:site_name" content="Mobile Angular UI">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://mobileangularui.com/docs/">
+    <link href="/assets/css/main.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/assets/img/favicon.png">
+    <!--[if lt IE 9]>
+      <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
   </head>
   <body>
     <div class="navbar navbar-default">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-nav">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/">
-        <span class="logo">
-          Mobile Angular UI
-        </span>
-      </a>
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-nav">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">
+            <span class="logo">
+              Mobile Angular UI
+            </span>
+          </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-collapse-nav">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/demo">Demo</a></li>
+            <li><a href="/docs">Docs</a></li>
+            <li><a href="/app-showcase">Apps</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/forum">Forum</a></li>
+            <li><a href="https://github.com/mcasimir/mobile-angular-ui" target="blank"><i class="fa fa-github"></i> Sources</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="collapse navbar-collapse navbar-collapse-nav">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="/demo">Demo</a></li>
-<li><a href="/docs">Docs</a></li>
-<li><a href="/app-showcase">Apps</a></li>
-<li><a href="/blog">Blog</a></li>
-<li><a href="/forum">Forum</a></li>
-
-        <li><a href="https://github.com/mcasimir/mobile-angular-ui" target="blank"><i class="fa fa-github"></i> Sources</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-    
     
     <div class="container">
-    
-    
       <div class="row">
         <div class="col-sm-3 sidebar-container">
           <ul class="toc sidebar nav" id="toc">
@@ -75,16 +61,14 @@
         </div>
         <div class="col-sm-9">
           <div class="content" role="aside">
-            
               <div class="page-header"><h1>Docs</h1></div>
-            
             
 
 <section>
 <h2 id="getting-started">Getting Started</h2>
 <h3 id="installation">Installation</h3>
 <p>Either install via <code>bower</code> or download it</p>
-<pre><code class="lang-sh">bower install <span class="hljs-subst">--</span>save mobile<span class="hljs-attribute">-angular</span><span class="hljs-attribute">-ui</span>
+<pre><code class="lang-sh">bower <span class="hljs-operator"><span class="hljs-keyword">install</span> <span class="hljs-comment">--save mobile-angular-ui</span></span>
 </code></pre>
 <h4 id="html-head-section-setup">Html head section setup</h4>
 <h5 id="distributed-package-content">Distributed package content</h5>
@@ -140,7 +124,7 @@
 </code></pre>
 <h3 id="initialization">Initialization</h3>
 <p>You can initialize your Angular application declaring <code>mobile-angular-ui</code> as a dependence.</p>
-<pre><code class="lang-javascript">angular.<span class="hljs-keyword">module</span>(<span class="hljs-string">&apos;myApp&apos;</span>, [<span class="hljs-string">&quot;mobile-angular-ui&quot;</span>]);
+<pre><code class="lang-javascript">angular.<span class="hljs-built_in">module</span>(<span class="hljs-string">&apos;myApp&apos;</span>, [<span class="hljs-string">&quot;mobile-angular-ui&quot;</span>]);
 </code></pre>
 <p>Here is a more complete example including ngRoute:</p>
 <pre><code class="lang-javascript">angular.module(<span class="hljs-string">&apos;myApp&apos;</span>, [
@@ -231,7 +215,6 @@
 <li>Breadcrumbs and pagination are just not the best way to navigate a mobile app so their are only included in desktop.css.</li>
 <li><code>.container</code> is always fluid.</li>
 </ol>
-
 </section>
 
 <section>
@@ -315,31 +298,31 @@
 </table>
 
 <p>To understand how it works consider the following example:</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">toggleable</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">&quot;lightbulb&quot;</span> <span class="hljs-attribute">active-class</span>=<span class="hljs-value">&quot;text-primary&quot;</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;text-default&quot;</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-lightbulb-o&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<pre><code class="lang-html">&lt;p toggleable id=<span class="hljs-string">&quot;lightbulb&quot;</span> active-<span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;text-primary&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;text-default&quot;</span>&gt;
+  &lt;i <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;fa fa-lightbulb-o&quot;</span>&gt;&lt;/i&gt;
+&lt;/p&gt;
 
-<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn-group justified nav-tabs&quot;</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">a</span>  
-     <span class="hljs-attribute">toggle</span>=<span class="hljs-value">&quot;toggle&quot;</span>
-     <span class="hljs-attribute">target</span>=<span class="hljs-value">&quot;lightbulb&quot;</span>
-     <span class="hljs-attribute">active-class</span>=<span class="hljs-value">&quot;active&quot;</span>
-     <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn btn-default&quot;</span> <span class="hljs-attribute">href</span>&gt;</span>
+&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn-group justified nav-tabs&quot;</span>&gt;
+  &lt;a  
+     toggle=<span class="hljs-string">&quot;toggle&quot;</span>
+     target=<span class="hljs-string">&quot;lightbulb&quot;</span>
+     active-<span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;active&quot;</span>
+     <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-default&quot;</span> href&gt;
       Toggle
-  <span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">a</span>  
-     <span class="hljs-attribute">toggle</span>=<span class="hljs-value">&quot;on&quot;</span>
-     <span class="hljs-attribute">target</span>=<span class="hljs-value">&quot;lightbulb&quot;</span>
-     <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn btn-default&quot;</span> <span class="hljs-attribute">href</span>&gt;</span>
+  &lt;/a&gt;
+  &lt;a  
+     toggle=<span class="hljs-string">&quot;on&quot;</span>
+     target=<span class="hljs-string">&quot;lightbulb&quot;</span>
+     <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-default&quot;</span> href&gt;
       Turn On
-  <span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">a</span>  
-     <span class="hljs-attribute">toggle</span>=<span class="hljs-value">&quot;off&quot;</span>
-     <span class="hljs-attribute">target</span>=<span class="hljs-value">&quot;lightbulb&quot;</span>
-     <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn btn-default&quot;</span> <span class="hljs-attribute">href</span>&gt;</span>
+  &lt;/a&gt;
+  &lt;a  
+     toggle=<span class="hljs-string">&quot;off&quot;</span>
+     target=<span class="hljs-string">&quot;lightbulb&quot;</span>
+     <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-default&quot;</span> href&gt;
       Turn Off
-  <span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  &lt;/a&gt;
+&lt;/div&gt;
 </code></pre>
 <p>The purpose of this code is to create a black <code>lightbulb</code> icon getting colored when it turns on. The <code>lightbulb</code> should be turned on and off by three switches. The first alternates its state, the second turns it on and the latter turns it off.</p>
 <p><code>#lightbulb</code> is a <code>[toggleable]</code> that wraps a lightbulb icon in form of font icon. When activated it acquires the <code>text-primary</code> class, thus being highlighted with the primary color.</p>
@@ -348,9 +331,9 @@
 <p><a href="demo/#/toggle">Try this example in the demo</a></p>
 <h4 id="programmatic-api">Programmatic API</h4>
 <p>Toggle module exposes the <code>toggle</code> and <code>toggleByClass</code> functions through <code>$rootScope</code> to interact with <code>[toggleable]</code> in a programmatic way. This will let you do something like that:</p>
-<pre><code class="lang-html"><span class="hljs-subst">&lt;</span>div ng<span class="hljs-attribute">-swipe</span><span class="hljs-attribute">-left</span><span class="hljs-subst">=</span><span class="hljs-string">&quot;toggle(&apos;mainSidebar&apos;, &apos;off&apos;)&quot;</span>
-        ng<span class="hljs-attribute">-swipe</span><span class="hljs-attribute">-right</span><span class="hljs-subst">=</span><span class="hljs-string">&quot;toggle(&apos;mainSidebar&apos;, &apos;on&apos;)&quot;</span><span class="hljs-subst">&gt;</span>
-<span class="hljs-subst">&lt;</span>div<span class="hljs-subst">&gt;</span>
+<pre><code class="lang-html">&lt;<span class="hljs-tag">div</span> ng-swipe-<span class="hljs-attribute">left</span>=<span class="hljs-string">&quot;toggle(&apos;mainSidebar&apos;, &apos;off&apos;)&quot;</span>
+        ng-swipe-<span class="hljs-attribute">right</span>=<span class="hljs-string">&quot;toggle(&apos;mainSidebar&apos;, &apos;on&apos;)&quot;</span>&gt;
+&lt;div&gt;
 </code></pre>
 <p><code>toggle</code> method takes 2 parameters: the <code>[toggleable]</code> id and the command to send (one of <code>toggle</code>, <code>on</code> or <code>off</code>).</p>
 <p><code>toggleByClass</code> method takes also 2 parameters: the <code>[toggleable]</code> class and the command to send.</p>
@@ -416,11 +399,11 @@
 });
 </code></pre>
 <p>If you wish you can also duplicate markup instead of move it. Just add <code>duplicate</code> parameter to <code>contentFor</code> directive to specify this behaviour.</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">content-for</span>=<span class="hljs-value">&quot;navbarAction&quot;</span> <span class="hljs-attribute">duplicate</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ng-click</span>=<span class="hljs-value">&quot;createCustomer()&quot;</span>&gt;</span>
+<pre><code class="lang-html">&lt;<span class="hljs-tag">div</span> <span class="hljs-attribute">content</span>-<span class="hljs-keyword">for</span>=<span class="hljs-string">&quot;navbarAction&quot;</span> duplicate&gt;
+  &lt;<span class="hljs-tag">button</span> ng-click=<span class="hljs-string">&quot;createCustomer()&quot;</span>&gt;
     Save
-  <span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  &lt;/button&gt;
+&lt;/div&gt;
 </code></pre>
 <table class="table table-bordered">
   <thead>
@@ -463,7 +446,6 @@
     </tr>
   </tbody>
 </table>
-
 
 </section>
 
@@ -519,26 +501,26 @@
 </code></pre>
 <p>As you can see the markup is pretty straightforward: there is a <code>.navbar-brand</code> with its new specification, <code>.navbar-brand-center</code>, that will render the title centered and below the two button groups. Note that <code>.navbar-brand-center</code> will position the title with absolute positioning ensuring that it will never cover the buttons, which would cause interaction problems.</p>
 <h3 id="sidebars">Sidebars</h3>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;sidebar sidebar-left&quot;</span> <span class="hljs-attribute">toggleable</span> <span class="hljs-attribute">parent-active-class</span>=<span class="hljs-value">&quot;sidebar-left-in&quot;</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">&quot;mainSidebar&quot;</span>&gt;</span>
+<pre><code class="lang-html">&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;sidebar sidebar-left&quot;</span> toggleable parent-active-<span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;sidebar-left-in&quot;</span> id=<span class="hljs-string">&quot;mainSidebar&quot;</span>&gt;
 
-<span class="hljs-tag">&lt;<span class="hljs-title">h1</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;app-name&quot;</span>&gt;</span>Mobile Angular UI<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+&lt;h1 <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;app-name&quot;</span>&gt;Mobile Angular UI&lt;/h1&gt;
 
-<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;scrollable&quot;</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;scrollable-content&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;list-group&quot;</span> <span class="hljs-attribute">toggle</span>=<span class="hljs-value">&quot;off&quot;</span> <span class="hljs-attribute">bubble</span> <span class="hljs-attribute">target</span>=<span class="hljs-value">&quot;mainSidebar&quot;</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;list-group-item&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#/&quot;</span>&gt;</span>Home <span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;list-group-item&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#/scroll&quot;</span>&gt;</span>Scroll <span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;list-group-item&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#/toggle&quot;</span>&gt;</span>Toggle <span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;list-group-item&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#/tabs&quot;</span>&gt;</span>Tabs <span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;list-group-item&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#/accordion&quot;</span>&gt;</span>Accordion <span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;list-group-item&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#/overlay&quot;</span>&gt;</span>Overlay <span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;list-group-item&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#/forms&quot;</span>&gt;</span>Forms <span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;scrollable&quot;</span>&gt;
+  &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;scrollable-content&quot;</span>&gt;
+    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;list-group&quot;</span> toggle=<span class="hljs-string">&quot;off&quot;</span> bubble target=<span class="hljs-string">&quot;mainSidebar&quot;</span>&gt;
+      &lt;a <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;list-group-item&quot;</span> href=<span class="hljs-string">&quot;#/&quot;</span>&gt;Home &lt;i <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;&lt;/i&gt;&lt;/a&gt;
+      &lt;a <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;list-group-item&quot;</span> href=<span class="hljs-string">&quot;#/scroll&quot;</span>&gt;Scroll &lt;i <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;&lt;/i&gt;&lt;/a&gt;
+      &lt;a <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;list-group-item&quot;</span> href=<span class="hljs-string">&quot;#/toggle&quot;</span>&gt;Toggle &lt;i <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;&lt;/i&gt;&lt;/a&gt;
+      &lt;a <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;list-group-item&quot;</span> href=<span class="hljs-string">&quot;#/tabs&quot;</span>&gt;Tabs &lt;i <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;&lt;/i&gt;&lt;/a&gt;
+      &lt;a <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;list-group-item&quot;</span> href=<span class="hljs-string">&quot;#/accordion&quot;</span>&gt;Accordion &lt;i <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;&lt;/i&gt;&lt;/a&gt;
+      &lt;a <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;list-group-item&quot;</span> href=<span class="hljs-string">&quot;#/overlay&quot;</span>&gt;Overlay &lt;i <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;&lt;/i&gt;&lt;/a&gt;
+      &lt;a <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;list-group-item&quot;</span> href=<span class="hljs-string">&quot;#/forms&quot;</span>&gt;Forms &lt;i <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;/div&gt;
 
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  &lt;/div&gt;
+&lt;/div&gt;
 
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+&lt;/div&gt;
 </code></pre>
 <p>As you can see sidebars can be placed either in left side or right side adding respectively <code>.sidebar-left</code> and <code>.sidebar-right</code> classes.</p>
 <p>You should also notice that a sidebar is a toggleable. A sidebar is shown when parent has the <code>.sidebar-[left|right]-in</code> class moving the above <code>.app</code> element left or right. <code>.sidebar</code> and <code>.app</code> are supposed to be siblings.</p>
@@ -730,14 +712,14 @@
 &lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 <p>Lets define the <code>carouselExampleItem</code> directive.</p>
-<pre><code class="lang-javascript">app.directive( <span class="hljs-string">&quot;carouselExampleItem&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$rootScope</span>, <span class="hljs-variable">$swipe</span>)</span>{</span>
-  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(scope, element, attrs)</span>{</span>
+<pre><code class="lang-javascript">app.directive( <span class="hljs-string">&quot;carouselExampleItem&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$rootScope</span>, <span class="hljs-variable">$swipe</span>)</span></span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(scope, element, attrs)</span></span>{
       <span class="hljs-keyword">var</span> startX = <span class="hljs-keyword">null</span>;
       <span class="hljs-keyword">var</span> startY = <span class="hljs-keyword">null</span>;
       <span class="hljs-keyword">var</span> endAction = <span class="hljs-string">&quot;cancel&quot;</span>;
       <span class="hljs-keyword">var</span> carouselId = element.<span class="hljs-keyword">parent</span>().<span class="hljs-keyword">parent</span>().attr(<span class="hljs-string">&quot;id&quot;</span>);
 
-      <span class="hljs-keyword">var</span> translateAndRotate = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x, y, z, deg)</span>{</span>
+      <span class="hljs-keyword">var</span> translateAndRotate = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x, y, z, deg)</span></span>{
         element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;-webkit-transform&quot;</span>] = <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span>+ y +<span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
         element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;-moz-transform&quot;</span>] = <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span> + y +<span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
         element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;-ms-transform&quot;</span>] = <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span> + y + <span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
@@ -746,19 +728,19 @@
       }
 
       <span class="hljs-variable">$swipe</span>.bind(element, {
-        start: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(coords)</span> {</span>
+        start: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(coords)</span> </span>{
           endAction = <span class="hljs-keyword">null</span>;
           startX = coords.x;
           startY = coords.y;
         },
 
-        cancel: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> {</span>
+        cancel: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{
           endAction = <span class="hljs-keyword">null</span>;
           translateAndRotate(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
           e.stopPropagation();
         },
 
-        end: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(coords, e)</span> {</span>
+        end: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(coords, e)</span> </span>{
           <span class="hljs-keyword">if</span> (endAction == <span class="hljs-string">&quot;prev&quot;</span>) {
             <span class="hljs-variable">$rootScope</span>.carouselPrev(carouselId);
           } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (endAction == <span class="hljs-string">&quot;next&quot;</span>) {
@@ -768,7 +750,7 @@
           e.stopPropagation();
         },
 
-        move: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(coords)</span> {</span>
+        move: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(coords)</span> </span>{
           <span class="hljs-keyword">if</span>( startX != <span class="hljs-keyword">null</span>) {
             <span class="hljs-keyword">var</span> deltaX = coords.x - startX;
             <span class="hljs-keyword">var</span> deltaXRatio = deltaX / element[<span class="hljs-number">0</span>].clientWidth;
@@ -796,7 +778,6 @@
 <p>It requires <code>ngModel</code>. You can also use <code>ngChange</code> in conjunction with <code>[switch]</code> to trigger functions in response to model changes.</p>
 <pre><code class="lang-html">&lt;<span class="hljs-keyword">switch</span>  ng-model=<span class="hljs-string">&quot;invoice.paid&quot;</span>&gt;&lt;/<span class="hljs-keyword">switch</span>&gt;
 </code></pre>
-
 </section>
 
 
@@ -819,30 +800,30 @@
 <p>Mobile angular Ui provides some markup savers to create form inputs.</p>
 <h4 id="-bs-form-control-"><code>bs-form-control</code></h4>
 <p>NOTE: former <code>bs-input</code>.</p>
-<pre><code class="lang-html"><span class="hljs-subst">&lt;</span>input
- bs<span class="hljs-attribute">-form</span><span class="hljs-attribute">-control</span>
+<pre><code class="lang-html">&lt;input
+ bs-form-control
 
- <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">&quot;text&quot;</span>
- ng<span class="hljs-attribute">-model</span><span class="hljs-subst">=</span><span class="hljs-string">&quot;invoice.customer&quot;</span>
- label<span class="hljs-subst">=</span><span class="hljs-string">&quot;Customer&quot;</span>
- label<span class="hljs-attribute">-class</span><span class="hljs-subst">=</span><span class="hljs-string">&quot;col-xs-3 col-sm-2 col-lg-1&quot;</span>
- class<span class="hljs-subst">=</span><span class="hljs-string">&quot;col-xs-9 col-sm-10 col-lg-11&quot;</span>
- placeholder<span class="hljs-subst">=</span><span class="hljs-string">&quot;Customer Name&quot;</span>
-<span class="hljs-subst">/</span><span class="hljs-subst">&gt;</span>
+ <span class="hljs-variable">type=</span><span class="hljs-string">&quot;text&quot;</span>
+ <span class="hljs-variable">ng-model=</span><span class="hljs-string">&quot;invoice.customer&quot;</span>
+ <span class="hljs-variable">label=</span><span class="hljs-string">&quot;Customer&quot;</span>
+ <span class="hljs-variable">label-class=</span><span class="hljs-string">&quot;col-xs-3 col-sm-2 col-lg-1&quot;</span>
+ <span class="hljs-variable">class=</span><span class="hljs-string">&quot;col-xs-9 col-sm-10 col-lg-11&quot;</span>
+ <span class="hljs-variable">placeholder=</span><span class="hljs-string">&quot;Customer Name&quot;</span>
+/&gt;
 </code></pre>
 <p>That translates to</p>
-<pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;form-group row&quot;</span>&gt;
-  &lt;label <span class="hljs-keyword">for</span>=<span class="hljs-string">&quot;invoice_customer_input&quot;</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;control-label col-xs-3 col-sm-2 col-lg-1&quot;</span> /&gt;Customer&lt;/label&gt;
-  &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;form-control-wrapper col-xs-9 col-sm-10 col-lg-11&quot;</span>&gt;
-    &lt;input type=<span class="hljs-string">&quot;text&quot;</span> ng-model=<span class="hljs-string">&quot;invoice.customer&quot;</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;form-control&quot;</span> placeholder=<span class="hljs-string">&quot;Customer Name&quot;</span> <span class="hljs-property">id</span>=<span class="hljs-string">&quot;invoice_customer_input&quot;</span> /&gt;
-  &lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
+<pre><code class="lang-html">&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span>=</span><span class="hljs-string">&quot;form-group row&quot;</span>&gt;
+  &lt;label <span class="hljs-keyword">for</span>=<span class="hljs-string">&quot;invoice_customer_input&quot;</span> <span class="hljs-class"><span class="hljs-keyword">class</span>=</span><span class="hljs-string">&quot;control-label col-xs-3 col-sm-2 col-lg-1&quot;</span> /&gt;<span class="hljs-type">Customer</span>&lt;/label&gt;
+  &lt;div <span class="hljs-class"><span class="hljs-keyword">class</span>=</span><span class="hljs-string">&quot;form-control-wrapper col-xs-9 col-sm-10 col-lg-11&quot;</span>&gt;
+    &lt;input <span class="hljs-class"><span class="hljs-keyword">type</span>=</span><span class="hljs-string">&quot;text&quot;</span> ng-model=<span class="hljs-string">&quot;invoice.customer&quot;</span> <span class="hljs-class"><span class="hljs-keyword">class</span>=</span><span class="hljs-string">&quot;form-control&quot;</span> placeholder=<span class="hljs-string">&quot;Customer Name&quot;</span> id=<span class="hljs-string">&quot;invoice_customer_input&quot;</span> /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
 </code></pre>
 <p>If you don&apos;t assing a grid class to label or element they will get <code>.col-xs-12</code>. This way you&apos;re always able to mix horizontal and vertical controls without the need to use <code>form-horizontal</code> or change markup and style.</p>
 <p>Note that this directive only wraps target element with some html. This lets you apply it to any type of control, even custom one.</p>
 <p>So for instance you can apply it to <code>textarea</code> or <code>switch</code> as well.</p>
-<pre><code class="lang-html"><span class="hljs-subst">&lt;</span>switch            ng<span class="hljs-attribute">-model</span><span class="hljs-subst">=</span><span class="hljs-string">&quot;invoice.paid&quot;</span>     label<span class="hljs-subst">=</span><span class="hljs-string">&quot;Paid&quot;</span> bs<span class="hljs-attribute">-form</span><span class="hljs-attribute">-control</span><span class="hljs-subst">&gt;&lt;</span>/switch<span class="hljs-subst">&gt;</span>
-<span class="hljs-subst">&lt;</span>textarea <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">&quot;text&quot;</span> ng<span class="hljs-attribute">-model</span><span class="hljs-subst">=</span><span class="hljs-string">&quot;customer.mailing_address&quot;</span> label<span class="hljs-subst">=</span><span class="hljs-string">&quot;Address&quot;</span> bs<span class="hljs-attribute">-form</span><span class="hljs-attribute">-control</span><span class="hljs-subst">&gt;&lt;</span>/textarea<span class="hljs-subst">&gt;</span>
+<pre><code class="lang-html">&lt;switch            <span class="hljs-variable">ng-model=</span><span class="hljs-string">&quot;invoice.paid&quot;</span>     <span class="hljs-variable">label=</span><span class="hljs-string">&quot;Paid&quot;</span> bs-form-control&gt;&lt;/switch&gt;
+&lt;textarea <span class="hljs-variable">type=</span><span class="hljs-string">&quot;text&quot;</span> <span class="hljs-variable">ng-model=</span><span class="hljs-string">&quot;customer.mailing_address&quot;</span> <span class="hljs-variable">label=</span><span class="hljs-string">&quot;Address&quot;</span> bs-form-control&gt;&lt;/textarea&gt;
 </code></pre>
 <h3 id="panel-helpers">Panel Helpers</h3>
 <h4 id="-bs-panel-"><code>bs-panel</code></h4>
@@ -864,50 +845,45 @@
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-
 </section>
 
 
-            
 
           </div>
         </div>
       </div>
-    
     </div>
 
 
     <footer class="footer">
-  <div class="container">
-    <p>
-      Mobile Angular Ui is made for you by <a href="https://github.com/mcasimir" target="_blank">mcasimir</a>
-    </p>
-    <p>
-      <ul class="list-inline">
-        <li><a href="/demo">Demo</a></li>
-<li><a href="/docs">Docs</a></li>
-<li><a href="/app-showcase">Apps</a></li>
-<li><a href="/blog">Blog</a></li>
-<li><a href="/forum">Forum</a></li>
-
-      </ul>
-      <ul class="list-inline">
-        <li><a target="blank" href="https://github.com/mcasimir/mobile-angular-ui"><i class="fa fa-github"></i> Github</a></li>
-        <li><a target="blank" href="https://plus.google.com/+MobileangularuiGp"><i class="fa fa-google-plus"></i> Google+</a></li>
-        <li><a target="blank" href="https://twitter.com/mobileangularui"><i class="fa fa-twitter"></i> Twitter</a></li>
-        <li><a href="mailto:mobileangularui@gmail.com"><i class="fa fa-envelope"></i> Mail</a></li>
-      </ul>
-    </p>
-    <p>
-      Website and docs built with <a href="http://stackticjs.github.io/stacktic/">Stacktic - Node.js Static Site Generator</a>
-    </p>
-    <p>
-      Published under the
-      <a href="https://raw.githubusercontent.com/mcasimir/mobile-angular-ui/master/LICENSE">MIT license</a>.
-    </p>
-  </div>
-</footer>
-
+      <div class="container">
+        <p>
+          Mobile Angular Ui is made for you by <a href="https://github.com/mcasimir" target="_blank">mcasimir</a>
+        </p>
+        <p>
+          <ul class="list-inline">
+            <li><a href="/demo">Demo</a></li>
+            <li><a href="/docs">Docs</a></li>
+            <li><a href="/app-showcase">Apps</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/forum">Forum</a></li>
+          </ul>
+          <ul class="list-inline">
+            <li><a target="blank" href="https://github.com/mcasimir/mobile-angular-ui"><i class="fa fa-github"></i> Github</a></li>
+            <li><a target="blank" href="https://plus.google.com/+MobileangularuiGp"><i class="fa fa-google-plus"></i> Google+</a></li>
+            <li><a target="blank" href="https://twitter.com/mobileangularui"><i class="fa fa-twitter"></i> Twitter</a></li>
+            <li><a href="mailto:mobileangularui@gmail.com"><i class="fa fa-envelope"></i> Mail</a></li>
+          </ul>
+        </p>
+        <p>
+          Website and docs built with <a href="http://stackticjs.github.io/stacktic/">Stacktic - Node.js Static Site Generator</a>
+        </p>
+        <p>
+          Published under the
+          <a href="https://raw.githubusercontent.com/mcasimir/mobile-angular-ui/master/LICENSE">MIT license</a>.
+        </p>
+      </div>
+    </footer>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

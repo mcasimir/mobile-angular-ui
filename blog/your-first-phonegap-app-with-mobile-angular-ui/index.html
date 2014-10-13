@@ -2,72 +2,58 @@
 <html lang="en" itemscope="" itemtype="http://schema.org/Article">
   <head>
     <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="author" content="Maurizio Casimirri (http://github.com/mcasimir)">
-
-<title>Your first Phonegap App with Mobile Angular Ui | Mobile Angular UI</title>
-
-
-<meta itemprop="description" name="description" property="og:description" content="A tutorial about starting a fresh mobile application using Phonegap and Mobile Angular Ui">
-<meta name="twitter:description" content="A tutorial about starting a fresh mobile application using Phonegap and Mobile Angular Ui">
-
-
-
-<link rel="publisher" href="https://plus.google.com/+MobileangularuiGp">
-
-<meta name="twitter:image:src" itemprop="image" property="og:image" content="/assets/img/og-logo.png">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@mobileangularui">
-<meta name="twitter:creator" content="@mauriziocas">
-<meta property="og:site_name" content="Mobile Angular UI">
-
-<meta property="og:type" content="article">
-
-<meta property="og:url" content="http://mobileangularui.com/blog/your-first-phonegap-app-with-mobile-angular-ui/">
-<link href="/assets/css/main.css" rel="stylesheet">
-<link rel="shortcut icon" href="/assets/img/favicon.png">
-<!--[if lt IE 9]>
-  <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-  <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-<![endif]-->
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Maurizio Casimirri (http://github.com/mcasimir)">
+    <title>Your first Phonegap App with Mobile Angular Ui | Mobile Angular UI</title>
+    <meta itemprop="description" name="description" property="og:description" content="A tutorial about starting a fresh mobile application using Phonegap and Mobile Angular Ui">
+    <meta name="twitter:description" content="A tutorial about starting a fresh mobile application using Phonegap and Mobile Angular Ui">
+    
+    
+    <link rel="publisher" href="https://plus.google.com/+MobileangularuiGp">
+    <meta name="twitter:image:src" itemprop="image" property="og:image" content="/assets/img/og-logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@mobileangularui">
+    <meta name="twitter:creator" content="@mauriziocas">
+    <meta property="og:site_name" content="Mobile Angular UI">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://mobileangularui.com/blog/your-first-phonegap-app-with-mobile-angular-ui/">
+    <link href="/assets/css/main.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/assets/img/favicon.png">
+    <!--[if lt IE 9]>
+      <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
   </head>
   <body>
     <div class="navbar navbar-default">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-nav">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/">
-        <span class="logo">
-          Mobile Angular UI
-        </span>
-      </a>
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-nav">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">
+            <span class="logo">
+              Mobile Angular UI
+            </span>
+          </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-collapse-nav">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/demo">Demo</a></li>
+            <li><a href="/docs">Docs</a></li>
+            <li><a href="/app-showcase">Apps</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/forum">Forum</a></li>
+            <li><a href="https://github.com/mcasimir/mobile-angular-ui" target="blank"><i class="fa fa-github"></i> Sources</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="collapse navbar-collapse navbar-collapse-nav">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="/demo">Demo</a></li>
-<li><a href="/docs">Docs</a></li>
-<li><a href="/app-showcase">Apps</a></li>
-<li><a href="/blog">Blog</a></li>
-<li><a href="/forum">Forum</a></li>
-
-        <li><a href="https://github.com/mcasimir/mobile-angular-ui" target="blank"><i class="fa fa-github"></i> Sources</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-    
     
     <div class="container">
-    
-    
       <div class="row">
         <div class="col-sm-3 sidebar-container">
           <ul class="toc sidebar nav" id="toc">
@@ -75,9 +61,7 @@
         </div>
         <div class="col-sm-9">
           <div class="content" role="aside">
-            
               <div class="page-header"><h1>Your first Phonegap App with Mobile Angular Ui</h1></div>
-            
             <p>Ready to code your first Phonegap App with Mobile Angular Ui? In the following tutorial I will show you how. I will create a super simple Weather app, covering the basics of setting up and coding relevant part of it.</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <p>You should have <code>node</code> and <code>npm</code> installed in your machine to follow this tutorial. We assume you can run your <code>Phonegap</code> application somehow (Android SDK, IOS Simulator, deploy to device).</p>
@@ -87,7 +71,7 @@
 <p>Plus Bootstrap/AngularUi components are not designed to support a mobile interaction properly, as well as they leak some basic components often used in mobile development, i.e sidebars, scroll areas, switches and more.</p>
 <h2 id="preparation">Preparation</h2>
 <h3 id="installing-required-tools">Installing required tools</h3>
-<pre><code class="lang-bash">npm install <span class="hljs-attribute">-g</span> yo gulp generator<span class="hljs-attribute">-mobileangularui</span>
+<pre><code class="lang-bash">npm <span class="hljs-keyword">install</span> -g bower yo gulp generator-mobileangularui
 </code></pre>
 <pre><code class="lang-bash"><span class="hljs-built_in">sudo</span> npm install -g phonegap
 </code></pre>
@@ -99,7 +83,7 @@ yo mobileangularui
 <p><img src="/assets/img/generator-welcome.png" alt=""></p>
 <p>Be patient.. this may take a few minutes until npm finishes to install.</p>
 <h3 id="build-your-project-for-the-first-time">Build your project for the first time</h3>
-<pre><code class="lang-bash">gulp build
+<pre><code class="lang-bash"><span class="hljs-title">gulp</span> build
 </code></pre>
 <h3 id="run-the-application">Run the application</h3>
 <p>Now to be sure that everything is ok let&apos;s try to run your app.</p>
@@ -121,23 +105,23 @@ yo mobileangularui
 </ul>
 <p>Looking at the <code>src</code> folder now it should appear to be something like this:</p>
 <pre><code>src
-&#x251C;&#x2500;&#x2500; html
-&#x2502;   &#x2514;&#x2500;&#x2500; index<span class="hljs-preprocessor">.html</span>
+&#x251C;&#x2500;&#x2500; <span class="hljs-tag">html</span>
+&#x2502;   &#x2514;&#x2500;&#x2500; index<span class="hljs-class">.html</span>
 &#x251C;&#x2500;&#x2500; images
 &#x251C;&#x2500;&#x2500; js
-&#x2502;   &#x251C;&#x2500;&#x2500; app<span class="hljs-preprocessor">.js</span>
+&#x2502;   &#x251C;&#x2500;&#x2500; app<span class="hljs-class">.js</span>
 &#x2502;   &#x251C;&#x2500;&#x2500; controllers
-&#x2502;   &#x2502;   &#x2514;&#x2500;&#x2500; main_controller<span class="hljs-preprocessor">.js</span>
+&#x2502;   &#x2502;   &#x2514;&#x2500;&#x2500; main_controller<span class="hljs-class">.js</span>
 &#x2502;   &#x251C;&#x2500;&#x2500; directives
 &#x2502;   &#x2514;&#x2500;&#x2500; services
 &#x251C;&#x2500;&#x2500; less
-&#x2502;   &#x251C;&#x2500;&#x2500; app<span class="hljs-preprocessor">.less</span>
-&#x2502;   &#x251C;&#x2500;&#x2500; mixins<span class="hljs-preprocessor">.less</span>
-&#x2502;   &#x251C;&#x2500;&#x2500; responsive<span class="hljs-preprocessor">.less</span>
-&#x2502;   &#x2514;&#x2500;&#x2500; variables<span class="hljs-preprocessor">.less</span>
+&#x2502;   &#x251C;&#x2500;&#x2500; app<span class="hljs-class">.less</span>
+&#x2502;   &#x251C;&#x2500;&#x2500; mixins<span class="hljs-class">.less</span>
+&#x2502;   &#x251C;&#x2500;&#x2500; responsive<span class="hljs-class">.less</span>
+&#x2502;   &#x2514;&#x2500;&#x2500; variables<span class="hljs-class">.less</span>
 &#x2514;&#x2500;&#x2500; templates
-    &#x251C;&#x2500;&#x2500; home<span class="hljs-preprocessor">.html</span>
-    &#x2514;&#x2500;&#x2500; sidebar<span class="hljs-preprocessor">.html</span>
+    &#x251C;&#x2500;&#x2500; home<span class="hljs-class">.html</span>
+    &#x2514;&#x2500;&#x2500; sidebar.html
 </code></pre><h4 id="gulpfile-and-build-process">Gulpfile and build process</h4>
 <p>Before to start hacking the scaffolded sources you may wish to know what happens when you run: <code>gulp build</code>. Well this is an explanation of what it does:</p>
 <ol>
@@ -151,7 +135,7 @@ yo mobileangularui
 <h4 id="configuring-customizing-the-build-process">Configuring/Customizing the build process</h4>
 <p>The build process is realized as a regular <code>gulpfile.js</code>. Anyway some common options are exposed through a <code>config.js</code> file.</p>
 <p><code>config.js</code> content is almost self-explanatory:</p>
-<pre><code>module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(config)</span> {</span>
+<pre><code><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(config)</span> </span>{
 
   <span class="hljs-comment">// Output directory</span>
   config.dest = <span class="hljs-string">&apos;www&apos;</span>;
@@ -163,18 +147,20 @@ yo mobileangularui
   config.minify_images = <span class="hljs-literal">true</span>;
 
   <span class="hljs-comment">// Development web server</span>
-  <span class="hljs-comment">// Setting to false will disable it</span>
-  config.server = {
-                    host: <span class="hljs-string">&apos;0.0.0.0&apos;</span>,
-                    port: <span class="hljs-string">&apos;8000&apos;</span>
-                  };
+
+  config.server.host = <span class="hljs-string">&apos;0.0.0.0&apos;</span>;
+  config.server.port = <span class="hljs-string">&apos;8000&apos;</span>;
+
+  <span class="hljs-comment">// Set to false to disable it:</span>
+  <span class="hljs-comment">// config.server = false;</span>
 
   <span class="hljs-comment">// Weinre Remote debug server</span>
-  <span class="hljs-comment">// Setting to false will disable it</span>
-  config.weinre = {
-           httpPort:     <span class="hljs-number">8001</span>,
-           boundHost:    <span class="hljs-string">&apos;localhost&apos;</span>
-         };
+
+  config.weinre.httpPort = <span class="hljs-number">8001</span>;
+  config.weinre.boundHost = <span class="hljs-string">&apos;localhost&apos;</span>;
+
+  <span class="hljs-comment">// Set to false to disable it:</span>
+  <span class="hljs-comment">// config.weinre = false;</span>
 
   <span class="hljs-comment">// 3rd party components</span>
   <span class="hljs-comment">// config.vendor.js.push(&apos;.bower_components/lib/dist/lib.js&apos;);</span>
@@ -192,14 +178,14 @@ yo mobileangularui
 <p>We could handle <code>deviceready</code> in many ways. For now we will just make it more angular-friendly isolating it in a service. <code>deviceready</code> will be exported as a function accepting a callback. </p>
 <p>We will also make it <em>cordova-agnostic</em> invoking the callback immediately when cordova is not running.</p>
 <p>This way we hopefully speed up development using a regular browser to test our app.</p>
-<pre><code class="lang-bash">touch src/js/services/cordova<span class="hljs-preprocessor">.js</span>
+<pre><code class="lang-bash">touch src<span class="hljs-regexp">/js/</span>services<span class="hljs-regexp">/cordova.js</span>
 </code></pre>
 <pre><code class="lang-js">angular.module(<span class="hljs-string">&apos;WeatherApp.services.Cordova&apos;</span>, [])
 
-.factory(<span class="hljs-string">&apos;deviceReady&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span> {</span>
-    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> window.cordova === <span class="hljs-string">&apos;object&apos;</span>) {
-      document.addEventListener(<span class="hljs-string">&apos;deviceready&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+.factory(<span class="hljs-string">&apos;deviceReady&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span> </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">window</span>.cordova === <span class="hljs-string">&apos;object&apos;</span>) {
+      <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">&apos;deviceready&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
         done();
       }, <span class="hljs-literal">false</span>);
     } <span class="hljs-keyword">else</span> {
@@ -210,10 +196,10 @@ yo mobileangularui
 </code></pre>
 <h4 id="using-cordova-geolocation">Using Cordova Geolocation</h4>
 <p>Install the cordova plugin:</p>
-<pre><code class="lang-bash">cordova plugin <span class="hljs-keyword">add</span> org<span class="hljs-preprocessor">.apache</span><span class="hljs-preprocessor">.cordova</span><span class="hljs-preprocessor">.geolocation</span>
+<pre><code class="lang-bash">cordova plugin add org<span class="hljs-class">.apache</span><span class="hljs-class">.cordova</span><span class="hljs-class">.geolocation</span>
 </code></pre>
 <p>Define a Geolocation module for geolocation related services:</p>
-<pre><code class="lang-bash">touch src/js/services/geolocation<span class="hljs-preprocessor">.js</span>
+<pre><code class="lang-bash">touch src<span class="hljs-regexp">/js/</span>services<span class="hljs-regexp">/geolocation.js</span>
 </code></pre>
 <pre><code class="lang-js"><span class="hljs-title">angular</span>.<span class="hljs-module"><span class="hljs-keyword">module</span><span class="hljs-container">(&apos;<span class="hljs-type">WeatherApp</span>.<span class="hljs-title">services</span>.<span class="hljs-type">Geolocation</span>&apos;, [
   &apos;<span class="hljs-type">WeatherApp</span>.<span class="hljs-title">services</span>.<span class="hljs-type">Cordova</span>&apos;
@@ -221,15 +207,15 @@ yo mobileangularui
 </code></pre>
 <p>Gulp will automatically take care of file ordering according to Angular module dependencies for us, so we can code without concerning about it.</p>
 <p>Define a service to retrieve the current position:</p>
-<pre><code class="lang-js">.factory(<span class="hljs-string">&apos;getCurrentPosition&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(deviceReady, <span class="hljs-variable">$document</span>, <span class="hljs-variable">$window</span>, <span class="hljs-variable">$rootScope</span>)</span>{</span>
-  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span> {</span>
-    deviceReady(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-      navigator.geolocation.getCurrentPosition(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(position)</span>{</span>
-        <span class="hljs-variable">$rootScope</span>.<span class="hljs-variable">$apply</span>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+<pre><code class="lang-js">.factory(<span class="hljs-string">&apos;getCurrentPosition&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(deviceReady, <span class="hljs-variable">$document</span>, <span class="hljs-variable">$window</span>, <span class="hljs-variable">$rootScope</span>)</span></span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(done)</span> </span>{
+    deviceReady(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+      navigator.geolocation.getCurrentPosition(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(position)</span></span>{
+        <span class="hljs-variable">$rootScope</span>.<span class="hljs-variable">$apply</span>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
           done(position);
         });
-      }, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error)</span>{</span>
-        <span class="hljs-variable">$rootScope</span>.<span class="hljs-variable">$apply</span>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      }, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error)</span></span>{
+        <span class="hljs-variable">$rootScope</span>.<span class="hljs-variable">$apply</span>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
           <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error(<span class="hljs-string">&apos;Unable to retreive position&apos;</span>);
         });
       });
@@ -247,17 +233,17 @@ yo mobileangularui
 <h4 id="requesting-the-weather-forecast">Requesting the Weather Forecast</h4>
 <p>For our example we will use a free api service from <a href="http://openweathermap.org/">OpenWeatherMap</a>.</p>
 <p>Lets define another angular service to handle it.</p>
-<pre><code class="lang-bash">touch src/js/services/forecast<span class="hljs-preprocessor">.js</span>
+<pre><code class="lang-bash">touch src<span class="hljs-regexp">/js/</span>services<span class="hljs-regexp">/forecast.js</span>
 </code></pre>
 <pre><code class="lang-js">angular.module(<span class="hljs-string">&apos;WeatherApp.services.Forecast&apos;</span>, [])
 
-.factory(<span class="hljs-string">&apos;getWeather&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$http</span>)</span>{</span>
-  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(lat, lng, done)</span> {</span>
+.factory(<span class="hljs-string">&apos;getWeather&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$http</span>)</span></span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(lat, lng, done)</span> </span>{
     <span class="hljs-variable">$http</span>({method: <span class="hljs-string">&apos;GET&apos;</span>, url: <span class="hljs-string">&apos;http://api.openweathermap.org/data/2.5/weather?lat=&apos;</span>+lat+<span class="hljs-string">&apos;&amp;lon=&apos;</span>+lng})
-        .success(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data, status, headers, config)</span> {</span>
+        .success(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data, status, headers, config)</span> </span>{
           done(data.name, data.weather[<span class="hljs-number">0</span>].description);
         })
-        .error(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data, status, headers, config)</span> {</span>
+        .error(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data, status, headers, config)</span> </span>{
           <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error(<span class="hljs-string">&apos;Unable to get weather&apos;</span>);
         });
   };
@@ -271,12 +257,12 @@ yo mobileangularui
   <span class="hljs-string">&apos;WeatherApp.services.Forecast&apos;</span>
   ])
 
-.controller(<span class="hljs-string">&apos;MainController&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$scope</span>, getCurrentPosition, getWeather)</span>{</span>
-  getCurrentPosition(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(position)</span>{</span>
+.controller(<span class="hljs-string">&apos;MainController&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$scope</span>, getCurrentPosition, getWeather)</span></span>{
+  getCurrentPosition(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(position)</span></span>{
     getWeather(
       position.coords.latitude, 
       position.coords.longitude, 
-      <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(location, weather)</span>{</span>
+      <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(location, weather)</span></span>{
         <span class="hljs-variable">$scope</span>.location = location;
         <span class="hljs-variable">$scope</span>.weather = weather;
       });
@@ -311,17 +297,17 @@ yo mobileangularui
 <p>If errors arises running our app in Phonegap we can use Weinre to figure out what happened.</p>
 <p>Mobile Angular Ui boilerplate ships with a gulp task for Weinre.</p>
 <p>Running:</p>
-<pre><code>gulp weinre
+<pre><code><span class="hljs-title">gulp</span> weinre
 </code></pre><p>or just the default</p>
 <pre><code>gulp
 </code></pre><p>A weinre server is started at <code>localhost:8001</code>.</p>
 <p>All we need to do is point a browser to that address and interact with our app through Weinre UI. Be aware that we have to wrap our code in try/catch and handle error logging manually in order to see runtime errors in Weinre.</p>
 <p>Also we may experience problems with <code>console.log</code>/<code>console.error</code> as well.</p>
 <p>A raw trick to overcome this is to have your error/messages stored in global vars we can dump at any time in weinre:</p>
-<pre><code>.controller(<span class="hljs-string">&apos;MainController&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$scope</span>, getCurrentPosition, getWeather)</span>{</span>
+<pre><code>.controller(<span class="hljs-string">&apos;MainController&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$scope</span>, getCurrentPosition, getWeather)</span></span>{
   <span class="hljs-keyword">try</span> {
-    getCurrentPosition(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(position)</span>{</span>
-      getWeather(position.coords.latitude, position.coords.longitude, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(location, weather)</span>{</span>
+    getCurrentPosition(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(position)</span></span>{
+      getWeather(position.coords.latitude, position.coords.longitude, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(location, weather)</span></span>{
         <span class="hljs-variable">$scope</span>.location = location;
         <span class="hljs-variable">$scope</span>.weather = weather;
       });
@@ -339,7 +325,6 @@ yo mobileangularui
 </ul>
 
 
-            
             <br>
             <hr>
             <div id="disqus_thread"></div>
@@ -356,46 +341,42 @@ yo mobileangularui
             </script>
             <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
             <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-            
 
           </div>
         </div>
       </div>
-    
     </div>
 
 
     <footer class="footer">
-  <div class="container">
-    <p>
-      Mobile Angular Ui is made for you by <a href="https://github.com/mcasimir" target="_blank">mcasimir</a>
-    </p>
-    <p>
-      <ul class="list-inline">
-        <li><a href="/demo">Demo</a></li>
-<li><a href="/docs">Docs</a></li>
-<li><a href="/app-showcase">Apps</a></li>
-<li><a href="/blog">Blog</a></li>
-<li><a href="/forum">Forum</a></li>
-
-      </ul>
-      <ul class="list-inline">
-        <li><a target="blank" href="https://github.com/mcasimir/mobile-angular-ui"><i class="fa fa-github"></i> Github</a></li>
-        <li><a target="blank" href="https://plus.google.com/+MobileangularuiGp"><i class="fa fa-google-plus"></i> Google+</a></li>
-        <li><a target="blank" href="https://twitter.com/mobileangularui"><i class="fa fa-twitter"></i> Twitter</a></li>
-        <li><a href="mailto:mobileangularui@gmail.com"><i class="fa fa-envelope"></i> Mail</a></li>
-      </ul>
-    </p>
-    <p>
-      Website and docs built with <a href="http://stackticjs.github.io/stacktic/">Stacktic - Node.js Static Site Generator</a>
-    </p>
-    <p>
-      Published under the
-      <a href="https://raw.githubusercontent.com/mcasimir/mobile-angular-ui/master/LICENSE">MIT license</a>.
-    </p>
-  </div>
-</footer>
-
+      <div class="container">
+        <p>
+          Mobile Angular Ui is made for you by <a href="https://github.com/mcasimir" target="_blank">mcasimir</a>
+        </p>
+        <p>
+          <ul class="list-inline">
+            <li><a href="/demo">Demo</a></li>
+            <li><a href="/docs">Docs</a></li>
+            <li><a href="/app-showcase">Apps</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/forum">Forum</a></li>
+          </ul>
+          <ul class="list-inline">
+            <li><a target="blank" href="https://github.com/mcasimir/mobile-angular-ui"><i class="fa fa-github"></i> Github</a></li>
+            <li><a target="blank" href="https://plus.google.com/+MobileangularuiGp"><i class="fa fa-google-plus"></i> Google+</a></li>
+            <li><a target="blank" href="https://twitter.com/mobileangularui"><i class="fa fa-twitter"></i> Twitter</a></li>
+            <li><a href="mailto:mobileangularui@gmail.com"><i class="fa fa-envelope"></i> Mail</a></li>
+          </ul>
+        </p>
+        <p>
+          Website and docs built with <a href="http://stackticjs.github.io/stacktic/">Stacktic - Node.js Static Site Generator</a>
+        </p>
+        <p>
+          Published under the
+          <a href="https://raw.githubusercontent.com/mcasimir/mobile-angular-ui/master/LICENSE">MIT license</a>.
+        </p>
+      </div>
+    </footer>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
