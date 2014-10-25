@@ -19,7 +19,7 @@ app.service('analytics', [
   '$rootScope', '$window', '$location', function($rootScope, $window, $location) {
     var send = function(evt, data) {
       ga('send', evt, data);
-    }
+    };
   }
 ]);
 
@@ -36,7 +36,7 @@ app.directive( "carouselExampleItem", function($rootScope, $swipe){
         element[0].style["-ms-transform"] = "translate3d("+x+"px," + y + "px," + z + "px) rotate("+ deg +"deg)";
         element[0].style["-o-transform"] = "translate3d("+x+"px," + y  + "px," + z + "px) rotate("+ deg +"deg)";
         element[0].style["transform"] = "translate3d("+x+"px," + y + "px," + z + "px) rotate("+ deg +"deg)";
-      }
+      };
 
       $swipe.bind(element, {
         start: function(coords) {
@@ -100,27 +100,27 @@ app.controller('MainController', function($rootScope, $scope, analytics){
   
   $scope.userAgent =  navigator.userAgent;
   $scope.chatUsers = [
-    { name: "Carlos  Flowers", online: true },
+    { name: "Carlos Flowers", online: true },
     { name: "Byron Taylor", online: true },
-    { name: "Jana  Terry", online: true },
-    { name: "Darryl  Stone", online: true },
-    { name: "Fannie  Carlson", online: true },
+    { name: "Jana Terry", online: true },
+    { name: "Darryl Stone", online: true },
+    { name: "Fannie Carlson", online: true },
     { name: "Holly Nguyen", online: true },
-    { name: "Bill  Chavez", online: true },
-    { name: "Veronica  Maxwell", online: true },
+    { name: "Bill Chavez", online: true },
+    { name: "Veronica Maxwell", online: true },
     { name: "Jessica Webster", online: true },
     { name: "Jackie  Barton", online: true },
     { name: "Crystal Drake", online: false },
-    { name: "Milton  Dean", online: false },
+    { name: "Milton Dean", online: false },
     { name: "Joann Johnston", online: false },
-    { name: "Cora  Vaughn", online: false },
-    { name: "Nina  Briggs", online: false },
+    { name: "Cora Vaughn", online: false },
+    { name: "Nina Briggs", online: false },
     { name: "Casey Turner", online: false },
-    { name: "Jimmie  Wilson", online: false },
+    { name: "Jimmie Wilson", online: false },
     { name: "Nathaniel Steele", online: false },
-    { name: "Aubrey  Cole", online: false },
-    { name: "Donnie  Summers", online: false },
-    { name: "Kate  Myers", online: false },
+    { name: "Aubrey Cole", online: false },
+    { name: "Donnie Summers", online: false },
+    { name: "Kate Myers", online: false },
     { name: "Priscilla Hawkins", online: false },
     { name: "Joe Barker", online: false },
     { name: "Lee Norman", online: false },
