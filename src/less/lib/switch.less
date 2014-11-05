@@ -1,0 +1,43 @@
+.switch {
+  cursor: pointer;
+  position: relative;
+  display: block;
+  width: @switch-width;
+  height: @switch-height;
+  background-color: @input-bg;
+  border: 1px solid @input-border;
+  border-radius: @switch-border-radius;
+
+  // Sliding handle
+  .switch-handle {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    z-index: @zindex-switch-handle;
+    width: @switch-handle-diameter;
+    height: @switch-handle-diameter;
+    background-color: @input-bg;
+    border: 1px solid @input-border;
+    border-radius: @switch-handle-border-radius;
+  }
+
+
+  // Active state for switch
+  &.active {
+    background-color: @switch-active-color;
+    border: 1px solid @switch-active-color;
+
+    .switch-handle {
+      border-color: @switch-active-color;
+      .translate(@switch-handle-diameter,0);
+    }
+  }
+}
+
+.switch-transition-enabled {
+  .transition(~"background-color 200ms ease, border 200ms ease");
+}
+
+.switch-transition-enabled>.switch-handle{
+  .transition-transform(~"200ms ease, background-color 200ms ease");
+}

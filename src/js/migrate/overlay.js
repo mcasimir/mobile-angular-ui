@@ -2,6 +2,7 @@ angular.module('mobile-angular-ui.directives.overlay', []).directive('overlay', 
   "$compile", function($compile) {
     return {
         compile: function(tElem, tAttrs) {
+            console.warn('overlay directive is deprecated and will be removed soon, use modal-overlay instead');
             var rawContent = tElem.html();
             return function postLink(scope, elem, attrs) {
                 var active = "";

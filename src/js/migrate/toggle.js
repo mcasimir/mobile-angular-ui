@@ -111,6 +111,7 @@ angular.module('mobile-angular-ui.directives.toggle', [])
     return {
       restrict: "A",
       link: function(scope, elem, attrs) {
+        console.warn('toggle/toggleable is deprecated and will be removed soon, use ui-* directives instead');
         var command = attrs.toggle || ToggleHelper.commands.alternate;
         var target = attrs.target;
         var targetClass = attrs.targetClass;
@@ -162,7 +163,8 @@ angular.module('mobile-angular-ui.directives.toggle', [])
   "$rootScope", "ToggleHelper", function($rootScope, ToggleHelper) {
     return {
       restrict: "A",
-      link: function(scope, elem, attrs) {        
+      link: function(scope, elem, attrs) {    
+        console.warn('toggle/toggleable is deprecated and will be removed soon, use ui-* directives instead');
         var toggleState = false;
         
         if (attrs["default"]) {

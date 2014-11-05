@@ -22,7 +22,7 @@ angular.module('mobile-angular-ui.directives.carousel', [])
       var found = false;
 
       for (var _i = 0; _i < items.length; _i++) {
-        item = items[_i];
+        var item = items[_i];
         idx += 1;
         if (angular.element(item).hasClass('active')) {
           found = true;

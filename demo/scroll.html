@@ -1,6 +1,11 @@
-<input type="search" class="form-control app-search" placeholder="Search.." />
+<div class="scrollable" ui-state="searchBar">
 
-<div class="scrollable">
+  <input
+    ng-if="ui.active('searchBar')"
+    type="search"
+    class="form-control scrollable-header"
+    placeholder="Search.." />
+
   <div class="scrollable-content">
     <div class="list-group">
       <a ng-repeat="item in scrollItems" href="#" class="list-group-item">
@@ -8,4 +13,11 @@
       </a>
     </div>
   </div>
+
+  <a class="btn btn-block btn-lg btn-primary scrollable-footer" ui-toggle='searchBar'>
+    <i class="fa fa-search"></i> 
+    <span ui-show="searchBar">Show</span>
+    <span ui-hide="searchBar">Hide</span>
+    Search Bar
+  </a>
 </div>
