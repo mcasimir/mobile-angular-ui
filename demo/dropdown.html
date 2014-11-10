@@ -1,4 +1,4 @@
-<div content-for="title">
+<div ui-content-for="title">
   <span>Dropdown</span>
 </div>
 
@@ -13,8 +13,8 @@
             </a>
             <ul 
               class="dropdown-menu"
-              outer-click="ui.turnOff('myDropdown')"
-              outer-click-if="ui.active('myDropdown')"
+              outer-click="Ui.turnOff('myDropdown')"
+              outer-click-if="Ui.active('myDropdown')"
               role="menu"
               ui-show="myDropdown" 
               ui-state="myDropdown"

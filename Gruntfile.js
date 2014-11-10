@@ -110,6 +110,10 @@ module.exports = function(grunt) {
         src: "tmp/sqm/mobile-angular-ui-base.css",
         dest: "tmp/hover.css"
       }
+    },
+
+    jshint: {
+      all: ['Gruntfile.js', 'src/js/**/*.js']
     }
 
   });
@@ -123,6 +127,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-contrib-less");
   grunt.loadNpmTasks("grunt-concurrent");
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.task.loadTasks("tasks");
 
   grunt.registerTask("build", [ "clean:dev",

@@ -1,12 +1,12 @@
 <div class="scrollable" ui-state="searchBar">
 
   <input
-    ng-if="ui.active('searchBar')"
+    ng-if="Ui.active('searchBar')"
     type="search"
     class="form-control scrollable-header"
     placeholder="Search.." />
 
-  <div class="scrollable-content">
+  <div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
     <div class="list-group">
       <a ng-repeat="item in scrollItems" href="#" class="list-group-item">
         {{ item }} <i class="fa fa-chevron-right pull-right"></i>

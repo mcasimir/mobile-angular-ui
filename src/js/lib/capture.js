@@ -1,90 +1,99 @@
-angular.module("mobile-angular-ui.directives.capture", [])
+(function () {
+   'use strict';
 
-.run([
-  "CaptureService", "$rootScope", function(CaptureService, $rootScope) {
-    $rootScope.$on('$routeChangeStart', function() {
-      CaptureService.resetAll();
-    });
-  }
-])
+   angular.module('mobile-angular-ui.capture', [])
 
-.factory("CaptureService", [
-  "$compile", function($compile) {
-    var yielders = {};
+   .run([
+     'Capture', 
+     '$rootScope', 
+     function(Capture, $rootScope) {
+       $rootScope.$on('$routeChangeStart', function() {
+         Capture.resetAll();
+       });
+     }
+   ])
 
-    return {
-      resetAll: function() {
-        for (name in yielders) {
-          this.resetYielder(name);
-        }
-      },
-      
-      resetYielder: function(name) {
-        var b = yielders[name];
-        this.setContentFor(name, b.defaultContent, b.defaultScope);
-      },
+   .factory('Capture', [
+     '$compile', 
+     function($compile) {
+       var yielders = {};
 
-      putYielder: function(name, element, defaultScope, defaultContent) {
-        var yielder = {};
-        yielder.name = name;
-        yielder.element = element;
-        yielder.defaultContent = defaultContent || "";
-        yielder.defaultScope = defaultScope;
-        yielders[name] = yielder;
-      },
+       return {
+         resetAll: function() {
+           for (var name in yielders) {
+             this.resetYielder(name);
+           }
+         },
+         
+         resetYielder: function(name) {
+           var b = yielders[name];
+           this.setContentFor(name, b.defaultContent, b.defaultScope);
+         },
 
-      getYielder: function(name) {
-        return yielders[name];
-      },
+         putYielder: function(name, element, defaultScope, defaultContent) {
+           var yielder = {};
+           yielder.name = name;
+           yielder.element = element;
+           yielder.defaultContent = defaultContent || '';
+           yielder.defaultScope = defaultScope;
+           yielders[name] = yielder;
+         },
 
-      removeYielder: function(name) {
-        delete yielders[name];
-      },
-      
-      setContentFor: function(name, content, scope) {
-        var b = yielders[name];
-        if (!b) {
-          return;
-        }
-        b.element.html(content);
-        $compile(b.element.contents())(scope);
-      }
+         getYielder: function(name) {
+           return yielders[name];
+         },
 
-    };
-  }
-])
+         removeYielder: function(name) {
+           delete yielders[name];
+         },
+         
+         setContentFor: function(name, content, scope) {
+           var b = yielders[name];
+           if (!b) {
+             return;
+           }
+           b.element.html(content);
+           $compile(b.element.contents())(scope);
+         }
 
-.directive("contentFor", [
-  "CaptureService", function(CaptureService) {
-    return {
-      compile: function(tElem, tAttrs) {
-        var rawContent = tElem.html();
-        if(tAttrs.duplicate == null) {
-          // no need to compile anything!
-          tElem.html("");
-        }
-        return function postLink(scope, elem, attrs) {
-          CaptureService.setContentFor(attrs.contentFor, rawContent, scope);
-          if (attrs.duplicate == null) {
-            elem.remove();
-          }
-        }
-      }
-    };
-  }
-])
+       };
+     }
+   ])
 
-.directive("yieldTo", [
-  "$compile", "CaptureService", function($compile, CaptureService) {
-    return {
-      link: function(scope, element, attr) {
-        CaptureService.putYielder(attr.yieldTo, element, scope, element.html());
-        element.contents().remove();
+   .directive('uiContentFor', [
+     'Capture', 
+     function(Capture) {
+       return {
+         compile: function(tElem, tAttrs) {
+           var rawContent = tElem.html();
+           if(tAttrs.duplicate === null || tAttrs.duplicate === undefined) {
+             // no need to compile anything!
+             tElem.html('');
+           }
+           return function postLink(scope, elem, attrs) {
+             Capture.setContentFor(attrs.uiContentFor, rawContent, scope);
+             if (attrs.duplicate === null || attrs.duplicate === undefined) {
+               elem.remove();
+             }
+           };
+         }
+       };
+     }
+   ])
 
-        scope.$on('$destroy', function(){
-          CaptureService.removeYielder(attr.yieldTo);
-        });
-      }
-    };
-  }
-]);
+   .directive('uiYieldTo', [
+     '$compile', 'Capture', function($compile, Capture) {
+       return {
+         link: function(scope, element, attr) {
+           Capture.putYielder(attr.uiYieldTo, element, scope, element.html());
+           element.contents().remove();
+
+           scope.$on('$destroy', function(){
+             Capture.removeYielder(attr.uiYieldTo);
+           });
+         }
+       };
+     }
+   ]);
+
+}());

@@ -1,4 +1,5 @@
 (function() {
+  'use strict';
   var module = angular.module('mobile-angular-ui.scrollable', []);
 
   module.directive('scrollableContent', function() {
@@ -74,6 +75,41 @@
     }]);
   });
 
+  // uiScrollTop/uiScrollBottom
+  // 
+  // usage:
+  // <div class="scrollable">
+  //    <div class="scrollable-content" ui-scroll-bottom='loadMore()'>
+  //    </div>
+  // </div>
+  angular.forEach(
+    {
+      uiScrollTop: function(elem){
+        return elem.scrollTop === 0;
+      }, 
+      uiScrollBottom: function(elem){
+        return elem.scrollHeight == elem.scrollTop + elem.clientHeight;
+      }
+    }, 
+    function(reached, directiveName){
+      module.directive(directiveName, [function() {
+        return {
+          restrict: 'A',
+          link: function(scope, elem, attrs) {
+            elem.on('scroll', function(){
+              /* If reached bottom */
+              if ( reached(elem[0]) ) {
+                /* Do what is specified by onScrollBottom */
+                scope.$apply(function(){
+                  scope.$eval(attrs[directiveName]);
+                });
+              }
+            });
+          }
+        };
+      }]);
+    });
+
   angular.forEach({Top: 'scrollableHeader', Bottom: 'scrollableFooter'}, 
     function(directiveName, side) {
         module.directive(directiveName, [
@@ -98,4 +134,4 @@
                 }
         ]);
     });
-})();
+}());

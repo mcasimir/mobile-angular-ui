@@ -1,4 +1,6 @@
 (function() {
+  'use strict';
+
   var module = angular.module(
     'mobile-angular-ui.sidebars', [
       'mobile-angular-ui.sharedState',
@@ -46,7 +48,7 @@
             SharedState.initialize(scope, directiveName, defaultActive);
 
             scope.$on('mobile-angular-ui.state.changed.' + directiveName, function (e, active) {
-              if (attrs.trackAsSearchParam == '' || attrs.trackAsSearchParam) {
+              if (attrs.uiTrackAsSearchParam === '' || attrs.uiTrackAsSearchParam) {
                 $location.search(directiveName, active || null);
               }
               
@@ -64,7 +66,7 @@
             });
 
             scope.$on('$routeUpdate', function() {
-              if (attrs.trackAsSearchParam) {
+              if (attrs.uiTrackAsSearchParam) {
                 if (($location.search())[directiveName]) {
                   SharedState.turnOn(directiveName);
                 } else {
@@ -81,4 +83,4 @@
       }
     ]);
   });
-})();
+}());
