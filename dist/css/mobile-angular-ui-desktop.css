@@ -464,6 +464,9 @@
   }
 }
 @media (min-width: 992px) {
+  .sidebar {
+    pointer-events: auto;
+  }
   .sidebar-toggle {
     display: none;
   }

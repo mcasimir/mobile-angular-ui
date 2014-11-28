@@ -4,13 +4,16 @@
 // 
 var app = angular.module('MobileAngularUiExamples', [
   'ngRoute',
-  'ngTouch',
   'mobile-angular-ui',
   
-  // touch and drag facility: this will be merged in 'mobile-angular-ui' soon
-  // but is too instable to be added by default, also it
-  // forcefully require you to use ngTouch (that is recommended anyway)
-  'mobile-angular-ui.drag'
+  // touch and drag feature: this is from 'mobile-angular-ui.gestures.js'
+  // it is at a very beginning stage, so please be careful if you like to use
+  // in production
+  'mobile-angular-ui.drag',
+
+  // If you're migrating from Mobile Angular UI 1.1 and you are using 
+  // 'mobile-angular-ui.migrate.js' you have to require it too
+  'mobile-angular-ui.migrate'
 ]);
 
 // 
@@ -19,16 +22,17 @@ var app = angular.module('MobileAngularUiExamples', [
 // in order to avoid unwanted routing.
 // 
 app.config(function($routeProvider) {
-  $routeProvider.when('/',          {templateUrl: 'home.html', reloadOnSearch: false});
-  $routeProvider.when('/scroll',    {templateUrl: 'scroll.html', reloadOnSearch: false}); 
-  $routeProvider.when('/toggle',    {templateUrl: 'toggle.html', reloadOnSearch: false}); 
-  $routeProvider.when('/tabs',      {templateUrl: 'tabs.html', reloadOnSearch: false}); 
-  $routeProvider.when('/accordion', {templateUrl: 'accordion.html', reloadOnSearch: false}); 
-  $routeProvider.when('/overlay',   {templateUrl: 'overlay.html', reloadOnSearch: false}); 
-  $routeProvider.when('/forms',     {templateUrl: 'forms.html', reloadOnSearch: false});
-  $routeProvider.when('/dropdown',  {templateUrl: 'dropdown.html', reloadOnSearch: false});
-  $routeProvider.when('/drag',      {templateUrl: 'drag.html', reloadOnSearch: false});
-  $routeProvider.when('/carousel',  {templateUrl: 'carousel.html', reloadOnSearch: false});
+  $routeProvider.when('/',              {templateUrl: 'home.html', reloadOnSearch: false});
+  $routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false}); 
+  $routeProvider.when('/toggle',        {templateUrl: 'toggle.html', reloadOnSearch: false}); 
+  $routeProvider.when('/tabs',          {templateUrl: 'tabs.html', reloadOnSearch: false}); 
+  $routeProvider.when('/accordion',     {templateUrl: 'accordion.html', reloadOnSearch: false}); 
+  $routeProvider.when('/overlay',       {templateUrl: 'overlay.html', reloadOnSearch: false}); 
+  $routeProvider.when('/forms',         {templateUrl: 'forms.html', reloadOnSearch: false});
+  $routeProvider.when('/dropdown',      {templateUrl: 'dropdown.html', reloadOnSearch: false});
+  $routeProvider.when('/drag',          {templateUrl: 'drag.html', reloadOnSearch: false});
+  $routeProvider.when('/carousel',      {templateUrl: 'carousel.html', reloadOnSearch: false});
+  $routeProvider.when('/toggleLegacy',  {templateUrl: 'toggleLegacy.html', reloadOnSearch: false});
 });
 
 //

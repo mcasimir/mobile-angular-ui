@@ -58,7 +58,9 @@ module.exports = function(grunt) {
       },
       js: {
         files: {
-          "dist/js/mobile-angular-ui.js": ["bower_components/overthrow/src/overthrow-detect.js", "bower_components/overthrow/src/overthrow-init.js", "bower_components/overthrow/src/overthrow-polyfill.js", "bower_components/fastclick/lib/fastclick.js", "src/js/lib/*.js", "src/js/mobile-angular-ui.js"]
+          "dist/js/mobile-angular-ui.js": ["bower_components/overthrow/src/overthrow-detect.js", "bower_components/overthrow/src/overthrow-init.js", "bower_components/overthrow/src/overthrow-polyfill.js", "bower_components/fastclick/lib/fastclick.js", "src/js/lib/*.js", "src/js/mobile-angular-ui.js"],
+          "dist/js/mobile-angular-ui.migrate.js": ["src/js/migrate/migrate.js"],
+          "dist/js/mobile-angular-ui.gestures.js": ["src/js/gestures/*.js"]
         }
       }
     },
@@ -69,7 +71,9 @@ module.exports = function(grunt) {
           report: 'min'
         },
         files: {
-          "dist/js/mobile-angular-ui.min.js": ["dist/js/mobile-angular-ui.js"]
+          "dist/js/mobile-angular-ui.min.js": ["dist/js/mobile-angular-ui.js"],
+          "dist/js/mobile-angular-ui.migrate.min.js": ["dist/js/mobile-angular-ui.migrate.js"],
+          "dist/js/mobile-angular-ui.gestures.min.js": ["dist/js/mobile-angular-ui.gestures.js"]
         }
       }
     },

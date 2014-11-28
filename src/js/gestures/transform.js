@@ -73,8 +73,21 @@
           [0,0,1]
         ];
       }
+      
+      Transform.getElementTransformProperty = function(e) {
+        e = e.length ? e[0] : e;
+        var tr = $window
+                .getComputedStyle(e, null)
+                .getPropertyValue(transformProperty);
+      };
+
+      Transform.setElementTransformProperty = function(e, value) {
+        e = e.length ? e[0] : e;
+        e.style[transformProperty] = value;
+      };
 
       Transform.fromElement = function(e) {
+        e = e.length ? e[0] : e;
         var tr = $window
                 .getComputedStyle(e, null)
                 .getPropertyValue(transformProperty);
@@ -103,12 +116,14 @@
       };
 
       Transform.prototype.apply = function(e, options) {
+        e = e.length ? e[0] : e;
         var mtx = Transform.fromElement(e).merge(this).mtx;
         e.style[transformProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
         return this;
       };
 
       Transform.prototype.set = function(e) {
+        e = e.length ? e[0] : e;
         var mtx = this.mtx;
         e.style[transformProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
         return this;

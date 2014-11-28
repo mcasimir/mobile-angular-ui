@@ -1129,37 +1129,52 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 }
 
 (function () {
-   'use strict';
+  'use strict';
 
-   angular.module("mobile-angular-ui.activeLinks", [])
+  angular.module("mobile-angular-ui.activeLinks", [])
 
-   .run([
-       '$rootScope', 
-       '$window', 
-       '$document',
-       function($rootScope, $window, $document){
+  .run([
+      '$rootScope', 
+      '$window', 
+      '$document',
+      '$location',
+      function($rootScope, $window, $document, $location){
 
-         var setupActiveLinks = function() {
-           var newPath  = $window.location.href;
-           var domLinks = $document[0].links;
+        var setupActiveLinks = function() {
+          // Excludes both search part and hash part from 
+          // comparison.
+          var url = $location.url(),
+              firstHash = url.indexOf('#'),
+              firstSearchMark = url.indexOf('?'),
+              locationHref = $window.location.href,
+              plainUrlLength = locationHref.indexOf(url),
+              newPath;
 
-           for (var i = 0; i < domLinks.length; i++) {
-             var domLink = domLinks[i];
-             var link    = angular.element(domLink);
+          if (firstHash === -1 && firstSearchMark === -1) {
+            newPath = locationHref;
+          } else if (firstHash != -1 && firstHash > firstSearchMark) {
+            newPath = locationHref.slice(0, plainUrlLength + firstHash);
+          } else if (firstSearchMark != -1 && firstSearchMark > firstHash) {
+            newPath = locationHref.slice(0, plainUrlLength + firstSearchMark);
+          }
+          
+          var domLinks = $document[0].links;
+          for (var i = 0; i < domLinks.length; i++) {
+            var domLink = domLinks[i];
+            var link    = angular.element(domLink);
 
-             if (domLink.href === newPath) {
-               link.addClass('active');
-             } else {
-               link.removeClass('active');
-             }
+            if (domLink.href === newPath) {
+              link.addClass('active');
+            } else if (domLink.href && domLink.href.length) {
+              link.removeClass('active');
+            }
+          }
+        };
 
-           }
-         };
-
-         $rootScope.$on('$locationChangeSuccess', setupActiveLinks);
-         $rootScope.$on('$includeContentLoaded', setupActiveLinks);
-       }
-   ]);
+        $rootScope.$on('$locationChangeSuccess', setupActiveLinks);
+        $rootScope.$on('$includeContentLoaded', setupActiveLinks);
+      }
+  ]);
 
 }());
 
@@ -1265,227 +1280,13 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 }());
 (function () {
    'use strict';
-
-   angular.module("mobile-angular-ui.drag", [
-     'ngTouch',
-     'mobile-angular-ui.transform'
-   ])
-
-   // 
-   // $drag
-   // 
-   // A provider to create touch & drag components.
-   // 
-   // $drag Service wraps ngTouch $swipe to extend its behavior moving one or more
-   // target element throug css transform according to the $swipe coords thus creating 
-   // a drag effect.
-   // 
-   // $drag interface is similar to $swipe:
-   // 
-   // app.controller('MyController', function($drag, $element){
-   //   $drag.bind($element, {
-   //    start: function(coords, cancel, markers, e){},
-   //    move: function(coords, cancel, markers, e){},
-   //    end: function(coords, cancel, markers, e){},
-   //    cancel: function(coords, markers, e){},
-   //    transform: function(x, y, transform) {},
-   //    adaptTransform: function(x, y, transform) {},
-   //    constraint: fn or {top: y1, left: x1, bottom: y2, right: x2}
-   //   });
-   // });
-   // 
-   // Main differences from $swipe are: 
-   //  - coords param take into account css transform so you can easily detect collision with other elements.
-   //  - start, move, end callback receive a cancel funcion that can be used to cancel the motion and reset
-   //    the transform.
-   //  - you can configure the transform behavior passing a transform function to options.
-   //  - you can constraint the motion through the constraint option (setting relative movement limits) 
-   //    or through the track option (setting absolute coords);
-   //  - you can setup collision markers being watched and passed to callbacks.
-   //  
-   // Example (drag to dismiss):
-   //  $drag.bind(e, {
-   //    move: function(c, cancel, markers){
-   //      if(c.left > markers.m1.left) {
-   //        e.addClass('willBeDeleted');
-   //      } else {
-   //        e.removeClass('willBeDeleted');
-   //      }
-   //    },
-   //    end: function(coords, cancel){
-   //      if(c.left > markers.m1.left) {
-   //        e.addClass('deleting');
-   //        delete($scope.myModel).then(function(){
-   //          e.remove();
-   //        }, function(){
-   //          cancel();
-   //        });
-   //      } else {
-   //        cancel();
-   //      }
-   //    },
-   //    cancel: function(){
-   //      e.removeClass('willBeDeleted');
-   //      e.removeClass('deleting');
-   //    },
-   //    constraint: { 
-   //        minX: 0, 
-   //        minY: 0, 
-   //        maxY: 0 
-   //     },
-   //   });
-
-   .provider('$drag', function() {
-     this.$get = ['$swipe', '$document', 'Transform', function($swipe, $document, Transform) {
-       return {
-         bind: function(elem, options) {
-           var defaults = {
-             constraint: {}
-           };
-
-           options = angular.extend({}, defaults, options || {});
-
-           var
-             e = angular.element(elem)[0],
-             zIndexBkp = e.style.zIndex,
-             moving = false,
-             deltaXTot = 0, // total movement since elem is bound
-             deltaYTot = 0,
-             x0, y0, // touch coords on start 
-             t0, // transform on start
-             tOrig = Transform.fromElement(e),
-             x, y, // current touch coords
-             t, // current transform
-             minX = options.constraint.minX !== undefined ? options.constraint.minX : Number.NEGATIVE_INFINITY,
-             maxX = options.constraint.maxX !== undefined ? options.constraint.maxX : Number.POSITIVE_INFINITY,
-             minY = options.constraint.minY !== undefined ? options.constraint.minY : Number.NEGATIVE_INFINITY,
-             maxY = options.constraint.maxY !== undefined ? options.constraint.maxY : Number.POSITIVE_INFINITY,
-             scope = elem.scope(),
-             
-             cancelFn = function(){
-               elem.triggerHandler('touchcancel');
-             },
-
-             resetFn = function(){
-               elem.triggerHandler('touchcancel');
-               deltaXTot = 0;
-               deltaYTot = 0;
-               tOrig.set(e);
-             },
-
-             callbacks = {
-               start: function(c) {
-                 
-                 if (!moving) { // Sometimes $swipe calls start multiple times
-                                   // without before end or cancel thus we need
-                                   // to ensure this is a fresh start to
-                                   // reset everything.
-                   t0 = Transform.fromElement(e);
-                   x  = x0 = c.x;
-                   y  = y0 = c.y; 
-                   moving = true;
-                   e.style.zIndex = 99999;
-                   if (options.start) {
-                     options.start(e.getBoundingClientRect(), cancelFn, resetFn);  
-                   }
-                 }
-                             
-               },
-
-               move: function(c) {
-                 // total movement shoud match constraints
-                 var dx, dy,
-                 deltaX, deltaY, r;
-
-                 deltaX = Math.max(Math.min(maxX - deltaXTot, c.x - x0), minX - deltaXTot);
-                 deltaY = Math.max(Math.min(maxY - deltaYTot, c.y - y0), minY - deltaYTot);
-
-                 dx = deltaX - (x - x0);
-                 dy = deltaY - (y - y0);
-
-                 t = Transform.fromElement(e); 
-
-                 if (options.transform) {
-                   r = options.transform(t, dx, dy, c.x, c.y, x0, y0);
-                   t = r || t;
-                 } else {
-                   t.translate(dx, dy);
-                 }
-
-                 if (options.adaptTransform) {
-                   r = options.adaptTransform(t, dx, dy, c.x, c.y, x0, y0);
-                   t = r || t;
-                 }
-                 
-                 x = deltaX + x0;
-                 y = deltaY + y0;
-
-                 t.set(e);
-
-                 if (options.move) {
-                   options.move(e.getBoundingClientRect(), cancelFn, resetFn);  
-                 }
-
-               },
-
-               end: function(c) {
-                 moving = false; 
-
-                 var deltaXTotOld = deltaXTot;
-                 var deltaYTotOld = deltaYTot;
-
-                 var undoFn = function() {
-                   deltaXTot = deltaXTotOld;
-                   deltaYTot = deltaYTotOld;
-                   t0.set(e);
-                 };
-
-                 deltaXTot = deltaXTot + x - x0;
-                 deltaYTot = deltaYTot + y - y0;
-                 
-                 if (options.end) {
-                   options.end(e.getBoundingClientRect(), undoFn, resetFn);
-                 }
-                 e.style.zIndex = zIndexBkp;
-               },
-
-               cancel: function() {
-                 if (moving) {
-                   t0.set(e);  
-                   if (options.cancel) {
-                     options.cancel(e.getBoundingClientRect(), resetFn);
-                   }
-                   moving = false;
-                   e.style.zIndex = zIndexBkp;
-                 }
-               }
-             };
-
-           scope.$on('$destroy', function() { 
-             $document.unbind('mouseout', cancelFn);
-             callbacks = options = e = moving = deltaXTot = deltaYTot = x0 = y0 = t0 = tOrig = x = y = t = minX = maxX = minY = maxY = scope = null;
-           });
-
-           $swipe.bind(elem, callbacks);
-           $document.on('mouseout', cancelFn);
-         }
-       };
-     }];
-   });
-
-}());
-
-
-
-(function () {
-   'use strict';
    var module = angular.module('mobile-angular-ui.fastclick', []);
 
-     module.run(function($window, $document) {
+     module.run(['$window', '$document', function($window, $document) {
          $window.addEventListener("load", (function() {
             FastClick.attach($document[0].body);
          }), false);
-     });
+     }]);
 
      angular.forEach(['select', 'input', 'textarea'], function(directiveName){
        module.directive(directiveName, function(){
@@ -1766,15 +1567,20 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
                     restrict: 'C',
                     link: function(scope, element, attr) {
                       var el = element[0],
-                          styles = $window.getComputedStyle(el),
-                          margin = parseInt(styles.marginTop) + parseInt(styles.marginBottom),
-                          heightWithMargin = el.offsetHeight + margin,
                           parentStyle = element.parent()[0].style;
 
-                      parentStyle['padding' + side] = heightWithMargin + 'px'; 
+                      var adjustParentPadding = function() {
+                        var styles = $window.getComputedStyle(el),
+                            margin = parseInt(styles.marginTop) + parseInt(styles.marginBottom);
+                        parentStyle['padding' + side] = el.offsetHeight + margin + 'px';
+                      };
+
+                      var interval = setInterval(adjustParentPadding, 30);
 
                       scope.$on('$destroy', function(){
-                        parentStyle['padding' + side] = '0px';
+                        clearInterval(interval);
+                        parentStyle['padding' + side] = null;
+                        interval = el = parentStyle = null;
                       });
                     }
                   };
@@ -1791,34 +1597,60 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
     '$parse',
     function($rootScope, $parse){
       var values = {};    // values, context object for evals
-      var statuses = {};  // status info
+      var statusesMeta = {};  // status info
       var scopes = {};    // scopes references
+      var exclusionGroups = {}; // support exclusive boolean sets
+
       return {
-        initialize: function(scope, id, defaultValue) {
-          var isNewScope = scopes[scope] === undefined;
+        initialize: function(scope, id, options) {
+          options = options || {};
+          
+          var isNewScope = scopes[scope] === undefined,
+              defaultValue = options.defaultValue,
+              exclusionGroup = options.exclusionGroup;
 
           scopes[scope.$id] = scopes[scope.$id] || [];
           scopes[scope.$id].push(id);
 
-          if (!statuses[id]) {
-            statuses[id] = {references: 1, defaultValue: defaultValue};
+          if (!statusesMeta[id]) { // is a brand new state 
+                                   // not referenced by any 
+                                   // scope currently
+
+            statusesMeta[id] = angular.extend({}, options, {references: 1});
+
             $rootScope.$broadcast('mobile-angular-ui.state.initialized.' + id, defaultValue);
+
             if (defaultValue !== undefined) {
-              $rootScope.$broadcast('mobile-angular-ui.state.changed.' + id, defaultValue);
+              this.setOne(id, defaultValue);
             }
+
+            if (exclusionGroup) {
+              // Exclusion groups are sets of statuses references
+              exclusionGroups[exclusionGroup] = exclusionGroups[exclusionGroup] || {};
+              exclusionGroups[exclusionGroup][id] = true;
+            }
+
           } else if (isNewScope) { // is a new reference from 
                                    // a different scope
-            statuses[id].references++; 
+            statusesMeta[id].references++; 
           }
           scope.$on('$destroy', function(){
             var ids = scopes[scope.$id] || [];
             for (var i = 0; i < ids.length; i++) {
-              var status = statuses[ids[i]];
+              var status = statusesMeta[ids[i]];
+              
+              if (status.exclusionGroup) {
+                delete exclusionGroups[status.exclusionGroup][ids[i]];
+                if (Object.keys(exclusionGroups[status.exclusionGroup]).length === 0) {
+                  delete exclusionGroups[status.exclusionGroup];
+                }
+              }
+
               status.references--;
               if (status.references <= 0) {
-                delete statuses[ids[i]];
+                delete statusesMeta[ids[i]];
                 delete values[ids[i]];
-                $rootScope.$broadcast('mobile-angular-ui.state.destroyed.' + id, defaultValue);
+                $rootScope.$broadcast('mobile-angular-ui.state.destroyed.' + id);
               }
             }
             delete scopes[scope.$id];
@@ -1826,7 +1658,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
         },
 
         setOne: function(id, value) {
-          if (statuses[id] !== undefined) {
+          if (statusesMeta[id] !== undefined) {
             var prev = values[id];
             values[id] = value;
             if (prev != value) {
@@ -1855,7 +1687,18 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
         },
 
         turnOn: function(id) {
-          return this.setOne(id, true);     
+          // Turns off other statuses belonging to the same exclusion group.
+          var eg = statusesMeta[id] && statusesMeta[id].exclusionGroup;
+          if (eg) {
+            var egStatuses = Object.keys(exclusionGroups[eg]);
+            for (var i = 0; i < egStatuses.length; i++) {
+              var item = egStatuses[i];
+              if (item != id) {
+                this.turnOff(item);
+              }
+            }
+          }
+          return this.setOne(id, true);
         },
 
         turnOff: function(id) {
@@ -1863,11 +1706,11 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
         },
 
         toggle: function(id) {
-          return this.setOne(id, !this.get(id));     
+          return this.get(id) ? this.turnOff(id) : this.turnOn(id);
         },
 
         get: function(id) {
-          return statuses[id] && values[id];
+          return statusesMeta[id] && values[id];
         },
 
         isActive: function(id) {
@@ -1879,7 +1722,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
         },
 
         isUndefined: function(id) {
-          return statuses[id] === undefined || this.get(id) === undefined;
+          return statusesMeta[id] === undefined || this.get(id) === undefined;
         },
 
         equals: function(id, value) {
@@ -1911,6 +1754,8 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 
   angular.forEach(['left', 'right'], function (side) {
     var directiveName = 'sidebar' + side.charAt(0).toUpperCase() + side.slice(1);
+    var stateName = 'ui' + directiveName.charAt(0).toUpperCase() + directiveName.slice(1);
+
     module.directive(directiveName, [
       '$rootElement',
       'SharedState',
@@ -1924,17 +1769,18 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
       ) {
         
         var outerClickCb = function (scope){
-          SharedState.turnOff(directiveName);
+          SharedState.turnOff(stateName);
         };
 
         var outerClickIf = function() {
-          return SharedState.isActive(directiveName);
+          return SharedState.isActive(stateName);
         };
         
         return {
           restrict: 'C',
           link: function (scope, elem, attrs) {
             var parentClass = 'has-sidebar-' + side;
+            var visibleClass = 'sidebar-' + side + '-visible';
             var activeClass = 'sidebar-' + side + '-in';
 
             $rootElement.addClass(parentClass);
@@ -1942,36 +1788,43 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
               $rootElement
                 .removeClass(parentClass);
               $rootElement
+                .removeClass(visibleClass);
+              $rootElement
                 .removeClass(activeClass);
             });
 
             var defaultActive = attrs.active !== undefined && attrs.active !== 'false';          
-            SharedState.initialize(scope, directiveName, defaultActive);
+            SharedState.initialize(scope, stateName, {defaultValue: defaultActive});
 
-            scope.$on('mobile-angular-ui.state.changed.' + directiveName, function (e, active) {
+            scope.$on('mobile-angular-ui.state.changed.' + stateName, function (e, active) {
               if (attrs.uiTrackAsSearchParam === '' || attrs.uiTrackAsSearchParam) {
-                $location.search(directiveName, active || null);
+                $location.search(stateName, active || null);
               }
               
               if (active) {
                 $rootElement
+                  .addClass(visibleClass);
+                $rootElement
                   .addClass(activeClass);
               } else {
+                // Note: there is no .removeClass(visibleClass);
+                // This is due visibleClass is removed after .app 
+                // transitioned by 'app' directive.
                 $rootElement
                   .removeClass(activeClass);
               }
             });
 
             scope.$on('$routeChangeSuccess', function() {
-              SharedState.turnOff(directiveName);
+              SharedState.turnOff(stateName);
             });
 
             scope.$on('$routeUpdate', function() {
               if (attrs.uiTrackAsSearchParam) {
-                if (($location.search())[directiveName]) {
-                  SharedState.turnOn(directiveName);
+                if (($location.search())[stateName]) {
+                  SharedState.turnOn(stateName);
                 } else {
-                  SharedState.turnOff(directiveName);
+                  SharedState.turnOff(stateName);
                 }                
               }
             });
@@ -1984,6 +1837,22 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
       }
     ]);
   });
+
+  module.directive('app', ['$rootElement', 'SharedState', function($rootElement, SharedState) {
+    return {
+      restrict: 'C',
+      link: function(scope, element, attributes) {
+        element.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend', function() {
+          if (!SharedState.isActive('uiSidebarLeft')) {
+            $rootElement.removeClass('sidebar-left-visible');  
+          }
+          if (!SharedState.isActive('uiSidebarRight')) {
+            $rootElement.removeClass('sidebar-right-visible');
+          }
+        });
+      }
+    };
+  }]);
 }());
 (function() {
   'use strict';  
@@ -2018,198 +1887,6 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 }());
 (function() {
   'use strict';
-  angular.module('mobile-angular-ui.transform', [])
-
-  .factory('Transform', [
-    '$window',
-    function($window){
-
-      function matrixHeight(m) {
-        return m.length;
-      }
-
-      function matrixWidth(m) {
-        return m[0] ? m[0].length : 0;
-      }
-
-      function matrixMult(m1, m2) {
-        var width1  = matrixWidth(m1), 
-            width2  = matrixWidth(m2), 
-            height1 = matrixHeight(m1), 
-            height2 = matrixHeight(m2);
-
-        if (width1 != height2) {
-          throw new Error("error: incompatible sizes");
-        }
-      
-        var result = [];
-        for (var i = 0; i < height1; i++) {
-            result[i] = [];
-            for (var j = 0; j < width2; j++) {
-                var sum = 0;
-                for (var k = 0; k < width1; k++) {
-                    sum += m1[i][k] * m2[k][j];
-                }
-                result[i][j] = sum;
-            }
-        }
-        return result; 
-      }
-
-      //
-      // Cross-Browser stuffs
-      // 
-      var vendorPrefix,
-          cssPrefix,
-          transformProperty,
-          prefixes = ['', 'webkit', 'Moz', 'O', 'ms'],
-          d = $window.document.createElement('div');
-      
-      for (var i = 0; i < prefixes.length; i++) {
-        var prefix = prefixes[i];
-        if ( (prefix + 'Perspective') in d.style ) {
-          vendorPrefix = prefix;
-          cssPrefix = (prefix === '' ? '' : '-' + prefix.toLowerCase() + '-');
-          transformProperty = cssPrefix + 'transform';
-          break;
-        }
-      }
-
-      d = null;
-
-      //
-      // Represents a 2d transform, 
-      // behind the scene is a transform matrix exposing methods to get/set
-      // meaningfull primitives like rotation, translation and scale.
-      // 
-      // Allows to apply multiple transforms through #merge.
-      //
-      function Transform(matrix) {
-        this.mtx = matrix || [
-          [1,0,0],
-          [0,1,0],
-          [0,0,1]
-        ];
-      }
-
-      Transform.fromElement = function(e) {
-        var tr = $window
-                .getComputedStyle(e, null)
-                .getPropertyValue(transformProperty);
-
-        if (!tr || tr === 'none') {
-          return new Transform();
-        }
-
-        if (tr.match('matrix3d')) {
-          throw new Error('Handling 3d transform is not supported yet');
-        }
-
-        var values = 
-          tr.split('(')[1]
-            .split(')')[0]
-            .split(',')
-            .map(Number);
-
-        var mtx = [
-          [values[0], values[2], values[4]],
-          [values[1], values[3], values[5]],
-          [        0,         0,        1 ],
-        ];
-
-        return new Transform(mtx);
-      };
-
-      Transform.prototype.apply = function(e, options) {
-        var mtx = Transform.fromElement(e).merge(this).mtx;
-        e.style[transformProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
-        return this;
-      };
-
-      Transform.prototype.set = function(e) {
-        var mtx = this.mtx;
-        e.style[transformProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
-        return this;
-      };
-
-      Transform.prototype.rotate = function(a) {
-        a = a * (Math.PI / 180); // deg2rad
-        var t = [
-          [Math.cos(a), -Math.sin(a),  0],
-          [Math.sin(a),  Math.cos(a),  0],
-          [          0,            0,  1]
-        ];
-
-        this.mtx = matrixMult(t, this.mtx);
-        return this;
-      };
-
-      Transform.prototype.translate = function(x, y) {
-        y = (y === null || y === undefined) ? x : y;
-        var t = [
-          [1,0,x],
-          [0,1,y],
-          [0,0,1]
-        ];
-        this.mtx = matrixMult(t, this.mtx);
-        return this;
-      };
-
-      Transform.prototype.scale = function(a) {
-        var t = [
-          [a,0,0],
-          [0,a,0],
-          [0,0,1]
-        ];
-        this.mtx = matrixMult(t, this.mtx);
-        return this;
-      };
-
-      Transform.prototype.merge = function(t) {
-        this.mtx = matrixMult(this.mtx, t.mtx);
-        return this;
-      };
-
-      Transform.prototype.getRotation = function() {
-        var mtx = this.mtx;
-        return Math.round(Math.atan2(mtx[1][0], mtx[0][0]) * (180/Math.PI)); // rad2deg
-      };
-
-      Transform.prototype.getTranslation = function() {
-        var mtx = this.mtx;
-        return {
-          x: mtx[0][2],
-          y: mtx[1][2]
-        };
-      };
-
-      Transform.prototype.getScale = function() {
-        var mtx = this.mtx, a = mtx[0][0], b = mtx[1][0], d = 10;
-        return Math.round( Math.sqrt( a*a + b*b ) * d ) / d;
-      };
-
-      Transform.prototype.matrixToString = function() {
-        var mtx = this.mtx;
-        var res = "";
-        for (var i = 0; i < mtx.length; i++) {
-          for (var j = 0; j < mtx[i].length; j++) {
-            var n = '' + mtx[i][j];
-            res += n;
-            for (var k = 0; k < 5 - n.length; k++) {
-              res += ' ';
-            }
-          }
-          res += '\n';
-        }
-        return res;
-      };
-
-      return Transform;
-    }
-  ]);
-}());
-(function() {
-  'use strict';
   var module = angular.module('mobile-angular-ui.ui', []);
 
   module.factory('uiBindEvent', function(){
@@ -2236,13 +1913,10 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
               defaultValueExpr = attrs.uiDefault || attrs['default'],
               defaultValue     = defaultValueExpr ? scope.$eval(defaultValueExpr) : undefined;
 
-          SharedState.initialize(scope, id);
-
-          if (defaultValue !== undefined) {
-            scope.$evalAsync(function(){
-              SharedState.set(id, defaultValue);
-            });
-          }
+          SharedState.initialize(scope, id, {
+            defaultValue: defaultValue,
+            exclusionGroup: attrs.uiExclusionGroup
+          });
         }
       };
     }

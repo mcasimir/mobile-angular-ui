@@ -3,12 +3,11 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  display: block;
-
+  display: none;
   .translate3d(0, 0, 0);
   .transition-transform(~"400ms ease");
+  pointer-events: none;
 }
-
 
 .sidebar-left {
   background: @sidebar-left-background;
@@ -23,26 +22,26 @@
   width: @sidebar-right-width;
   left: auto;
   right: 0;
-  .opacity(1);
-  .transition(~"opacity  600ms cubic-bezier(1, 0, 1, 0), width 400ms ease");
+  .transition(~"width 400ms ease");
 }
 
-.sidebar-left-in .sidebar-right {
-  z-index: -100;
-  .opacity(0);
-  .transition(~"opacity  600ms cubic-bezier(1, 0, 1, 0), width 400ms ease");
-  width: 0;
+.sidebar-left-visible .sidebar-left, .sidebar-right-visible .sidebar-right {
+  display: block;
+}
+
+.sidebar-left-in .sidebar-left, .sidebar-right-in .sidebar-right {
+  pointer-events: auto;
 }
 
 .sidebar-left-in .app {
   width: 100%;
-  .translate3d(@sidebar-left-width, 0, 0);
+  .translate(@sidebar-left-width, 0);
   .transition-transform(~"400ms ease");
 }
 
 .sidebar-right-in .app {
   width: 100%;
-  .translate3d(-@sidebar-right-width, 0, 0);
+  .translate(-@sidebar-right-width, 0);
   .transition-transform(~"400ms ease");
 }
 

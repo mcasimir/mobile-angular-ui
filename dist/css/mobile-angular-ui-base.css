@@ -7327,13 +7327,14 @@ a.list-group-item .icon.pull-right {
   position: absolute;
   top: 0;
   bottom: 0;
-  display: block;
+  display: none;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   -webkit-transition: -webkit-transform 400ms ease;
   -moz-transition: -moz-transform 400ms ease;
   -o-transition: -o-transform 400ms ease;
   transition: transform 400ms ease;
+  pointer-events: none;
 }
 
 .sidebar-left {
@@ -7351,27 +7352,27 @@ a.list-group-item .icon.pull-right {
   width: 300px;
   left: auto;
   right: 0;
-  opacity: 1;
-  filter: alpha(opacity=100);
-  -webkit-transition: opacity  600ms cubic-bezier(1, 0, 1, 0), width 400ms ease;
-  -o-transition: opacity  600ms cubic-bezier(1, 0, 1, 0), width 400ms ease;
-  transition: opacity  600ms cubic-bezier(1, 0, 1, 0), width 400ms ease;
+  -webkit-transition: width 400ms ease;
+  -o-transition: width 400ms ease;
+  transition: width 400ms ease;
 }
 
-.sidebar-left-in .sidebar-right {
-  z-index: -100;
-  opacity: 0;
-  filter: alpha(opacity=0);
-  -webkit-transition: opacity  600ms cubic-bezier(1, 0, 1, 0), width 400ms ease;
-  -o-transition: opacity  600ms cubic-bezier(1, 0, 1, 0), width 400ms ease;
-  transition: opacity  600ms cubic-bezier(1, 0, 1, 0), width 400ms ease;
-  width: 0;
+.sidebar-left-visible .sidebar-left,
+.sidebar-right-visible .sidebar-right {
+  display: block;
+}
+
+.sidebar-left-in .sidebar-left,
+.sidebar-right-in .sidebar-right {
+  pointer-events: auto;
 }
 
 .sidebar-left-in .app {
   width: 100%;
-  -webkit-transform: translate3d(300px, 0, 0);
-  transform: translate3d(300px, 0, 0);
+  -webkit-transform: translate(300px, 0);
+  -ms-transform: translate(300px, 0);
+  -o-transform: translate(300px, 0);
+  transform: translate(300px, 0);
   -webkit-transition: -webkit-transform 400ms ease;
   -moz-transition: -moz-transform 400ms ease;
   -o-transition: -o-transform 400ms ease;
@@ -7380,8 +7381,10 @@ a.list-group-item .icon.pull-right {
 
 .sidebar-right-in .app {
   width: 100%;
-  -webkit-transform: translate3d(-300px, 0, 0);
-  transform: translate3d(-300px, 0, 0);
+  -webkit-transform: translate(-300px, 0);
+  -ms-transform: translate(-300px, 0);
+  -o-transform: translate(-300px, 0);
+  transform: translate(-300px, 0);
   -webkit-transition: -webkit-transform 400ms ease;
   -moz-transition: -moz-transform 400ms ease;
   -o-transition: -o-transform 400ms ease;
@@ -7556,6 +7559,14 @@ a.panel-heading {
   max-width: 100%;
   max-height: 100%;
   margin: auto;
+}
+
+.modal {
+  display: block;
+}
+
+.modal-dialog {
+  z-index: 1050;
 }
 
 .modal-overlay {

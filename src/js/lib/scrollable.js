@@ -119,15 +119,20 @@
                     restrict: 'C',
                     link: function(scope, element, attr) {
                       var el = element[0],
-                          styles = $window.getComputedStyle(el),
-                          margin = parseInt(styles.marginTop) + parseInt(styles.marginBottom),
-                          heightWithMargin = el.offsetHeight + margin,
                           parentStyle = element.parent()[0].style;
 
-                      parentStyle['padding' + side] = heightWithMargin + 'px'; 
+                      var adjustParentPadding = function() {
+                        var styles = $window.getComputedStyle(el),
+                            margin = parseInt(styles.marginTop) + parseInt(styles.marginBottom);
+                        parentStyle['padding' + side] = el.offsetHeight + margin + 'px';
+                      };
+
+                      var interval = setInterval(adjustParentPadding, 30);
 
                       scope.$on('$destroy', function(){
-                        parentStyle['padding' + side] = '0px';
+                        clearInterval(interval);
+                        parentStyle['padding' + side] = null;
+                        interval = el = parentStyle = null;
                       });
                     }
                   };

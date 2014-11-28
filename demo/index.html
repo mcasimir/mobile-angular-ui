@@ -15,11 +15,16 @@
     <link rel="stylesheet" href="demo.css" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular-route.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular-touch.min.js"></script>
-    <script src="/dist/js/mobile-angular-ui.js"></script>
+    <script src="/dist/js/mobile-angular-ui.min.js"></script>
+
+    <!-- Only required to use $drag, $swipe and Translate services -->
+    <script src="/dist/js/mobile-angular-ui.gestures.min.js"></script>
+
+    <!-- Only required to import legacy syntax and directives. You won't need it 
+    unless you are attempting to move an app from Mobile Angular UI 1.1 to 1.2 -->
+    <script src="/dist/js/mobile-angular-ui.migrate.min.js"></script>
     <script src="demo.js"></script>
   </head>
-  
 
   <body 
     ng-app="MobileAngularUiExamples" 
@@ -43,12 +48,12 @@
           Mobile Angular UI
         </div>
         <div class="btn-group pull-left">
-          <div ui-toggle="sidebarLeft" class="btn sidebar-toggle">
+          <div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle">
             <i class="fa fa-bars"></i> Menu
           </div>
         </div>
         <div class="btn-group pull-right" ui-yield-to="navbarAction">
-          <div ui-toggle="sidebarRight" class="btn">
+          <div ui-toggle="uiSidebarRight" class="btn">
             <i class="fa fa-comment"></i> Chat
           </div>
         </div>

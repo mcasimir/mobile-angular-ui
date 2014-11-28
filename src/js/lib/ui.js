@@ -26,13 +26,10 @@
               defaultValueExpr = attrs.uiDefault || attrs['default'],
               defaultValue     = defaultValueExpr ? scope.$eval(defaultValueExpr) : undefined;
 
-          SharedState.initialize(scope, id);
-
-          if (defaultValue !== undefined) {
-            scope.$evalAsync(function(){
-              SharedState.set(id, defaultValue);
-            });
-          }
+          SharedState.initialize(scope, id, {
+            defaultValue: defaultValue,
+            exclusionGroup: attrs.uiExclusionGroup
+          });
         }
       };
     }

@@ -7,34 +7,60 @@
     '$parse',
     function($rootScope, $parse){
       var values = {};    // values, context object for evals
-      var statuses = {};  // status info
+      var statusesMeta = {};  // status info
       var scopes = {};    // scopes references
+      var exclusionGroups = {}; // support exclusive boolean sets
+
       return {
-        initialize: function(scope, id, defaultValue) {
-          var isNewScope = scopes[scope] === undefined;
+        initialize: function(scope, id, options) {
+          options = options || {};
+          
+          var isNewScope = scopes[scope] === undefined,
+              defaultValue = options.defaultValue,
+              exclusionGroup = options.exclusionGroup;
 
           scopes[scope.$id] = scopes[scope.$id] || [];
           scopes[scope.$id].push(id);
 
-          if (!statuses[id]) {
-            statuses[id] = {references: 1, defaultValue: defaultValue};
+          if (!statusesMeta[id]) { // is a brand new state 
+                                   // not referenced by any 
+                                   // scope currently
+
+            statusesMeta[id] = angular.extend({}, options, {references: 1});
+
             $rootScope.$broadcast('mobile-angular-ui.state.initialized.' + id, defaultValue);
+
             if (defaultValue !== undefined) {
-              $rootScope.$broadcast('mobile-angular-ui.state.changed.' + id, defaultValue);
+              this.setOne(id, defaultValue);
             }
+
+            if (exclusionGroup) {
+              // Exclusion groups are sets of statuses references
+              exclusionGroups[exclusionGroup] = exclusionGroups[exclusionGroup] || {};
+              exclusionGroups[exclusionGroup][id] = true;
+            }
+
           } else if (isNewScope) { // is a new reference from 
                                    // a different scope
-            statuses[id].references++; 
+            statusesMeta[id].references++; 
           }
           scope.$on('$destroy', function(){
             var ids = scopes[scope.$id] || [];
             for (var i = 0; i < ids.length; i++) {
-              var status = statuses[ids[i]];
+              var status = statusesMeta[ids[i]];
+              
+              if (status.exclusionGroup) {
+                delete exclusionGroups[status.exclusionGroup][ids[i]];
+                if (Object.keys(exclusionGroups[status.exclusionGroup]).length === 0) {
+                  delete exclusionGroups[status.exclusionGroup];
+                }
+              }
+
               status.references--;
               if (status.references <= 0) {
-                delete statuses[ids[i]];
+                delete statusesMeta[ids[i]];
                 delete values[ids[i]];
-                $rootScope.$broadcast('mobile-angular-ui.state.destroyed.' + id, defaultValue);
+                $rootScope.$broadcast('mobile-angular-ui.state.destroyed.' + id);
               }
             }
             delete scopes[scope.$id];
@@ -42,7 +68,7 @@
         },
 
         setOne: function(id, value) {
-          if (statuses[id] !== undefined) {
+          if (statusesMeta[id] !== undefined) {
             var prev = values[id];
             values[id] = value;
             if (prev != value) {
@@ -71,7 +97,18 @@
         },
 
         turnOn: function(id) {
-          return this.setOne(id, true);     
+          // Turns off other statuses belonging to the same exclusion group.
+          var eg = statusesMeta[id] && statusesMeta[id].exclusionGroup;
+          if (eg) {
+            var egStatuses = Object.keys(exclusionGroups[eg]);
+            for (var i = 0; i < egStatuses.length; i++) {
+              var item = egStatuses[i];
+              if (item != id) {
+                this.turnOff(item);
+              }
+            }
+          }
+          return this.setOne(id, true);
         },
 
         turnOff: function(id) {
@@ -79,11 +116,11 @@
         },
 
         toggle: function(id) {
-          return this.setOne(id, !this.get(id));     
+          return this.get(id) ? this.turnOff(id) : this.turnOn(id);
         },
 
         get: function(id) {
-          return statuses[id] && values[id];
+          return statusesMeta[id] && values[id];
         },
 
         isActive: function(id) {
@@ -95,7 +132,7 @@
         },
 
         isUndefined: function(id) {
-          return statuses[id] === undefined || this.get(id) === undefined;
+          return statusesMeta[id] === undefined || this.get(id) === undefined;
         },
 
         equals: function(id, value) {
