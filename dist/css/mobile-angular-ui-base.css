@@ -7570,7 +7570,7 @@ a.panel-heading {
 }
 
 .modal-overlay {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.95);
 }
 
 .modal-overlay .modal-content,
@@ -7581,11 +7581,16 @@ a.panel-heading {
   border: none;
 }
 
+.has-modal .app,
+.has-modal-overlay .app,
+.has-modal .sidebar,
+.has-modal-overlay .sidebar {
+  pointer-events: none;
+}
+
 .has-modal-overlay .app,
 .has-modal-overlay .sidebar {
   -webkit-filter: blur(5px);
-  -moz-filter: blur(5px);
-  -o-filter: blur(5px);
   -ms-filter: blur(5px);
   filter: blur(5px);
 }

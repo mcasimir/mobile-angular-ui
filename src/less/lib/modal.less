@@ -19,12 +19,16 @@
   }
 }
 
+.has-modal, .has-modal-overlay {
+  .app, .sidebar {
+    pointer-events: none;
+  }
+}
+
 .has-modal-overlay {
   .app, .sidebar {
     -webkit-filter: blur(@overlay-blur);
-    -moz-filter: blur(@overlay-blur);
-    -o-filter: blur(@overlay-blur);
-    -ms-filter: blur(@overlay-blur);
+    -ms-filter: blur(@overlay-blur); // hope someday will be used
     filter: blur(@overlay-blur);
   }
 }

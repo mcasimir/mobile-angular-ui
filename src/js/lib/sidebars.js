@@ -63,11 +63,9 @@
                 $rootElement
                   .addClass(activeClass);
               } else {
-                // Note: there is no .removeClass(visibleClass);
-                // This is due visibleClass is removed after .app 
-                // transitioned by 'app' directive.
                 $rootElement
                   .removeClass(activeClass);
+                // Note: .removeClass(visibleClass) is called by 'app' directive
               }
             });
 
@@ -98,6 +96,7 @@
     return {
       restrict: 'C',
       link: function(scope, element, attributes) {
+        
         element.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend', function() {
           if (!SharedState.isActive('uiSidebarLeft')) {
             $rootElement.removeClass('sidebar-left-visible');  
@@ -105,7 +104,8 @@
           if (!SharedState.isActive('uiSidebarRight')) {
             $rootElement.removeClass('sidebar-right-visible');
           }
-        });
+        });          
+
       }
     };
   }]);

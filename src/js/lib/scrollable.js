@@ -129,10 +129,8 @@
 
                       var interval = setInterval(adjustParentPadding, 30);
 
-                      scope.$on('$destroy', function(){
+                      element.on('$destroy', function(){
                         clearInterval(interval);
-                        parentStyle['padding' + side] = null;
-                        interval = el = parentStyle = null;
                       });
                     }
                   };

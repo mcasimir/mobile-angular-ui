@@ -1303,6 +1303,20 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
   'use strict';
   angular.module('mobile-angular-ui.modals', [])
 
+  .directive('modal', [
+    '$rootElement',
+    function($rootElement) {
+      return {
+        restrict: 'C',
+        link: function(scope, elem) {
+          $rootElement.addClass('has-modal');
+          scope.$on('$destroy', function(){
+            $rootElement.removeClass('has-modal');
+          });
+        }
+      };
+  }])
+
   .directive('modalOverlay', [
     '$rootElement',
     function($rootElement) {
@@ -1577,10 +1591,8 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 
                       var interval = setInterval(adjustParentPadding, 30);
 
-                      scope.$on('$destroy', function(){
+                      element.on('$destroy', function(){
                         clearInterval(interval);
-                        parentStyle['padding' + side] = null;
-                        interval = el = parentStyle = null;
                       });
                     }
                   };
@@ -1807,11 +1819,9 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
                 $rootElement
                   .addClass(activeClass);
               } else {
-                // Note: there is no .removeClass(visibleClass);
-                // This is due visibleClass is removed after .app 
-                // transitioned by 'app' directive.
                 $rootElement
                   .removeClass(activeClass);
+                // Note: .removeClass(visibleClass) is called by 'app' directive
               }
             });
 
@@ -1842,6 +1852,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
     return {
       restrict: 'C',
       link: function(scope, element, attributes) {
+        
         element.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend', function() {
           if (!SharedState.isActive('uiSidebarLeft')) {
             $rootElement.removeClass('sidebar-left-visible');  
@@ -1849,7 +1860,8 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
           if (!SharedState.isActive('uiSidebarRight')) {
             $rootElement.removeClass('sidebar-right-visible');
           }
-        });
+        });          
+
       }
     };
   }]);
@@ -2113,18 +2125,18 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
   'use strict';
 
   angular.module('mobile-angular-ui', [
-    'mobile-angular-ui.pointerEvents',
-    'mobile-angular-ui.activeLinks',
-    'mobile-angular-ui.fastclick',
-    'mobile-angular-ui.sharedState',
-    'mobile-angular-ui.ui',
-    'mobile-angular-ui.outerClick',
-    'mobile-angular-ui.modals',
-    'mobile-angular-ui.switch',
-    'mobile-angular-ui.sidebars',
-    'mobile-angular-ui.scrollable',
-    'mobile-angular-ui.capture',
-    'mobile-angular-ui.navbars'
+    'mobile-angular-ui.pointerEvents',     /* prevents actions on disabled elements */
+    'mobile-angular-ui.activeLinks',       /* adds .active class to current links */
+    'mobile-angular-ui.fastclick',         /* polyfills overflow: auto */
+    'mobile-angular-ui.sharedState',       /* SharedState service */
+    'mobile-angular-ui.ui',                /* ui-* directives */
+    'mobile-angular-ui.outerClick',        /* outerClick directives */
+    'mobile-angular-ui.modals',            /* modals and overlays */
+    'mobile-angular-ui.switch',            /* switch form input */
+    'mobile-angular-ui.sidebars',          /* sidebars */
+    'mobile-angular-ui.scrollable',        /* uiScrollable directives */
+    'mobile-angular-ui.capture',           /* uiYieldTo and uiContentFor directives */
+    'mobile-angular-ui.navbars'            /* navbars */
   ]);
 
 }());
