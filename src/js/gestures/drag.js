@@ -1,9 +1,9 @@
 (function () {
    'use strict';
 
-   angular.module('mobile-angular-ui.drag', [
-     'mobile-angular-ui.swipe',
-     'mobile-angular-ui.transform'
+   angular.module('mobile-angular-ui.gestures.drag', [
+     'mobile-angular-ui.gestures.swipe',
+     'mobile-angular-ui.gestures.transform'
    ])
 
    // 

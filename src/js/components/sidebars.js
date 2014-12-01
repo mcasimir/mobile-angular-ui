@@ -2,9 +2,9 @@
   'use strict';
 
   var module = angular.module(
-    'mobile-angular-ui.sidebars', [
-      'mobile-angular-ui.sharedState',
-      'mobile-angular-ui.outerClick'
+    'mobile-angular-ui.components.sidebars', [
+      'mobile-angular-ui.core.sharedState',
+      'mobile-angular-ui.core.outerClick'
     ]
   );
 

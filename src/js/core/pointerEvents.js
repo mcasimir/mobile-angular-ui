@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  angular.module('mobile-angular-ui.pointerEvents', []).run([
+  angular.module('mobile-angular-ui.core.pointerEvents', []).run([
     '$document', function($document) {
       return angular.element($document).on("click tap", function(e) {
         var target;

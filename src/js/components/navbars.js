@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  var module = angular.module('mobile-angular-ui.navbars', []);
+  var module = angular.module('mobile-angular-ui.components.navbars', []);
 
   angular.forEach(['top', 'bottom'], function(side) {
     var directiveName = 'navbarAbsolute' + side.charAt(0).toUpperCase() + side.slice(1);

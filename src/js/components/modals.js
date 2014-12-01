@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  angular.module('mobile-angular-ui.modals', [])
+  angular.module('mobile-angular-ui.components.modals', [])
 
   .directive('modal', [
     '$rootElement',

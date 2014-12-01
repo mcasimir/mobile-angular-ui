@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module("mobile-angular-ui.activeLinks", [])
+  angular.module("mobile-angular-ui.core.activeLinks", [])
 
   .run([
       '$rootScope', 

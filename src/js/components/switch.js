@@ -1,6 +1,6 @@
 (function() {
   'use strict';  
-  angular.module('mobile-angular-ui.switch', [])
+  angular.module('mobile-angular-ui.components.switch', [])
   .directive("uiSwitch", function() {
     return {
       restrict: "EA",

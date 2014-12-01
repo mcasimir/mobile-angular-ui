@@ -1,6 +1,6 @@
 (function() {
   'use strict';  
-  angular.module('mobile-angular-ui.sharedState', [])
+  angular.module('mobile-angular-ui.core.sharedState', [])
 
   .factory('SharedState', [
     '$rootScope',

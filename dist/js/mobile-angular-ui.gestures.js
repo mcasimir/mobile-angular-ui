@@ -1,9 +1,9 @@
 (function () {
    'use strict';
 
-   angular.module('mobile-angular-ui.drag', [
-     'mobile-angular-ui.swipe',
-     'mobile-angular-ui.transform'
+   angular.module('mobile-angular-ui.gestures.drag', [
+     'mobile-angular-ui.gestures.swipe',
+     'mobile-angular-ui.gestures.transform'
    ])
 
    // 
@@ -264,7 +264,7 @@
   // basically the same despite of:
   // 1) It does not require ngTouch thus is better compatible with fastclick.js 
   // 2) It allows to unbind
-  angular.module('mobile-angular-ui.swipe', [])
+  angular.module('mobile-angular-ui.gestures.swipe', [])
 
   .factory('$swipe', [function() {
     var MOVE_BUFFER_RADIUS = 10;
@@ -408,7 +408,7 @@
 
 (function() {
   'use strict';
-  angular.module('mobile-angular-ui.transform', [])
+  angular.module('mobile-angular-ui.gestures.transform', [])
 
   .factory('Transform', [
     '$window',
@@ -612,4 +612,14 @@
       return Transform;
     }
   ]);
+}());
+(function () {
+   'use strict';
+
+   angular.module('mobile-angular-ui.gestures', [
+     'mobile-angular-ui.gestures.drag',
+     'mobile-angular-ui.gestures.swipe',
+     'mobile-angular-ui.gestures.transform'
+   ]);
+
 }());

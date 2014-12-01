@@ -5,7 +5,7 @@
   // basically the same despite of:
   // 1) It does not require ngTouch thus is better compatible with fastclick.js 
   // 2) It allows to unbind
-  angular.module('mobile-angular-ui.swipe', [])
+  angular.module('mobile-angular-ui.gestures.swipe', [])
 
   .factory('$swipe', [function() {
     var MOVE_BUFFER_RADIUS = 10;

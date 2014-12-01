@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  angular.module('mobile-angular-ui.transform', [])
+  angular.module('mobile-angular-ui.gestures.transform', [])
 
   .factory('Transform', [
     '$window',

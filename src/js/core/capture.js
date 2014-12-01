@@ -1,7 +1,7 @@
 (function () {
    'use strict';
 
-   angular.module('mobile-angular-ui.capture', [])
+   angular.module('mobile-angular-ui.core.capture', [])
 
    .run([
      'Capture', 

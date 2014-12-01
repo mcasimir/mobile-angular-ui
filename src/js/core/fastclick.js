@@ -1,6 +1,6 @@
 (function () {
    'use strict';
-   var module = angular.module('mobile-angular-ui.fastclick', []);
+   var module = angular.module('mobile-angular-ui.core.fastclick', []);
 
      module.run(['$window', '$document', function($window, $document) {
          $window.addEventListener("load", (function() {

@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var module = angular.module('mobile-angular-ui.ui', []);
+  var module = angular.module('mobile-angular-ui.core.ui', ['mobile-angular-ui.core.sharedState']);
 
   module.factory('uiBindEvent', function(){
     return function(scope, element, eventNames, fn){

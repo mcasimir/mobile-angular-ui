@@ -1,6 +1,6 @@
 (function () {
    'use strict';
-   angular.module('mobile-angular-ui.outerClick', [])
+   angular.module('mobile-angular-ui.core.outerClick', [])
 
    .factory('isAncestorOrSelf', function () {
      return function (element, target) {

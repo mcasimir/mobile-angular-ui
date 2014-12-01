@@ -58,9 +58,11 @@ module.exports = function(grunt) {
       },
       js: {
         files: {
-          "dist/js/mobile-angular-ui.js": ["bower_components/overthrow/src/overthrow-detect.js", "bower_components/overthrow/src/overthrow-init.js", "bower_components/overthrow/src/overthrow-polyfill.js", "bower_components/fastclick/lib/fastclick.js", "src/js/lib/*.js", "src/js/mobile-angular-ui.js"],
-          "dist/js/mobile-angular-ui.migrate.js": ["src/js/migrate/migrate.js"],
-          "dist/js/mobile-angular-ui.gestures.js": ["src/js/gestures/*.js"]
+          "dist/js/mobile-angular-ui.core.js": ["bower_components/fastclick/lib/fastclick.js", "src/js/core/**/*.js", "src/js/mobile-angular-ui.core.js"],
+          "dist/js/mobile-angular-ui.components.js": ["bower_components/overthrow/src/overthrow-detect.js", "bower_components/overthrow/src/overthrow-init.js", "bower_components/overthrow/src/overthrow-polyfill.js", "src/js/components/**/*.js", "src/js/mobile-angular-ui.components.js"],
+          "dist/js/mobile-angular-ui.migrate.js": ["src/js/migrate/**/*.js", "src/js/mobile-angular-ui.migrate.js"],
+          "dist/js/mobile-angular-ui.gestures.js": ["src/js/gestures/**/*.js", "src/js/mobile-angular-ui.gestures.js"],
+          "dist/js/mobile-angular-ui.js": [ "dist/js/mobile-angular-ui.core.js", "dist/js/mobile-angular-ui.components.js", "src/js/mobile-angular-ui.js"]
         }
       }
     },
@@ -73,7 +75,9 @@ module.exports = function(grunt) {
         files: {
           "dist/js/mobile-angular-ui.min.js": ["dist/js/mobile-angular-ui.js"],
           "dist/js/mobile-angular-ui.migrate.min.js": ["dist/js/mobile-angular-ui.migrate.js"],
-          "dist/js/mobile-angular-ui.gestures.min.js": ["dist/js/mobile-angular-ui.gestures.js"]
+          "dist/js/mobile-angular-ui.gestures.min.js": ["dist/js/mobile-angular-ui.gestures.js"],
+          "dist/js/mobile-angular-ui.core.min.js": ["dist/js/mobile-angular-ui.core.js"],
+          "dist/js/mobile-angular-ui.components.min.js": ["dist/js/mobile-angular-ui.components.js"]
         }
       }
     },

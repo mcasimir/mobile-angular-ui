@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var module = angular.module('mobile-angular-ui.scrollable', []);
+  var module = angular.module('mobile-angular-ui.components.scrollable', []);
 
   module.directive('scrollableContent', function() {
     return {
