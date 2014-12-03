@@ -1,6 +1,7 @@
-(function () {
+(function() {
   'use strict';
-  angular.module('mobile-angular-ui.core.pointerEvents', []).run([
+
+  angular.module('mobile-angular-ui.migrate.disabled', []).run([
     '$document', function($document) {
       return angular.element($document).on("click tap", function(e) {
         var target;
@@ -17,4 +18,5 @@
       });
     }
   ]);
+
 }());

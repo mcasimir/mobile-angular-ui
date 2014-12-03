@@ -1,4 +1,26 @@
 (function() {
+  'use strict';
+
+  angular.module('mobile-angular-ui.migrate.disabled', []).run([
+    '$document', function($document) {
+      return angular.element($document).on("click tap", function(e) {
+        var target;
+        target = angular.element(e.target);
+        if (target.hasClass("disabled")) {
+          e.preventDefault();
+          e.stopPropagation();
+          target = null;
+          return false;
+        } else {
+          target = null;
+          return true;
+        }
+      });
+    }
+  ]);
+
+}());
+(function() {
   'use strict';      
 
   var module = angular.module('mobile-angular-ui.migrate.forms', []);
@@ -222,10 +244,10 @@
 (function() {
   'use strict';      
 
-  var module = angular.module('mobile-angular-ui.migrate', 
-    [
+  angular.module('mobile-angular-ui.migrate', [
       'mobile-angular-ui.migrate.toggle',
       'mobile-angular-ui.migrate.forms',
-      'mobile-angular-ui.migrate.panels'
+      'mobile-angular-ui.migrate.panels',
+      'mobile-angular-ui.migrate.disabled'
     ]);
 }());

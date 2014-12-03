@@ -1,5 +1,6 @@
-(function () {
+(function() {
   'use strict';
+
   angular.module('mobile-angular-ui.components', [
     'mobile-angular-ui.components.modals',
     'mobile-angular-ui.components.navbars',

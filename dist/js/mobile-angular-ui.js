@@ -1073,27 +1073,6 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
      }
    ]);
 }());
-(function () {
-  'use strict';
-  angular.module('mobile-angular-ui.core.pointerEvents', []).run([
-    '$document', function($document) {
-      return angular.element($document).on("click tap", function(e) {
-        var target;
-        target = angular.element(e.target);
-        if (target.hasClass("disabled")) {
-          e.preventDefault();
-          e.stopPropagation();
-          target = null;
-          return false;
-        } else {
-          target = null;
-          return true;
-        }
-      });
-    }
-  ]);
-}());
-
 (function() {
   'use strict';  
   angular.module('mobile-angular-ui.core.sharedState', [])
@@ -1477,7 +1456,6 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
   angular.module('mobile-angular-ui.core', [
     'mobile-angular-ui.core.fastclick',
     'mobile-angular-ui.core.activeLinks',
-    'mobile-angular-ui.core.pointerEvents',
     'mobile-angular-ui.core.capture',
     'mobile-angular-ui.core.outerClick',
     'mobile-angular-ui.core.sharedState',
@@ -2133,8 +2111,9 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
     };
   });
 }());
-(function () {
+(function() {
   'use strict';
+
   angular.module('mobile-angular-ui.components', [
     'mobile-angular-ui.components.modals',
     'mobile-angular-ui.components.navbars',
