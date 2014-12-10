@@ -993,28 +993,26 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 }());
 (function () {
    'use strict';
-   angular.module('mobile-angular-ui.core.outerClick', [])
 
-   .factory('isAncestorOrSelf', function () {
-     return function (element, target) {
-       var parent = element;
-       while (parent.length > 0) {
-         if (parent[0] === target[0]) {
-           parent = null;
-           return true;
-         }
-         parent = parent.parent();
+   var isAncestorOrSelf = function(element, target) {
+     var parent = element;
+     while (parent.length > 0) {
+       if (parent[0] === target[0]) {
+         parent = null;
+         return true;
        }
-       parent = null;
-       return false;
-     };
-   })
+       parent = parent.parent();
+     }
+     parent = null;
+     return false;
+   };
+
+   angular.module('mobile-angular-ui.core.outerClick', [])
 
    .factory('bindOuterClick', [
      '$document',
-     '$timeout', 
-     'isAncestorOrSelf',
-     function ($document, $timeout, isAncestorOrSelf) {
+     '$timeout',
+     function ($document, $timeout) {
        
        return function (scope, element, outerClickFn, outerClickIf) {
          var handleOuterClick = function(event){
@@ -1075,9 +1073,9 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 }());
 (function() {
   'use strict';  
-  angular.module('mobile-angular-ui.core.sharedState', [])
+  var module = angular.module('mobile-angular-ui.core.sharedState', []);
 
-  .factory('SharedState', [
+  module.factory('SharedState', [
     '$rootScope',
     '$parse',
     function($rootScope, $parse){
@@ -1225,23 +1223,15 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
       };
     }
   ]);
-}());
 
-(function() {
-  'use strict';
-  var module = angular.module('mobile-angular-ui.core.ui', ['mobile-angular-ui.core.sharedState']);
-
-  module.factory('uiBindEvent', function(){
-    return function(scope, element, eventNames, fn){
-      eventNames = eventNames || 'click tap';
-      element.on(eventNames, function(event){
-        scope.$apply(function() {
-          fn(scope, {$event:event});
-        });
+  var uiBindEvent = function(scope, element, eventNames, fn){
+    eventNames = eventNames || 'click tap';
+    element.on(eventNames, function(event){
+      scope.$apply(function() {
+        fn(scope, {$event:event});
       });
-    };
-  });
-
+    });
+  };
 
   module.directive('uiState', [
     'SharedState', 
@@ -1271,8 +1261,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
       module.directive(directiveName, [
         '$parse',
         'SharedState',
-        'uiBindEvent',
-        function($parse, SharedState, uiBindEvent) {
+        function($parse, SharedState) {
               var method = SharedState[methodName];
               return {
                 restrict: 'A',
@@ -1450,7 +1439,9 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
     }
   ]);
 
+
 }());
+
 (function () {
   'use strict';
   angular.module('mobile-angular-ui.core', [
@@ -1458,8 +1449,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
     'mobile-angular-ui.core.activeLinks',
     'mobile-angular-ui.core.capture',
     'mobile-angular-ui.core.outerClick',
-    'mobile-angular-ui.core.sharedState',
-    'mobile-angular-ui.core.ui'
+    'mobile-angular-ui.core.sharedState'
   ]);
 }());
 /*! Overthrow. An overflow:auto polyfill for responsive design. (c) 2012: Scott Jehl, Filament Group, Inc. http://filamentgroup.github.com/Overthrow/license.txt */

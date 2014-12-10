@@ -5,7 +5,6 @@
     'mobile-angular-ui.core.activeLinks',
     'mobile-angular-ui.core.capture',
     'mobile-angular-ui.core.outerClick',
-    'mobile-angular-ui.core.sharedState',
-    'mobile-angular-ui.core.ui'
+    'mobile-angular-ui.core.sharedState'
   ]);
 }());

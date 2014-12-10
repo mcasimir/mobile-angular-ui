@@ -1,27 +1,25 @@
 (function () {
    'use strict';
-   angular.module('mobile-angular-ui.core.outerClick', [])
 
-   .factory('isAncestorOrSelf', function () {
-     return function (element, target) {
-       var parent = element;
-       while (parent.length > 0) {
-         if (parent[0] === target[0]) {
-           parent = null;
-           return true;
-         }
-         parent = parent.parent();
+   var isAncestorOrSelf = function(element, target) {
+     var parent = element;
+     while (parent.length > 0) {
+       if (parent[0] === target[0]) {
+         parent = null;
+         return true;
        }
-       parent = null;
-       return false;
-     };
-   })
+       parent = parent.parent();
+     }
+     parent = null;
+     return false;
+   };
+
+   angular.module('mobile-angular-ui.core.outerClick', [])
 
    .factory('bindOuterClick', [
      '$document',
-     '$timeout', 
-     'isAncestorOrSelf',
-     function ($document, $timeout, isAncestorOrSelf) {
+     '$timeout',
+     function ($document, $timeout) {
        
        return function (scope, element, outerClickFn, outerClickIf) {
          var handleOuterClick = function(event){
