@@ -66,15 +66,13 @@
        return {
          compile: function(tElem, tAttrs) {
            var rawContent = tElem.html();
-           if(tAttrs.duplicate === null || tAttrs.duplicate === undefined) {
+           if(tAttrs.uiDuplicate === null || tAttrs.uiDuplicate === undefined) {
              // no need to compile anything!
              tElem.html('');
+             tElem.remove();
            }
-           return function postLink(scope, elem, attrs) {
+           return function(scope, elem, attrs) {
              Capture.setContentFor(attrs.uiContentFor, rawContent, scope);
-             if (attrs.duplicate === null || attrs.duplicate === undefined) {
-               elem.remove();
-             }
            };
          }
        };

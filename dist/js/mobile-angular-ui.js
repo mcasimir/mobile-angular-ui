@@ -939,15 +939,13 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
        return {
          compile: function(tElem, tAttrs) {
            var rawContent = tElem.html();
-           if(tAttrs.duplicate === null || tAttrs.duplicate === undefined) {
+           if(tAttrs.uiDuplicate === null || tAttrs.uiDuplicate === undefined) {
              // no need to compile anything!
              tElem.html('');
+             tElem.remove();
            }
-           return function postLink(scope, elem, attrs) {
+           return function(scope, elem, attrs) {
              Capture.setContentFor(attrs.uiContentFor, rawContent, scope);
-             if (attrs.duplicate === null || attrs.duplicate === undefined) {
-               elem.remove();
-             }
            };
          }
        };
@@ -1878,17 +1876,19 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
         link: function(scope, elem, attrs, scrollable) {
           // Workaround to avoid soft keyboard hiding inputs
           elem.on('focus', function(){
-            var h1 = scrollable.scrollableContent.offsetHeight;
-            $timeout(function() {
-              var h2 = scrollable.scrollableContent.offsetHeight;
-              // 
-              // if scrollableContent height is reduced in half second
-              // since an input got focus we assume soft keyboard is showing.
-              //
-              if (h1 > h2) {
-                scrollable.scrollTo(elem, 10);  
-              }
-            }, 500);
+            if (scrollable && scrollableContent) {
+              var h1 = scrollable.scrollableContent.offsetHeight;
+              $timeout(function() {
+                var h2 = scrollable.scrollableContent.offsetHeight;
+                // 
+                // if scrollableContent height is reduced in half second
+                // since an input got focus we assume soft keyboard is showing.
+                //
+                if (h1 > h2) {
+                  scrollable.scrollTo(elem, 10);  
+                }
+              }, 500);              
+            }
           });
         }
       };

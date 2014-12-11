@@ -113,4 +113,22 @@
       }
     };    
   }]);
+
+  module.run(['$rootScope', function($rootScope, SharedState) {
+
+    $rootScope.toggle = function(target, command) {
+      if (command === 'on') {
+        SharedState.turnOn(target);
+      } else if (command === 'off') {
+        SharedState.turnOff(target);
+      } else {
+        SharedState.toggle(target);
+      }
+    };
+
+    // $rootScope.toggleByClass = function(target, command) {
+    //  // Not supported 
+    // };
+
+  }]);
 }());

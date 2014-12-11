@@ -58,17 +58,19 @@
         link: function(scope, elem, attrs, scrollable) {
           // Workaround to avoid soft keyboard hiding inputs
           elem.on('focus', function(){
-            var h1 = scrollable.scrollableContent.offsetHeight;
-            $timeout(function() {
-              var h2 = scrollable.scrollableContent.offsetHeight;
-              // 
-              // if scrollableContent height is reduced in half second
-              // since an input got focus we assume soft keyboard is showing.
-              //
-              if (h1 > h2) {
-                scrollable.scrollTo(elem, 10);  
-              }
-            }, 500);
+            if (scrollable && scrollableContent) {
+              var h1 = scrollable.scrollableContent.offsetHeight;
+              $timeout(function() {
+                var h2 = scrollable.scrollableContent.offsetHeight;
+                // 
+                // if scrollableContent height is reduced in half second
+                // since an input got focus we assume soft keyboard is showing.
+                //
+                if (h1 > h2) {
+                  scrollable.scrollTo(elem, 10);  
+                }
+              }, 500);              
+            }
           });
         }
       };
