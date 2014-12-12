@@ -57,12 +57,16 @@
       <div class="row">
         <div class="col-sm-3 sidebar-container">
           <ul class="toc sidebar nav" id="toc">
-          <li class="toc1"><a href="#getting-started">Getting Started</a><ul class="nav"><li class="toc2"><a href="#installation">Installation</a></li><li class="toc2"><a href="#initialization">Initialization</a></li><li class="toc2"><a href="#basic-layout">Basic Layout</a></li><li class="toc2"><a href="#differences-with-bootstrap-3">Differences with Bootstrap 3</a></li></ul></li><li class="toc1"><a href="#angular-directives">Angular Directives</a><ul class="nav"><li class="toc2"><a href="#-scrollable-">scrollable</a></li><li class="toc2"><a href="#-toggle-and-toggleable-">toggle and toggleable</a></li><li class="toc2"><a href="#-contentfor-and-yieldto-">contentFor and yieldTo</a></li></ul></li><li class="toc1"><a href="#components">Components</a><ul class="nav"><li class="toc2"><a href="#navbars">Navbars</a></li><li class="toc2"><a href="#sidebars">Sidebars</a></li><li class="toc2"><a href="#tabs">Tabs</a></li><li class="toc2"><a href="#accordion-and-collapse">Accordion and Collapse</a></li><li class="toc2"><a href="#overlays">Overlays</a></li><li class="toc2"><a href="#dropdowns">Dropdowns</a></li><li class="toc2"><a href="#carousels">Carousels</a></li><li class="toc2"><a href="#toggle-switch">Toggle Switch</a></li></ul></li><li class="toc1"><a href="#utils">Utils</a><ul class="nav"><li class="toc2"><a href="#justified-blocks">Justified Blocks</a></li><li class="toc2"><a href="#form-helpers">Form helpers</a></li><li class="toc2"><a href="#panel-helpers">Panel Helpers</a></li></ul></li></ul>
+          <li class="toc1"><a href="#getting-started">Getting Started</a><ul class="nav"><li class="toc2"><a href="#installation">Installation</a></li><li class="toc3"><a href="#using-the-boilerplate">Using the boilerplate</a></li><li class="toc2"><a href="#initial-setup">Initial Setup</a></li><li class="toc3"><a href="#html-head-section-setup">Html head section setup</a></li><li class="toc3"><a href="#basic-layout">Basic Layout</a></li><li class="toc2"><a href="#support-and-compatibility">Support and Compatibility</a></li><li class="toc3"><a href="#browser-support">Browser Support</a></li><li class="toc3"><a href="#differences-with-bootstrap-3">Differences with Bootstrap 3</a></li></ul></li><li class="toc1"><a href="#modules">Modules</a><ul class="nav"><li class="toc2"><a href="#overview">Overview</a></li><li class="toc2"><a href="#core">Core</a></li><li class="toc3"><a href="#active-links">Active Links</a></li><li class="toc3"><a href="#capture">Capture</a></li><li class="toc3"><a href="#fastclick">Fastclick</a></li><li class="toc3"><a href="#outer-click">Outer Click</a></li><li class="toc3"><a href="#shared-state">Shared State</a></li><li class="toc2"><a href="#components">Components</a></li><li class="toc3"><a href="#modals-and-overlays">Modals and Overlays</a></li><li class="toc3"><a href="#navbars">Navbars</a></li><li class="toc3"><a href="#mobile-navbar-layout">Mobile Navbar Layout</a></li><li class="toc3"><a href="#scrollable">Scrollable</a></li><li class="toc3"><a href="#sidebars">Sidebars</a></li><li class="toc3"><a href="#toggle-switch">Toggle Switch</a></li><li class="toc2"><a href="#gestures">Gestures</a></li></ul></li><li class="toc1"><a href="#utils">Utils</a><ul class="nav"><li class="toc2"><a href="#justified-blocks">Justified Blocks</a></li></ul></li></ul>
         </div>
         <div class="col-sm-9">
           <div class="content" role="aside">
               <div class="page-header"><h1>Docs</h1></div>
             
+
+<div id="docs-page">
+  
+<div class="alert alert-info"><i class="fa fa-warning"></i> This documentation is for the current version (v1.2). If you are looking for old v1.1 documentation you can find it <a href="/docs-v1.1">here</a>.</div>
 
 <section>
 <h2 id="getting-started">Getting Started</h2>
@@ -70,59 +74,18 @@
 <p>Either install via <code>bower</code> or download it</p>
 <pre><code class="lang-sh">bower <span class="hljs-operator"><span class="hljs-keyword">install</span> <span class="hljs-comment">--save mobile-angular-ui</span></span>
 </code></pre>
-<h4 id="html-head-section-setup">Html head section setup</h4>
-<h5 id="distributed-package-content">Distributed package content</h5>
-<table>
-<thead>
-<tr>
-<th>File</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>dist/css/mobile-angular-ui-base.css</code></td>
-<td>Mobile only css. it has no media queries except for <code>col-sm-*</code> grid. It also hasn&apos;t :hover styles. It is intended to target phones and tablets.</td>
-</tr>
-<tr>
-<td><code>dist/css/mobile-angular-ui-hover.css</code></td>
-<td>The <code>:hover</code> css rules stripped out from <code>base.css</code>.</td>
-</tr>
-<tr>
-<td><code>dist/css/mobile-angular-ui-desktop.css</code></td>
-<td>Responsive css. Contains <code>col-md-*</code>/<code>col-lg-*</code> grid along with some pieces of bootstrap.css for components that are only meaningful on large screens (breadcrumbs, pagination..) and a few lines of code to make sidebars always visible. No other responsive stuffs are included from <code>bootstrap.css</code>.</td>
-</tr>
-<tr>
-<td><code>dist/js/mobile-angular-ui.min.js</code></td>
-<td><code>mobile-angular-ui</code> itself as well as overthrow.js and fastclicks.js releases. <code>angular.js</code> is not bundled in <code>mobile-angular-ui</code>.</td>
-</tr>
-<tr>
-<td><code>dist/fonts/fontawesome*</code></td>
-<td>Fonts from FontAwesome icons toolkit</td>
-</tr>
-</tbody>
-</table>
-<h5 id="setup-a-mobile-only-app">Setup a mobile only app</h5>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">&quot;stylesheet&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css&quot;</span> /&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;angular.min.js&quot;</span>&gt;</span><span class="javascript">
-</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;angular-route.min.js&quot;</span>&gt;</span><span class="javascript">
-</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/js/mobile-angular-ui.min.js&quot;</span>&gt;</span><span class="javascript">
-</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<h4 id="using-the-boilerplate">Using the boilerplate</h4>
+<p>If you want to have your Mobile Angular UI project bootstrapped in a minute you can use the <code>generator-mobileangularui</code> generator for Yeoman.</p>
+<pre><code class="lang-sh">npm <span class="hljs-keyword">install</span> -g bower yo gulp generator-mobileangularui
 </code></pre>
-<h5 id="setup-a-responsive-app">Setup a responsive app</h5>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">&quot;stylesheet&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/css/mobile-angular-ui-hover.min.css&quot;</span> /&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">&quot;stylesheet&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css&quot;</span> /&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">&quot;stylesheet&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/css/mobile-angular-ui-desktop.min.css&quot;</span> /&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;angular.min.js&quot;</span>&gt;</span><span class="javascript">
-</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;angular-route.min.js&quot;</span>&gt;</span><span class="javascript">
-</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/js/mobile-angular-ui.min.js&quot;</span>&gt;</span><span class="javascript">
-</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<p>Using the generator is super-easy and fast</p>
+<pre><code class="lang-sh"><span class="hljs-built_in">mkdir</span> myApp
+<span class="hljs-built_in">cd</span> myApp
+yo mobileangularui
 </code></pre>
-<h3 id="initialization">Initialization</h3>
+<p>You can find a complete tutorial to start a Phonegap project with mobile-angular-ui <a href="/blog/your-first-phonegap-app-with-mobile-angular-ui/">here</a>.</p>
+<p><hr></p>
+<h3 id="initial-setup">Initial Setup</h3>
 <p>You can initialize your Angular application declaring <code>mobile-angular-ui</code> as a dependence.</p>
 <pre><code class="lang-javascript">angular.<span class="hljs-built_in">module</span>(<span class="hljs-string">&apos;myApp&apos;</span>, [<span class="hljs-string">&quot;mobile-angular-ui&quot;</span>]);
 </code></pre>
@@ -138,215 +101,253 @@
   });
 </code></pre>
 <p>If you wish you can avoid to load whole <code>mobile-angular-ui</code> modules at all and pick a subset of the loaded modules to fit your needs. This is how the <code>mobile-angular-ui</code> module is defined with its dependencies.</p>
-<pre><code class="lang-javascript">angular.<span class="hljs-keyword">module</span>(<span class="hljs-string">&quot;mobile-angular-ui&quot;</span>, [
-  <span class="hljs-string">&apos;mobile-angular-ui.pointer-events&apos;</span>,     <span class="hljs-regexp">/* prevents actions on disabled elements */</span>
-  <span class="hljs-string">&apos;mobile-angular-ui.active-links&apos;</span>,       <span class="hljs-regexp">/* add .active class to active links */</span>
-  <span class="hljs-string">&apos;mobile-angular-ui.fastclick&apos;</span>,          <span class="hljs-regexp">/* provides touch events with fastclick */</span>
-  <span class="hljs-string">&apos;mobile-angular-ui.scrollable&apos;</span>,         <span class="hljs-regexp">/* polyfills overflow:auto with overthrow */</span>
-  <span class="hljs-string">&apos;mobile-angular-ui.directives.toggle&apos;</span>,
-  <span class="hljs-string">&apos;mobile-angular-ui.directives.overlay&apos;</span>,
-  <span class="hljs-string">&apos;mobile-angular-ui.directives.forms&apos;</span>,
-  <span class="hljs-string">&apos;mobile-angular-ui.directives.panels&apos;</span>,
-  <span class="hljs-string">&apos;mobile-angular-ui.directives.capture&apos;</span>,
-  <span class="hljs-string">&apos;mobile-angular-ui.directives.sidebars&apos;</span>,
-  <span class="hljs-string">&apos;mobile-angular-ui.directives.navbars&apos;</span>,
-  <span class="hljs-string">&apos;mobile-angular-ui.directives.carousel&apos;</span>
- ]);
+<pre><code class="lang-javascript"><span class="hljs-attribute">angular</span>.<span class="hljs-function">module</span>(<span class="hljs-string">&apos;mobile-angular-ui&apos;</span>, [
+  <span class="hljs-string">&apos;mobile-angular-ui.core.pointerEvents&apos;</span>,     <span class="hljs-comment">/* prevents actions on disabled elements */</span>
+  <span class="hljs-string">&apos;mobile-angular-ui.core.activeLinks&apos;</span>,       <span class="hljs-comment">/* adds .active class to current links */</span>
+  <span class="hljs-string">&apos;mobile-angular-ui.core.fastclick&apos;</span>,         <span class="hljs-comment">/* polyfills overflow: auto */</span>
+  <span class="hljs-string">&apos;mobile-angular-ui.core.sharedState&apos;</span>,       <span class="hljs-comment">/* SharedState service */</span>
+  <span class="hljs-string">&apos;mobile-angular-ui.core.ui&apos;</span>,                <span class="hljs-comment">/* ui-* directives */</span>
+  <span class="hljs-string">&apos;mobile-angular-ui.core.outerClick&apos;</span>,        <span class="hljs-comment">/* outerClick directives */</span>
+  <span class="hljs-string">&apos;mobile-angular-ui.components.modals&apos;</span>,            <span class="hljs-comment">/* modals and overlays */</span>
+  <span class="hljs-string">&apos;mobile-angular-ui.components.switch&apos;</span>,            <span class="hljs-comment">/* switch form input */</span>
+  <span class="hljs-string">&apos;mobile-angular-ui.components.sidebars&apos;</span>,          <span class="hljs-comment">/* sidebars */</span>
+  <span class="hljs-string">&apos;mobile-angular-ui.components.scrollable&apos;</span>,        <span class="hljs-comment">/* uiScrollable directives */</span>
+  <span class="hljs-string">&apos;mobile-angular-ui.components.capture&apos;</span>,           <span class="hljs-comment">/* uiYieldTo and uiContentFor directives */</span>
+  <span class="hljs-string">&apos;mobile-angular-ui.components.navbars&apos;</span>            <span class="hljs-comment">/* navbars */</span>
+]);
 </code></pre>
-<h3 id="basic-layout">Basic Layout</h3>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Sidebars --&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;sidebar sidebar-left&quot;</span> <span class="hljs-attribute">toggleable</span> <span class="hljs-attribute">parent-active-class</span>=<span class="hljs-value">&quot;sidebar-left-in&quot;</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">&quot;mainSidebar&quot;</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;app-name&quot;</span>&gt;</span>My App<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;scrollable&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;scrollable-content&quot;</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;list-group&quot;</span> <span class="hljs-attribute">toggle</span>=<span class="hljs-value">&quot;off&quot;</span> <span class="hljs-attribute">bubble</span> <span class="hljs-attribute">target</span>=<span class="hljs-value">&quot;mainSidebar&quot;</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;list-group-item&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#/&quot;</span>&gt;</span>Home <span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-        <span class="hljs-comment">&lt;!-- ... --&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;app&quot;</span>&gt;</span>
-
-  <span class="hljs-comment">&lt;!-- Navbars --&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;navbar navbar-app navbar-absolute-top&quot;</span>&gt;</span>
-
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;navbar-brand navbar-brand-center&quot;</span> <span class="hljs-attribute">yield-to</span>=<span class="hljs-value">&quot;title&quot;</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span>My App<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn-group pull-left&quot;</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">ng-click</span>=<span class="hljs-value">&quot;toggle(&apos;mainSidebar&apos;)&quot;</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn btn-navbar sidebar-toggle&quot;</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-bars&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span> Menu
-        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn-group pull-right&quot;</span> <span class="hljs-attribute">yield-to</span>=<span class="hljs-value">&quot;navbarAction&quot;</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn btn-navbar&quot;</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-plus&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span> New
-        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;navbar navbar-app navbar-absolute-bottom&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn-group justified&quot;</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#/route1&quot;</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn btn-navbar btn-icon-only&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-home fa-navbar&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#/route2&quot;</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn btn-navbar btn-icon-only&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-list fa-navbar&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;app-body&quot;</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">ng-view</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;app-content&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">ng-view</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<h4 id="html-head-section-setup">Html head section setup</h4>
+<h5 id="distributed-package-content">Distributed package content</h5>
+<h6 id="regular-usage-files">Regular usage files</h6>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dist/css/mobile-angular-ui-base.css</code></td>
+<td>Mobile only css. it has no media queries except for <code>col-sm-*</code> grid. It also hasn&apos;t :hover styles. It is intended to target phones and tablets</td>
+</tr>
+<tr>
+<td><code>dist/css/mobile-angular-ui-hover.css</code></td>
+<td>The <code>:hover</code> css rules stripped out from <code>base.css</code></td>
+</tr>
+<tr>
+<td><code>dist/css/mobile-angular-ui-desktop.css</code></td>
+<td>Responsive css. Contains <code>col-md-*</code>/<code>col-lg-*</code> grid along with some pieces of bootstrap.css for components that are only meaningful on large screens (breadcrumbs, pagination..) and a few lines of code to make sidebars always visible. No other responsive stuffs are included from <code>bootstrap.css</code></td>
+</tr>
+<tr>
+<td><code>dist/js/mobile-angular-ui.min.js</code></td>
+<td><code>mobile-angular-ui</code> itself bundled with overthrow.js and fastclicks.js</td>
+</tr>
+<tr>
+<td><code>dist/js/mobile-angular-ui.gestures.min.js</code></td>
+<td>Gesture handling services: <code>$drag</code>, <code>$swipe</code>, <code>Transform</code></td>
+</tr>
+<tr>
+<td><code>dist/js/mobile-angular-ui.migrate.min.js</code></td>
+<td>Adapters to migrate from 1.1 to 1.2 without too much hurt</td>
+</tr>
+<tr>
+<td><code>dist/fonts/fontawesome*</code></td>
+<td>Fonts from FontAwesome icons toolkit</td>
+</tr>
+</tbody>
+</table>
+<h6 id="stand-alone-modules-files">Stand-alone modules files</h6>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dist/js/mobile-angular-ui.core.min.js</code></td>
+<td>Core Module</td>
+</tr>
+<tr>
+<td><code>dist/js/mobile-angular-ui.components.min.js</code></td>
+<td>Components</td>
+</tr>
+</tbody>
+</table>
+<h5 id="examples">Examples</h5>
+<h6 id="seting-up-a-mobile-only-app">Seting up a mobile only app</h6>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">&quot;stylesheet&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;angular.min.js&quot;</span>&gt;</span><span class="javascript">
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;angular-route.min.js&quot;</span>&gt;</span><span class="javascript">
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/js/mobile-angular-ui.min.js&quot;</span>&gt;</span><span class="javascript">
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 </code></pre>
-<h3 id="differences-with-bootstrap-3">Differences with Bootstrap 3</h3>
+<h6 id="seting-up-a-responsive-app">Seting up a responsive app</h6>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">&quot;stylesheet&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/css/mobile-angular-ui-hover.min.css&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">&quot;stylesheet&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">&quot;stylesheet&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/css/mobile-angular-ui-desktop.min.css&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;angular.min.js&quot;</span>&gt;</span><span class="javascript">
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;angular-route.min.js&quot;</span>&gt;</span><span class="javascript">
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/js/mobile-angular-ui.min.js&quot;</span>&gt;</span><span class="javascript">
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<h6 id="enabling-built-in-gestures-modules-not-stable-yet-">Enabling built-in gestures modules (not stable yet)</h6>
+<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Required to use $drag, $swipe and Translate services --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;/dist/js/mobile-angular-ui.gestures.min.js&quot;</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<h6 id="use-the-migration-module-to-move-from-v1-1-to-v1-2">Use the migration module to move from v1.1 to v1.2</h6>
+<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Only required to import legacy syntax and directives. You won&apos;t need it 
+unless you are attempting to move an app from Mobile Angular UI 1.1 to 1.2 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;/dist/js/mobile-angular-ui.migrate.min.js&quot;</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<h6 id="use-with-other-css-frameworks-ie-topcoat-http-topcoat-io-">Use with other css frameworks (ie. <a href="http://topcoat.io/">Topcoat</a>)</h6>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">&quot;stylesheet&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;https://cdnjs.cloudflare.com/ajax/libs/topcoat/0.8.0/css/topcoat-mobile-dark.css&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;angular.min.js&quot;</span>&gt;</span><span class="javascript">
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;angular-route.min.js&quot;</span>&gt;</span><span class="javascript">
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/js/mobile-angular-ui.core.min.js&quot;</span>&gt;</span><span class="javascript">
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;/dist/js/mobile-angular-ui.gestures.min.js&quot;</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p><hr></p>
+<h4 id="basic-layout">Basic Layout</h4>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">ng-app</span>=<span class="hljs-value">&quot;myApp&quot;</span>&gt;</span>
+
+  <span class="hljs-comment">&lt;!-- Sidebars --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;sidebar sidebar-left&quot;</span>&gt;</span><span class="hljs-comment">&lt;!-- ... --&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;sidebar sidebar-right&quot;</span>&gt;</span><span class="hljs-comment">&lt;!-- ... --&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;app&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;navbar navbar-app navbar-absolute-top&quot;</span>&gt;</span><span class="hljs-comment">&lt;!-- Top Navbar --&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;navbar navbar-app navbar-absolute-bottom&quot;</span>&gt;</span><span class="hljs-comment">&lt;!-- Bottom Navbar --&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+    <span class="hljs-comment">&lt;!-- App body --&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&apos;app-body&apos;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&apos;app-content&apos;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">ng-view</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">ng-view</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span><span class="hljs-comment">&lt;!-- ~ .app --&gt;</span>
+
+  <span class="hljs-comment">&lt;!-- Modals and Overlays --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">ui-yield-to</span>=<span class="hljs-value">&quot;modals&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+</code></pre>
+<p><hr></p>
+<h3 id="support-and-compatibility">Support and Compatibility</h3>
+<p>Mobile Angular UI 1.2 is compatible with:</p>
+<ul>
+<li>AngularJs 1.2 and 1.3</li>
+<li>Boostrap 3.x sources *</li>
+</ul>
+<div class="alert alert-info">
+* = Mobile Angular UI is automatically built from Bootstrap <code>.less</code> sources. Bootstrap less are compiled with mobile-angular-ui stylesheets and then passed to a pipeline that transforms them to <strong>mobilified</strong> stylesheets.
+</div>
+
+
+<h4 id="browser-support">Browser Support</h4>
+<p>Anything that can run Bootstrap 3 and Angular 1.3 and supports CSS3
+transitions and transforms should fit:</p>
+<ul>
+<li>Chrome</li>
+<li>Firefox</li>
+<li>Safari/IOS Safari</li>
+<li>Android Browser 2.3+</li>
+<li>Chrome for Android</li>
+<li>Blackberry Browser</li>
+<li>IE Mobile</li>
+<li>Opera/Opera Mobile</li>
+<li>IE10+</li>
+</ul>
+<p><strong>Note n.1</strong>: Some visual effects may be only available in some of the browsers above (ie. blur effect in overlays). A decent fallback is provided in any case.</p>
+<p><strong>Note n.2</strong>: It may work even with IE9 (although not supported), but it may require a lot of effort:</p>
+<ul>
+<li>Forget about transitions: sidebars use transitions events to hide show. Adding <code>.sidebar-left-in, .sidebar-right-in { display: block !important; }</code> should fix this.</li>
+<li>Be sure to <a target="blank" href="http://stackoverflow.com/questions/6418139/media-query-not-working-in-ie9">enable Media Queries</a>.</li>
+<li>Replace/override any 3d transforms with equivalent <code>margin</code> or 2d transforms prefixed with <code>-ms-</code></li>
+<li>Polyfill any other missing features</li>
+</ul>
+<p><strong>Note n.3</strong>: Currently some experimental features like those from <code>gestures</code> module are not supported by all of the browsers above, hopefully support will be the broadest possibile as these features will stabilize.</p>
+<p><strong>Note n.4</strong>: If you notice frozen application on older devices be aware that this may be mainly due to device resources scarcity and not due to your application or framework you are using. If you have to forcefully support them try to lower your application footprint as much as you can.</p>
+<p><hr></p>
+<h4 id="differences-with-bootstrap-3">Differences with Bootstrap 3</h4>
 <ol>
-<li>It has different mobile-friendly style for default components</li>
+<li>Although Mobile Angular UI aims to retain most of Bootstrap CSS style, some minor changes are employed to achieve a more mobile-friendly look and feel for default components.</li>
 <li>It adds new components like sidebars, absolute-positioned navbars, switches, overlays, scrollables ..</li>
-<li>It does not rely on jQuery or bootstrap.js at all (most of the interactions can be reproduced with [toggle] angular directive)</li>
+<li>It does not rely on jQuery or bootstrap.js at all (all of the interactions is reproduced without coding through core module directives)</li>
 <li>It uses font-awesome in place of glyphicons</li>
 <li>Responsive css rules for components <em>-sm, </em>-md, *-lg are moved out of the default bundle</li>
 <li>Responsive grid is divided in two parts: <code>.col-xs-*</code> and <code>.col-sm-*</code> classes are included in base.css, <code>.col-md-*</code> and <code>.col-lg-*</code> classes are included in desktop.css.</li>
 <li>Breadcrumbs and pagination are just not the best way to navigate a mobile app so their are only included in desktop.css.</li>
 <li><code>.container</code> is always fluid.</li>
 </ol>
+<hr>
+
 </section>
 
 <section>
-<h2 id="angular-directives">Angular Directives</h2>
-<p>Before going ahead with components you may want to familiarize with some basic mobile angular ui directives.</p>
-<h3 id="-scrollable-"><code>scrollable</code></h3>
-<p>First of all: one thing you&apos;ll always have to deal with approaching mobile web app development is scroll and <code>position:fixed</code> bugs.</p>
-<p>Due to the lack of support in some devices fixed positioned elements may bounce or disappear during scroll. Also mobile interaction often leverages horizontal scroll eg. in carousels or sliders.</p>
-<p>We use <code>overflow:auto</code> to create scrollable areas and solve any problems related to scroll.</p>
-<p>Since <code>overflow:auto</code> is not always available in touch devices we use <a href="http://filamentgroup.github.io/Overthrow/">Overthrow</a> to polyfill that.</p>
-<p>Markup for any scrollable areas is as simple as:</p>
-<pre><code class="lang-html">&lt;div class=<span class="hljs-string">&quot;scrollable&quot;</span>&gt;
-  &lt;div class=<span class="hljs-string">&quot;scrollable-content&quot;</span>&gt;<span class="hljs-keyword">...</span>&lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<p>This piece of code will trigger a directive that properly setup a new <code>Overthrow</code> instance for the <code>.scrollable</code> node.</p>
-<h3 id="-toggle-and-toggleable-"><code>toggle</code> and <code>toggleable</code></h3>
-<p>Toggle module is the basic to implement tabs, accordions, collapsibles and all the other components that need to be selectively or exclusively switched on or off.</p>
-<p>Toggle module defines two directives: <code>toggle</code> and <code>toggleable</code>. These two directives replaces almost all of the bootstrap 3 jquery stuffs.</p>
-<p>A <code>[toggle]</code> node will works as a trigger to turn <code>on</code> or <code>off</code> one or more targeted <code>[toggleable]</code> nodes by translating clicks into <em>toggle events</em>.</p>
-<table class="table table-bordered">
-  <thead>
-    <tr><th colspan="2"><code>toggle</code> directive parameters</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>toggle</th><td>
-        Possible values are <code>on</code>, <code>off</code> or <code>toggle</code> (default to <code>toggle</code>)
-      </td>
-    </tr>
-    <tr>
-      <th>target</th><td>The <code>id</code> of the corresponding toggleable. One of <code>target</code> or <code>targetClass</code> is required.</td>
-    </tr>
-    <tr>
-      <th>targetClass</th><td>The <code>class</code> of the corresponding toggleable. One of <code>target</code> or <code>targetClass</code> is required. Notice that this wont select nodes with dom methods.</td>
-    </tr>
-    <tr>
-      <th>bubble</th><td>If <code>bubble</code> is set <code>[toggle]</code> does not capture the click event and let it to be propagated to dom.</td>
-    </tr>
-    <tr>
-      <th>activeClass</th><td>The <code>class</code> the element will acquire when corresponding target is active and that will be removed when target is inactive. Does not affect <code>targetClass</code>.</td>
-    </tr>
-    <tr>
-      <th>inactiveClass</th><td>The <code>class</code> the element will acquire when corresponding target is inactive and that will be removed when target is active. Does not affect <code>targetClass</code>.</td>
-    </tr>
-    <tr>
-      <th>parentActiveClass</th><td>The <code>class</code> the parent of the element will acquire when corresponding target is inactive and that will be removed when target is active. Does not affect <code>targetClass</code>.</td>
-    </tr>
-    <tr>
-      <th>parentInactiveClass</th><td>The <code>class</code> the parent of the element will acquire when corresponding target is inactive and that will be removed when target is active. Does not affect <code>targetClass</code>.</td>
-    </tr>
-  </tbody>
-</table>
+<h2 id="modules">Modules</h2>
+<h3 id="overview">Overview</h3>
+<div id="modules-overview-graph"></div>
 
-<table class="table table-bordered">
-  <thead>
-    <tr><th colspan="2"><code>toggleable</code> directive parameters</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>exclusionGroup</th><td>
-        Instruct the element to <em>&quot;turn itself off&quot;</em> when another element of the same <code>exclusionGroup</code> is activated.
-      </td>
-    </tr>
-    <tr>
-      <th>default</th><td>The initial state of the element <code>active</code> or <code>inactive</code> (default to <code>inactive</code>).</td>
-    </tr>
-    <tr>
-      <th>activeClass</th><td>The <code>class</code> the element will acquire when is active and that will be removed when is inactive.</td>
-    </tr>
-    <tr>
-      <th>inactiveClass</th><td>The <code>class</code> the element will acquire when is inactive and that will be removed when is active.</td>
-    </tr>
-    <tr>
-      <th>parentActiveClass</th><td>The <code>class</code> the parent of the element will acquire when is inactive and that will be removed when is active.</td>
-    </tr>
-    <tr>
-      <th>parentInactiveClass</th><td>The <code>class</code> the parent of the element will acquire when is inactive and that will be removed when is active.</td>
-    </tr>
-  </tbody>
-</table>
 
-<p>To understand how it works consider the following example:</p>
-<pre><code class="lang-html">&lt;p toggleable id=<span class="hljs-string">&quot;lightbulb&quot;</span> active-<span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;text-primary&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;text-default&quot;</span>&gt;
-  &lt;i <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;fa fa-lightbulb-o&quot;</span>&gt;&lt;/i&gt;
-&lt;/p&gt;
 
-&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn-group justified nav-tabs&quot;</span>&gt;
-  &lt;a  
-     toggle=<span class="hljs-string">&quot;toggle&quot;</span>
-     target=<span class="hljs-string">&quot;lightbulb&quot;</span>
-     active-<span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;active&quot;</span>
-     <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-default&quot;</span> href&gt;
-      Toggle
-  &lt;/a&gt;
-  &lt;a  
-     toggle=<span class="hljs-string">&quot;on&quot;</span>
-     target=<span class="hljs-string">&quot;lightbulb&quot;</span>
-     <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-default&quot;</span> href&gt;
-      Turn On
-  &lt;/a&gt;
-  &lt;a  
-     toggle=<span class="hljs-string">&quot;off&quot;</span>
-     target=<span class="hljs-string">&quot;lightbulb&quot;</span>
-     <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-default&quot;</span> href&gt;
-      Turn Off
-  &lt;/a&gt;
-&lt;/div&gt;
+
+<p><hr></p>
+<h3 id="core">Core</h3>
+<div class="h5">Stand alone usage</div>
+
+<p><code>.core</code> module is required by <code>mobile-angular-ui</code>, anyway you can use it alone.</p>
+<pre><code>angular.<span class="hljs-built_in">module</span>(<span class="hljs-string">&apos;myApp&apos;</span>, [<span class="hljs-string">&apos;mobile-angular-ui.core&apos;</span>]);
+</code></pre><div class="h5">Description</div>
+
+<p>It has all the core functionalities of Mobile Angular UI. It aims to act as a common base for a UI framework providing services and directives to create components and implement UI interactions with angular.</p>
+<div class="alert alert-success">
+  <b>NOTE</b>
+  <ul>
+    <li>It has no dependency on Bootstrap.</li>
+    <li>It is not related to mobile apps only.</li>
+    <li>It is not requiring CSS support.</li>
+    <li><b>You can use it on any Angular Application and with any CSS framework.</b></li>
+  </ul>
+</div>
+
+<p><hr></p>
+<h4 id="active-links">Active Links</h4>
+<h5 id="description">Description</h5>
+<p><code>mobile-angular-ui.activeLinks</code> module sets up <code>.active</code> class for <code>a</code> elements those <code>href</code> attribute matches the current angular <code>$location</code> url. It takes care of excluding both search part and hash part from comparison.</p>
+<p><code>.active</code> classes are added/removed each time one of <code>$locationChangeSuccess</code> or <code>$includeContentLoaded</code> is fired.</p>
+<h5 id="usage">Usage</h5>
+<p>Just declare it as a dependency to your app unless you have already included one of its super-modules.</p>
+<pre><code>angular.<span class="hljs-built_in">module</span>(<span class="hljs-string">&apos;myApp&apos;</span>, [<span class="hljs-string">&apos;mobile-angular-ui.core.activeLinks&apos;</span>]);
+</code></pre><p><strong>NOTE:</strong> if you are using it without Bootstrap you may need to add some css to your stylesheets to reflect the activation state of links. I.e.</p>
+<pre><code class="lang-css"><span class="hljs-tag">a</span><span class="hljs-class">.active</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> blue</span></span>;
+<span class="hljs-rule">}</span></span>
 </code></pre>
-<p>The purpose of this code is to create a black <code>lightbulb</code> icon getting colored when it turns on. The <code>lightbulb</code> should be turned on and off by three switches. The first alternates its state, the second turns it on and the latter turns it off.</p>
-<p><code>#lightbulb</code> is a <code>[toggleable]</code> that wraps a lightbulb icon in form of font icon. When activated it acquires the <code>text-primary</code> class, thus being highlighted with the primary color.</p>
-<p>The first <code>[toggle]</code> turns on and off the <code>#lightbulb</code> depending of its state. It also reflects the <code>#lightbulb</code> activation since when lightbulb is active it takes the <code>active</code> class.</p>
-<p>Second and third <code>[toggle]</code> are only sending <code>on</code> or <code>off</code> commands to <code>#lightbulb</code>.</p>
-<p><a href="demo/#/toggle">Try this example in the demo</a></p>
-<h4 id="programmatic-api">Programmatic API</h4>
-<p>Toggle module exposes the <code>toggle</code> and <code>toggleByClass</code> functions through <code>$rootScope</code> to interact with <code>[toggleable]</code> in a programmatic way. This will let you do something like that:</p>
-<pre><code class="lang-html">&lt;<span class="hljs-tag">div</span> ng-swipe-<span class="hljs-attribute">left</span>=<span class="hljs-string">&quot;toggle(&apos;mainSidebar&apos;, &apos;off&apos;)&quot;</span>
-        ng-swipe-<span class="hljs-attribute">right</span>=<span class="hljs-string">&quot;toggle(&apos;mainSidebar&apos;, &apos;on&apos;)&quot;</span>&gt;
-&lt;div&gt;
-</code></pre>
-<p><code>toggle</code> method takes 2 parameters: the <code>[toggleable]</code> id and the command to send (one of <code>toggle</code>, <code>on</code> or <code>off</code>).</p>
-<p><code>toggleByClass</code> method takes also 2 parameters: the <code>[toggleable]</code> class and the command to send.</p>
-<h3 id="-contentfor-and-yieldto-"><code>contentFor</code> and <code>yieldTo</code></h3>
-<p>The capture module exposes directives to let you extract markup which can be used in other parts of a template.</p>
+<p><hr></p>
+<h4 id="capture">Capture</h4>
+<h5 id="description">Description</h5>
+<p>The <code>capture</code> module exposes directives to let you extract markup which can be used in other parts of a template using <code>uiContentFor</code> and <code>uiYieldTo</code> directives.</p>
 <p>It provides a way to move or clone a block of markup to other parts of the document.</p>
 <p>This method is particularly useful to setup parts of the layout within an angular view. Since blocks of html are transplanted within their original <code>$scope</code> is easy to create layout interactions depending on the context. Some tipical task you can accomplish with these directives are: <em>setup the navbar title depending on the view</em> or <em>place a submit button for a form inside a navbar</em>.</p>
-<p><strong>Usage:</strong></p>
-<p>Use <code>yield-to</code> as a placeholder.</p>
+<h5 id="usage">Usage</h5>
+<p>Declare it as a dependency to your app unless you have already included some of its super-modules.</p>
+<pre><code>angular.<span class="hljs-built_in">module</span>(<span class="hljs-string">&apos;myApp&apos;</span>, [<span class="hljs-string">&apos;mobile-angular-ui.core.capture&apos;</span>]);
+</code></pre><p>Use <code>ui-yield-to</code> as a placeholder.</p>
 <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- index.html --&gt;</span>
 
 <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;navbar&quot;</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">yield-to</span>=<span class="hljs-value">&quot;title&quot;</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;navbar-brand&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">ui-yield-to</span>=<span class="hljs-value">&quot;title&quot;</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;navbar-brand&quot;</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span>Default Title<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
@@ -355,18 +356,18 @@
   <span class="hljs-tag">&lt;<span class="hljs-title">ng-view</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;app-content&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">ng-view</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<p>Use <code>content-for</code> inside any view to populate the <code>yield-to</code> content.</p>
+<p>Use <code>ui-content-for</code> inside any view to populate the <code>ui-yield-to</code> content.</p>
 <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- myView.html --&gt;</span>
 
-<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">content-for</span>=<span class="hljs-value">&quot;title&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">ui-content-for</span>=<span class="hljs-value">&quot;title&quot;</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span>My View Title<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<p>Since the original scope is preserved you can use directives inside <code>content-for</code> blocks to interact with the current scope. In the following example we will add a navbar button to submit a form inside a nested view.  </p>
+<p>Since the original scope is preserved you can use directives inside <code>ui-content-for</code> blocks to interact with the current scope. In the following example we will add a navbar button to submit a form inside a nested view.  </p>
 <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- index.html --&gt;</span>
 
 <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;navbar&quot;</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">yield-to</span>=<span class="hljs-value">&quot;navbarAction&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">ui-yield-to</span>=<span class="hljs-value">&quot;navbarAction&quot;</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 
@@ -382,7 +383,7 @@
     <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">&quot;text&quot;</span> <span class="hljs-attribute">ng-model</span>=<span class="hljs-value">&quot;customer.name&quot;</span> /&gt;</span>  
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">content-for</span>=<span class="hljs-value">&quot;navbarAction&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">ui-content-for</span>=<span class="hljs-value">&quot;navbarAction&quot;</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ng-click</span>=<span class="hljs-value">&quot;createCustomer()&quot;</span>&gt;</span>
       Save
     <span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
@@ -398,8 +399,8 @@
   }
 });
 </code></pre>
-<p>If you wish you can also duplicate markup instead of move it. Just add <code>duplicate</code> parameter to <code>contentFor</code> directive to specify this behaviour.</p>
-<pre><code class="lang-html">&lt;<span class="hljs-tag">div</span> <span class="hljs-attribute">content</span>-<span class="hljs-keyword">for</span>=<span class="hljs-string">&quot;navbarAction&quot;</span> duplicate&gt;
+<p>If you wish you can also duplicate markup instead of move it. Just add <code>duplicate</code> parameter to <code>uiContentFor</code> directive to specify this behaviour.</p>
+<pre><code class="lang-html">&lt;<span class="hljs-tag">div</span> ui-<span class="hljs-attribute">content</span>-<span class="hljs-keyword">for</span>=<span class="hljs-string">&quot;navbarAction&quot;</span> duplicate&gt;
   &lt;<span class="hljs-tag">button</span> ng-click=<span class="hljs-string">&quot;createCustomer()&quot;</span>&gt;
     Save
   &lt;/button&gt;
@@ -407,11 +408,11 @@
 </code></pre>
 <table class="table table-bordered">
   <thead>
-    <tr><th colspan="2"><code>yieldTo</code> directive parameters</th></tr>
+    <tr><th colspan="2"><code>uiYieldTo</code> directive parameters</th></tr>
   </thead>
   <tbody>
     <tr>
-      <th>yieldTo</th><td>
+      <th>uiYieldTo</th><td>
         An unique name to reference the placeholder.
       </td>
     </tr>
@@ -426,11 +427,11 @@
 
 <table class="table table-bordered">
   <thead>
-    <tr><th colspan="2"><code>contentFor</code> directive parameters</th></tr>
+    <tr><th colspan="2"><code>uiContentFor</code> directive parameters</th></tr>
   </thead>
   <tbody>
     <tr>
-      <th>contentFor</th><td>
+      <th>uiContentFor</th><td>
         An unique name to reference the placeholder.
       </td>
     </tr>
@@ -447,13 +448,320 @@
   </tbody>
 </table>
 
-</section>
 
-<section>
-<h2 id="components">Components</h2>
-<h3 id="navbars">Navbars</h3>
-<p>Bootstrap default navbars are awesome for responsive websites, but are not the best to interact with in a small screen. Plus fixed positioning is not an option to create navbars standing in top or bottom of the screen.</p>
-<p>Mobile Angular Ui offers an alternative to bootstrap navbars that is better suitable for mobile.</p>
+<p><hr></p>
+<h4 id="fastclick">Fastclick</h4>
+<h5 id="description">Description</h5>
+<p><code>mobile-angular-ui.core.fastclick</code> module sets up <code>fastclick.js</code> to remove click delays on the whole document.</p>
+<h5 id="usage">Usage</h5>
+<p>Just declare it as a dependency to your app unless you have already included one of its super-modules.</p>
+<pre><code>angular.<span class="hljs-built_in">module</span>(<span class="hljs-string">&apos;myApp&apos;</span>, [<span class="hljs-string">&apos;mobile-angular-ui.core.fastclick&apos;</span>]);
+</code></pre><p><hr></p>
+<h4 id="outer-click">Outer Click</h4>
+<h5 id="description">Description</h5>
+<p>Provides a directive to specifiy a behaviour when click/tap events happen outside an element. This can be easily used to implement eg. <strong>close on outer click</strong> feature for a dropdown.</p>
+<h5 id="usage">Usage</h5>
+<p>Declare it as a dependency to your app unless you have already included some of its super-modules.</p>
+<pre><code>angular.<span class="hljs-built_in">module</span>(<span class="hljs-string">&apos;myApp&apos;</span>, [<span class="hljs-string">&apos;mobile-angular-ui.core.outerClick&apos;</span>]);
+</code></pre><p>Use <code>ui-outer-click</code> to define an expression to evaluate when an <em>Outer Click</em> event happens.
+Use <code>ui-outer-click-if</code> parameter to define a condition to enable/disable the listener.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn-group&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">ui-turn-on</span>=<span class="hljs-value">&apos;myDropdown&apos;</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&apos;btn&apos;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-ellipsis-v&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ul</span> 
+    <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;dropdown-menu&quot;</span>
+    <span class="hljs-attribute">ui-outer-click</span>=<span class="hljs-value">&quot;Ui.turnOff(&apos;myDropdown&apos;)&quot;</span>
+    <span class="hljs-attribute">ui-outer-click-if</span>=<span class="hljs-value">&quot;Ui.active(&apos;myDropdown&apos;)&quot;</span>
+    <span class="hljs-attribute">role</span>=<span class="hljs-value">&quot;menu&quot;</span>
+    <span class="hljs-attribute">ui-show</span>=<span class="hljs-value">&quot;myDropdown&quot;</span> 
+    <span class="hljs-attribute">ui-state</span>=<span class="hljs-value">&quot;myDropdown&quot;</span>
+    <span class="hljs-attribute">ui-turn-off</span>=<span class="hljs-value">&quot;myDropdown&quot;</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span>&gt;</span>Action<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span>&gt;</span>Another action<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span>&gt;</span>Something else here<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;divider&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span>&gt;</span>Separated link<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<table class="table table-bordered">
+  <thead>
+    <tr><th colspan="2"><code>uiOuterClick</code> directive parameters</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>uiOuterClick</th><td>
+        Expression to evaluate when an <em>Outer Click</em> event happens.
+      </td>
+    </tr>
+    <tr>
+      <th>uiOuterClickIf</th><td>
+        Condition to enable/disable the listener. Defaults to <code>true</code>.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<p><hr></p>
+<h4 id="shared-state">Shared State</h4>
+<h5 id="description">Description</h5>
+<p><code>SharedState</code> aims to provide a proper way to create directives and components that previously used scope variables to communicate.</p>
+<p><code>mobile-angular-ui.core.sharedState</code> is composed by the homonymous service <code>SharedState</code> and a group of directives to access it. </p>
+<p>It acts as a BUS between UI elements to share UI related state that is automatically disposed when all scopes requiring it are destroyed.</p>
+<p>eg.</p>
+<pre><code class="lang-js">app.controller(<span class="hljs-string">&apos;controller1&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$scope</span>, SharedState)</span></span>{
+  SharedState.initialize(<span class="hljs-variable">$scope</span>, <span class="hljs-string">&apos;myId&apos;</span>);
+});
+
+app.controller(<span class="hljs-string">&apos;controller2&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(SharedState)</span></span>{
+  SharedState.toggle(<span class="hljs-string">&apos;myId&apos;</span>);
+});
+</code></pre>
+<p>Data structures retaining statuses will stay outside angular scopes thus they are not evaluated against digest cycle until its necessary. Also although statuses are sort of global variables <code>SharedState</code> will take care of disposing them when no scopes are requiring them anymore.</p>
+<p>A set of <code>ui-*</code> directives are available to interact with <code>SharedState</code> module and will hopefully let you spare your controllers and your time for something that is more meaningful than this:</p>
+<pre><code class="lang-js"><span class="hljs-variable">$scope</span>.activeTab = <span class="hljs-number">1</span>;
+
+<span class="hljs-variable">$scope</span>.setActiveTab = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span> </span>{
+  <span class="hljs-variable">$scope</span>.activeTab = n;
+};
+</code></pre>
+<h5 id="usage">Usage</h5>
+<p>Declare it as a dependency to your app unless you have already included some of its super-modules.</p>
+<pre><code>angular.<span class="hljs-built_in">module</span>(<span class="hljs-string">&apos;myApp&apos;</span>, [<span class="hljs-string">&apos;mobile-angular-ui.core.sharedState&apos;</span>]);
+</code></pre><p>Use <code>ui-state</code> directive to require/initialize a state from the target element scope</p>
+<p>Example: Tabs</p>
+<pre><code class="lang-html">
+&lt;<span class="hljs-tag">div</span> class=<span class="hljs-string">&quot;tabs&quot;</span> ui-state=<span class="hljs-string">&quot;activeTab&quot;</span>&gt;
+
+  &lt;<span class="hljs-tag">ul</span> class=<span class="hljs-string">&quot;nav nav-tabs&quot;</span>&gt;
+    &lt;<span class="hljs-tag">li</span> ui-class=<span class="hljs-string">&quot;{&apos;active&apos;: activeTab == 1)}&quot;</span>&gt;
+      &lt;<span class="hljs-tag">a</span> ui-set=<span class="hljs-string">&quot;{&apos;activeTab&apos;: 1}&quot;</span>&gt;Tab <span class="hljs-number">1</span>&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;<span class="hljs-tag">li</span> ui-class=<span class="hljs-string">&quot;{&apos;active&apos;: activeTab == 2)}&quot;</span>&gt;
+      &lt;<span class="hljs-tag">a</span> ui-set=<span class="hljs-string">&quot;{&apos;activeTab&apos;: 2}&quot;</span>&gt;Tab <span class="hljs-number">2</span>&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;<span class="hljs-tag">li</span> ui-class=<span class="hljs-string">&quot;{&apos;active&apos;: activeTab == 3)}&quot;</span>&gt;
+      &lt;<span class="hljs-tag">a</span> ui-set=<span class="hljs-string">&quot;{&apos;activeTab&apos;: 3}&quot;</span>&gt;Tab <span class="hljs-number">3</span>&lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;<span class="hljs-tag">div</span> ui-<span class="hljs-keyword">if</span>=<span class="hljs-string">&quot;activeTab == 1&quot;</span>&gt;
+    Tab <span class="hljs-number">1</span>
+  &lt;/div&gt;
+
+  &lt;<span class="hljs-tag">div</span> ui-<span class="hljs-keyword">if</span>=<span class="hljs-string">&quot;activeTab == 2&quot;</span>&gt;
+    Tab <span class="hljs-number">2</span>
+  &lt;/div&gt;
+
+  &lt;<span class="hljs-tag">div</span> ui-<span class="hljs-keyword">if</span>=<span class="hljs-string">&quot;activeTab == 3&quot;</span>&gt;
+    Tab <span class="hljs-number">3</span>
+  &lt;/div&gt;
+
+&lt;/div&gt;
+</code></pre>
+<p>NOTE: <code>ui-toggle/set/turnOn/turnOff</code> responds to <code>click/tap</code> without stopping propagation so you can use them along with ng-click too. You can also change events to respond to with <code>ui-triggers</code> attribute.</p>
+<p>Any <code>SharedState</code> method is exposed through <code>Ui</code> object in <code>$rootScope</code>. So you could always do <code>ng-click=&quot;Ui.turnOn(&apos;myVar&apos;)&quot;</code>.</p>
+<p>Since <code>SharedState</code> is a service you can initialize/set statuses through controllers too:</p>
+<pre><code class="lang-js">app.controller(<span class="hljs-string">&apos;myController&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$scope</span>, SharedState)</span></span>{
+  SharedState.initialize(<span class="hljs-variable">$scope</span>, <span class="hljs-string">&quot;activeTab&quot;</span>, <span class="hljs-number">3</span>);
+});
+</code></pre>
+<p>As well as you can use <code>ui-default</code> for that: </p>
+<pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;tabs&quot;</span> ui-state=<span class="hljs-string">&quot;activeTab&quot;</span> ui-default=<span class="hljs-string">&quot;thisIsAnExpression(5 + 1 - 2)&quot;</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+</code></pre>
+<h5 id="-sharedstate-service-api-reference"><code>SharedState</code> Service Api Reference</h5>
+<p><code>SharedState</code> exposes methods to interact with statuses to create, read and update statuses. A state is a global variable identified by an <code>id</code>.</p>
+<h6 id="initialize-scope-id-options-">initialize(scope, id, options)</h6>
+<p>Initialize, or require if already intialized, a state identified by <code>id</code> within the provided <code>scope</code>, making it available to the rest of application.</p>
+<p>A <code>SharedState</code> is bound to one or more scopes. Each time <code>initialize</code> is called for an angular <code>scope</code> this will be bound to the <code>SharedState</code> and a reference count is incremented to allow garbage collection.</p>
+<p>This reference count is decremented once the scope is destroyed. When the counter reach 0 the state will be disposed.</p>
+<p>Valid <code>options</code> are: </p>
+<ul>
+<li><p><code>defaultValue</code>: the initialization value, it is taken into account only if the state <code>id</code> is not already initialized.</p>
+</li>
+<li><p><code>exclusionGroup</code>: specify an exclusion group for the state. This means that for boolean operations (ie. toggle, turnOn, turnOf) when this state is set to <code>true</code>, any other state that is in the same <code>exclusionGroup</code> will be set to <code>false</code>.</p>
+</li>
+</ul>
+<h6 id="setone-id-value-">setOne(id, value)</h6>
+<p>Set the value of the state identified by <code>id</code> to the <code>value</code> parameter.</p>
+<h6 id="setmany-object-">setMany(object)</h6>
+<p>Set multiple statuses at once. ie.</p>
+<pre><code><span class="hljs-tag">SharedState</span><span class="hljs-class">.setMany</span>({ <span class="hljs-attribute">activeTab</span>: <span class="hljs-string">&apos;firstTab&apos;</span>, <span class="hljs-attribute">sidebarIn</span>: false });
+</code></pre><h6 id="set-idorobject-value-">set(idOrObject, [value])</h6>
+<p>Just a shorthand for both <code>setOne</code> and <code>setMany</code>. When called with only one parameter that is an object it is the same of <code>setMany</code>, otherwise is the same of <code>setOne</code>.</p>
+<h6 id="turnon-id-">turnOn(id)</h6>
+<p>Set shared state identified by <code>id</code> to <code>true</code>. If the shared state has been initialized with <code>exclusionGroup</code> option it will also turn off (set to <code>false</code>) all other statuses from the same exclusion group.</p>
+<h6 id="turnoff-id-">turnOff(id)</h6>
+<p>Set shared state identified by <code>id</code> to <code>false</code>.</p>
+<h6 id="toggle-id-">toggle(id)</h6>
+<p>If current value for shared state identified by <code>id</code> evaluates to <code>true</code> it calls <code>turnOff</code> on it otherwise calls <code>turnOn</code>. Be aware that it will take into account <code>exclusionGroup</code> option. See <code>#turnOn</code> and <code>#initialize</code> for more.</p>
+<h6 id="get-id-object">get(id) &#x2192; object</h6>
+<p>Return the current value of the state identified by <code>id</code>.</p>
+<h6 id="isactive-id-bool">isActive(id) &#x2192; bool</h6>
+<p>Return <code>true</code> if the boolean conversion of <code>#get(id)</code> evaluates to <code>true</code>.</p>
+<h6 id="active-id-bool">active(id) &#x2192; bool</h6>
+<p>Alias for <code>#isActive</code>.</p>
+<h6 id="isundefined-id-bool">isUndefined(id) &#x2192; bool</h6>
+<p>Return <code>true</code> if <code>#get(id)</code> evaluates to <code>true</code>.</p>
+<h6 id="equals-id-value-bool">equals(id, value) &#x2192; bool</h6>
+<p>Return <code>true</code> if <code>#get(id)</code> is exactly equal (<code>===</code>) to <code>value</code> param.</p>
+<h6 id="eq-id-value-bool">eq(id, value) &#x2192; bool</h6>
+<p>Alias for <code>#equals</code>.</p>
+<h6 id="values-object">values () &#x2192; object</h6>
+<p>Returns an object with all the status values currently stored. It has the form of <code>{statusId: statusValue}</code>.</p>
+<p>Bear in mind that in order to spare resources it currently returns just the internal object retaining statuses values. Thus it is not intended to be modified and direct changes to it will be not tracked or notified.</p>
+<p>Just clone before apply any change to it.</p>
+<h5 id="events">Events</h5>
+<h6 id="mobile-angular-ui-state-initialized-id-currentvalue-">mobile-angular-ui.state.initialized.ID &#x2192; (currentValue)</h6>
+<p>Broadcasted when <code>#initialize</code> is called for a new state not referenced by any scope currently.</p>
+<h6 id="mobile-angular-ui-state-destroyed-id">mobile-angular-ui.state.destroyed.ID</h6>
+<p>Broadcasted when a state is destroyed.</p>
+<h6 id="mobile-angular-ui-state-changed-id-newvalue-previousvalue-">mobile-angular-ui.state.changed.ID &#x2192; (newValue, previousValue)</h6>
+<p>Broadcasted when the value of a state changes.</p>
+<pre><code class="lang-js">$scope.$<span class="hljs-literal">on</span>(`<span class="javascript">mobile-angular-ui.state.changed.uiSidebarLeft</span>`, <span class="hljs-reserved">function</span>(e, newVal, oldVal) {
+  <span class="hljs-keyword">if</span> (newVal === <span class="hljs-literal">true</span>) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;sidebar opened&apos;</span>);
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;sidebar closed&apos;</span>);
+  }
+});
+</code></pre>
+<h5 id="directives">Directives</h5>
+<h6 id="uistate">uiState</h6>
+<p>Calls <code>SharedState#initialize</code> on the scope relative to the element using it.</p>
+<p>Params: </p>
+<ul>
+<li><code>uiState</code>: Required. (string) the shared state id</li>
+<li><code>uiDefault</code>: (expression) the default value</li>
+</ul>
+<h6 id="uitoggle">uiToggle</h6>
+<p>Calls <code>SharedState#toggle</code> when triggering events happens on the element using it.</p>
+<p>Params:</p>
+<ul>
+<li><code>uiToggle</code>: Required. (string) the target shared state</li>
+<li><code>uiTriggers</code>: (string) the event triggering the call. Defaults to <code>click tap</code></li>
+</ul>
+<h6 id="uiturnon">uiTurnOn</h6>
+<p>Calls <code>SharedState#turnOn</code> when triggering events happens on the element using it.</p>
+<p>Params:</p>
+<ul>
+<li><code>uiTurnOn</code>: Required. (string) the target shared state</li>
+<li><code>uiTriggers</code>: (string) the event triggering the call. Defaults to <code>click tap</code></li>
+</ul>
+<h6 id="uiturnoff">uiTurnOff</h6>
+<p>Calls <code>SharedState#turnOff</code> when triggering events happens on the element using it.</p>
+<p>Params:</p>
+<ul>
+<li><code>uiTurnOff</code>: Required. (string) the target shared state</li>
+<li><code>uiTriggers</code>: (string) the event triggering the call. Defaults to <code>click tap</code></li>
+</ul>
+<h6 id="uiset">uiSet</h6>
+<p>Calls <code>SharedState#set</code> when triggering events happens on the element using it.</p>
+<p>Params:</p>
+<ul>
+<li><code>uiSet</code>: Required. (expression) the object to pass as parameter to <code>SharedState#set</code></li>
+<li><code>uiTriggers</code>: (string) the event triggering the call. Defaults to <code>click tap</code></li>
+</ul>
+<h6 id="uiif">uiIf</h6>
+<p>Same as <code>ngIf</code> but evaluates condition against <code>SharedState</code> statuses too</p>
+<p>Params</p>
+<ul>
+<li><code>uiIf</code>: Required. (expression) a condition to decide wether to attach the element to the dom</li>
+</ul>
+<h6 id="uihide">uiHide</h6>
+<p>Same as <code>ngHide</code> but evaluates condition against <code>SharedState</code> statuses too</p>
+<p>Params</p>
+<ul>
+<li><code>uiHide</code>: Required. (expression) a condition to decide wether to hide the element</li>
+</ul>
+<h6 id="uishow">uiShow</h6>
+<p>Same as <code>ngShow</code> but evaluates condition against <code>SharedState</code> statuses too</p>
+<p>Params</p>
+<ul>
+<li><code>uiShow</code>: Required. (expression) a condition to decide wether to show the element</li>
+</ul>
+<h6 id="uiclass">uiClass</h6>
+<p>A simplified version of <code>ngClass</code> that evaluates in context of <code>SharedState</code> too, it only suppors the <code>{&apos;className&apos;: expr}</code> syntax.</p>
+<p>Params</p>
+<ul>
+<li><code>uiClass</code>: Required. (expression) an object of the form <code>{&apos;className&apos;: expr}</code>, where <code>expr</code> decides wether the class should appear to element&apos;s class list</li>
+</ul>
+<hr>
+
+<h3 id="components">Components</h3>
+<p><hr></p>
+<h4 id="modals-and-overlays">Modals and Overlays</h4>
+<p>Modals are basically the same of Bootstrap 3 but you have to use uiState with <code>ngIf/uiIf</code> or <code>ngHide/uiHide</code> to <code>activate/dismiss</code> it. By default both modals and overlay are made always showing up by css rule <code>.modal {display:block}</code>, so you can use it with <code>ngAnimate</code> and other angular directives in a simpler way.</p>
+<p><strong>Note:</strong></p>
+<p>For modals and overlays to cover the whole page you have to attach them as child of <code>body</code> element. To achieve this from a view is a common use for <code>contentFor/yieldTo</code> directives:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">ng-app</span>=<span class="hljs-value">&quot;myApp&quot;</span>&gt;</span>
+
+  <span class="hljs-comment">&lt;!-- ... --&gt;</span>
+
+  <span class="hljs-comment">&lt;!-- Modals and Overlays --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">ui-yield-to</span>=<span class="hljs-value">&quot;modals&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+</code></pre>
+<p>Then you can wrap your modals and overlays in <code>contentFor</code>:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">ui-content-for</span>=<span class="hljs-value">&quot;modals&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;modal&quot;</span>&gt;</span><span class="hljs-comment">&lt;!-- ... --&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<h5 id="modals">Modals</h5>
+<pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> ui-content-<span class="hljs-keyword">for</span>=<span class="hljs-string">&quot;modals&quot;</span>&gt;
+  &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;modal&quot;</span> ui-<span class="hljs-keyword">if</span>=<span class="hljs-string">&quot;modal1&quot;</span> ui-state=&apos;modal1&apos;&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;modal-backdrop in&quot;</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;modal-dialog&quot;</span>&gt;
+      &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;modal-content&quot;</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;modal-header&quot;</span>&gt;
+          &lt;button <span class="hljs-type">class</span>=<span class="hljs-string">&quot;close&quot;</span> 
+                  ui-turn-off=<span class="hljs-string">&quot;modal1&quot;</span>&gt;&amp;<span class="hljs-keyword">times</span>;&lt;/button&gt;
+          &lt;h4 <span class="hljs-type">class</span>=<span class="hljs-string">&quot;modal-title&quot;</span>&gt;Modal title&lt;/h4&gt;
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;modal-body&quot;</span>&gt;
+          &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio quo illum nihil voluptatem earum optio repellendus, molestias illo facere, ea non. Possimus assumenda illo accusamus voluptatibus, vel corporis maxime quam.&lt;/p&gt;
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;modal-footer&quot;</span>&gt;
+          &lt;button ui-turn-off=<span class="hljs-string">&quot;modal1&quot;</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;btn btn-default&quot;</span>&gt;Close&lt;/button&gt;
+          &lt;button ui-turn-off=<span class="hljs-string">&quot;modal1&quot;</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span>&gt;Save changes&lt;/button&gt;
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+      &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+  &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+</code></pre>
+<h5 id="overlays">Overlays</h5>
+<p>Overlay are just like to modals except they looks more native in mobile devices with a blurred overlay in background.</p>
+<p>You can create an overlay adding <code>.modal-overlay</code> class to a modal:</p>
+<pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> ui-content-<span class="hljs-keyword">for</span>=<span class="hljs-string">&quot;modals&quot;</span>&gt;
+  &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;modal modal-overlay&quot;</span> ui-<span class="hljs-keyword">if</span>=&apos;modal2&apos; ui-state=&apos;modal2&apos;&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;modal-dialog&quot;</span>&gt;
+      &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;modal-content&quot;</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;modal-header&quot;</span>&gt;
+          &lt;button <span class="hljs-type">class</span>=<span class="hljs-string">&quot;close&quot;</span>
+                  ui-turn-off=<span class="hljs-string">&quot;modal2&quot;</span>&gt;&amp;<span class="hljs-keyword">times</span>;&lt;/button&gt;
+          &lt;h4 <span class="hljs-type">class</span>=<span class="hljs-string">&quot;modal-title&quot;</span>&gt;Modal title&lt;/h4&gt;
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;modal-body&quot;</span>&gt;
+          &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, amet harum reiciendis enim adipisci magni fugit suscipit eaque corporis? Saepe eius ipsum optio dolorum a qui adipisci, reprehenderit totam temporibus!&lt;/p&gt;
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;modal-footer&quot;</span>&gt;
+          &lt;button ui-turn-off=<span class="hljs-string">&quot;modal2&quot;</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;btn btn-default&quot;</span>&gt;Close&lt;/button&gt;
+          &lt;button ui-turn-off=<span class="hljs-string">&quot;modal2&quot;</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span>&gt;Save changes&lt;/button&gt;
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+      &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+  &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+</code></pre>
+<p><hr></p>
+<h4 id="navbars">Navbars</h4>
+<p>Bootstrap default navbars are awesome for responsive websites, but are not the best with a small screen. Also fixed positioning is yet not an option to create navbars standing in top or bottom of the screen.</p>
+<p>Mobile Angular Ui offers an alternative to bootstrap navbars that is more suitable for mobile.</p>
 <p>It uses scrollable areas to avoid scroll issues. In the following figure you can see the difference between fixed navbars and navbars with absolute positioning.</p>
 <figure class="full-width-figure">
   <img src="/assets/img/figs/fixed-overflow.png" alt="">
@@ -499,287 +807,100 @@
   &lt;/<span class="hljs-keyword">div</span>&gt;
 &lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
-<p>As you can see the markup is pretty straightforward: there is a <code>.navbar-brand</code> with its new specification, <code>.navbar-brand-center</code>, that will render the title centered and below the two button groups. Note that <code>.navbar-brand-center</code> will position the title with absolute positioning ensuring that it will never cover the buttons, which would cause interaction problems.</p>
-<h3 id="sidebars">Sidebars</h3>
-<pre><code class="lang-html">&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;sidebar sidebar-left&quot;</span> toggleable parent-active-<span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;sidebar-left-in&quot;</span> id=<span class="hljs-string">&quot;mainSidebar&quot;</span>&gt;
-
-&lt;h1 <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;app-name&quot;</span>&gt;Mobile Angular UI&lt;/h1&gt;
-
-&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;scrollable&quot;</span>&gt;
-  &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;scrollable-content&quot;</span>&gt;
-    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;list-group&quot;</span> toggle=<span class="hljs-string">&quot;off&quot;</span> bubble target=<span class="hljs-string">&quot;mainSidebar&quot;</span>&gt;
-      &lt;a <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;list-group-item&quot;</span> href=<span class="hljs-string">&quot;#/&quot;</span>&gt;Home &lt;i <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;&lt;/i&gt;&lt;/a&gt;
-      &lt;a <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;list-group-item&quot;</span> href=<span class="hljs-string">&quot;#/scroll&quot;</span>&gt;Scroll &lt;i <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;&lt;/i&gt;&lt;/a&gt;
-      &lt;a <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;list-group-item&quot;</span> href=<span class="hljs-string">&quot;#/toggle&quot;</span>&gt;Toggle &lt;i <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;&lt;/i&gt;&lt;/a&gt;
-      &lt;a <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;list-group-item&quot;</span> href=<span class="hljs-string">&quot;#/tabs&quot;</span>&gt;Tabs &lt;i <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;&lt;/i&gt;&lt;/a&gt;
-      &lt;a <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;list-group-item&quot;</span> href=<span class="hljs-string">&quot;#/accordion&quot;</span>&gt;Accordion &lt;i <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;&lt;/i&gt;&lt;/a&gt;
-      &lt;a <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;list-group-item&quot;</span> href=<span class="hljs-string">&quot;#/overlay&quot;</span>&gt;Overlay &lt;i <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;&lt;/i&gt;&lt;/a&gt;
-      &lt;a <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;list-group-item&quot;</span> href=<span class="hljs-string">&quot;#/forms&quot;</span>&gt;Forms &lt;i <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;&lt;/i&gt;&lt;/a&gt;
-    &lt;/div&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
+<p><code>.navbar-brand-center</code> is a specialization of BS3&apos;s <code>.navbar-brand</code>. It will render the title centered and below the two button groups. Note that <code>.navbar-brand-center</code> will position the title with absolute positioning ensuring that it will never cover the buttons, which would cause interaction problems.</p>
+<p><hr></p>
+<h4 id="scrollable">Scrollable</h4>
+<p>One thing you&apos;ll always have to deal with approaching mobile web app development is scroll and <code>position:fixed</code> bugs.</p>
+<p>Due to the lack of support in some devices fixed positioned elements may bounce or disappear during scroll. Also mobile interaction often leverages horizontal scroll eg. in carousels or sliders.</p>
+<p>We use <code>overflow:auto</code> to create scrollable areas and solve any problems related to scroll.</p>
+<p>Since <code>overflow:auto</code> is not always available in touch devices we use <a href="http://filamentgroup.github.io/Overthrow/">Overthrow</a> to polyfill that.</p>
+<p>Markup for any scrollable areas is as simple as:</p>
+<pre><code class="lang-html">&lt;div class=<span class="hljs-string">&quot;scrollable&quot;</span>&gt;
+  &lt;div class=<span class="hljs-string">&quot;scrollable-content&quot;</span>&gt;<span class="hljs-keyword">...</span>&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
-<p>As you can see sidebars can be placed either in left side or right side adding respectively <code>.sidebar-left</code> and <code>.sidebar-right</code> classes.</p>
-<p>You should also notice that a sidebar is a toggleable. A sidebar is shown when parent has the <code>.sidebar-[left|right]-in</code> class moving the above <code>.app</code> element left or right. <code>.sidebar</code> and <code>.app</code> are supposed to be siblings.</p>
-<p>The purpose of the <code>toggle</code> directive for <code>.list-group</code> is to make the sidebar disappear when a link is clicked or tapped, the <code>bubble</code> parameter is infact used to let click events be propagated to inner links.</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;list-group&quot;</span> <span class="hljs-attribute">toggle</span>=<span class="hljs-value">&quot;off&quot;</span> <span class="hljs-attribute">bubble</span> <span class="hljs-attribute">target</span>=<span class="hljs-value">&quot;mainSidebar&quot;</span>&gt;</span>
-  <span class="hljs-comment">&lt;!-- ... --&gt;</span>
+<p>This piece of code will trigger a directive that properly setup a new <code>Overthrow</code> instance for the <code>.scrollable</code> node.</p>
+<h5 id="headers-and-footers">Headers and footers</h5>
+<p><code>.scrollable-header/.scrollable-footer</code> can be used to add fixed header/footer to a scrollable area without having to deal with css height and positioning to avoid breaking scroll.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;scrollable&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;scrollable-header&quot;</span>&gt;</span><span class="hljs-comment">&lt;!-- ... --&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;scrollable-content&quot;</span>&gt;</span><span class="hljs-comment">&lt;!-- ... --&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;scrollable-footer&quot;</span>&gt;</span><span class="hljs-comment">&lt;!-- ... --&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<p>Sidebars can be toggled using the <code>toggle</code> directive either as an attribute or programmatically via <code>toggle(&apos;sidebarId&apos;)</code></p>
-<pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;btn-group pull-left&quot;</span>&gt;
-  &lt;<span class="hljs-keyword">div</span> ng-click=<span class="hljs-string">&quot;toggle(&apos;mainSidebar&apos;)&quot;</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;btn btn-navbar sidebar-toggle&quot;</span>&gt;
-    &lt;i <span class="hljs-type">class</span>=<span class="hljs-string">&quot;fa fa-bars&quot;</span>&gt;&lt;/i&gt; Menu
-  &lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
+<h5 id="scrollto">scrollTo</h5>
+<p><code>.scrollable-content</code> controller exposes a <code>scrollTo</code> function: <code>scrollTo(offsetOrElement, margin)</code> </p>
+<p>You have to require it in your directives to use it or obtain through <code>element().controller</code>:</p>
+<pre><code class="lang-js"><span class="hljs-reserved">var</span> elem = element(<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&apos;myScrollableContent&apos;</span>));
+<span class="hljs-reserved">var</span> scrollableContentController = elem.controller(<span class="hljs-string">&apos;scrollableContent&apos;</span>);
+
+<span class="hljs-regexp">//</span> - Scroll to top <span class="hljs-keyword">of</span> containedElement
+scrollableContentController.scrollTo(containedElement);
+
+<span class="hljs-regexp">//</span> - Scroll to top <span class="hljs-keyword">of</span> containedElement <span class="hljs-reserved">with</span> a margin <span class="hljs-keyword">of</span> <span class="hljs-number">10</span>px;
+scrollableContentController.scrollTo(containedElement, <span class="hljs-number">10</span>);
+
+<span class="hljs-regexp">//</span> - Scroll top <span class="hljs-keyword">by</span> <span class="hljs-number">200</span>px;
+scrollableContentController.scrollTo(<span class="hljs-number">200</span>);
 </code></pre>
-<p>By default sidebar are closed by clicking/tapping outside them. To prevent this behavior just add <code>close-on-outer-clicks=&apos;false&apos;</code> to <code>.sidebar</code> element.</p>
-<h3 id="tabs">Tabs</h3>
-<p>Tabs component is realized via <code>toggle</code> and <code>toggleable</code> directives using <code>exclusion-group</code> parameter to inactivate other tabs but the active one.</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">ul</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;nav nav-tabs&quot;</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#Tab1&quot;</span> <span class="hljs-attribute">toggle</span>=<span class="hljs-value">&quot;on&quot;</span> <span class="hljs-attribute">parent-active-class</span>=<span class="hljs-value">&quot;active&quot;</span>&gt;</span>Tab 1<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#Tab2&quot;</span> <span class="hljs-attribute">toggle</span>=<span class="hljs-value">&quot;on&quot;</span> <span class="hljs-attribute">parent-active-class</span>=<span class="hljs-value">&quot;active&quot;</span>&gt;</span>Tab 2<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#Tab3&quot;</span> <span class="hljs-attribute">toggle</span>=<span class="hljs-value">&quot;on&quot;</span> <span class="hljs-attribute">parent-active-class</span>=<span class="hljs-value">&quot;active&quot;</span>&gt;</span>Tab 3<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;tab-content&quot;</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;tab-pane&quot;</span>
-      <span class="hljs-attribute">toggleable</span>
-      <span class="hljs-attribute">active-class</span>=<span class="hljs-value">&quot;active&quot;</span>
-      <span class="hljs-attribute">default</span>=<span class="hljs-value">&quot;active&quot;</span>
-      <span class="hljs-attribute">id</span>=<span class="hljs-value">&quot;Tab1&quot;</span>
-      <span class="hljs-attribute">exclusion-group</span>=<span class="hljs-value">&quot;myTabs&quot;</span>&gt;</span>
-
-    <span class="hljs-tag">&lt;<span class="hljs-title">h3</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;page-header&quot;</span>&gt;</span>Tab 1<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-comment">&lt;!-- ... --&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<h5 id="-ui-scroll-bottom-ui-scroll-top-"><code>ui-scroll-bottom/ui-scroll-top</code></h5>
+<p>You can use <code>ui-scroll-bottom/ui-scroll-top</code> directives handle that events and implement features like <em>infinite scroll</em>.</p>
+<pre><code class="lang-html"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;scrollable&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;scrollable-content section&quot;</span> <span class="hljs-attribute">ui-scroll-bottom</span>=<span class="hljs-value">&quot;loadMore()&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">li</span> <span class="hljs-attribute">ng-repeat</span>=<span class="hljs-value">&quot;item in items&quot;</span>&gt;</span>
+        </span><span class="hljs-expression">{{<span class="hljs-variable">item.name</span>}}</span><span class="xml">
+      <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;tab-pane&quot;</span>
-      <span class="hljs-attribute">toggleable</span>
-      <span class="hljs-attribute">active-class</span>=<span class="hljs-value">&quot;active&quot;</span>
-      <span class="hljs-attribute">id</span>=<span class="hljs-value">&quot;Tab2&quot;</span>
-      <span class="hljs-attribute">exclusion-group</span>=<span class="hljs-value">&quot;myTabs&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h3</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;page-header&quot;</span>&gt;</span>Tab 2<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-comment">&lt;!-- ... --&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;tab-pane&quot;</span>
-      <span class="hljs-attribute">toggleable</span>
-      <span class="hljs-attribute">active-class</span>=<span class="hljs-value">&quot;active&quot;</span>
-      <span class="hljs-attribute">id</span>=<span class="hljs-value">&quot;Tab3&quot;</span>
-      <span class="hljs-attribute">exclusion-group</span>=<span class="hljs-value">&quot;myTabs&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h3</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;page-header&quot;</span>&gt;</span>Tab 3<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-comment">&lt;!-- ... --&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn-group justified nav-tabs&quot;</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn btn-default&quot;</span>
-     <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#Tab1&quot;</span>
-     <span class="hljs-attribute">toggle</span>=<span class="hljs-value">&quot;on&quot;</span>
-     <span class="hljs-attribute">active-class</span>=<span class="hljs-value">&quot;active&quot;</span>&gt;</span>Tab 1
-  <span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn btn-default&quot;</span>
-     <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#Tab2&quot;</span>
-     <span class="hljs-attribute">toggle</span>=<span class="hljs-value">&quot;on&quot;</span>
-     <span class="hljs-attribute">active-class</span>=<span class="hljs-value">&quot;active&quot;</span>&gt;</span>Tab 2
-  <span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-
-  <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn btn-default&quot;</span>
-     <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#Tab3&quot;</span>
-     <span class="hljs-attribute">toggle</span>=<span class="hljs-value">&quot;on&quot;</span>
-     <span class="hljs-attribute">active-class</span>=<span class="hljs-value">&quot;active&quot;</span>&gt;</span>Tab 3
-  <span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
-
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span></span>
 </code></pre>
-<h3 id="accordion-and-collapse">Accordion and Collapse</h3>
-<p>Accordion component is achieved via <code>toggle</code> and <code>toggleable</code> directives. <code>exclusion-group</code> parameter is used to inactivate other panels but the active one.</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-group&quot;</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">&quot;accordion&quot;</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel panel-default&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-heading&quot;</span> <span class="hljs-attribute">toggle</span> <span class="hljs-attribute">target</span>=<span class="hljs-value">&quot;collapseOne&quot;</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">h4</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-title&quot;</span>&gt;</span>
-          Collapsible Group Item #1
-      <span class="hljs-tag">&lt;/<span class="hljs-title">h4</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">&quot;collapseOne&quot;</span> <span class="hljs-attribute">toggleable</span> <span class="hljs-attribute">active-class</span>=<span class="hljs-value">&quot;in&quot;</span> <span class="hljs-attribute">exclusion-group</span>=<span class="hljs-value">&quot;accordion1&quot;</span> <span class="hljs-attribute">default</span>=<span class="hljs-value">&quot;active&quot;</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-collapse collapse&quot;</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-body&quot;</span>&gt;</span>
-        <span class="hljs-comment">&lt;!-- ... --&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel panel-default&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-heading&quot;</span> <span class="hljs-attribute">toggle</span> <span class="hljs-attribute">target</span>=<span class="hljs-value">&quot;collapseTwo&quot;</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">h4</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-title&quot;</span>&gt;</span>
-          Collapsible Group Item #2
-      <span class="hljs-tag">&lt;/<span class="hljs-title">h4</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">&quot;collapseTwo&quot;</span> <span class="hljs-attribute">toggleable</span> <span class="hljs-attribute">active-class</span>=<span class="hljs-value">&quot;in&quot;</span> <span class="hljs-attribute">exclusion-group</span>=<span class="hljs-value">&quot;accordion1&quot;</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-collapse collapse&quot;</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-body&quot;</span>&gt;</span>
-        <span class="hljs-comment">&lt;!-- ... --&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel panel-default&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-heading&quot;</span> <span class="hljs-attribute">toggle</span> <span class="hljs-attribute">target</span>=<span class="hljs-value">&quot;collapseThree&quot;</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">h4</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-title&quot;</span>&gt;</span>
-          Collapsible Group Item #3
-      <span class="hljs-tag">&lt;/<span class="hljs-title">h4</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">&quot;collapseThree&quot;</span> <span class="hljs-attribute">toggleable</span> <span class="hljs-attribute">active-class</span>=<span class="hljs-value">&quot;in&quot;</span> <span class="hljs-attribute">exclusion-group</span>=<span class="hljs-value">&quot;accordion1&quot;</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-collapse collapse&quot;</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-body&quot;</span>&gt;</span>
-        <span class="hljs-comment">&lt;!-- ... --&gt;</span>
+<p><hr></p>
+<h4 id="sidebars">Sidebars</h4>
+<h5 id="creating-sidebars">Creating sidebars</h5>
+<p>Sidebars can be placed either in left side or right side adding respectively <code>.sidebar-left</code> and <code>.sidebar-right</code> classes.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;sidebar sidebar-left&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;scrollable&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h1</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;scrollable-header app-name&quot;</span>&gt;</span>My App<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>  
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;scrollable-content&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;list-group&quot;</span> <span class="hljs-attribute">ui-turn-off</span>=<span class="hljs-value">&apos;uiSidebarLeft&apos;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;list-group-item&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#/link1&quot;</span>&gt;</span>Link 1 
+          <span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;list-group-item&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;#/link2&quot;</span>&gt;</span>Link 2
+          <span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-chevron-right pull-right&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-</code></pre>
-<h3 id="overlays">Overlays</h3>
-<p>Overlay are similar to modals but looks more native in mobile devices.</p>
-<p>This is the basic markup for an <code>overlay</code>. An <code>overlay</code> directive implicitly sets up a <code>toggleable</code> using its argument as <code>id</code>.</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">overlay</span>=<span class="hljs-value">&quot;myOverlay&quot;</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">h4</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;overlay-title&quot;</span>&gt;</span>My Overlay<span class="hljs-tag">&lt;/<span class="hljs-title">h4</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, ex eaque possimus ipsa ab quasi quos corporis consequatur laudantium? Ab assumenda delectus quo velit voluptates doloribus. Earum odit facilis qui.
-  <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">toggle</span>=<span class="hljs-value">&quot;off&quot;</span> <span class="hljs-attribute">bubble</span> <span class="hljs-attribute">target</span>=<span class="hljs-value">&quot;myOverlay&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn btn-primary&quot;</span>&gt;</span>Ok<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn btn-default&quot;</span>&gt;</span>Cancel<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>  
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;sidebar sidebar-rigth&quot;</span>&gt;</span>
+  <span class="hljs-comment">&lt;!-- --&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<p>You can show an overlay by default adding <code>default=&apos;active&apos;</code> to the <code>[overlay]</code> element.</p>
-<p>To interact with overlays from controllers you can use <code>$rootScope.toggle()</code> function: i.e <code>$rootScope.toggle(&apos;myOverlay&apos;, &apos;on&apos;);</code> or <code>$rootScope.toggle(&apos;myOverlay&apos;, &apos;off&apos;);</code>.</p>
-<h3 id="dropdowns">Dropdowns</h3>
-<p>Dropdowns are also achieved using <code>toggle</code> and <code>toggleable</code>.</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn-group pull-right toggleable-dropdown&quot;</span> <span class="hljs-attribute">active-class</span>=<span class="hljs-value">&quot;open&quot;</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">&quot;myDropdown&quot;</span> <span class="hljs-attribute">toggleable</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">&quot;button&quot;</span>
-    <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn btn-default dropdown-toggle&quot;</span> <span class="hljs-attribute">toggle</span>
-    <span class="hljs-attribute">target</span>=<span class="hljs-value">&quot;myDropdown&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;fa fa-gear&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;caret&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">ul</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;dropdown-menu&quot;</span> <span class="hljs-attribute">role</span>=<span class="hljs-value">&quot;menu&quot;</span> <span class="hljs-attribute">toggle</span>=<span class="hljs-value">&quot;off&quot;</span> <span class="hljs-attribute">bubble</span> <span class="hljs-attribute">target</span>=<span class="hljs-value">&quot;myDropdown&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>&gt;</span>Action<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>&gt;</span>Another action<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>&gt;</span>Something else here<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">li</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;divider&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>&gt;</span>Separated link<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<h5 id="interacting-with-sidebars">Interacting with sidebars</h5>
+<p>Under the hood sidebar uses <code>SharedState</code> exposing respective statuses: <code>uiSidebarLeft</code> and <code>uiSidebarRight</code></p>
+<pre><code class="lang-html">&lt;<span class="hljs-tag">a</span> href ui-toggle=<span class="hljs-string">&apos;uiSidebarLeft&apos;</span>&gt;Toggle sidebar <span class="hljs-attribute">left</span>&lt;/a&gt;
+
+&lt;<span class="hljs-tag">a</span> href ui-toggle=<span class="hljs-string">&apos;uiSidebarRight&apos;</span>&gt;Toggle sidebar <span class="hljs-attribute">right</span>&lt;/a&gt;
 </code></pre>
-<h3 id="carousels">Carousels</h3>
-<p>Carousels have the same markup of bootstrap but their behaviour is achieved with 2 functions available to <code>$rootScope</code>: <code>carouselPrev(id)</code> and <code>carouselNext(id)</code>.</p>
-<p>This is a basic example that uses <code>ngSwipeLeft</code> and <code>ngSwipeRight</code> from <code>ngTouch</code>.</p>
-<pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> <span class="hljs-property">id</span>=<span class="hljs-string">&quot;carousel-example&quot;</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;carousel&quot;</span>&gt;
-      &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;carousel-inner&quot;</span> ng-swipe-left=<span class="hljs-string">&quot;carouselPrev(&apos;carousel-example&apos;)&quot;</span>
-      ng-swipe-right=<span class="hljs-string">&quot;carouselNext(&apos;carousel-example&apos;)&quot;</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> href=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;item active&quot;</span>&gt;
-          &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;carousel-example-content&quot;</span>&gt;<span class="hljs-number">1</span>&lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> href=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;item&quot;</span>&gt;
-          &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;carousel-example-content&quot;</span>&gt;<span class="hljs-number">2</span>&lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> href=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;item&quot;</span>&gt;
-          &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;carousel-example-content&quot;</span>&gt;<span class="hljs-number">3</span>&lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-      &lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-</code></pre>
-<p>To create more fancy effects and touch friendly experience you can use <code>$swipe</code> service direclty. <code>$swipe</code> service is provided by <code>angular-touch</code>.</p>
-<p>This is a more complete example to explain how to build a swipe friendly carousel.</p>
-<pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> <span class="hljs-property">id</span>=<span class="hljs-string">&quot;carousel-example&quot;</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;carousel&quot;</span>&gt;
-      &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;carousel-inner&quot;</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> href=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;item active&quot;</span> carousel-example-<span class="hljs-property">item</span>&gt;
-          &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;carousel-example-content&quot;</span>&gt;<span class="hljs-number">1</span>
-            &lt;br/&gt;&lt;small&gt;Swipe <span class="hljs-keyword">me</span>!&lt;/small&gt;
-          &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> href=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;item&quot;</span> carousel-example-<span class="hljs-property">item</span>&gt;
-          &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;carousel-example-content&quot;</span>&gt;<span class="hljs-number">2</span>
-            &lt;br/&gt;&lt;small&gt;Swipe <span class="hljs-keyword">me</span>!&lt;/small&gt;
-          &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> href=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;item&quot;</span> carousel-example-<span class="hljs-property">item</span>&gt;
-          &lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;carousel-example-content&quot;</span>&gt;<span class="hljs-number">3</span>
-            &lt;br/&gt;&lt;small&gt;Swipe <span class="hljs-keyword">me</span>!&lt;/small&gt;
-          &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-      &lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-</code></pre>
-<p>Lets define the <code>carouselExampleItem</code> directive.</p>
-<pre><code class="lang-javascript">app.directive( <span class="hljs-string">&quot;carouselExampleItem&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$rootScope</span>, <span class="hljs-variable">$swipe</span>)</span></span>{
-  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(scope, element, attrs)</span></span>{
-      <span class="hljs-keyword">var</span> startX = <span class="hljs-keyword">null</span>;
-      <span class="hljs-keyword">var</span> startY = <span class="hljs-keyword">null</span>;
-      <span class="hljs-keyword">var</span> endAction = <span class="hljs-string">&quot;cancel&quot;</span>;
-      <span class="hljs-keyword">var</span> carouselId = element.<span class="hljs-keyword">parent</span>().<span class="hljs-keyword">parent</span>().attr(<span class="hljs-string">&quot;id&quot;</span>);
-
-      <span class="hljs-keyword">var</span> translateAndRotate = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x, y, z, deg)</span></span>{
-        element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;-webkit-transform&quot;</span>] = <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span>+ y +<span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
-        element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;-moz-transform&quot;</span>] = <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span> + y +<span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
-        element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;-ms-transform&quot;</span>] = <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span> + y + <span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
-        element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;-o-transform&quot;</span>] = <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span> + y  + <span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
-        element[<span class="hljs-number">0</span>].style[<span class="hljs-string">&quot;transform&quot;</span>] = <span class="hljs-string">&quot;translate3d(&quot;</span>+x+<span class="hljs-string">&quot;px,&quot;</span> + y + <span class="hljs-string">&quot;px,&quot;</span> + z + <span class="hljs-string">&quot;px) rotate(&quot;</span>+ deg +<span class="hljs-string">&quot;deg)&quot;</span>;
-      }
-
-      <span class="hljs-variable">$swipe</span>.bind(element, {
-        start: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(coords)</span> </span>{
-          endAction = <span class="hljs-keyword">null</span>;
-          startX = coords.x;
-          startY = coords.y;
-        },
-
-        cancel: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{
-          endAction = <span class="hljs-keyword">null</span>;
-          translateAndRotate(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
-          e.stopPropagation();
-        },
-
-        end: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(coords, e)</span> </span>{
-          <span class="hljs-keyword">if</span> (endAction == <span class="hljs-string">&quot;prev&quot;</span>) {
-            <span class="hljs-variable">$rootScope</span>.carouselPrev(carouselId);
-          } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (endAction == <span class="hljs-string">&quot;next&quot;</span>) {
-            <span class="hljs-variable">$rootScope</span>.carouselNext(carouselId);
-          }
-          translateAndRotate(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
-          e.stopPropagation();
-        },
-
-        move: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(coords)</span> </span>{
-          <span class="hljs-keyword">if</span>( startX != <span class="hljs-keyword">null</span>) {
-            <span class="hljs-keyword">var</span> deltaX = coords.x - startX;
-            <span class="hljs-keyword">var</span> deltaXRatio = deltaX / element[<span class="hljs-number">0</span>].clientWidth;
-            <span class="hljs-keyword">if</span> (deltaXRatio &amp;gt; <span class="hljs-number">0.3</span>) {
-              endAction = <span class="hljs-string">&quot;next&quot;</span>;
-            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (deltaXRatio &amp;lt; -<span class="hljs-number">0.3</span>){
-              endAction = <span class="hljs-string">&quot;prev&quot;</span>;
-            } <span class="hljs-keyword">else</span> {
-              endAction = <span class="hljs-keyword">null</span>;
-            }
-            translateAndRotate(deltaXRatio * <span class="hljs-number">200</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, deltaXRatio * <span class="hljs-number">15</span>);
-          }
-        }
-      });
-    }
-});
-</code></pre>
-<p>Now swiping items we will see them moving and rotating. When releasing an item if the swipe lenght was at least 3/10 of the item width then carouselPrev/carouselNext are invoked according to swipe direction.</p>
-<h3 id="toggle-switch">Toggle Switch</h3>
+<p>You can put <code>ui-turn-off=&apos;uiSidebarLeft&apos;</code> or <code>ui-turn-off=&apos;uiSidebarLeft&apos;</code> inside the sidebar to make it close after clicking links inside them.</p>
+<p>By default sidebar are closed by clicking/tapping outside them.</p>
+<p><hr></p>
+<h4 id="toggle-switch">Toggle Switch</h4>
 <figure class="full-width-figure">
   <img src="/assets/img/figs/switch.png" alt="">
 </figure>
 
-<p>The <code>switch</code> directive (not to be confused with <code>ng-switch</code>) lets you create a toggle switch control bound to a boolean <code>ngModel</code> value.</p>
+<p>The <code>ui-switch</code> directive (not to be confused with <code>ng-switch</code>) lets you create a toggle switch control bound to a boolean <code>ngModel</code> value.</p>
 <p>It requires <code>ngModel</code>. You can also use <code>ngChange</code> in conjunction with <code>[switch]</code> to trigger functions in response to model changes.</p>
-<pre><code class="lang-html">&lt;<span class="hljs-keyword">switch</span>  ng-model=<span class="hljs-string">&quot;invoice.paid&quot;</span>&gt;&lt;/<span class="hljs-keyword">switch</span>&gt;
+<pre><code class="lang-html">&lt;ui-<span class="hljs-keyword">switch</span>  ng-model=<span class="hljs-string">&quot;invoice.paid&quot;</span>&gt;&lt;/ui-<span class="hljs-keyword">switch</span>&gt;
 </code></pre>
-</section>
+<hr>
 
+<h3 id="gestures">Gestures</h3>
+<p>Coming soon ...</p>
+<hr>
+</section>
 
 <section>
 <h2 id="utils">Utils</h2>
@@ -796,56 +917,9 @@
   <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn&quot;</span>&gt;</span>Tab 3<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<h3 id="form-helpers">Form helpers</h3>
-<p>Mobile angular Ui provides some markup savers to create form inputs.</p>
-<h4 id="-bs-form-control-"><code>bs-form-control</code></h4>
-<p>NOTE: former <code>bs-input</code>.</p>
-<pre><code class="lang-html">&lt;input
- bs-form-control
-
- <span class="hljs-variable">type=</span><span class="hljs-string">&quot;text&quot;</span>
- <span class="hljs-variable">ng-model=</span><span class="hljs-string">&quot;invoice.customer&quot;</span>
- <span class="hljs-variable">label=</span><span class="hljs-string">&quot;Customer&quot;</span>
- <span class="hljs-variable">label-class=</span><span class="hljs-string">&quot;col-xs-3 col-sm-2 col-lg-1&quot;</span>
- <span class="hljs-variable">class=</span><span class="hljs-string">&quot;col-xs-9 col-sm-10 col-lg-11&quot;</span>
- <span class="hljs-variable">placeholder=</span><span class="hljs-string">&quot;Customer Name&quot;</span>
-/&gt;
-</code></pre>
-<p>That translates to</p>
-<pre><code class="lang-html">&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span>=</span><span class="hljs-string">&quot;form-group row&quot;</span>&gt;
-  &lt;label <span class="hljs-keyword">for</span>=<span class="hljs-string">&quot;invoice_customer_input&quot;</span> <span class="hljs-class"><span class="hljs-keyword">class</span>=</span><span class="hljs-string">&quot;control-label col-xs-3 col-sm-2 col-lg-1&quot;</span> /&gt;<span class="hljs-type">Customer</span>&lt;/label&gt;
-  &lt;div <span class="hljs-class"><span class="hljs-keyword">class</span>=</span><span class="hljs-string">&quot;form-control-wrapper col-xs-9 col-sm-10 col-lg-11&quot;</span>&gt;
-    &lt;input <span class="hljs-class"><span class="hljs-keyword">type</span>=</span><span class="hljs-string">&quot;text&quot;</span> ng-model=<span class="hljs-string">&quot;invoice.customer&quot;</span> <span class="hljs-class"><span class="hljs-keyword">class</span>=</span><span class="hljs-string">&quot;form-control&quot;</span> placeholder=<span class="hljs-string">&quot;Customer Name&quot;</span> id=<span class="hljs-string">&quot;invoice_customer_input&quot;</span> /&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<p>If you don&apos;t assing a grid class to label or element they will get <code>.col-xs-12</code>. This way you&apos;re always able to mix horizontal and vertical controls without the need to use <code>form-horizontal</code> or change markup and style.</p>
-<p>Note that this directive only wraps target element with some html. This lets you apply it to any type of control, even custom one.</p>
-<p>So for instance you can apply it to <code>textarea</code> or <code>switch</code> as well.</p>
-<pre><code class="lang-html">&lt;switch            <span class="hljs-variable">ng-model=</span><span class="hljs-string">&quot;invoice.paid&quot;</span>     <span class="hljs-variable">label=</span><span class="hljs-string">&quot;Paid&quot;</span> bs-form-control&gt;&lt;/switch&gt;
-&lt;textarea <span class="hljs-variable">type=</span><span class="hljs-string">&quot;text&quot;</span> <span class="hljs-variable">ng-model=</span><span class="hljs-string">&quot;customer.mailing_address&quot;</span> <span class="hljs-variable">label=</span><span class="hljs-string">&quot;Address&quot;</span> bs-form-control&gt;&lt;/textarea&gt;
-</code></pre>
-<h3 id="panel-helpers">Panel Helpers</h3>
-<h4 id="-bs-panel-"><code>bs-panel</code></h4>
-<p>A super simple directive minimizing the markup to use bootstrap panels.</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">bs-panel</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">&quot;My Panel&quot;</span>&gt;</span>
-  <span class="hljs-comment">&lt;!-- Content --&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-</code></pre>
-<p>That translates to</p>
-<pre><code class="lang-html">
-<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel&quot;</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-heading&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-title&quot;</span>&gt;</span>
-      My Panel
-    <span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-body&quot;</span>&gt;</span>
-     <span class="hljs-comment">&lt;!-- Content --&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-</code></pre>
 </section>
+
+</div>
 
 
 
@@ -894,6 +968,7 @@
       ga('create', 'UA-48036416-1', 'mobileangularui.com');
       ga('send', 'pageview');
     </script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="/assets/js/main.js"></script>
   </body>
 </html>
