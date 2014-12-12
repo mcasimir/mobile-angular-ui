@@ -1,54 +1,59 @@
 <!DOCTYPE html>
-<!--
-  ** NOTE **
-
-  Run `grunt connect` then
-  navigate to http://localhost:3000/demo
-  to see this page in browser
-
-  -->
 <html>
   <head>
     <meta charset="utf-8" />
     <base href="/demo/" />
-    <title>Mobile Angular UI Examples</title>
+    <title>Mobile Angular UI Demo</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
     <meta name="apple-mobile-web-app-status-bar-style" content="yes" />
     <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
-    <link rel="stylesheet" href="/dist/css/mobile-angular-ui-hover.min.css" />
-    <link rel="stylesheet" href="/dist/css/mobile-angular-ui-base.min.css" />
-    <link rel="stylesheet" href="/dist/css/mobile-angular-ui-desktop.min.css" />
+    <link rel="stylesheet" href="/dist/css/mobile-angular-ui-hover.css" />
+    <link rel="stylesheet" href="/dist/css/mobile-angular-ui-base.css" />
+    <link rel="stylesheet" href="/dist/css/mobile-angular-ui-desktop.css" />
     <link rel="stylesheet" href="demo.css" />
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-touch.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular-route.min.js"></script>
     <script src="/dist/js/mobile-angular-ui.min.js"></script>
+
+    <!-- Only required to use $drag, $swipe and Translate services -->
+    <script src="/dist/js/mobile-angular-ui.gestures.min.js"></script>
+
+    <!-- Only required to import legacy syntax and directives. You won't need it 
+    unless you are attempting to move an app from Mobile Angular UI 1.1 to 1.2 -->
+    <script src="/dist/js/mobile-angular-ui.migrate.min.js"></script>
     <script src="demo.js"></script>
   </head>
-  <body ng-app="MobileAngularUiExamples" ng-controller="MainController">
+
+  <body 
+    ng-app="MobileAngularUiExamples" 
+    ng-controller="MainController"
+    >
 
     <!-- Sidebars -->
-    <div ng-include="'sidebar.html'" class="sidebar sidebar-left" toggleable parent-active-class="sidebar-left-in" id="mainSidebar"></div>
+    <div ng-include="'sidebar.html'" 
+            ui-track-as-search-param='true'
+            class="sidebar sidebar-left"></div>
 
-    <div ng-include="'sidebarRight.html'" class="sidebar sidebar-right" toggleable parent-active-class="sidebar-right-in" id="rightSidebar"></div>
+    <div ng-include="'sidebarRight.html'" 
+            class="sidebar sidebar-right"></div>
 
     <div class="app">
 
       <!-- Navbars -->
 
       <div class="navbar navbar-app navbar-absolute-top">
-        <div class="navbar-brand navbar-brand-center" yield-to="title">
-          <span>Mobile Angular UI</span>
+        <div class="navbar-brand navbar-brand-center" ui-yield-to="title">
+          Mobile Angular UI
         </div>
         <div class="btn-group pull-left">
-          <div ng-click="toggle('mainSidebar')" class="btn btn-navbar sidebar-toggle">
+          <div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle">
             <i class="fa fa-bars"></i> Menu
           </div>
         </div>
-        <div class="btn-group pull-right" yield-to="navbarAction">
-          <div ng-click="toggle('rightSidebar')" class="btn btn-navbar">
+        <div class="btn-group pull-right" ui-yield-to="navbarAction">
+          <div ui-toggle="uiSidebarRight" class="btn">
             <i class="fa fa-comment"></i> Chat
           </div>
         </div>
@@ -67,11 +72,15 @@
         <div ng-show="loading" class="app-content-loading">
           <i class="fa fa-spinner fa-spin loading-spinner"></i>
         </div>
-
-        <ng-view class="app-content" ng-hide="loading"></ng-view>
+        <div class="app-content">
+          <ng-view></ng-view>
+        </div>
       </div>
 
     </div><!-- ~ .app -->
+
+    <div ui-yield-to="modals"></div>
+
     <script>
        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
