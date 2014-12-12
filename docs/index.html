@@ -102,11 +102,9 @@ yo mobileangularui
 </code></pre>
 <p>If you wish you can avoid to load whole <code>mobile-angular-ui</code> modules at all and pick a subset of the loaded modules to fit your needs. This is how the <code>mobile-angular-ui</code> module is defined with its dependencies.</p>
 <pre><code class="lang-javascript"><span class="hljs-attribute">angular</span>.<span class="hljs-function">module</span>(<span class="hljs-string">&apos;mobile-angular-ui&apos;</span>, [
-  <span class="hljs-string">&apos;mobile-angular-ui.core.pointerEvents&apos;</span>,     <span class="hljs-comment">/* prevents actions on disabled elements */</span>
   <span class="hljs-string">&apos;mobile-angular-ui.core.activeLinks&apos;</span>,       <span class="hljs-comment">/* adds .active class to current links */</span>
   <span class="hljs-string">&apos;mobile-angular-ui.core.fastclick&apos;</span>,         <span class="hljs-comment">/* polyfills overflow: auto */</span>
-  <span class="hljs-string">&apos;mobile-angular-ui.core.sharedState&apos;</span>,       <span class="hljs-comment">/* SharedState service */</span>
-  <span class="hljs-string">&apos;mobile-angular-ui.core.ui&apos;</span>,                <span class="hljs-comment">/* ui-* directives */</span>
+  <span class="hljs-string">&apos;mobile-angular-ui.core.sharedState&apos;</span>,       <span class="hljs-comment">/* SharedState service and directives */</span>
   <span class="hljs-string">&apos;mobile-angular-ui.core.outerClick&apos;</span>,        <span class="hljs-comment">/* outerClick directives */</span>
   <span class="hljs-string">&apos;mobile-angular-ui.components.modals&apos;</span>,            <span class="hljs-comment">/* modals and overlays */</span>
   <span class="hljs-string">&apos;mobile-angular-ui.components.switch&apos;</span>,            <span class="hljs-comment">/* switch form input */</span>
