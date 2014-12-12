@@ -6,6 +6,8 @@ _Wed Nov 28 2014_
 
 # Migrating to Mobile Angular UI 1.2
 
+All of the functionalities are now separed in 3 modules: `core`, `components` and `gestures`.
+
 ## Core UI functionalities
 
 Core UI Functionalities are those any HTML UI built on Angular could use. They are not Mobile-specific nor depending on anything else that Angular itself, and you could use them with any css framework.
