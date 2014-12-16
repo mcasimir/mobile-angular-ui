@@ -1,5 +1,12 @@
 # Mobile Angular Ui Changelog
 
+### v. 1.2.0-beta.4
+
+_Thu Dec 16 2014_
+
+- Fixes $drag causing exception or warning due to misused `insertRule`
+- Doc comments in drag.js now reflects $drag actual interface
+
 ### v. 1.2.0-beta.3
 
 _Thu Dec 16 2014_
