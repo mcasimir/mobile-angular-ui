@@ -6,69 +6,102 @@
      'mobile-angular-ui.gestures.transform'
    ])
 
-   // 
-   // $drag
-   // 
-   // A provider to create touch & drag components.
-   // 
-   // $drag Service wraps ngTouch $swipe to extend its behavior moving one or more
-   // target element throug css transform according to the $swipe coords thus creating 
-   // a drag effect.
-   // 
-   // $drag interface is similar to $swipe:
-   // 
-   // app.controller('MyController', function($drag, $element){
-   //   $drag.bind($element, {
-   //    start: function(coords, cancel, markers, e){},
-   //    move: function(coords, cancel, markers, e){},
-   //    end: function(coords, cancel, markers, e){},
-   //    cancel: function(coords, markers, e){},
-   //    transform: function(x, y, transform) {},
-   //    adaptTransform: function(x, y, transform) {},
-   //    constraint: fn or {top: y1, left: x1, bottom: y2, right: x2}
-   //   });
-   // });
-   // 
-   // Main differences from $swipe are: 
-   //  - coords param take into account css transform so you can easily detect collision with other elements.
-   //  - start, move, end callback receive a cancel funcion that can be used to cancel the motion and reset
-   //    the transform.
-   //  - you can configure the transform behavior passing a transform function to options.
-   //  - you can constraint the motion through the constraint option (setting relative movement limits) 
-   //    or through the track option (setting absolute coords);
-   //  - you can setup collision markers being watched and passed to callbacks.
-   //  
-   // Example (drag to dismiss):
-   //  $drag.bind(e, {
-   //    move: function(c, cancel, markers){
-   //      if(c.left > markers.m1.left) {
-   //        e.addClass('willBeDeleted');
-   //      } else {
-   //        e.removeClass('willBeDeleted');
-   //      }
-   //    },
-   //    end: function(coords, cancel){
-   //      if(c.left > markers.m1.left) {
-   //        e.addClass('deleting');
-   //        delete($scope.myModel).then(function(){
-   //          e.remove();
-   //        }, function(){
-   //          cancel();
-   //        });
-   //      } else {
-   //        cancel();
-   //      }
-   //    },
-   //    cancel: function(){
-   //      e.removeClass('willBeDeleted');
-   //      e.removeClass('deleting');
-   //    },
-   //    constraint: { 
-   //        minX: 0, 
-   //        minY: 0, 
-   //        maxY: 0 
-   //     },
-   //   });
+  // `$drag` Service wraps `$swipe` to extend its behavior moving target element through css transform according to the `$swipe` coords thus creating 
+  // a drag effect.
+
+  // $drag interface is very close to `$swipe`:
+
+  // app.controller('MyController', function($drag, $element){
+  //   var unbindDrag = $drag.bind($element, {
+  //    // drag callbacks
+  //    // - rect is the current result of getBoundingClientRect() for bound element
+  //    // - cancelFn issue a "touchcancel" on element
+  //    // - resetFn restore the initial transform
+  //    // - undoFn undoes the current movement
+  //    // - swipeCoords are the coordinates exposed by the underlying $swipe service
+  //    start: function(rect, cancelFn, resetFn, swipeCoords){},
+  //    move: function(rect, cancelFn, resetFn, swipeCoords){},
+  //    end: function(rect, undoFn, resetFn, swipeCoords) {};
+  //    cancel: function(rect, resetFn){},
+
+  //    // constraints for the movement
+  //    // you can use a "static" object of the form:
+  //    // {top: .., lelf: .., bottom: .., rigth: ..}
+  //    // or pass a function that is called on each movement 
+  //    // and return it in a dynamic way.
+  //    // This is useful if you have to constraint drag movement while bounduaries are
+  //    // changing over time.
+
+  //    constraint: function(){ return {top: y1, left: x1, bottom: y2, right: x2}; }, // or just {top: y1, left: x1, bottom: y2, right: x2}
+
+  //    // instantiates the Trasform according to touch movement (defaults to `t.translate(dx, dy);`)
+  //    // dx, dy are the distances of movement for x and y axis after constraints are applyied
+  //    transform: function(transform, dx, dy, currSwipeX, currSwipeY, startSwipeX, startSwipeY) {},
+
+  //    // changes the Transform before is applied to element (useful to add something like easing or accelleration)
+  //    adaptTransform: function(transform, dx, dy, currSwipeX, currSwipeY, startSwipeX, startSwipeY) {}
+
+  //   });
+    
+  //   // This is automatically called when element is disposed so it is not necessary
+  //   // that you call this manually but if you have to detatch $drag service before
+  //   // this you could just call:
+  //   unbindDrag();
+  // });
+
+  // Main differences with `$swipe` are:
+  //  - bound elements will move following swipe direction automatically
+  //  - coords param take into account css transform so you can easily detect collision with other elements.
+  //  - start, move, end callback receive a cancel funcion that can be used to cancel the motion and reset
+  //    the transform.
+  //  - you can configure the transform behavior passing a transform function to options.
+  //  - you can constraint the motion through the constraint option (setting relative movement limits)
+   
+  // Example (drag to dismiss):
+
+  // app.directive('dragToDismiss', function($drag, $parse, $timeout){
+  //   return {
+  //     restrict: 'A',
+  //     compile: function(elem, attrs) {
+  //       var dismissFn = $parse(attrs.dragToDismiss);
+  //       return function(scope, elem, attrs){
+  //         var dismiss = false;
+
+  //         $drag.bind(elem, {
+  //           constraint: {
+  //             minX: 0, 
+  //             minY: 0, 
+  //             maxY: 0 
+  //           },
+  //           move: function(c) {
+  //             if( c.left >= c.width / 4) {
+  //               dismiss = true;
+  //               elem.addClass('dismiss');
+  //             } else {
+  //               dismiss = false;
+  //               elem.removeClass('dismiss');
+  //             }
+  //           },
+  //           cancel: function(){
+  //             elem.removeClass('dismiss');
+  //           },
+  //           end: function(c, undo, reset) {
+  //             if (dismiss) {
+  //               elem.addClass('dismitted');
+  //               $timeout(function() { 
+  //                 scope.$apply(function() {
+  //                   dismissFn(scope);  
+  //                 });
+  //               }, 400);
+  //             } else {
+  //               reset();
+  //             }
+  //           }
+  //         });
+  //       };
+  //     }
+  //   };
+  // });
 
   .provider('$drag', function() {
     this.$get = ['$swipe', '$document', 'Transform', function($swipe, $document, Transform) {
@@ -78,11 +111,11 @@
       document.head.appendChild(style);
       var sheet = style.sheet;
       // Makes z-index 99999
-      sheet.insertRule('html .ui-drag-move{z-index: 99999 !important;}');
+      sheet.insertRule('html .ui-drag-move{z-index: 99999 !important;}', 0);
       // Disable transitions
-      sheet.insertRule('html .ui-drag-move{-webkit-transition: none !important;-moz-transition: none !important;-o-transition: none !important;-ms-transition: none !important;transition: none !important;}');
+      sheet.insertRule('html .ui-drag-move{-webkit-transition: none !important;-moz-transition: none !important;-o-transition: none !important;-ms-transition: none !important;transition: none !important;}', 0);
       // Makes text unselectable
-      sheet.insertRule('html .ui-drag-move, html .ui-drag-move *{-webkit-touch-callout: none !important;-webkit-user-select: none !important;-khtml-user-select: none !important;-moz-user-select: none !important;-ms-user-select: none !important;user-select: none !important;}');
+      sheet.insertRule('html .ui-drag-move, html .ui-drag-move *{-webkit-touch-callout: none !important;-webkit-user-select: none !important;-khtml-user-select: none !important;-moz-user-select: none !important;-ms-user-select: none !important;user-select: none !important;}', 0);
 
       return {
         Transform: Transform,
