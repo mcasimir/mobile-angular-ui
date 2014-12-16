@@ -58,7 +58,7 @@
         link: function(scope, elem, attrs, scrollable) {
           // Workaround to avoid soft keyboard hiding inputs
           elem.on('focus', function(){
-            if (scrollable && scrollableContent) {
+            if (scrollable && scrollable.scrollableContent) {
               var h1 = scrollable.scrollableContent.offsetHeight;
               $timeout(function() {
                 var h2 = scrollable.scrollableContent.offsetHeight;

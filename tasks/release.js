@@ -4,18 +4,18 @@
 
 var exec, path, semver;
 
-exec = require("child_process").exec;
+exec = require('child_process').exec;
 
-path = require("path");
+path = require('path');
 
-semver = require("semver");
+semver = require('semver');
 
 module.exports = function(grunt) {
   var run;
   
   run = function(cmd, callback) {
     var cp;
-    grunt.log.writeln("Executing: " + cmd.blue);
+    grunt.log.writeln('Executing: ' + cmd.blue);
     cp = exec(cmd, function(err, stdout, stderr) {
       if (err) {
         grunt.fail.warn(err);
@@ -27,20 +27,20 @@ module.exports = function(grunt) {
     cp.stdout.pipe(process.stdout);
   };
 
-  ["major", "minor", "patch", "prerelease"].forEach(function(verType) {
-    return grunt.task.registerTask(verType, "Commit and release a new version", function() {
+  ['major', 'minor', 'patch', 'prerelease'].forEach(function(verType) {
+    return grunt.task.registerTask(verType, 'Commit and release a new version', function() {
       var message, nextver, taskDone;
       taskDone = this.async();
-      message = grunt.option("msg");
+      message = grunt.option('msg');
       if (!message) {
-        grunt.fail.warn("Commit message can't be blank");
+        grunt.fail.warn('Commit message can\'t be blank');
         taskDone;
       }
       nextver = null;
-      return run("git tag", function(err, out) {
+      return run('git tag', function(err, out) {
         var latest, sortedTags, tags;
         if (!err) {
-          tags = out.split("\n").filter(function(tag) {
+          tags = out.split('\n').filter(function(tag) {
             return semver.valid(tag);
           });
           sortedTags = tags.sort(function(t1, t2) {
@@ -48,25 +48,25 @@ module.exports = function(grunt) {
           });
           latest = sortedTags[0];
           nextver = semver.inc(latest, verType);
-          console.log("Latest:", latest);
-          console.log("Next:", nextver);
-          return run("git add .", function(err, out) {
+          console.log('Latest:', latest);
+          console.log('Next:', nextver);
+          return run('git add .', function(err, out) {
             if (err) {
               return taskDone();
             } else {
-              return run("git commit -m \"" + message + "\" -a", function(err, out) {
+              return run('git commit -m "' + message + '" -a', function(err, out) {
                 if (err) {
                   return taskDone();
                 } else {
-                  return run("git push", function(err, out) {
+                  return run('git push', function(err, out) {
                     if (err) {
                       return taskDone();
                     } else {
-                      return run("git tag -a " + nextver + " -m \"" + message + "\"", function(err, out) {
+                      return run('git tag -a ' + nextver + ' -m "' + message + '"', function(err, out) {
                         if (err) {
                           return taskDone();
                         } else {
-                          return run("git push --tags", function(err, out) {
+                          return run('git push --tags', function(err, out) {
                             return taskDone();
                           });
                         }
