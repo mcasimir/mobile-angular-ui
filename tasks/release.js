@@ -27,7 +27,7 @@ module.exports = function(grunt) {
     cp.stdout.pipe(process.stdout);
   };
 
-  ['major', 'minor', 'patch', 'prerelease'].forEach(function(verType) {
+  ['prerelease'].forEach(function(verType) {
     return grunt.task.registerTask(verType, 'Commit and release a new version', function() {
       var message, nextver, taskDone;
       taskDone = this.async();

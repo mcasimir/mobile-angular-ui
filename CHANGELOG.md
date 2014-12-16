@@ -1,5 +1,12 @@
 # Mobile Angular Ui Changelog
 
+### v. 1.2.0-beta.3
+
+_Thu Dec 16 2014_
+
+- Fixes #179: causing exception on focus inputs inside scrollables, now Angular soft keyboard workaround will work again
+- Added tests with Protractor
+
 ### v. 1.2.0-beta.2
 
 _Wed Nov 28 2014_
