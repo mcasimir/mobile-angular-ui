@@ -6,7 +6,7 @@
     return {
         compile: function(tElem, tAttrs) {
             var rawContent = tElem.html();
-            elem.remove();
+            tElem.remove();
             
             return function postLink(scope, elem, attrs) {
                 var active = "";
@@ -17,7 +17,7 @@
                   active = "default='" + attrs["default"] + "'";
                 }
 
-                var html = "<div class=\"overlay\" id=\"" + id + "\" toggleable " + active + " parent-active-class=\"overlay-in\" active-class=\"overlay-show\">\n  <div class=\"overlay-inner\">\n    <div class=\"overlay-background\"></div>\n    <a href=\"#" + id + "\" toggle=\"off\" class=\"overlay-dismiss\">\n      <i class=\"fa fa-times-circle-o\"></i>\n    </a>\n    <div class=\"overlay-content\">\n      <div class=\"overlay-body\">\n        " + body + "\n      </div>\n    </div>\n  </div>\n</div>";
+                var html = "<div class=\"overlay\" id=\"" + id + "\" toggleable " + active + " active-class=\"overlay-show\">\n  <div class=\"overlay-inner\">\n    <div class=\"overlay-background\"></div>\n    <a href=\"#" + id + "\" toggle=\"off\" class=\"overlay-dismiss\">\n      <i class=\"fa fa-times-circle-o\"></i>\n    </a>\n    <div class=\"overlay-content\">\n      <div class=\"overlay-body\">\n        " + body + "\n      </div>\n    </div>\n  </div>\n</div>";
 
                 var sameId = angular.element(document.getElementById(id));
 

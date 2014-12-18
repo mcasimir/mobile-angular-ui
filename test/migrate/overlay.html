@@ -1,0 +1,41 @@
+<div content-for="title">
+  <span>Overlays</span>
+</div>
+
+
+<div class="scrollable">
+ <div class="scrollable-content">
+   <div class="section section-break container-fluid">
+     <a href="#overlay1" class="btn btn-default" toggle="on">Show Overlay 1</a>
+     <a href="#overlay2" class="btn btn-default" toggle="on">Show Overlay 2</a>
+   </div>
+
+   <div class="section container">
+     <h4>Title</h4>
+     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, autem, culpa rerum odio sed esse officia quae nulla corporis laudantium necessitatibus dolores dolore nam eum exercitationem aut porro. Autem, nostrum.</p>
+     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, inventore, doloremque debitis accusamus qui pariatur aut ullam id reprehenderit impedit explicabo perspiciatis recusandae blanditiis quasi maiores quas itaque. Nesciunt, natus.</p>
+   </div>
+ </div>
+</div>
+
+<div overlay="overlay1" default="active">
+  <h4 class="overlay-title">First Overlay</h4>    
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, ex eaque possimus ipsa ab quasi quos corporis consequatur laudantium? Ab assumenda delectus quo velit voluptates doloribus. Earum odit facilis qui.
+  </p>
+  <p toggle="off" bubble target="overlay1">
+    <span class="btn btn-primary">Ok</span>
+    <span class="btn btn-default">Cancel</span>
+  </p>  
+</div>
+
+<div overlay="overlay2">
+  <h4 class="overlay-title">Second Overlay</h4>    
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, ex eaque possimus ipsa ab quasi quos corporis consequatur laudantium? Ab assumenda delectus quo velit voluptates doloribus. Earum odit facilis qui.
+  </p>
+  <p toggle="off" bubble target="overlay2">
+    <span class="btn btn-primary">Ok</span>
+    <span class="btn btn-default">Cancel</span>
+  </p>  
+</div>

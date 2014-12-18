@@ -17,7 +17,7 @@
       link: function(scope, elem, attrs) {
         var exclusionGroup        =  attrs.exclusionGroup,
             command               =  attrs.toggle || 'toggle',
-            bubble                =  scope.$eval(attrs.bubble),
+            bubble                =  attrs.bubble !== undefined && attrs.bubble !== 'false',
             activeClass           =  attrs.activeClass,
             inactiveClass         =  attrs.inactiveClass,
             parentActiveClass     =  attrs.parentActiveClass,
@@ -114,7 +114,7 @@
     };    
   }]);
 
-  module.run(['$rootScope', function($rootScope, SharedState) {
+  module.run(['$rootScope', 'SharedState', function($rootScope, SharedState) {
 
     $rootScope.toggle = function(target, command) {
       if (command === 'on') {

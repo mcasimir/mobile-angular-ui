@@ -7,6 +7,8 @@
       'mobile-angular-ui.migrate.panels',
       'mobile-angular-ui.migrate.disabled',
       'mobile-angular-ui.migrate.overlay',
-      'mobile-angular-ui.migrate.namespaceAliases'
+      'mobile-angular-ui.migrate.carousel',
+      'mobile-angular-ui.migrate.namespaceAliases',
+      'mobile-angular-ui.migrate.switch'
     ]);
 }());

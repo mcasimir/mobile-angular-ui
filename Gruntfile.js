@@ -52,7 +52,8 @@ module.exports = function(grunt) {
         files: {
           'tmp/mobile.css': 'src/less/mobile-angular-ui.less',
           'tmp/sm-grid.css': 'src/less/sm-grid.less',
-          'tmp/mobile-angular-ui-desktop.css': 'src/less/mobile-angular-ui-desktop.less'
+          'tmp/mobile-angular-ui-desktop.css': 'src/less/mobile-angular-ui-desktop.less',
+          'dist/css/mobile-angular-ui-migrate.css': 'src/less/migrate.less'
         }
       }
     },
@@ -117,6 +118,14 @@ module.exports = function(grunt) {
           hostname: '0.0.0.0',
           port: 3000,
           base: ['.', 'demo'],
+          keepalive: true
+        }
+      },
+      migrate: {
+        options: {
+          hostname: '0.0.0.0',
+          port: 3002,
+          base: ['.', 'test/migrate'],
           keepalive: true
         }
       },

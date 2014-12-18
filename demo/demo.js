@@ -12,11 +12,7 @@ var app = angular.module('MobileAngularUiExamples', [
   // easy to use alternative to other 3rd party libs like hammer.js, with the
   // final pourpose to integrate gestures into default ui interactions like 
   // opening sidebars, turning switches on/off ..
-  'mobile-angular-ui.gestures',
-
-  // If you're migrating from Mobile Angular UI 1.1 and you are using 
-  // 'mobile-angular-ui.migrate.js' you have to require it too
-  'mobile-angular-ui.migrate'
+  'mobile-angular-ui.gestures'
 ]);
 
 // 
@@ -35,7 +31,6 @@ app.config(function($routeProvider) {
   $routeProvider.when('/dropdown',      {templateUrl: 'dropdown.html', reloadOnSearch: false});
   $routeProvider.when('/drag',          {templateUrl: 'drag.html', reloadOnSearch: false});
   $routeProvider.when('/carousel',      {templateUrl: 'carousel.html', reloadOnSearch: false});
-  $routeProvider.when('/toggleLegacy',  {templateUrl: 'toggleLegacy.html', reloadOnSearch: false});
 });
 
 //

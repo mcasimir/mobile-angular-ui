@@ -25,9 +25,13 @@
           // declared for the same element
           priority: 99999,
           compile: function(elem, attrs){
+            
             var placeholder = angular.element(document.createElement('div'));
             elem.after(placeholder);
-            
+            // Detach element until link phase 
+            // so Angular wont go down to the children.
+            elem.remove();
+
             var dasherizedTarget = uncamelize(targetDirective);
             var dasherizedAlias = uncamelize(aliasName);
 
@@ -44,10 +48,6 @@
             if (beforeLink) {
               beforeLink(elem, attrs);
             }
-
-            // Detach element until link phase 
-            // so Angular wont go down to the children.
-            elem.remove();
             
             return function(scope){
               placeholder.replaceWith(elem);
@@ -59,7 +59,7 @@
     }]);
   };
 
-  aliasDirective('switch', 'uiSwitch', {restrict: 'EA'});
+  aliasDirective('switch', 'uiSwitch');
   aliasDirective('contentFor', 'uiContentFor', {
     beforeLink: function(elem) {
       elem.attr('uiDuplicate', elem.attr('duplicate'));

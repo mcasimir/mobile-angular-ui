@@ -1991,22 +1991,25 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
         SharedState,
         bindOuterClick,
         $location
-      ) {
-        
-        var outerClickCb = function (scope){
-          SharedState.turnOff(stateName);
-        };
-
-        var outerClickIf = function() {
-          return SharedState.isActive(stateName);
-        };
-        
+      ) {  
         return {
           restrict: 'C',
           link: function (scope, elem, attrs) {
             var parentClass = 'has-sidebar-' + side;
             var visibleClass = 'sidebar-' + side + '-visible';
             var activeClass = 'sidebar-' + side + '-in';
+
+            if (attrs.id) {
+              stateName = attrs.id;
+            }
+
+            var outerClickCb = function (scope){
+              SharedState.turnOff(stateName);
+            };
+
+            var outerClickIf = function() {
+              return SharedState.isActive(stateName);
+            };
 
             $rootElement.addClass(parentClass);
             scope.$on('$destroy', function () {
@@ -2034,7 +2037,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
               } else {
                 $rootElement
                   .removeClass(activeClass);
-                // Note: .removeClass(visibleClass) is called by 'app' directive
+                // Note: .removeClass(visibleClass) is called on 'mobile-angular-ui.app.transitionend'
               }
             });
 
@@ -2052,6 +2055,12 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
               }
             });
 
+            scope.$on('mobile-angular-ui.app.transitionend', function() {
+              if (!SharedState.isActive(stateName)) {
+                $rootElement.removeClass(visibleClass);  
+              }
+            });
+
             if (attrs.closeOnOuterClicks !== 'false') {
               bindOuterClick(scope, elem, outerClickCb, outerClickIf);
             }
@@ -2061,18 +2070,13 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
     ]);
   });
 
-  module.directive('app', ['$rootElement', 'SharedState', function($rootElement, SharedState) {
+  module.directive('app', ['$rootScope', 'SharedState', function($rootScope, SharedState) {
     return {
       restrict: 'C',
       link: function(scope, element, attributes) {
         
         element.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend', function() {
-          if (!SharedState.isActive('uiSidebarLeft')) {
-            $rootElement.removeClass('sidebar-left-visible');  
-          }
-          if (!SharedState.isActive('uiSidebarRight')) {
-            $rootElement.removeClass('sidebar-right-visible');
-          }
+          $rootScope.$broadcast('mobile-angular-ui.app.transitionend');
         });          
 
       }
