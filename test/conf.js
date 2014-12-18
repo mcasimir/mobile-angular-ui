@@ -16,7 +16,9 @@ exports.config = {
   sauceKey: null,
   
   specs: [
-    'core/*.js'
+    'core/*.js',
+    'gestures/*.js',
+    //'components/*.js'
   ],
   
   capabilities: {

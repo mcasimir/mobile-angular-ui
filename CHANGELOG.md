@@ -1,6 +1,22 @@
 # Mobile Angular Ui Changelog
 
-### v. 1.2.0-beta.4
+### v. 1.2.0-beta.6
+
+_Thu Dec 18 2014_
+
+- Added ng-swipe-left/ng-swipe-right directives
+- Improved tests for SharedState
+- Scaffolded specs for ui-switch
+
+### v. 1.2.0-beta.4 - v. 1.2.0-beta.5
+
+_Tue Dec 16 2014_
+
+- Fixes $drag causing exception or warning due to misused `insertRule`
+- Doc comments in drag.js now reflects $drag actual interface
+
+
+### v. 1.2.0-beta.4 - v. 1.2.0-beta.5
 
 _Thu Dec 16 2014_
 
