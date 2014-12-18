@@ -14,6 +14,15 @@ describe('SharedState', function() {
     expect(element(by.id('myVar')).getText()).toEqual('5');
   });
 
+  it('should always bind ui-* handlers after ng-click', function() {
+    browser.get('/core/sharedState.html');
+    expect(element(by.id('ngIfState')).getText()).toEqual('true');
+    element(by.id('turnOnNgClickNgIf')).click();
+    expect(element(by.id('ngIfState')).getText()).toEqual('false');
+    expect(element(by.id('myVar')).getText()).toEqual('6');
+    
+  });
+
   it("should garbage collect", function() {
     browser.get('/core/sharedState.html');
     expect(element(by.id('refCount')).getText()).toEqual('1');

@@ -201,6 +201,12 @@
               var method = SharedState[methodName];
               return {
                 restrict: 'A',
+                priority: 1, // This would make postLink calls happen after ngClick 
+                             // (and similar) ones, thus intercepting events after them.
+                             // 
+                             // This will prevent eventual ng-if to detach elements 
+                             // before ng-click fires.
+
                 compile: function(elem, attrs) {
                   var fn = methodName === 'set' ?
                     $parse(attrs[directiveName]) :

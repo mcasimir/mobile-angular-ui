@@ -51,6 +51,7 @@ app.controller('controller2', function($scope, SharedState) {
 
   <!-- reporters -->
   <div id="testState">{{Ui.get('testState') ? 'true' : 'false' }}</div>
+  <div id="ngIfState">{{Ui.get('ngIfState') ? 'true' : 'false' }}</div>
   <div id="refCount">{{Ui.referenceCount('testState')}}</div>
   <div id="has">{{Ui.has('testState') ? 'true' : 'false' }}</div>
   <div id='myVar'>{{myVar}}</div>
@@ -62,6 +63,10 @@ app.controller('controller2', function($scope, SharedState) {
 
   <a href="" ng-click='setMyVar(5)' ui-turn-on="testState" id='turnOnNgClick'>Turn On and Ng Click</a>
   
+  <div ui-if='ngIfState' ui-state='ngIfState' ui-default='true'>
+    <a href="" ui-turn-off="ngIfState" ng-click='setMyVar(6)' id='turnOnNgClickNgIf'>Turn On and Ng Click</a>
+  </div>
+
   <a href="" ng-click='requireTestStateById("controller2")' id='attachElem2'>Attach elem 2</a>
   <a href="" ng-click='destroyElemById("controller1")' id='detachElem1'>Detach elem 1</a>
   <a href="" ng-click='destroyElemById("controller2")' id='detachElem2'>Detach elem 2</a>
