@@ -1206,6 +1206,15 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
           return statusesMeta[id] === undefined || this.get(id) === undefined;
         },
 
+        has: function(id) {
+          return statusesMeta[id] !== undefined;
+        },
+
+        referenceCount: function(id) {
+          var status = statusesMeta[id];
+          return status === undefined ? undefined : status.references;
+        },
+
         equals: function(id, value) {
           return this.get(id) === value;
         },

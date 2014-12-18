@@ -57,7 +57,7 @@
       <div class="row">
         <div class="col-sm-3 sidebar-container">
           <ul class="toc sidebar nav" id="toc">
-          <li class="toc1"><a href="#getting-started">Getting Started</a><ul class="nav"><li class="toc2"><a href="#installation">Installation</a></li><li class="toc2"><a href="#initial-setup">Initial Setup</a></li><li class="toc2"><a href="#support-and-compatibility">Support and Compatibility</a></li></ul></li><li class="toc1"><a href="#overview">Overview</a></li><li class="toc1"><a href="#core">Core</a><ul class="nav"><li class="toc2"><a href="#active-links">Active Links</a></li><li class="toc2"><a href="#capture">Capture</a></li><li class="toc2"><a href="#fastclick">Fastclick</a></li><li class="toc2"><a href="#outer-click">Outer Click</a></li><li class="toc2"><a href="#shared-state">Shared State</a></li></ul></li><li class="toc1"><a href="#components">Components</a><ul class="nav"><li class="toc2"><a href="#modals-and-overlays">Modals and Overlays</a></li><li class="toc2"><a href="#navbars">Navbars</a></li><li class="toc2"><a href="#mobile-navbar-layout">Mobile Navbar Layout</a></li><li class="toc2"><a href="#scrollable">Scrollable</a></li><li class="toc2"><a href="#sidebars">Sidebars</a></li><li class="toc2"><a href="#toggle-switch">Toggle Switch</a></li></ul></li><li class="toc1"><a href="#gestures">Gestures</a><ul class="nav"><li class="toc2"><a href="#drag">Drag</a></li><li class="toc2"><a href="#swipe">Swipe</a></li><li class="toc2"><a href="#transform">Transform</a></li></ul></li><li class="toc1"><a href="#utils">Utils</a><ul class="nav"><li class="toc2"><a href="#sections">Sections</a></li><li class="toc2"><a href="#justified-blocks">Justified Blocks</a></li></ul></li><li class="toc1"><a href="#recipes">Recipes</a><ul class="nav"><li class="toc2"><a href="#tabs">Tabs</a></li><li class="toc2"><a href="#accordion">Accordion</a></li><li class="toc2"><a href="#dropdowns">Dropdowns</a></li><li class="toc2"><a href="#segmented-navigation">Segmented Navigation</a></li></ul></li></ul>
+          <li class="toc1"><a href="#getting-started">Getting Started</a><ul class="nav"><li class="toc2"><a href="#installation">Installation</a></li><li class="toc2"><a href="#initial-setup">Initial Setup</a></li><li class="toc2"><a href="#support-and-compatibility">Support and Compatibility</a></li></ul></li><li class="toc1"><a href="#overview">Overview</a></li><li class="toc1"><a href="#core">Core</a><ul class="nav"><li class="toc2"><a href="#active-links">Active Links</a></li><li class="toc2"><a href="#capture">Capture</a></li><li class="toc2"><a href="#fastclick">Fastclick</a></li><li class="toc2"><a href="#outer-click">Outer Click</a></li><li class="toc2"><a href="#shared-state">Shared State</a></li></ul></li><li class="toc1"><a href="#components">Components</a><ul class="nav"><li class="toc2"><a href="#modals-and-overlays">Modals and Overlays</a></li><li class="toc2"><a href="#navbars">Navbars</a></li><li class="toc2"><a href="#mobile-navbar-layout">Mobile Navbar Layout</a></li><li class="toc2"><a href="#scrollable">Scrollable</a></li><li class="toc2"><a href="#sidebars">Sidebars</a></li><li class="toc2"><a href="#toggle-switch">Toggle Switch</a></li></ul></li><li class="toc1"><a href="#gestures">Gestures</a><ul class="nav"><li class="toc2"><a href="#swipe">Swipe</a></li><li class="toc2"><a href="#drag">Drag</a></li><li class="toc2"><a href="#transform">Transform</a></li></ul></li><li class="toc1"><a href="#utils">Utils</a><ul class="nav"><li class="toc2"><a href="#sections">Sections</a></li><li class="toc2"><a href="#justified-blocks">Justified Blocks</a></li></ul></li><li class="toc1"><a href="#recipes">Recipes</a><ul class="nav"><li class="toc2"><a href="#tabs">Tabs</a></li><li class="toc2"><a href="#accordion">Accordion</a></li><li class="toc2"><a href="#dropdowns">Dropdowns</a></li><li class="toc2"><a href="#segmented-navigation">Segmented Navigation</a></li></ul></li></ul>
         </div>
         <div class="col-sm-9">
           <div class="content" role="aside">
@@ -265,6 +265,7 @@ transitions and transforms should fit:</p>
 <li>IE Mobile</li>
 <li>Opera/Opera Mobile</li>
 <li>IE10+</li>
+<li>IEMobile 10+</li>
 </ul>
 <p><strong>Note n.1</strong>: Some visual effects may be only available in some of the browsers above (ie. blur effect in overlays). A decent fallback is provided in any case.</p>
 <p><strong>Note n.2</strong>: It may work even with IE9 (although not supported), but it may require a lot of effort:</p>
@@ -276,6 +277,11 @@ transitions and transforms should fit:</p>
 </ul>
 <p><strong>Note n.3</strong>: Currently some experimental features like those from <code>gestures</code> module are not supported by all of the browsers above, hopefully support will be the broadest possibile as these features will stabilize.</p>
 <p><strong>Note n.4</strong>: If you notice frozen application on older devices be aware that this may be mainly due to device resources scarcity and not due to your application or framework you are using. If you have to forcefully support them try to lower your application footprint as much as you can.</p>
+<p>See also:</p>
+<ul>
+<li><a href="http://getbootstrap.com/getting-started/#support">http://getbootstrap.com/getting-started/#support</a></li>
+<li><a href="https://docs.angularjs.org/guide/ie">https://docs.angularjs.org/guide/ie</a></li>
+</ul>
 <p><hr></p>
 <h4 id="differences-with-bootstrap-3">Differences with Bootstrap 3</h4>
 <ol>
@@ -926,6 +932,44 @@ If you are looking for something more complete and production-ready I suggest yo
 
 <p>It has directives and services to support <code>swipe</code> and <code>drag</code> gestures.</p>
 <p>It does not need any <code>.css</code> to work.</p>
+<h3 id="swipe">Swipe</h3>
+<div class="alert alert-success">
+  <p><i class="fa fa-thumbs-up"></i> Swipe module is stable and ready to use. It is intended to be a drop-in replacement of <code>ngTouch</code> <code>$swipe</code> service and <code>ng-swipe-*</code> directives, that offers better interface and improvements.</p>
+  <p>It is recomended to use this in place of <code>ngTouch</code> in order to avoid conflicts with fastclick.</p>
+</div>
+
+<h4 id="description">Description</h4>
+<p>An adaptation of ngTouch.$swipe. It is basically the same despite of:</p>
+<ol>
+<li>It does not require ngTouch thus is better compatible with fastclick.js </li>
+<li>It allows to unbind</li>
+</ol>
+<p>It also provides <code>ng-swipe-left</code> and <code>ng-swipe-right</code>. The only difference
+with ngTouch ones is that they allow for nesting.</p>
+<h4 id="usage">Usage</h4>
+<p>$swipe service:</p>
+<pre><code class="lang-js">var unbind = $swipe.bind(elem, options);
+
+// <span class="hljs-operator"><span class="hljs-keyword">Call</span> this <span class="hljs-keyword">only</span> <span class="hljs-keyword">if</span> you need <span class="hljs-keyword">to</span> detatch <span class="hljs-string">`$swipe`</span>
+// <span class="hljs-keyword">before</span> the element <span class="hljs-keyword">is</span> destroyed:
+unbind();</span>
+</code></pre>
+<p>ng-swipe-* directives:</p>
+<p>Swiping the inner element wont call the outer handler (just f2 is executed and not f1).</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">ng-swipe-left</span>=<span class="hljs-value">&apos;fn1()&apos;</span>&gt;</span>
+  <span class="hljs-comment">&lt;!-- ... --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">ng-swipe-left</span>=<span class="hljs-value">&apos;fn2()&apos;</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- ... --&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-comment">&lt;!-- ... --&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Example: Opening left sidebar on swipe-right.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;app&quot;</span> <span class="hljs-attribute">ng-swipe-right</span>=<span class="hljs-value">&apos;Ui.turnOn(&quot;uiSidebarLeft&quot;)&apos;</span>&gt;</span>
+  <span class="hljs-comment">&lt;!-- ... --&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p><hr></p>
 <h3 id="drag">Drag</h3>
 <div class="alert alert-warning">
   <i class="fa fa-warning"></i>
@@ -1125,21 +1169,6 @@ app.directive(<span class="hljs-string">&apos;carouselItem&apos;</span>, <span c
     }
   };
 });
-</code></pre>
-<p><hr></p>
-<h3 id="swipe">Swipe</h3>
-<h4 id="description">Description</h4>
-<p>An adaptation of ngTouch.$swipe. It is basically the same despite of:</p>
-<ol>
-<li>It does not require ngTouch thus is better compatible with fastclick.js </li>
-<li>It allows to unbind</li>
-</ol>
-<h4 id="usage">Usage</h4>
-<pre><code class="lang-js">var unbind = $swipe.bind(elem, options);
-
-// <span class="hljs-operator"><span class="hljs-keyword">Call</span> this <span class="hljs-keyword">if</span> you need <span class="hljs-keyword">to</span> detatch <span class="hljs-string">`$swipe`</span> 
-// <span class="hljs-keyword">before</span> the element <span class="hljs-keyword">is</span> destroyed.
-unbind();</span>
 </code></pre>
 <p><hr></p>
 <h3 id="transform">Transform</h3>
