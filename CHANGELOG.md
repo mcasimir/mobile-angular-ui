@@ -1,5 +1,24 @@
 # Mobile Angular Ui Changelog
 
+### v. 1.2.0-beta.8
+
+_Fri Dec 19 2014_
+
+Drag Fixes and Demo improvements:
+
+- Transform now works in FF (broken due to bad property name)
+- Added translate(0,0) workaround to [drag-to-dismiss] in demo to make
+it work in Android and mobile chrome
+- Drag prevent propagation of move so it works while nested in ng-swipe
+- Demo uses modals with ng-include
+
+### v. 1.2.0-beta.7
+
+_Fri Dec 19 2014_
+
+- fix #177
+- ui-* now fires after ng-click
+
 ### v. 1.2.0-beta.6
 
 _Thu Dec 18 2014_
