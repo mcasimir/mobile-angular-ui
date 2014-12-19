@@ -1972,7 +1972,9 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
                       var interval = setInterval(adjustParentPadding, 30);
 
                       element.on('$destroy', function(){
+                        parentStyle['padding' + side] = null;
                         clearInterval(interval);
+                        interval = adjustParentPadding = element = null;
                       });
                     }
                   };

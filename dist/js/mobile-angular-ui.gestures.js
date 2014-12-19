@@ -179,8 +179,6 @@
                                   // dragging and not for touches we will bind $drag.start
                                   // to the first time move is called.
 
-                  // forceRedraw(e);
-
                   t0 = Transform.fromElement(e);
                   x  = x0 = c.x;
                   y  = y0 = c.y; 
