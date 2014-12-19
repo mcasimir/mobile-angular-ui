@@ -1,5 +1,12 @@
 # Mobile Angular Ui Changelog
 
+### v. 1.2.0-beta.9
+
+- Fix #183 (padding not removed when sidebar-header/footer are removed)
+
+_Fri Dec 19 2014_
+
+
 ### v. 1.2.0-beta.8
 
 _Fri Dec 19 2014_
