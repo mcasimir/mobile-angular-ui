@@ -41,17 +41,17 @@
       //
       // Cross-Browser stuffs
       // 
-      var vendorPrefix,
-          cssPrefix,
+      var cssPrefix,
           transformProperty,
+          styleProperty,
           prefixes = ['', 'webkit', 'Moz', 'O', 'ms'],
           d = $window.document.createElement('div');
       
       for (var i = 0; i < prefixes.length; i++) {
         var prefix = prefixes[i];
         if ( (prefix + 'Perspective') in d.style ) {
-          vendorPrefix = prefix;
           cssPrefix = (prefix === '' ? '' : '-' + prefix.toLowerCase() + '-');
+          styleProperty = prefix + (prefix === '' ? 'transform' : 'Transform');
           transformProperty = cssPrefix + 'transform';
           break;
         }
@@ -79,18 +79,17 @@
         var tr = $window
                 .getComputedStyle(e, null)
                 .getPropertyValue(transformProperty);
+        return tr;
       };
 
       Transform.setElementTransformProperty = function(e, value) {
         e = e.length ? e[0] : e;
-        e.style[transformProperty] = value;
+        e.style[styleProperty] = value;
       };
 
       Transform.fromElement = function(e) {
         e = e.length ? e[0] : e;
-        var tr = $window
-                .getComputedStyle(e, null)
-                .getPropertyValue(transformProperty);
+        var tr = Transform.getElementTransformProperty(e);
 
         if (!tr || tr === 'none') {
           return new Transform();
@@ -118,14 +117,14 @@
       Transform.prototype.apply = function(e, options) {
         e = e.length ? e[0] : e;
         var mtx = Transform.fromElement(e).merge(this).mtx;
-        e.style[transformProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
+        e.style[styleProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
         return this;
       };
 
       Transform.prototype.set = function(e) {
         e = e.length ? e[0] : e;
         var mtx = this.mtx;
-        e.style[transformProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
+        e.style[styleProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
         return this;
       };
 

@@ -1,0 +1,19 @@
+<div class="modal" ui-if='modal1' ui-state='modal1'>
+  <div class="modal-backdrop in"></div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" 
+                ui-turn-off="modal1">&times;</button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{lorem}}</p>
+      </div>
+      <div class="modal-footer">
+        <button ui-turn-off="modal1" class="btn btn-default">Close</button>
+        <button ui-turn-off="modal1" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

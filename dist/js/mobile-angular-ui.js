@@ -957,8 +957,11 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
        return {
          link: function(scope, element, attr) {
            Capture.putYielder(attr.uiYieldTo, element, scope, element.html());
-           element.contents().remove();
-
+           
+           element.on('$destroy', function(){
+             Capture.removeYielder(attr.uiYieldTo);
+           });
+           
            scope.$on('$destroy', function(){
              Capture.removeYielder(attr.uiYieldTo);
            });
@@ -1784,6 +1787,9 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
         restrict: 'C',
         link: function(scope, elem) {
           $rootElement.addClass('has-modal');
+          elem.on('$destroy', function(){
+            $rootElement.removeClass('has-modal');
+          });
           scope.$on('$destroy', function(){
             $rootElement.removeClass('has-modal');
           });
@@ -1798,6 +1804,9 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
         restrict: 'C',
         link: function(scope, elem) {
           $rootElement.addClass('has-modal-overlay');
+          elem.on('$destroy', function(){
+            $rootElement.removeClass('has-modal-overlay');
+          });
           scope.$on('$destroy', function(){
             $rootElement.removeClass('has-modal-overlay');
           });
@@ -1805,8 +1814,6 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
       };
   }]);   
 }());
-
-
 (function() {
   'use strict';
 

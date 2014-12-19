@@ -84,8 +84,11 @@
        return {
          link: function(scope, element, attr) {
            Capture.putYielder(attr.uiYieldTo, element, scope, element.html());
-           element.contents().remove();
-
+           
+           element.on('$destroy', function(){
+             Capture.removeYielder(attr.uiYieldTo);
+           });
+           
            scope.$on('$destroy', function(){
              Capture.removeYielder(attr.uiYieldTo);
            });

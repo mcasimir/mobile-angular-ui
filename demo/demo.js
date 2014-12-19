@@ -264,9 +264,8 @@ app.controller('MainController', function($rootScope, $scope){
   // 
   $scope.notices = [];
   
-  for (var j = 0; j < $scope.chatUsers.length; j++) {
-    var user = $scope.chatUsers[j];
-    $scope.notices.push({icon: 'envelope', message: 'Notice ' + j });
+  for (var j = 0; j < 10; j++) {
+    $scope.notices.push({icon: 'envelope', message: 'Notice ' + (j + 1) });
   }
 
   $scope.deleteNotice = function(notice) {

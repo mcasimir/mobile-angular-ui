@@ -110,6 +110,7 @@
       style.appendChild(document.createTextNode(''));
       document.head.appendChild(style);
       var sheet = style.sheet;
+
       // Makes z-index 99999
       sheet.insertRule('html .ui-drag-move{z-index: 99999 !important;}', 0);
       // Disable transitions
@@ -159,7 +160,10 @@
             },
 
             callbacks = {
-              move: function(c) {
+              move: function(c, event) {
+                event.stopPropagation();
+                event.preventDefault();
+
                 if (elem[0].addEventListener) {
                   for (var i = 0; i < preventedWhileMoving.length; i++) {
                     
@@ -287,5 +291,3 @@
   });
 
 }());
-
-

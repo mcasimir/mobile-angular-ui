@@ -317,6 +317,9 @@
         restrict: 'C',
         link: function(scope, elem) {
           $rootElement.addClass('has-modal');
+          elem.on('$destroy', function(){
+            $rootElement.removeClass('has-modal');
+          });
           scope.$on('$destroy', function(){
             $rootElement.removeClass('has-modal');
           });
@@ -331,6 +334,9 @@
         restrict: 'C',
         link: function(scope, elem) {
           $rootElement.addClass('has-modal-overlay');
+          elem.on('$destroy', function(){
+            $rootElement.removeClass('has-modal-overlay');
+          });
           scope.$on('$destroy', function(){
             $rootElement.removeClass('has-modal-overlay');
           });
@@ -338,8 +344,6 @@
       };
   }]);   
 }());
-
-
 (function() {
   'use strict';
 
