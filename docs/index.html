@@ -202,6 +202,7 @@ yo mobileangularui
 <h6 id="use-the-migration-module-to-move-from-v1-1-to-v1-2">Use the migration module to move from v1.1 to v1.2</h6>
 <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Only required to import legacy syntax and directives. You won&apos;t need it 
 unless you are attempting to move an app from Mobile Angular UI 1.1 to 1.2 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">&quot;stylesheet&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/css/mobile-angular-ui-migrate.min.css&quot;</span> /&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;/dist/js/mobile-angular-ui.migrate.min.js&quot;</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 </code></pre>
 <h6 id="use-with-other-css-frameworks-ie-topcoat-http-topcoat-io-">Use with other css frameworks (ie. <a href="http://topcoat.io/">Topcoat</a>)</h6>
@@ -668,29 +669,67 @@ app.controller(<span class="hljs-string">&apos;controller2&apos;</span>, <span c
 <li><code>uiSet</code>: Required. (expression) the object to pass as parameter to <code>SharedState#set</code></li>
 <li><code>uiTriggers</code>: (string) the event triggering the call. Defaults to <code>click tap</code></li>
 </ul>
+<h4 id="conditional-directives">Conditional Directives</h4>
+<p>Those that follows are <code>ng-if/ng-hide/ng-show/ng-class</code> directives from angular readapted to evaluate in the context of <code>SharedState</code> thus hopefully being more performant and easy to write.</p>
+<p>Note that you can always use <code>ng-*</code> directives if you prefer, ie.:</p>
+<pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> ui-<span class="hljs-keyword">if</span>=<span class="hljs-string">&apos;myState&apos;</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> ng-<span class="hljs-keyword">if</span>=<span class="hljs-string">&apos;Ui.active(&quot;myState&quot;)&apos;</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+
+&lt;<span class="hljs-keyword">div</span> ui-<span class="hljs-keyword">if</span>=<span class="hljs-string">&apos;myState == 1&apos;</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> ng-<span class="hljs-keyword">if</span>=<span class="hljs-string">&apos;Ui.eq(&quot;myState&quot;, 1)&apos;</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+</code></pre>
+<h5 id="uiscopecontext">uiScopeContext</h5>
+<p><code>uiScopeContext</code> is not a directive, but a parameter common to any of the following <code>ui-*</code> directives.</p>
+<p>It allows to use current scope vars inside ui-* conditions. That will leave other scope vars (or the entire scope if not present) apart from the condition evaluation process.</p>
+<p>Hopefully this will keep evaluation running against a flat and small data structure instead of taking into account the whole scope. </p>
+<p>It is a list <code>scopeVar[ as aliasName] [, ...]</code> specifing one of more scope variables to take into account when evaluating conditions. ie:</p>
+<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- use item from ng-repeat --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">ui-if</span>=<span class="hljs-value">&quot;openPanel == i&quot;</span> <span class="hljs-attribute">ui-scope-context</span>=<span class="hljs-value">&apos;i&apos;</span> <span class="hljs-attribute">ng-repeat</span>=<span class="hljs-value">&quot;i in [1,2,3]&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;panel-body&quot;</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- ... --&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> ui-<span class="hljs-keyword">if</span>=<span class="hljs-string">&quot;sharedState1 == myVar1 &amp;&amp; sharedState2 == myVar2&quot;</span>
+  ui-scope-context=<span class="hljs-string">&quot;myVar1, myVar2&quot;</span>
+&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+</code></pre>
+<p>Be aware that scope vars will take precedence over sharedStates so,
+in order to avoid name clashes you can use &apos;as&apos; to refer to scope vars
+with a different name in conditions:</p>
+<pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> ui-<span class="hljs-keyword">if</span>=<span class="hljs-string">&quot;x == myVar1 &amp;&amp; y == myVar2&quot;</span>
+  ui-scope-context=<span class="hljs-string">&quot;x as myVar1, y as myVar2&quot;</span>
+&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+</code></pre>
 <h5 id="uiif">uiIf</h5>
 <p>Same as <code>ngIf</code> but evaluates condition against <code>SharedState</code> statuses too</p>
 <p>Params</p>
 <ul>
 <li><code>uiIf</code>: Required. (expression) a condition to decide wether to attach the element to the dom</li>
+<li><code>uiScopeContext</code>: list <code>scopeVar[ as aliasName] [, ...]</code> specifing one of more scope variables to take into account when evaluating condition.</li>
 </ul>
 <h5 id="uihide">uiHide</h5>
-<p>Same as <code>ngHide</code> but evaluates condition against <code>SharedState</code> statuses too</p>
+<p>Same as <code>ngHide</code> but evaluates condition against <code>SharedState</code> statuses</p>
 <p>Params</p>
 <ul>
 <li><code>uiHide</code>: Required. (expression) a condition to decide wether to hide the element</li>
+<li><code>uiScopeContext</code>: list <code>scopeVar[ as aliasName] [, ...]</code> specifing one of more scope variables to take into account when evaluating condition.</li>
 </ul>
 <h5 id="uishow">uiShow</h5>
-<p>Same as <code>ngShow</code> but evaluates condition against <code>SharedState</code> statuses too</p>
+<p>Same as <code>ngShow</code> but evaluates condition against <code>SharedState</code> statuses</p>
 <p>Params</p>
 <ul>
 <li><code>uiShow</code>: Required. (expression) a condition to decide wether to show the element</li>
+<li><code>uiScopeContext</code>: list <code>scopeVar[ as aliasName] [, ...]</code> specifing one of more scope variables to take into account when evaluating condition.</li>
 </ul>
 <h5 id="uiclass">uiClass</h5>
-<p>A simplified version of <code>ngClass</code> that evaluates in context of <code>SharedState</code> too, it only suppors the <code>{&apos;className&apos;: expr}</code> syntax.</p>
+<p>A simplified version of <code>ngClass</code> that evaluates in context of <code>SharedState</code>, it only suppors the <code>{&apos;className&apos;: expr}</code> syntax.</p>
 <p>Params</p>
 <ul>
 <li><code>uiClass</code>: Required. (expression) an object of the form <code>{&apos;className&apos;: expr}</code>, where <code>expr</code> decides wether the class should appear to element&apos;s class list</li>
+<li><code>uiScopeContext</code>: list <code>scopeVar[ as aliasName] [, ...]</code> specifing one of more scope variables to take into account when evaluating condition.</li>
 </ul>
 <hr>
 
@@ -888,7 +927,7 @@ scrollableContentController.scrollTo(<span class="hljs-number">200</span>);
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
 <h4 id="interacting-with-sidebars">Interacting with sidebars</h4>
-<p>Under the hood sidebar uses <code>SharedState</code> exposing respective statuses: <code>uiSidebarLeft</code> and <code>uiSidebarRight</code></p>
+<p>Under the hood sidebar uses <code>SharedState</code> exposing respective statuses: <code>uiSidebarLeft</code> and <code>uiSidebarRight</code> unless you define different state name through <code>id</code> attribute on sidebar elements.</p>
 <pre><code class="lang-html">&lt;<span class="hljs-tag">a</span> href ui-toggle=<span class="hljs-string">&apos;uiSidebarLeft&apos;</span>&gt;Toggle sidebar <span class="hljs-attribute">left</span>&lt;/a&gt;
 
 &lt;<span class="hljs-tag">a</span> href ui-toggle=<span class="hljs-string">&apos;uiSidebarRight&apos;</span>&gt;Toggle sidebar <span class="hljs-attribute">right</span>&lt;/a&gt;

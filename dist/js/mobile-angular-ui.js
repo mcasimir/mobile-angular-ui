@@ -1301,6 +1301,46 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
       ]);
     });
 
+
+  var parseScopeContext = function(attr) {
+    if (!attr || attr === '') {
+      return [];
+    }
+    var vars = attr ? attr.trim().split(/ *, */) : [];
+    var res = [];
+    for (var i = 0; i < vars.length; i++) {
+      var item = vars[i].split(/ *as */);
+      if (item.length > 2 || item.length < 1) {
+        throw new Error('Error parsing uiScopeContext="' + attr + '"');
+      }
+      res.push(item);
+    }
+    return res;
+  };
+
+  var mixScopeContext = function(context, scopeVars, scope) {
+    for (var i = 0; i < scopeVars.length; i++) {
+      var key = scopeVars[i][0];
+      var alias = scopeVars[i][1] || key;
+      context[alias] = scope[key];
+    }
+  };
+
+  var parseUiCondition = function(name, attrs, $scope, SharedState, $parse) {
+    var exprFn = $parse(attrs[name]);
+    var uiScopeContext = parseScopeContext(attrs.uiScopeContext);
+    return function() {
+      var context;
+      if (uiScopeContext.length) {
+        context = angular.extend({}, SharedState.values());
+        mixScopeContext(context, uiScopeContext, $scope);  
+      } else {
+        context = SharedState.values();
+      }
+      return exprFn(context);
+    };
+  };
+
   // Same as ng-if but takes into account SharedState too
   module.directive('uiIf', ['$animate', 'SharedState', '$parse', function($animate, SharedState, $parse) {
     function getBlockNodes(nodes) {
@@ -1325,10 +1365,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
       $$tlb: true,
       link: function ($scope, $element, $attr, ctrl, $transclude) {
           var block, childScope, previousElements, 
-          exprFn = $parse($attr.uiIf),
-          uiIfFn = function() { // can be slow
-            return exprFn(angular.extend({}, SharedState.values(), $scope));
-          };
+          uiIfFn = parseUiCondition('uiIf', $attr, $scope, SharedState, $parse);
 
           $scope.$watch(uiIfFn, function uiIfWatchAction(value) {
             if (value) {
@@ -1381,9 +1418,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
       multiElement: true,
       link: function(scope, element, attr) {
         var exprFn = $parse(attr.uiHide),
-        uiHideFn = function() { // can be slow
-          return exprFn(angular.extend({}, SharedState.values(), scope));
-        };
+        uiHideFn = parseUiCondition('uiHide', attr, scope, SharedState, $parse);
         scope.$watch(uiHideFn, function uiHideWatchAction(value){
           $animate[value ? 'addClass' : 'removeClass'](element,NG_HIDE_CLASS, {
             tempClasses : NG_HIDE_IN_PROGRESS_CLASS
@@ -1403,9 +1438,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
       multiElement: true,
       link: function(scope, element, attr) {
         var exprFn = $parse(attr.uiShow),
-        uiShowFn = function() { // can be slow
-          return exprFn(angular.extend({}, SharedState.values(), scope));
-        };
+        uiShowFn = parseUiCondition('uiShow', attr, scope, SharedState, $parse);
         scope.$watch(uiShowFn, function uiShowWatchAction(value){
           $animate[value ? 'removeClass' : 'addClass'](element, NG_HIDE_CLASS, {
             tempClasses : NG_HIDE_IN_PROGRESS_CLASS
@@ -1422,9 +1455,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
       restrict: 'A',
       link: function(scope, element, attr) {
         var exprFn = $parse(attr.uiClass),
-        uiClassFn = function() { // can be slow
-          return exprFn(angular.extend({}, SharedState.values(), scope));
-        };
+        uiClassFn = parseUiCondition('uiClass', attr, scope, SharedState, $parse);
         scope.$watch(uiClassFn, function uiClassWatchAction(value){
           var classesToAdd = "";
           var classesToRemove = "";

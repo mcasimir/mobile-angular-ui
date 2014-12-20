@@ -57,17 +57,37 @@
       <div class="row">
         <div class="col-sm-3 sidebar-container">
           <ul class="toc sidebar nav" id="toc">
-          <li class="toc1"><a href="#core-functionalities">Core functionalities</a><ul class="nav"><li class="toc2"><a href="#yieldto-contentfor">YieldTo/ContentFor</a></li><li class="toc2"><a href="#toggle-toggleable-to-sharedstate-and-ui-">Toggle/Toggleable to SharedState and ui-*</a></li><li class="toc2"><a href="#outer-clicks">Outer Clicks</a></li></ul></li><li class="toc1"><a href="#ui-components">UI Components</a><ul class="nav"><li class="toc2"><a href="#general-considerations">General Considerations</a></li><li class="toc2"><a href="#navbars">Navbars</a></li><li class="toc2"><a href="#scrollables">Scrollables</a></li><li class="toc2"><a href="#modals-and-overlay">Modals and Overlay</a></li><li class="toc2"><a href="#sidebars">Sidebars</a></li><li class="toc2"><a href="#carousel">Carousel</a></li></ul></li><li class="toc1"><a href="#gestures">Gestures</a><ul class="nav"><li class="toc2"><a href="#-swipe">$swipe</a></li><li class="toc2"><a href="#-drag">$drag</a></li><li class="toc2"><a href="#transform">Transform</a></li></ul></li><li class="toc1"><a href="#utils">Utils</a></li></ul>
+          <li class="toc1"><a href="#using-the-migrate-module">Using the migrate module</a></li><li class="toc1"><a href="#moving-to-1-2">Moving to 1.2</a><ul class="nav"><li class="toc2"><a href="#core-functionalities">Core functionalities</a></li><li class="toc2"><a href="#ui-components">UI Components</a></li><li class="toc2"><a href="#gestures">Gestures</a></li><li class="toc2"><a href="#utils">Utils</a></li></ul></li></ul>
         </div>
         <div class="col-sm-9">
           <div class="content" role="aside">
               <div class="page-header"><h1>Migrating to Mobile Angular UI 1.2</h1></div>
-            <p>All of the functionalities are now separed in 3 modules: <code>core</code>, <code>components</code> and <code>gestures</code>.</p>
-<h2 id="core-functionalities">Core functionalities</h2>
+            <p>Mobile Angular 1.2 Beta is here with many improvements and fixes, but also with many breaking changes.</p>
+<h2 id="using-the-migrate-module">Using the migrate module</h2>
+<p>If you want to move your application to 1.2 (you should), you have the opiton to mitigate the transition using the <code>mobile-angular-ui.migrate</code> module.</p>
+<p>It will translate old syntax to new and reintroduce dropped features. </p>
+<p>Be aware that this is intended to help transition and not to stay there in production. In particular it will introduce some performance overhead and will be discontinued soon.</p>
+<p>So: <strong>use it only in the meanwhile you readapt your application to newer syntax</strong>.  </p>
+<p>To use <code>migrate</code> module include it in your head section:</p>
+<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Only required to import legacy syntax and directives. You won&apos;t need it 
+unless you are attempting to move an app from Mobile Angular UI 1.1 to 1.2 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">&quot;stylesheet&quot;</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">&quot;mobile-angular-ui/dist/css/mobile-angular-ui-migrate.min.css&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">&quot;/dist/js/mobile-angular-ui.migrate.min.js&quot;</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p>And then declare it as a dependency for your app:</p>
+<pre><code class="lang-js"><span class="hljs-reserved">var</span> app = angular.<span class="hljs-built_in">module</span>(<span class="hljs-string">&apos;MobileAngularUiExamples&apos;</span>, [
+  <span class="hljs-string">&apos;ngRoute&apos;</span>,
+  <span class="hljs-string">&apos;mobile-angular-ui&apos;</span>,
+  <span class="hljs-string">&apos;mobile-angular-ui.migrate&apos;</span>
+);
+</code></pre>
+<h2 id="moving-to-1-2">Moving to 1.2</h2>
+<p>In order to properly move your old 1.1 app to 1.2 you may wish to know what&apos;s changed. All of the functionalities are now separed in 3 modules: <code>core</code>, <code>components</code> and <code>gestures</code>.</p>
+<h3 id="core-functionalities">Core functionalities</h3>
 <p>Core UI Functionalities are those any HTML UI built on Angular could use. They are not Mobile-specific nor depending on anything else that Angular itself, and you could use them with any css framework.</p>
-<h3 id="yieldto-contentfor">YieldTo/ContentFor</h3>
+<h4 id="yieldto-contentfor">YieldTo/ContentFor</h4>
 <p>They are the same that 1.1 beside to be prefixed with <code>ui-</code> so use: <code>ui-yield-to</code> and <code>ui-content-for</code>.</p>
-<h3 id="toggle-toggleable-to-sharedstate-and-ui-">Toggle/Toggleable to SharedState and ui-*</h3>
+<h4 id="toggle-toggleable-to-sharedstate-and-ui-">Toggle/Toggleable to SharedState and ui-*</h4>
 <p>Toggle has been rewritten from scratch for 1.2. In place of that there is a new service with it&apos;s own isolated context.</p>
 <p>It is called <code>SharedState</code>. It will act as a BUS between UI elements to share UI related state that is automatically disposed when all scopes requiring it are destroyed.</p>
 <p>eg.</p>
@@ -116,7 +136,7 @@
 <p>As well as you can use <code>ui-default</code> for that: </p>
 <pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">&quot;tabs&quot;</span> ui-state=<span class="hljs-string">&quot;activeTab&quot;</span> ui-default=<span class="hljs-string">&quot;thisIsAnExpression(5 + 1 - 2)&quot;</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
-<h3 id="outer-clicks">Outer Clicks</h3>
+<h4 id="outer-clicks">Outer Clicks</h4>
 <p><code>ui-outer-click</code> and <code>ui-outer-click-if</code> are directives that allow to specifiy a behaviour when click/tap events happen outside an element. This can be easily used to implement eg. <strong>close on outer click</strong> feature for a dropdown.</p>
 <pre><code class="lang-html">  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;btn-group pull-right&quot;</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">ui-turn-on</span>=<span class="hljs-value">&apos;myDropdown&apos;</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&apos;btn&apos;</span>&gt;</span>
@@ -141,17 +161,17 @@
     <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<h2 id="ui-components">UI Components</h2>
-<h3 id="general-considerations">General Considerations</h3>
+<h3 id="ui-components">UI Components</h3>
+<h4 id="general-considerations">General Considerations</h4>
 <p>Since 1.2 I&apos;ve tried to retain bootstrap existing components look and feel as much as possible for two reason:</p>
 <ol>
 <li>People would expect to already know them and how customize their appearence through css.</li>
 <li>Mobile Angular UI dependance on bootstrap is more loose so it does not need to be updated each time BS3 changes.</li>
 </ol>
 <p>As a consequence i&apos;ve reduced special styles for panels/forms/modals to the bare minimum.</p>
-<h3 id="navbars">Navbars</h3>
+<h4 id="navbars">Navbars</h4>
 <p>Pretty much the same. They plays well with <code>ng-if</code> now.</p>
-<h3 id="scrollables">Scrollables</h3>
+<h4 id="scrollables">Scrollables</h4>
 <p><code>.scrollable</code> component is backward compatible but also has some major improvements too.</p>
 <ol>
 <li><code>.scrollable-header/.scrollable-footer</code> can be used to add fixed header/footer to a scrollable area without having to deal with css height and positioning to avoid breaking scroll.</li>
@@ -171,7 +191,7 @@
   <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;scrollable-footer&quot;</span>&gt;</span><span class="hljs-comment">&lt;!-- ... --&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<h3 id="modals-and-overlay">Modals and Overlay</h3>
+<h4 id="modals-and-overlay">Modals and Overlay</h4>
 <p>Modal dialogs has been reintroduced from Bootstrap, overlays are now just modals styled different.</p>
 <pre><code class="lang-html">
 <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">content-for</span>=<span class="hljs-value">&quot;modals&quot;</span>&gt;</span>
@@ -218,7 +238,7 @@
 
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<h3 id="sidebars">Sidebars</h3>
+<h4 id="sidebars">Sidebars</h4>
 <p>Basically the same, but now they rely on <code>SharedState</code> and <code>bindOuterClick</code> to activate/inactivate them.</p>
 <p>Syntax is basically the same:</p>
 <pre><code><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;sidebar sidebar-left&quot;</span>&gt;</span>
@@ -249,12 +269,12 @@
   <span class="hljs-variable">$routeProvider</span>.<span class="hljs-keyword">when</span>(<span class="hljs-string">&apos;/carousel&apos;</span>,  {<span class="hljs-symbol">templateUrl:</span> <span class="hljs-string">&apos;carousel.html&apos;</span>, <span class="hljs-symbol">reloadOnSearch:</span> <span class="hljs-keyword">false</span>});
 });
 </code></pre>
-<h3 id="carousel">Carousel</h3>
+<h4 id="carousel">Carousel</h4>
 <p>Carousel implementations (with <code>$swipe</code> or <code>$drag</code>) has been moved in an external file/plugin and not included by default.</p>
-<h2 id="gestures">Gestures</h2>
-<h3 id="-swipe">$swipe</h3>
+<h3 id="gestures">Gestures</h3>
+<h4 id="-swipe">$swipe</h4>
 <p>A drop in replacement for <code>ngTouch</code>&apos;s <code>$swipe</code>. It is free from other <code>ngTouch</code> features that does duplicate/break fastclicks behaviour.</p>
-<h3 id="-drag">$drag</h3>
+<h4 id="-drag">$drag</h4>
 <p><code>$drag</code> Service wraps <code>$swipe</code> to extend its behavior moving target element through css transform according to the <code>$swipe</code> coords thus creating a drag effect.</p>
 <p>$drag interface is very close to <code>$swipe</code>:</p>
 <pre><code class="lang-js">app.controller(<span class="hljs-string">&apos;MyController&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$drag</span>, <span class="hljs-variable">$element</span>)</span></span>{
@@ -447,7 +467,7 @@ app.directive(<span class="hljs-string">&apos;carouselItem&apos;</span>, <span c
   };
 });
 </code></pre>
-<h3 id="transform">Transform</h3>
+<h4 id="transform">Transform</h4>
 <p><code>Transform</code> is the underlying service used by <code>$drag</code> to deal with css trasform matrix in a simpler and vendor-angnostic way.</p>
 <pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> <span class="hljs-property">id</span>=<span class="hljs-string">&quot;myElem&quot;</span> style=<span class="hljs-string">&quot;transform: translateX: 20px;&quot;</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
@@ -469,7 +489,7 @@ t1.translate(<span class="hljs-number">12</span>, <span class="hljs-number">40</
 <span class="hljs-comment">// merges t1 with current trasformation matrix of element.</span>
 t1.apply(e);
 </code></pre>
-<h2 id="utils">Utils</h2>
+<h3 id="utils">Utils</h3>
 <p><code>panels</code> and <code>forms</code> has been discontinued completely. This is due to: panels has a trivial markup as they are in bootstrap. Forms on the contrary has a lot of functionalities so in my opinion <code>.form-*</code> directives need an external plugin to be implemented and mantained correctly.</p>
 
 
