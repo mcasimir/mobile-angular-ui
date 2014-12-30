@@ -2,27 +2,26 @@
    'use strict';
 
    angular.module('mobile-angular-ui.gestures.drag', [
-     'mobile-angular-ui.gestures.swipe',
+     'mobile-angular-ui.gestures.touch',
      'mobile-angular-ui.gestures.transform'
    ])
 
-  // `$drag` Service wraps `$swipe` to extend its behavior moving target element through css transform according to the `$swipe` coords thus creating 
+  // `$drag` Service wraps `$touch` to extend its behavior moving target element through css transform according to the `$touch` coords thus creating 
   // a drag effect.
 
-  // $drag interface is very close to `$swipe`:
+  // $drag interface is very close to `$touch`:
 
   // app.controller('MyController', function($drag, $element){
   //   var unbindDrag = $drag.bind($element, {
   //    // drag callbacks
   //    // - rect is the current result of getBoundingClientRect() for bound element
-  //    // - cancelFn issue a "touchcancel" on element
   //    // - resetFn restore the initial transform
   //    // - undoFn undoes the current movement
-  //    // - swipeCoords are the coordinates exposed by the underlying $swipe service
-  //    start: function(rect, cancelFn, resetFn, swipeCoords){},
-  //    move: function(rect, cancelFn, resetFn, swipeCoords){},
-  //    end: function(rect, undoFn, resetFn, swipeCoords) {};
-  //    cancel: function(rect, resetFn){},
+  //    // - swipeCoords are the coordinates exposed by the underlying $touch service
+  //    start: function(dragInfo, reset, event) {},
+  //    move: function(dragInfo, undo, reset, event) {},
+  //    end: function(dragInfo, undo, reset, event) {},
+  //    cancel: function(dragInfo) {};
 
   //    // constraints for the movement
   //    // you can use a "static" object of the form:
@@ -37,11 +36,6 @@
   //    // instantiates the Trasform according to touch movement (defaults to `t.translate(dx, dy);`)
   //    // dx, dy are the distances of movement for x and y axis after constraints are applyied
   //    transform: function(transform, dx, dy, currSwipeX, currSwipeY, startSwipeX, startSwipeY) {},
-
-  //    // changes the Transform before is applied to element (useful to add something like easing or accelleration)
-  //    adaptTransform: function(transform, dx, dy, currSwipeX, currSwipeY, startSwipeX, startSwipeY) {}
-
-  //   });
     
   //   // This is automatically called when element is disposed so it is not necessary
   //   // that you call this manually but if you have to detatch $drag service before
@@ -49,7 +43,7 @@
   //   unbindDrag();
   // });
 
-  // Main differences with `$swipe` are:
+  // Main differences with `$touch` are:
   //  - bound elements will move following swipe direction automatically
   //  - coords param take into account css transform so you can easily detect collision with other elements.
   //  - start, move, end callback receive a cancel funcion that can be used to cancel the motion and reset
@@ -62,12 +56,12 @@
   // app.directive('dragToDismiss', function($drag, $parse, $timeout){
   //   return {
   //     restrict: 'A',
-  //     compile: function(elem, attrs) {
+  //     compile: function($element, attrs) {
   //       var dismissFn = $parse(attrs.dragToDismiss);
-  //       return function(scope, elem, attrs){
+  //       return function(scope, $element, attrs){
   //         var dismiss = false;
 
-  //         $drag.bind(elem, {
+  //         $drag.bind($element, {
   //           constraint: {
   //             minX: 0, 
   //             minY: 0, 
@@ -76,18 +70,18 @@
   //           move: function(c) {
   //             if( c.left >= c.width / 4) {
   //               dismiss = true;
-  //               elem.addClass('dismiss');
+  //               $element.addClass('dismiss');
   //             } else {
   //               dismiss = false;
-  //               elem.removeClass('dismiss');
+  //               $element.removeClass('dismiss');
   //             }
   //           },
   //           cancel: function(){
-  //             elem.removeClass('dismiss');
+  //             $element.removeClass('dismiss');
   //           },
   //           end: function(c, undo, reset) {
   //             if (dismiss) {
-  //               elem.addClass('dismitted');
+  //               $element.addClass('dismitted');
   //               $timeout(function() { 
   //                 scope.$apply(function() {
   //                   dismissFn(scope);  
@@ -104,8 +98,9 @@
   // });
 
   .provider('$drag', function() {
-    this.$get = ['$swipe', '$document', 'Transform', function($swipe, $document, Transform) {
+    this.$get = ['$touch', '$document', '$transform', function($touch, $document, $transform) {
 
+      // Add some css rules to be used while moving elements
       var style = document.createElement('style');
       style.appendChild(document.createTextNode(''));
       document.head.appendChild(style);
@@ -118,176 +113,216 @@
       // Makes text unselectable
       sheet.insertRule('html .ui-drag-move, html .ui-drag-move *{-webkit-touch-callout: none !important;-webkit-user-select: none !important;-khtml-user-select: none !important;-moz-user-select: none !important;-ms-user-select: none !important;user-select: none !important;}', 0);
 
+      style = sheet = null;   // we wont use them anymore so make 
+                             // their memory immediately claimable
+
       return {
-        Transform: Transform,
-        bind: function(elem, options) {
-          var defaults = {
-            constraint: {}
+
+        // 
+        // built-in transforms
+        // 
+        NULL_TRANSFORM: function(element, transform) {
+          return transform;
+        },
+
+        TRANSLATE_BOTH: function(element, transform, touch) {
+          transform.translateX = touch.distanceX;
+          transform.translateY = touch.distanceY;
+          return transform;
+        },
+
+        TRANSLATE_HORIZONTAL: function(element, transform, touch) {
+          transform.translateX = touch.distanceX;
+          transform.translateY = 0;
+          return transform;
+        },
+
+        TRANSLATE_UP: function(element, transform, touch) {
+          transform.translateY = touch.distanceY <= 0 ? touch.distanceY : 0;
+          transform.translateX = 0;
+          return transform;
+        },
+
+        TRANSLATE_DOWN: function(element, transform, touch) {
+          transform.translateY = touch.distanceY >= 0 ? touch.distanceY : 0;
+          transform.translateX = 0;
+          return transform;
+        },
+
+        TRANSLATE_LEFT: function(element, transform, touch) {
+          transform.translateX = touch.distanceX <= 0 ? touch.distanceX : 0;
+          transform.translateY = 0;
+          return transform;
+        },
+
+        TRANSLATE_RIGHT: function(element, transform, touch) {
+          transform.translateX = touch.distanceX >= 0 ? touch.distanceX : 0;
+          transform.translateY = 0;
+          return transform;
+        },
+
+        TRANSLATE_VERTICAL: function(element, transform, touch) {
+          transform.translateX = 0;
+          transform.translateY = touch.distanceY;
+          return transform;
+        },
+
+        TRANSLATE_INSIDE: function(wrapperElementOrRectangle) {
+          wrapperElementOrRectangle = wrapperElementOrRectangle.length ? wrapperElementOrRectangle[0] : wrapperElementOrRectangle;
+          
+          return function(element, transform, touch) {
+            element = element.length ? element[0] : element;
+            var re = element.getBoundingClientRect();
+            var rw = wrapperElementOrRectangle instanceof HTMLElement ? wrapperElementOrRectangle.getBoundingClientRect() : wrapperElementOrRectangle;
+            var tx, ty;
+
+            if (re.width >= rw.width) {
+              tx = 0;   
+            } else {
+              // compute translateX so that re.left and re.right will stay between rw.left and rw.right
+              if (re.right + touch.stepX > rw.right) {
+                tx = rw.right - re.right;
+              } else if (re.left + touch.stepX < rw.left) {
+                tx = rw.left - re.left;
+              } else {
+                tx = touch.stepX;
+              }
+
+            }
+
+            if (re.height >= rw.height) {
+              ty = 0;   
+            } else {
+              if (re.bottom + touch.stepY > rw.bottom) {
+                ty = rw.bottom - re.bottom;
+              } else if (re.top + touch.stepY < rw.top) {
+                ty = rw.top - re.top;
+              } else {
+                ty = touch.stepY;
+              }
+            }
+
+            transform.translateX += tx;
+            transform.translateY += ty;
+            return transform;
           };
+        },
 
-          options = angular.extend({}, defaults, options || {});
+        // 
+        // bind function
+        // 
+        bind: function($element, dragOptions, touchOptions) {
+          $element = angular.element($element);
+          dragOptions = dragOptions || {};
+          touchOptions = touchOptions || {};
+          
+          var startEventHandler = dragOptions.start,
+              endEventHandler = dragOptions.end,
+              moveEventHandler = dragOptions.move,
+              cancelEventHandler = dragOptions.cancel,
+              transformEventHandler = dragOptions.transform || this.TRANSLATE_BOTH;
 
-          var
-            e = angular.element(elem)[0],
-            moving = false,
-            deltaXTot = 0, // total movement since elem is bound
-            deltaYTot = 0,
-            x0, y0, // touch coords on start 
-            t0, // transform on start
-            tOrig = Transform.fromElement(e),
-            x, y, // current touch coords
-            t, // current transform
-            minX = options.constraint.minX !== undefined ? options.constraint.minX : Number.NEGATIVE_INFINITY,
-            maxX = options.constraint.maxX !== undefined ? options.constraint.maxX : Number.POSITIVE_INFINITY,
-            minY = options.constraint.minY !== undefined ? options.constraint.minY : Number.NEGATIVE_INFINITY,
-            maxY = options.constraint.maxY !== undefined ? options.constraint.maxY : Number.POSITIVE_INFINITY,
+          var domElement = $element[0],
+              tO = $transform.get($element), // original transform
+              rO = domElement.getBoundingClientRect(), // original bounding rect
+              tS, // transform at start
+              rS;
+
+            var moving = false;
             
-            preventedWhileMoving = ['click', 'tap', 'mouseup', 'touchend'],
+            var isMoving = function() {
+              return moving;
+            };
+            
+            var cleanup = function() {
+              moving = false;
+              tS = rS = null;
+              $element.removeClass('ui-drag-move');
+            };
+            
+            var reset = function() {
+              $transform.set(domElement, tO);
+            };
 
-            captureClicks = function(e) {
-              e.stopPropagation();
-            },
+            var undo = function() {
+              $transform.set(domElement, tS || tO);
+            };
 
-            cancelFn = function(){
-              elem.triggerHandler('touchcancel');
-            },
+            var setup = function() {
+              moving = true;
+              rS = domElement.getBoundingClientRect();
+              tS = $transform.get(domElement);
+              $element.addClass('ui-drag-move');
+            };
 
-            resetFn = function(){
-              elem.triggerHandler('touchcancel');
-              deltaXTot = 0;
-              deltaYTot = 0;
-              tOrig.set(e);
-            },
+            var createDragInfo = function(touch) {
+              touch = angular.extend({}, touch);
+              touch.originalTransform = tO;
+              touch.originalRect = rO;
+              touch.startRect = rS;
+              touch.rect = domElement.getBoundingClientRect();
+              touch.startTransform = tS;
+              touch.transform = $transform.get(domElement);
+              touch.reset = reset;
+              touch.undo = undo;
+              return touch;
+            };
 
-            callbacks = {
-              move: function(c, event) {
-                event.stopPropagation();
-                event.preventDefault();
+            var onTouchMove = function(touch, event) {
+              // preventDefault no matter what 
+              // it is (ie. maybe html5 drag for images or scroll)
+              event.preventDefault();
 
-                if (elem[0].addEventListener) {
-                  for (var i = 0; i < preventedWhileMoving.length; i++) {
-                    
-                    // Sorry.. for IE8 we are not capturing clicks
-                    // for inner elements, hope it wont cause too 
-                    // much problems
-                    elem[0].addEventListener(preventedWhileMoving[i], captureClicks, true);
-                  }                  
+              // $touch calls start on the first touch
+              // to ensure $drag.start is called only while actually
+              // dragging and not for touches we will bind $drag.start
+              // to the first time move is called
+              
+              if (!isMoving()) { // drag start
+                setup();
+                if (startEventHandler) {
+                  startEventHandler(createDragInfo(touch), event);
                 }
+              } else { // drag move
+                touch = createDragInfo(touch);
 
-                if (!moving) {    // $swipe calls start at the first touch
-                                  // to ensure $drag start is called only while actually
-                                  // dragging and not for touches we will bind $drag.start
-                                  // to the first time move is called.
+                var transform = transformEventHandler($element, angular.extend({}, touch.transform), touch, event);
 
-                  t0 = Transform.fromElement(e);
-                  x  = x0 = c.x;
-                  y  = y0 = c.y; 
+                $transform.set(domElement, transform);
 
-                  elem.addClass('ui-drag-move');
-
-                  if (options.start) {
-                    options.start(e.getBoundingClientRect(), cancelFn, resetFn, c);    
-                  }
-
-                  moving = true;
-                }
-
-                // total movement shoud match constraints
-                var dx, dy,
-                deltaX, deltaY, r,
-                rectBefore = e.getBoundingClientRect(),
-                _maxX = angular.isFunction(maxX) ? maxX() : maxX,
-                _maxY = angular.isFunction(maxY) ? maxY() : maxY,
-                _minX = angular.isFunction(minX) ? minX() : minX,
-                _minY = angular.isFunction(minY) ? minY() : minY;
-
-                deltaX = Math.max(Math.min(_maxX - deltaXTot, c.x - x0), _minX - deltaXTot);
-                deltaY = Math.max(Math.min(_maxY - deltaYTot, c.y - y0), _minY - deltaYTot);
-
-                dx = deltaX - (x - x0);
-                dy = deltaY - (y - y0);
-
-                t = Transform.fromElement(e); 
-
-                if (options.transform) {
-                  r = options.transform(t, dx, dy, c.x, c.y, x0, y0);
-                  t = r || t;
-                } else {
-                  t.translate(dx, dy);
-                }
-
-                if (options.adaptTransform) {
-                  r = options.adaptTransform(t, dx, dy, c.x, c.y, x0, y0);
-                  t = r || t;
-                }
-                
-                x = deltaX + x0;
-                y = deltaY + y0;
-
-                t.set(e);
-
-                if (options.move) {
-                  options.move(e.getBoundingClientRect(), cancelFn, resetFn, c);  
-                }
-
-              },
-
-              end: function(c) {
-                moving = false;
-                if (elem[0].removeEventListener) {
-                  for (var i = 0; i < preventedWhileMoving.length; i++) {
-                    elem[0].removeEventListener(preventedWhileMoving[i], captureClicks);
-                  }                  
-                }
-
-                var deltaXTotOld = deltaXTot;
-                var deltaYTotOld = deltaYTot;
-
-                var undoFn = function() {
-                  deltaXTot = deltaXTotOld;
-                  deltaYTot = deltaYTotOld;
-                  t0.set(e);
-                };
-
-                deltaXTot = deltaXTot + x - x0;
-                deltaYTot = deltaYTot + y - y0;
-                
-                if (options.end) {
-                  options.end(e.getBoundingClientRect(), undoFn, resetFn, c);
-                }
-                
-                elem.removeClass('ui-drag-move');
-              },
-
-              cancel: function() {
-                if (elem[0].removeEventListener) {
-                  for (var i = 0; i < preventedWhileMoving.length; i++) {
-                    elem[0].removeEventListener(preventedWhileMoving[i], captureClicks);
-                  }                  
-                }
-
-                if (moving) {
-                  t0.set(e);  
-                  if (options.cancel) {
-                    options.cancel(e.getBoundingClientRect(), resetFn);
-                  }
-                  moving = false;
-                  elem.removeClass('ui-drag-move');
+                if (moveEventHandler) {
+                  moveEventHandler(touch, event);
                 }
               }
             };
 
-          elem.on('$destroy', function() { 
-            $document.unbind('mouseout', cancelFn);
-            callbacks = options = e = moving = deltaXTot = deltaYTot = x0 = y0 = t0 = tOrig = x = y = t = minX = maxX = minY = maxY = null;
-          });
+            var onTouchEnd = function(touch, event) {
+              if (!isMoving()) { return; }
+              
+              touch = createDragInfo(touch);
+              cleanup();
+              
+              if (endEventHandler) {
+                endEventHandler(touch, event);
+              }
+            };
 
-          var unbind = $swipe.bind(elem, callbacks);
-          $document.on('mouseout', cancelFn);
-          return unbind;
-        }
-      };
-    }];
+            var onTouchCancel = function(touch, event) {
+              if (!isMoving()) { return; }
+              
+              touch = createDragInfo(touch);
+              undo(); // on cancel movement is undoed automatically;
+              cleanup();
+
+              if (cancelEventHandler) {
+                cancelEventHandler(touch, event);
+              }
+            };
+
+            return $touch.bind($element, {move: onTouchMove, end: onTouchEnd, cancel: onTouchCancel});
+          } // ~ bind
+        }; // ~ return $drag
+      }]; // ~ $get
   });
 
 }());
@@ -296,145 +331,23 @@
 
   // An adaptation of ngTouch.$swipe
   // basically the same despite of:
-  // 1) It does not require ngTouch thus is better compatible with fastclick.js 
-  // 2) It allows to unbind
-  var module = angular.module('mobile-angular-ui.gestures.swipe', []);
+  // 1) It is based on 'mobile-angular-ui.gestures.touch'
+  // 2) It does not require ngTouch thus is better compatible with fastclick.js 
+  // 3) It allows to unbind
+  var module = angular.module('mobile-angular-ui.gestures.swipe', 
+    ['mobile-angular-ui.gestures.touch']);
 
-  module.factory('$swipe', [function() {
-    var MOVE_BUFFER_RADIUS = 10;
-
-    var POINTER_EVENTS = {
-      'mouse': {
-        start: 'mousedown',
-        move: 'mousemove',
-        end: 'mouseup'
-      },
-      'touch': {
-        start: 'touchstart',
-        move: 'touchmove',
-        end: 'touchend',
-        cancel: 'touchcancel'
-      }
-    };
-
-    function getCoordinates(event) {
-      var touches = event.touches && event.touches.length ? event.touches : [event];
-      var e = (event.changedTouches && event.changedTouches[0]) ||
-          (event.originalEvent && event.originalEvent.changedTouches &&
-              event.originalEvent.changedTouches[0]) ||
-          touches[0].originalEvent || touches[0];
-
-      return {
-        x: e.clientX,
-        y: e.clientY
-      };
-    }
-
-    function getEvents(pointerTypes, eventType) {
-      var res = [];
-      angular.forEach(pointerTypes, function(pointerType) {
-        var eventName = POINTER_EVENTS[pointerType][eventType];
-        if (eventName) {
-          res.push(eventName);
-        }
-      });
-      return res.join(' ');
-    }
-
+  module.factory('$swipe', ['$touch', function($touch) {
     return {
       bind: function(element, eventHandlers, pointerTypes) {
-        // Absolute total movement, used to control swipe vs. scroll.
-        var totalX, totalY;
-        // Coordinates of the start position.
-        var startCoords;
-        // Last event's position.
-        var lastPos;
-        // Whether a swipe is active.
-        var active = false;
-
-        pointerTypes = pointerTypes || ['mouse', 'touch'];
-
-        var cancelEvents = getEvents(pointerTypes, 'cancel');
-        var startEvents = getEvents(pointerTypes, 'start');
-        var endEvents = getEvents(pointerTypes, 'end');
-        var moveEvents = getEvents(pointerTypes, 'move');
-
-        var startCb = function(event) {
-          startCoords = getCoordinates(event);
-          active = true;
-          totalX = 0;
-          totalY = 0;
-          lastPos = startCoords;
-          if (eventHandlers.start) {
-            eventHandlers.start(startCoords, event);
-          }
+        var options = {
+          pointerTypes: pointerTypes,
+          movementThreshold: 10,
+          preventScroll: function(t) {
+            return t.totalY <= t.totalX;
+          }  
         };
-
-        var moveCb = function(event) {
-          if (!active) return;
-
-          // Android will send a touchcancel if it thinks we're starting to scroll.
-          // So when the total distance (+ or - or both) exceeds 10px in either direction,
-          // we either:
-          // - On totalX > totalY, we send preventDefault() and treat this as a swipe.
-          // - On totalY > totalX, we let the browser handle it as a scroll.
-
-          if (!startCoords) return;
-          var coords = getCoordinates(event);
-
-          totalX += Math.abs(coords.x - lastPos.x);
-          totalY += Math.abs(coords.y - lastPos.y);
-
-          lastPos = coords;
-
-          if (totalX < MOVE_BUFFER_RADIUS && totalY < MOVE_BUFFER_RADIUS) {
-            return;
-          }
-
-          // One of totalX or totalY has exceeded the buffer, so decide on swipe vs. scroll.
-          if (totalY > totalX) {
-            // Allow native scrolling to take over.
-            active = false;
-            if (eventHandlers.cancel) {
-              eventHandlers.cancel(event);
-            }
-            return;
-          } else {
-            // Prevent the browser from scrolling.
-            event.preventDefault();
-            if (eventHandlers.move) {
-              eventHandlers.move(coords, event);
-            }
-          }
-        };
-
-        var cancelCb = function(event) {
-          active = false;
-          if (eventHandlers.cancel) {
-            eventHandlers.cancel(event);
-          }        
-        };
-
-        var endCb = function(event) {
-          if (!active) return;
-          active = false;
-          if(eventHandlers.end) {
-            eventHandlers.end(getCoordinates(event), event);
-          }
-        };
-
-        element.on(startEvents, startCb);
-        if (cancelEvents) { element.on(cancelEvents, cancelCb); }
-        element.on(moveEvents, moveCb);
-        element.on(endEvents, endCb);
-      
-        return function unbind() {
-          element.off(startEvents, startCb);
-          if (cancelEvents) { element.off(cancelEvents, cancelCb); }
-          element.off(moveEvents, moveCb);
-          element.off(endEvents, endCb);
-          element = startEvents = startCb = moveEvents = moveCb = endEvents = endCb = cancelEvents = cancelCb = null;
-        };
+        return $touch.bind(element, eventHandlers, options);
       }
     };
   }]);
@@ -464,7 +377,7 @@
           // (ie. same direction as the directive wants) will have a positive delta and
           // illegal ones a negative delta.
           // Therefore this delta must be positive, and larger than the minimum.
-          if (!startCoords) return false;
+          if (!startCoords) { return false; }
           var deltaY = Math.abs(coords.y - startCoords.y);
           var deltaX = (coords.x - startCoords.x) * direction;
           return valid && // Short circuit for already-invalidated swipes.
@@ -479,23 +392,24 @@
           pointerTypes.push('mouse');
         }
         $swipe.bind(element, {
-          'start': function(coords, event) {
+          start: function(coords) {
             startCoords = coords;
             valid = true;
           },
-          'cancel': function(event) {
+          cancel: function() {
             valid = false;
           },
-          'end': function(coords, event) {
-              event.stopPropagation();
-
+          end: function(coords, event) {
+            // makes nested swipes work:
+            if (!event.__UiSwipeHandled__) {
+              event.__UiSwipeHandled__ = true;
               if (validSwipe(coords)) {
                 scope.$apply(function() {
                   element.triggerHandler(eventName);
                   swipeHandler(scope, {$event: event});
                 });
               }
-
+            }
           }
         }, pointerTypes);
       };
@@ -512,209 +426,790 @@
 
 (function() {
   'use strict';
-  angular.module('mobile-angular-ui.gestures.transform', [])
 
-  .factory('Transform', [
-    '$window',
-    function($window){
+  // input-device agnostic touch handling. 
+  // $touch service is an abstraction of touch event handling that works with any kind of
+  // input devices. It is intended for single touch only and it provides extended infos
+  // about touch like: movement direction, velocity, duration ...
+  // 
+  // $touch service is intended as base to build any single-touch gesture handlers
+  // 
+  // Usage:
+  // 
+  // $touch.bind(element, {
+  //    start: function(touchInfo, e);
+  //    move: function(touchInfo, e);
+  //    end: function(touchInfo, e);
+  //    cancel: function(touchInfo, e);
+  // }, options);
+  // 
+  // touchInfo is an object containing:
+  // - timestamp
+  // - duration
+  // - startX
+  // - startY
+  // - prevX
+  // - prevY
+  // - x
+  // - y
+  // - step
+  // - stepX
+  // - stepY
+  // - velocity
+  // - distance: linear distance from start
+  // - distanceX
+  // - distanceY
+  // - total: total length of the movement (considering turnarounds etc ...)
+  // - totalX
+  // - totalY
+  // 
+  // - direction: angle of movement from start in degree (or null)
+  // 
+  // options is an object specifing:
+  // 
+  // - movementThreshold: 10
+  // - preventScroll: (fn->bool or bool) wether yield to scroll or prevent it
+  // - pointerTypes: (array) which kind of pointer events you wish 
+  //                  to handle ie. ['mouse', 'touch', 'pen']
 
-      function matrixHeight(m) {
-        return m.length;
+  var module = angular.module('mobile-angular-ui.gestures.touch', []);
+
+  module.provider('$touch', function() {
+
+    /*=====================================
+    =            Configuration            =
+    =====================================*/
+
+    var PREVENT_SCROLL = true;
+    var MOVEMENT_THRESHOLD = 1;
+
+    var POINTER_EVENTS = {
+      'mouse': {
+        start: 'mousedown',
+        move: 'mousemove',
+        end: 'mouseup'
+      },
+      'touch': {
+        start: 'touchstart',
+        move: 'touchmove',
+        end: 'touchend',
+        cancel: 'touchcancel'
       }
+    };
 
-      function matrixWidth(m) {
-        return m[0] ? m[0].length : 0;
-      }
+    var POINTER_TYPES = ['mouse', 'touch'];
 
-      function matrixMult(m1, m2) {
-        var width1  = matrixWidth(m1), 
-            width2  = matrixWidth(m2), 
-            height1 = matrixHeight(m1), 
-            height2 = matrixHeight(m2);
+    // if set to `true` emulates behaviour of touchmove so
+    // it will continue after touch goes outside element,
+    // bear in mind that disabling this may lead
+    // to inconsistencies between devices
+    var ALLOW_OUTER_MOVEMENT = true;
 
-        if (width1 != height2) {
-          throw new Error("error: incompatible sizes");
+    this.setPointerEvents = function(pe) {
+      POINTER_EVENTS = pe;
+    };
+
+    this.setPointerTypes = function(pt) {
+      POINTER_EVENTS = pt;
+    };
+
+    this.setPreventScroll = function(v) {
+      PREVENT_SCROLL = v;
+    };
+
+    this.setMovementThreshold = function(v) {
+      MOVEMENT_THRESHOLD = v;
+    };
+
+    this.setAllowOuterMovement = function(v) {
+      ALLOW_OUTER_MOVEMENT = !!v;
+    };
+
+    // 
+    // Shorthands for minification
+    //
+    var abs = Math.abs,
+        asin = Math.asin,
+        sqrt = Math.sqrt;
+
+    /*===============================
+    =            Helpers            =
+    ===============================*/
+
+    var getCoordinates = function(event) {
+      var touches = event.touches && event.touches.length ? event.touches : [event];
+      var e = (event.changedTouches && event.changedTouches[0]) ||
+          (event.originalEvent && event.originalEvent.changedTouches &&
+              event.originalEvent.changedTouches[0]) ||
+          touches[0].originalEvent || touches[0];
+
+      return {
+        x: e.clientX,
+        y: e.clientY
+      };
+    };
+
+    var getEvents = function(pointerTypes, eventType) {
+      var res = [];
+      angular.forEach(pointerTypes, function(pointerType) {
+        var eventName = POINTER_EVENTS[pointerType][eventType];
+        if (eventName) {
+          res.push(eventName);
         }
+      });
+      return res.join(' ');
+    };
+
+    var now = function() { 
+      return new Date();
+    };
+
+    var timediff = function(t1, t2) {
+      t2 = t2 || now();
+      return abs(t2 - t1);
+    };
+
+    var len = function(x, y) {
+      return sqrt(x*x + y*y);
+    };
+
+    // Compute values for new TouchInfo based on coordinates and previus touches.
+    // - c is coords of new touch
+    // - t0 is first touch: useful to compute duration and distance (how far pointer 
+    //                    got from first touch)
+    // - tl is last touch: useful to compute velocity and length (total length of the movement)
+    var buildTouchInfo = function(type, c, t0, tl) {
+      t0 = t0 || {}; 
+      tl = tl || {}; 
+
+      var // timestamps  
+          ts = now(), ts0 = t0.timestamp || ts, tsl = tl.timestamp || ts0,
+          // coords
+          x = c.x, y = c.y, x0 = t0.x || x, y0 = t0.y || y, xl = tl.x || x0, yl = tl.y || y0,
+          // total movement
+          totalXl = tl.totalX || 0, totalYl = tl.totalY || 0, 
+          totalX = totalXl + abs(x - xl), totalY = totalYl + abs(y - yl), 
+          total = len(totalX, totalY),
+          // duration
+          duration = timediff(ts, ts0),
+          durationl = timediff(ts, tsl),
+          // distance
+          dxl = x - xl, dyl = y - yl, dl = len(dxl, dyl),
+          dx = x - x0, dy = y - y0, d = len(dx, dy),
+          // velocity (px per second)
+          v = durationl > 0 ? abs(dl / ( durationl / 1000 )) : 0,
+          // direction (angle between distance vector and x axis)
+          // given as the arcsin of normalized direction vector in degrees
+          dir = d !== 0 ? asin(dy/d) * (180 / Math.PI) : null;
+
+      return {
+        type: type,
+        timestamp: ts,
+        duration: duration,
+        startX: x0,
+        startY: y0,
+        prevX: xl,
+        prevY: yl,
+        x: c.x,
+        y: c.y,
+
+        step:  dl, // distance from prev
+        stepX: dxl,
+        stepY: dyl,
+
+        velocity: v,
+        
+        distance: d, // distance from start
+        distanceX: dx,
+        distanceY: dy,
+
+        total: total, // total length of momement,
+                      // considering turnaround
+        totalX: totalX,
+        totalY: totalY,
+
+        direction: dir
+      };
+    };
+
+    /*======================================
+    =            Factory Method            =
+    ======================================*/
+
+    this.$get = ['$document', function($document) {
       
-        var result = [];
-        for (var i = 0; i < height1; i++) {
-            result[i] = [];
-            for (var j = 0; j < width2; j++) {
-                var sum = 0;
-                for (var k = 0; k < width1; k++) {
-                    sum += m1[i][k] * m2[k][j];
-                }
-                result[i][j] = sum;
+      return {
+        bind: function($element, eventHandlers, options) {
+
+          // ensure element to be an angular element 
+          $element = angular.element($element);
+          
+          options = options || {};
+          // uses default pointer types in case of none passed
+          var pointerTypes = options.pointerTypes || POINTER_TYPES,
+              preventScroll = options.preventScroll === undefined ? PREVENT_SCROLL : options.preventScroll,
+              movementThreshold = options.movementThreshold === undefined ? MOVEMENT_THRESHOLD : options.preventScroll,
+              allowOuterMovement = options.allowOuterMovement === undefined ? ALLOW_OUTER_MOVEMENT : options.allowOuterMovement;
+
+          var // first and last touch
+              t0, tl,
+              // events
+              startEvents = getEvents(pointerTypes, 'start'),
+              endEvents = getEvents(pointerTypes, 'end'),
+              moveEvents = getEvents(pointerTypes, 'move'),
+              cancelEvents = getEvents(pointerTypes, 'cancel');
+
+          var startEventHandler = eventHandlers.start,
+              endEventHandler = eventHandlers.end,
+              moveEventHandler = eventHandlers.move,
+              cancelEventHandler = eventHandlers.cancel;
+
+          var $movementTarget = allowOuterMovement ? $document : $element;
+
+          var resetTouch = function() {
+            t0 = tl = null;
+            $movementTarget.off(moveEvents, onTouchMove);
+            $movementTarget.off(endEvents, onTouchEnd);
+          };
+
+          var isActive = function() {
+            return !!t0;
+          };
+
+          // 
+          // Callbacks
+          // 
+
+          // on touchstart
+          var onTouchStart = function(event) {
+            tl = t0 = buildTouchInfo('touchstart', getCoordinates(event));
+            $movementTarget.on(moveEvents, onTouchMove);
+            $movementTarget.on(endEvents, onTouchEnd);
+            if (startEventHandler) {
+              startEventHandler(t0, event); 
             }
-        }
-        return result; 
-      }
+          };
 
-      //
-      // Cross-Browser stuffs
-      // 
-      var cssPrefix,
-          transformProperty,
-          styleProperty,
-          prefixes = ['', 'webkit', 'Moz', 'O', 'ms'],
-          d = $window.document.createElement('div');
+          // on touchCancel
+          var onTouchCancel = function(event) {
+            var t = buildTouchInfo('touchcancel', getCoordinates(event), t0, tl);
+            resetTouch();
+            if (cancelEventHandler) {
+              cancelEventHandler(t, event);
+            }
+          };
+
+          // on touchMove
+          var onTouchMove = function(event) {
+            if (!isActive()) { return; }
+            
+            var coords = getCoordinates(event);
+
+            // wont fire outside the window
+            if (coords.x < 0 || coords.x > window.innerWidth || coords.y < 0 || coords.y > window.innerHeight){ return; }
+
+            var t = buildTouchInfo('touchmove', coords, t0, tl),
+                totalX = t.totalX,
+                totalY = t.totalY;
+
+            tl = t;
+    
+            if (totalX < movementThreshold && totalY < movementThreshold) {
+              return;
+            }
+            
+            var shouldPreventScroll = typeof preventScroll === 'function' ? preventScroll(t) : preventScroll;
+
+            if (shouldPreventScroll) {
+              event.preventDefault();
+            } else {
+              resetTouch();
+              if (cancelEventHandler) {
+                cancelEventHandler(t, event);
+              }
+              return;
+            }
+
+            if (moveEventHandler) {
+              moveEventHandler(t, event);
+            }
+          };
+
+          // on touchEnd
+          var onTouchEnd = function(event) {
+            if (!isActive()) { return; }
+            var tlbkp = tl;
+            if (endEventHandler) {
+              setTimeout(function() {
+                endEventHandler(angular.extend({}, tlbkp, {type: 'touchend'}), event);
+              }, 0);
+            }  
+            resetTouch();
+          };
+
+
+          $element.on(startEvents, onTouchStart);
+          if (cancelEvents) { $element.on(cancelEvents, onTouchCancel); }
+
+          return function unbind() {
+            if ($element) { // <- wont throw if accidentally called twice
+              $element.off(startEvents, onTouchStart);
+              if (cancelEvents) { $element.off(cancelEvents, onTouchCancel); }
+              $movementTarget.off(moveEvents, onTouchMove);
+              $movementTarget.off(endEvents, onTouchEnd);
+
+              // Clear all those variables we carried out from `#bind` method scope
+              // to local scope and that we don't have to use anymore
+              $element = $movementTarget = startEvents = cancelEvents = moveEvents = endEvents = onTouchStart = onTouchCancel = onTouchMove = onTouchEnd = pointerTypes = preventScroll = movementThreshold = allowOuterMovement = null;
+            }
+          };
+        }
+      };
+    }];
+  });
+}());
+(function() {
+  'use strict';
+  
+  var module = angular.module('mobile-angular-ui.gestures.transform', []);
+
+  // $transform Service is designed with the specific aim to provide a cross-browser way to
+  // interpolate CSS 3d transform without having to deal with CSS Matrix, and being able
+  // to take into account any previous unknown transform already applied to an element.
+  // 
+  // Usage
+  // 
+  // ``` css
+  // .myelem {
+  //   transform: translate(12px) rotate(20deg);
+  // }
+  // ```
+  // 
+  // ``` html
+  // <div class='myelem'></div>
+  // ```
+  // 
+  // ``` js
+  //   t = $transform.get(e);
+  //   t.rotationZ += 15;
+  //   t.translateX += 1;
+  //   $transform.set(e, t);
+  // ```
+  module.factory('$transform', function(){
+
+    /*==============================================================
+    =            Cross-Browser Property Prefix Handling            =
+    ==============================================================*/
+
+    // Cross-Browser style properties
+    var cssPrefix,
+        transformProperty,
+        styleProperty,
+        prefixes = ['', 'webkit', 'Moz', 'O', 'ms'],
+        d = document.createElement('div');
+    
+    for (var i = 0; i < prefixes.length; i++) {
+      var prefix = prefixes[i];
+      if ( (prefix + 'Perspective') in d.style ) {
+        cssPrefix = (prefix === '' ? '' : '-' + prefix.toLowerCase() + '-');
+        styleProperty = prefix + (prefix === '' ? 'transform' : 'Transform');
+        transformProperty = cssPrefix + 'transform';
+        break;
+      }
+    }
+
+    d = null;
+
+    // return current element transform matrix in a cross-browser way
+    var getElementTransformProperty = function(e) {
+      e = e.length ? e[0] : e;
+      var tr = window
+              .getComputedStyle(e, null)
+              .getPropertyValue(transformProperty);
+      return tr;
+    };
+
+    // set current element transform matrix in a cross-browser way
+    var setElementTransformProperty = function(elem, value) {
+      elem = elem.length ? elem[0] : elem;
+      elem.style[styleProperty] = value;
+    };
+
+    /*======================================================
+    =            Transform Matrix Decomposition            =
+    ======================================================*/
+
+    var SMALL_NUMBER = 1.e-7;
+
+    var rad2deg = function(angle) {
+      return angle * 180 / Math.PI;
+    };
+
+    var sqrt = Math.sqrt,
+        asin = Math.asin,
+        atan2 = Math.atan2,
+        cos = Math.cos,
+        abs = Math.abs,
+        floor = Math.floor;
+
+    var cloneMatrix = function(m) {
+      var res = [[],[],[],[]];
+      for (var i = 0; i < m.length; i++) {
+        for (var j = 0; j < m[i].length; j++) {
+          res[i][j] = m[i][j];
+        }
+      }
+      return res;
+    };
+
+    var determinant2x2 = function(a, b, c, d) {
+       return a * d - b * c;
+    };
+
+    var determinant3x3 = function(a1, a2, a3, b1, b2, b3, c1, c2, c3) {
+      return a1 * determinant2x2(b2, b3, c2, c3) - b1 * determinant2x2(a2, a3, c2, c3) + c1 * determinant2x2(a2, a3, b2, b3);  
+    };
+
+    var determinant4x4 = function(m) {
+      var a1 = m[0][0], b1 = m[0][1], c1 = m[0][2], d1 = m[0][3], a2 = m[1][0], b2 = m[1][1], c2 = m[1][2], d2 = m[1][3], a3 = m[2][0], b3 = m[2][1], c3 = m[2][2], d3 = m[2][3], a4 = m[3][0], b4 = m[3][1], c4 = m[3][2], d4 = m[3][3];
+      return a1 * determinant3x3(b2, b3, b4, c2, c3, c4, d2, d3, d4) - b1 * determinant3x3(a2, a3, a4, c2, c3, c4, d2, d3, d4) + c1 * determinant3x3(a2, a3, a4, b2, b3, b4, d2, d3, d4) - d1 * determinant3x3(a2, a3, a4, b2, b3, b4, c2, c3, c4);
+    };
+
+    var adjoint = function(m) {
+      var res = [[],[],[],[]], a1 = m[0][0], b1 = m[0][1], c1 = m[0][2], d1 = m[0][3], a2 = m[1][0], b2 = m[1][1], c2 = m[1][2], d2 = m[1][3], a3 = m[2][0], b3 = m[2][1], c3 = m[2][2], d3 = m[2][3], a4 = m[3][0], b4 = m[3][1], c4 = m[3][2], d4 = m[3][3];
+
+      res[0][0]  =   determinant3x3(b2, b3, b4, c2, c3, c4, d2, d3, d4);
+      res[1][0]  = - determinant3x3(a2, a3, a4, c2, c3, c4, d2, d3, d4);
+      res[2][0]  =   determinant3x3(a2, a3, a4, b2, b3, b4, d2, d3, d4);
+      res[3][0]  = - determinant3x3(a2, a3, a4, b2, b3, b4, c2, c3, c4);
+      res[0][1]  = - determinant3x3(b1, b3, b4, c1, c3, c4, d1, d3, d4);
+      res[1][1]  =   determinant3x3(a1, a3, a4, c1, c3, c4, d1, d3, d4);
+      res[2][1]  = - determinant3x3(a1, a3, a4, b1, b3, b4, d1, d3, d4);
+      res[3][1]  =   determinant3x3(a1, a3, a4, b1, b3, b4, c1, c3, c4);
+      res[0][2]  =   determinant3x3(b1, b2, b4, c1, c2, c4, d1, d2, d4);
+      res[1][2]  = - determinant3x3(a1, a2, a4, c1, c2, c4, d1, d2, d4);
+      res[2][2]  =   determinant3x3(a1, a2, a4, b1, b2, b4, d1, d2, d4);
+      res[3][2]  = - determinant3x3(a1, a2, a4, b1, b2, b4, c1, c2, c4);
+      res[0][3]  = - determinant3x3(b1, b2, b3, c1, c2, c3, d1, d2, d3);
+      res[1][3]  =   determinant3x3(a1, a2, a3, c1, c2, c3, d1, d2, d3);
+      res[2][3]  = - determinant3x3(a1, a2, a3, b1, b2, b3, d1, d2, d3);
+      res[3][3]  =   determinant3x3(a1, a2, a3, b1, b2, b3, c1, c2, c3);
+
+      return res;
+    };
+
+    var inverse = function(m) {
+      var res = adjoint(m),
+          det = determinant4x4(m);
+      if (abs(det) < SMALL_NUMBER) { return false; }
       
-      for (var i = 0; i < prefixes.length; i++) {
-        var prefix = prefixes[i];
-        if ( (prefix + 'Perspective') in d.style ) {
-          cssPrefix = (prefix === '' ? '' : '-' + prefix.toLowerCase() + '-');
-          styleProperty = prefix + (prefix === '' ? 'transform' : 'Transform');
-          transformProperty = cssPrefix + 'transform';
-          break;
+      for (var i = 0; i < 4; i++) {
+          for (var j = 0; j < 4; j++) {
+              res[i][j] = res[i][j] / det;
+          }
+      }
+      return res;
+    };
+
+    var transposeMatrix4 = function(m) {
+      var res = [[],[],[],[]];
+      for (var i = 0; i < 4; i++) {
+        for (var j = 0; j < 4; j++) {
+          res[i][j] = m[j][i];
         }
       }
+      return res;
+    };
 
-      d = null;
+    var v4MulPointByMatrix = function(p, m) {
+      var res = [];
 
-      //
-      // Represents a 2d transform, 
-      // behind the scene is a transform matrix exposing methods to get/set
-      // meaningfull primitives like rotation, translation and scale.
-      // 
-      // Allows to apply multiple transforms through #merge.
-      //
-      function Transform(matrix) {
-        this.mtx = matrix || [
-          [1,0,0],
-          [0,1,0],
-          [0,0,1]
-        ];
+      res[0] = (p[0] * m[0][0]) + (p[1] * m[1][0]) +
+                  (p[2] * m[2][0]) + (p[3] * m[3][0]);
+      res[1] = (p[0] * m[0][1]) + (p[1] * m[1][1]) +
+                  (p[2] * m[2][1]) + (p[3] * m[3][1]);
+      res[2] = (p[0] * m[0][2]) + (p[1] * m[1][2]) +
+                  (p[2] * m[2][2]) + (p[3] * m[3][2]);
+      res[3] = (p[0] * m[0][3]) + (p[1] * m[1][3]) +
+                  (p[2] * m[2][3]) + (p[3] * m[3][3]);
+
+      return res;
+    };
+
+    var v3Length = function(a) {
+      return sqrt((a[0] * a[0]) + (a[1] * a[1]) + (a[2] * a[2]));
+    };
+
+    var v3Scale = function(v, desiredLength) {
+      var res = [], len = v3Length(v);
+      if (len !== 0) {
+          var l = desiredLength / len;
+          res[0] *= l;
+          res[1] *= l;
+          res[2] *= l;
       }
+      return res;
+    };
+
+    var v3Dot = function(a, b){
+        return (a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2]);
+    };
+
+    var v3Combine = function(a, b, ascl, bscl) {
+      var res = [];
+      res[0] = (ascl * a[0]) + (bscl * b[0]);
+      res[1] = (ascl * a[1]) + (bscl * b[1]);
+      res[2] = (ascl * a[2]) + (bscl * b[2]);
+      return res;
+    };
+
+    var v3Cross = function(a, b) {
+      var res = [];
+      res[0] = (a[1] * b[2]) - (a[2] * b[1]);
+      res[1] = (a[2] * b[0]) - (a[0] * b[2]);
+      res[2] = (a[0] * b[1]) - (a[1] * b[0]);
+      return res;
+    };
+
+    var decompose = function(mat) {
+      var result = {}, localMatrix = cloneMatrix(mat), i, j;
       
-      Transform.getElementTransformProperty = function(e) {
-        e = e.length ? e[0] : e;
-        var tr = $window
-                .getComputedStyle(e, null)
-                .getPropertyValue(transformProperty);
-        return tr;
-      };
+      // Normalize the matrix.
+      if (localMatrix[3][3] === 0) {
+        return false;
+      }
 
-      Transform.setElementTransformProperty = function(e, value) {
-        e = e.length ? e[0] : e;
-        e.style[styleProperty] = value;
-      };
-
-      Transform.fromElement = function(e) {
-        e = e.length ? e[0] : e;
-        var tr = Transform.getElementTransformProperty(e);
-
-        if (!tr || tr === 'none') {
-          return new Transform();
+      for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j++) {
+          localMatrix[i][j] /= localMatrix[3][3];
         }
+      }
 
-        if (tr.match('matrix3d')) {
-          throw new Error('Handling 3d transform is not supported yet');
-        }
+      var perspectiveMatrix = cloneMatrix(localMatrix);
+      for (i = 0; i < 3; i++) {
+        perspectiveMatrix[i][3] = 0;
+      }
+      perspectiveMatrix[3][3] = 1;
 
-        var values = 
-          tr.split('(')[1]
-            .split(')')[0]
-            .split(',')
-            .map(Number);
+      if (determinant4x4(perspectiveMatrix) === 0) {
+        return false;
+      }
 
-        var mtx = [
-          [values[0], values[2], values[4]],
-          [values[1], values[3], values[5]],
-          [        0,         0,        1 ],
-        ];
+      // First, isolate perspective.  This is the messiest.
+      if (localMatrix[0][3] !== 0 || localMatrix[1][3] !== 0 || localMatrix[2][3] !== 0) {
+          // rightHandSide is the right hand side of the equation.
+          var rightHandSide = [];
+          rightHandSide[0] = localMatrix[0][3];
+          rightHandSide[1] = localMatrix[1][3];
+          rightHandSide[2] = localMatrix[2][3];
+          rightHandSide[3] = localMatrix[3][3];
 
-        return new Transform(mtx);
-      };
+          // Solve the equation by inverting perspectiveMatrix and multiplying
+          // rightHandSide by the inverse. (This is the easiest way, not
+          // necessarily the best.)
+          var inversePerspectiveMatrix = inverse(perspectiveMatrix);
+          var transposedInversePerspectiveMatrix = transposeMatrix4(inversePerspectiveMatrix);
+          var perspectivePoint = v4MulPointByMatrix(rightHandSide, transposedInversePerspectiveMatrix);
 
-      Transform.prototype.apply = function(e, options) {
-        e = e.length ? e[0] : e;
-        var mtx = Transform.fromElement(e).merge(this).mtx;
-        e.style[styleProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
-        return this;
-      };
+          result.perspectiveX = perspectivePoint[0];
+          result.perspectiveY = perspectivePoint[1];
+          result.perspectiveZ = perspectivePoint[2];
+          result.perspectiveW = perspectivePoint[3];
+          
+          // Clear the perspective partition
+          localMatrix[0][3] = localMatrix[1][3] = localMatrix[2][3] = 0;
+          localMatrix[3][3] = 1;
+      } else {
+          // No perspective.
+          result.perspectiveX = result.perspectiveY = result.perspectiveZ = 0;
+          result.perspectiveW = 1;
+      }
 
-      Transform.prototype.set = function(e) {
-        e = e.length ? e[0] : e;
-        var mtx = this.mtx;
-        e.style[styleProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
-        return this;
-      };
+      // Next take care of translation (easy).
+      result.translateX = localMatrix[3][0];
+      localMatrix[3][0] = 0;
+      result.translateY = localMatrix[3][1];
+      localMatrix[3][1] = 0;
+      result.translateZ = localMatrix[3][2];
+      localMatrix[3][2] = 0;
 
-      Transform.prototype.rotate = function(a) {
-        a = a * (Math.PI / 180); // deg2rad
-        var t = [
-          [Math.cos(a), -Math.sin(a),  0],
-          [Math.sin(a),  Math.cos(a),  0],
-          [          0,            0,  1]
-        ];
+      // Now get scale and shear.
+      var row = [[],[],[]], pdum3;
+      
+      for (i = 0; i < 3; i++) {
+          row[i][0] = localMatrix[i][0];
+          row[i][1] = localMatrix[i][1];
+          row[i][2] = localMatrix[i][2];
+      }
 
-        this.mtx = matrixMult(t, this.mtx);
-        return this;
-      };
+      // Compute X scale factor and normalize first row.
+      result.scaleX = v3Length(row[0]);
+      v3Scale(row[0], 1.0);
 
-      Transform.prototype.translate = function(x, y) {
-        y = (y === null || y === undefined) ? x : y;
-        var t = [
-          [1,0,x],
-          [0,1,y],
-          [0,0,1]
-        ];
-        this.mtx = matrixMult(t, this.mtx);
-        return this;
-      };
+      // Compute XY shear factor and make 2nd row orthogonal to 1st.
+      result.skewXY = v3Dot(row[0], row[1]);
+      v3Combine(row[1], row[0], row[1], 1.0, -result.skewXY);
 
-      Transform.prototype.scale = function(a) {
-        var t = [
-          [a,0,0],
-          [0,a,0],
-          [0,0,1]
-        ];
-        this.mtx = matrixMult(t, this.mtx);
-        return this;
-      };
+      // Now, compute Y scale and normalize 2nd row.
+      result.scaleY = v3Length(row[1]);
+      v3Scale(row[1], 1.0);
+      result.skewXY /= result.scaleY;
 
-      Transform.prototype.merge = function(t) {
-        this.mtx = matrixMult(this.mtx, t.mtx);
-        return this;
-      };
+      // Compute XZ and YZ shears, orthogonalize 3rd row.
+      result.skewXZ = v3Dot(row[0], row[2]);
+      v3Combine(row[2], row[0], row[2], 1.0, -result.skewXZ);
+      result.skewYZ = v3Dot(row[1], row[2]);
+      v3Combine(row[2], row[1], row[2], 1.0, -result.skewYZ);
 
-      Transform.prototype.getRotation = function() {
-        var mtx = this.mtx;
-        return Math.round(Math.atan2(mtx[1][0], mtx[0][0]) * (180/Math.PI)); // rad2deg
-      };
+      // Next, get Z scale and normalize 3rd row.
+      result.scaleZ = v3Length(row[2]);
+      v3Scale(row[2], 1.0);
+      result.skewXZ /= result.scaleZ;
+      result.skewYZ /= result.scaleZ;
+      
+      // At this point, the matrix (in rows[]) is orthonormal.
+      // Check for a coordinate system flip.  If the determinant
+      // is -1, then negate the matrix and the scaling factors.
+      pdum3 = v3Cross(row[1], row[2]);
+      
+      if (v3Dot(row[0], pdum3) < 0) {
+          for (i = 0; i < 3; i++) {
+              result.scaleX *= -1;
+              row[i][0] *= -1;
+              row[i][1] *= -1;
+              row[i][2] *= -1;
+          }
+      }
 
-      Transform.prototype.getTranslation = function() {
-        var mtx = this.mtx;
-        return {
-          x: mtx[0][2],
-          y: mtx[1][2]
-        };
-      };
+      // Rotation (angles smaller then SMALL_NUMBER are zeroed)
+      result.rotateY = rad2deg(asin(-row[0][2]))  || 0;
+      if (cos(result.rotateY) !== 0) {
+        result.rotateX = rad2deg(atan2(row[1][2], row[2][2]))  || 0;
+        result.rotateZ = rad2deg(atan2(row[0][1], row[0][0]))  || 0;
+      } else {
+        result.rotateX = rad2deg(atan2(-row[2][0], row[1][1])) || 0;
+        result.rotateZ = 0;
+      }
 
-      Transform.prototype.getScale = function() {
-        var mtx = this.mtx, a = mtx[0][0], b = mtx[1][0], d = 10;
-        return Math.round( Math.sqrt( a*a + b*b ) * d ) / d;
-      };
+      return result;
+    };
 
-      Transform.prototype.matrixToString = function() {
-        var mtx = this.mtx;
-        var res = "";
-        for (var i = 0; i < mtx.length; i++) {
-          for (var j = 0; j < mtx[i].length; j++) {
-            var n = '' + mtx[i][j];
-            res += n;
-            for (var k = 0; k < 5 - n.length; k++) {
-              res += ' ';
+    /*=========================================
+    =            Factory interface            =
+    =========================================*/
+
+    var fCom = function(n, def) {
+      // avoid scientific notation with toFixed
+      var val = (n || def || 0);
+      return '' + val.toFixed(20);
+    };
+
+    var fPx = function(n, def) {
+      return fCom(n, def) + 'px';
+    };
+
+    var fDeg = function(n, def) {
+      return fCom(n, def) + 'deg';
+    };
+
+    return {
+      fromCssMatrix: function(tr) {
+        var M = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
+
+        // Just returns identity in case no transform is setup for the element
+        if (tr && tr !== 'none') { 
+          var elems = tr.split('(')[1].split(')')[0].split(',').map(Number);
+
+          // Is a 2d transform: matrix(a, b, c, d, tx, ty) is a shorthand 
+          // for matrix3d(a, b, 0, 0, c, d, 0, 0, 0, 0, 1, 0, tx, ty, 0, 1)
+          if (tr.match(/^matrix\(/)) {
+            M[0][0] = elems[0];
+            M[1][0] = elems[1];
+            M[0][1] = elems[2];
+            M[1][1] = elems[3];
+            M[3][0] = elems[4];
+            M[3][1] = elems[5];
+
+          // Is a 3d transform, set elements by rows
+          } else {
+            for (var i = 0; i < 16; i++) {
+              var row = floor(i / 4),
+                  col = i % 4;
+              M[row][col] = elems[i];
             }
           }
-          res += '\n';
         }
-        return res;
-      };
+        return decompose(M);
+      },
 
-      return Transform;
-    }
-  ]);
+      toCssMatrix: function(t) {
+        // 
+        // Transforms are recomposed as a composition of:
+        // 
+        // matrix3d(1,0,0,0, 0,1,0,0, 0,0,1,0, perspective[0], perspective[1], perspective[2], perspective[3])
+        // translate3d(translation[0], translation[1], translation[2])
+        // rotateX(rotation[0]) rotateY(rotation[1]) rotateZ(rotation[2])
+        // matrix3d(1,0,0,0, 0,1,0,0, 0,skew[2],1,0, 0,0,0,1)
+        // matrix3d(1,0,0,0, 0,1,0,0, skew[1],0,1,0, 0,0,0,1)
+        // matrix3d(1,0,0,0, skew[0],1,0,0, 0,0,1,0, 0,0,0,1)
+        // scale3d(scale[0], scale[1], scale[2])
+        // 
+        
+        var perspective = [
+          fCom(t.perspectiveX),
+          fCom(t.perspectiveY),
+          fCom(t.perspectiveZ),
+          fCom(t.perspectiveW, 1)
+        ],
+        translate = [
+          fPx(t.translateX), 
+          fPx(t.translateY), 
+          fPx(t.translateZ)
+        ],
+        scale = [
+          fCom(t.scaleX), 
+          fCom(t.scaleY),
+          fCom(t.scaleZ)
+        ],
+        rotation = [
+          fDeg(t.rotateX),
+          fDeg(t.rotateY),
+          fDeg(t.rotateZ)
+        ],
+        skew = [
+          fCom(t.skewXY),
+          fCom(t.skewXZ),
+          fCom(t.skewYZ)
+        ];
+        
+        return [
+          'matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,' + perspective.join(',') + ')',
+          'translate3d(' + translate.join(',') + ')',
+          'rotateX('+ rotation[0] + ') rotateY(' + rotation[1] + ') rotateZ(' + rotation[2] + ')',
+          'matrix3d(1,0,0,0,0,1,0,0,0,' + skew[2] + ',1,0,0,0,0,1)',
+          'matrix3d(1,0,0,0,0,1,0,0,' + skew[1] + ',0,1,0,0,0,0,1)',
+          'matrix3d(1,0,0,0,' + skew[0] + ',1,0,0,0,0,1,0,0,0,0,1)',
+          'scale3d(' + scale.join(',') + ')'
+        ].join(' ');
+      },
+
+      // 
+      // Returns a decomposition of the transform matrix applied
+      // to `e`;
+      //  
+      // NOTE: 2d matrices are translated to 3d matrices
+      //       before any other operation.
+      //       
+      get: function(e) {
+        return this.fromCssMatrix(getElementTransformProperty(e));
+      },
+
+      // Recompose a transform from decomposition `t` and apply it to element `e`
+      set: function(e, t) {
+        setElementTransformProperty(e, this.toCssMatrix(t));
+      }
+    };
+  });
 }());
 (function () {
    'use strict';

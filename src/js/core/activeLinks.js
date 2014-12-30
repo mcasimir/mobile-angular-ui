@@ -22,9 +22,9 @@
 
           if (firstHash === -1 && firstSearchMark === -1) {
             newPath = locationHref;
-          } else if (firstHash != -1 && firstHash > firstSearchMark) {
+          } else if (firstHash !== -1 && firstHash > firstSearchMark) {
             newPath = locationHref.slice(0, plainUrlLength + firstHash);
-          } else if (firstSearchMark != -1 && firstSearchMark > firstHash) {
+          } else if (firstSearchMark !== -1 && firstSearchMark > firstHash) {
             newPath = locationHref.slice(0, plainUrlLength + firstSearchMark);
           }
           

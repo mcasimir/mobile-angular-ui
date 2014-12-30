@@ -3,19 +3,9 @@ var lodash = require('lodash');
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-
-
-
     concurrent: {
       devel: {
         tasks: ['connect:demo', 'watch'],
-        options: {
-          limit: 2,
-          logConcurrentOutput: true
-        }
-      },
-      test: {
-        tasks: ['connect:test', 'protractor'],
         options: {
           limit: 2,
           logConcurrentOutput: true
@@ -133,11 +123,17 @@ module.exports = function(grunt) {
         options: {
           hostname: '0.0.0.0',
           port: 3001,
+          base: ['.', 'test']
+        }
+      },
+      'test:keepalive': {
+        options: {
+          hostname: '0.0.0.0',
+          port: 3001,
           base: ['.', 'test'],
           keepalive: true
         }
       }
-
     },
 
     'split-hover': {
@@ -148,17 +144,32 @@ module.exports = function(grunt) {
     },
 
     jshint: {
-      all: ['Gruntfile.js', 'src/js/**/*.js']
+      all: ['src/js/*.js', 'src/js/core/*.js','src/js/gestures/*.js','src/js/components/*.js'],
+      options: {
+        jshintrc: true
+      }
     },
 
     protractor: {
       options: {
-        configFile: 'test/conf.js',
         keepAlive: false,
-        noColor: false,
-        args: {}
+        noColor: false
       },
-      all: {}
+      all: {
+        options: {
+          configFile: 'test/all.conf.js'
+        }
+      },
+      chrome: {
+        options: {
+          configFile: 'test/chrome.conf.js'
+        }
+      },
+      firefox: {
+        options: {
+          configFile: 'test/firefox.conf.js'  
+        }
+      }
     }
 
   });
@@ -175,8 +186,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-protractor-runner');
 
-
-
   grunt.task.loadTasks('tasks');
 
   grunt.registerTask('build', [ 'clean:dev',
@@ -188,9 +197,11 @@ module.exports = function(grunt) {
                                 'uglify',
                                 'cssmin']);
 
-  grunt.registerTask('test', ['concurrent:test']);
+  grunt.registerTask('test', ['connect:test', 'protractor:all']);
+  grunt.registerTask('test:chrome', ['connect:test', 'protractor:chrome']);
+  grunt.registerTask('test:firefox', ['connect:test', 'protractor:firefox']);
 
-  grunt.registerTask('fulltest', ['build', 'jshint', 'concurrent:test']);
+  grunt.registerTask('fulltest', ['build', 'jshint', 'connect:test', 'protractor:all']);
 
   grunt.registerTask('default', [ 'build',
                                   'concurrent:devel']);

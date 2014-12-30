@@ -32,7 +32,7 @@
             scrollableContent.scrollTop = elementOrNumber - marginTop;
           } else {
             var target = angular.element(elementOrNumber)[0];
-            if ((! target.offsetParent) || target.offsetParent == scrollable) {
+            if ((! target.offsetParent) || target.offsetParent === scrollable) {
               scrollableContent.scrollTop = target.offsetTop - marginTop;
             } else {
               // recursively subtract offsetTop from marginTop until it reaches scrollable element.
@@ -41,7 +41,7 @@
           }
         };
       }],
-      link: function(scope, element, attr) {
+      link: function(scope, element) {
         if (overthrow.support !== 'native') {
           element.addClass('overthrow');
           overthrow.forget();
@@ -90,7 +90,7 @@
         return elem.scrollTop === 0;
       }, 
       uiScrollBottom: function(elem){
-        return elem.scrollHeight == elem.scrollTop + elem.clientHeight;
+        return elem.scrollHeight === elem.scrollTop + elem.clientHeight;
       }
     }, 
     function(reached, directiveName){
@@ -119,13 +119,13 @@
           function($window) {
                   return {
                     restrict: 'C',
-                    link: function(scope, element, attr) {
+                    link: function(scope, element) {
                       var el = element[0],
                           parentStyle = element.parent()[0].style;
 
                       var adjustParentPadding = function() {
                         var styles = $window.getComputedStyle(el),
-                            margin = parseInt(styles.marginTop) + parseInt(styles.marginBottom);
+                            margin = parseInt(styles.marginTop, 10) + parseInt(styles.marginBottom, 10);
                         parentStyle['padding' + side] = el.offsetHeight + margin + 'px';
                       };
 

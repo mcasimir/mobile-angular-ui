@@ -102,16 +102,10 @@ h1 {
   background-size: cover;
 }
 
-.carousel-inner>.item:first-child {
-  z-index: 1998; 
-}
-
-.carousel-inner>.item.active {
-  z-index: 2000;
-}
-
-.carousel-inner>.item.active + .item {
-  z-index: 1999;
+.carousel-item {
+  -webkit-transition: -webkit-transform 500ms;
+  -moz-transition: -moz-transform 500ms;
+  transition: transform 500ms;
 }
 
 [drag-to-dismiss]{
@@ -123,9 +117,9 @@ h1 {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  -webkit-transition: opacity 0.3s;
-  -moz-transition: opacity 0.3s;
-  transition: opacity 0.3s;
+  -webkit-transition: opacity 300ms, -webkit-transform 300ms;
+  -moz-transition: opacity 300ms, -moz-transform 300ms;
+  transition: opacity 300ms, transform 300ms;
   opacity: 1;
 }
 
@@ -134,17 +128,17 @@ h1 {
 }
 
 .dismiss {
+  -webkit-transition: opacity 300ms, -webkit-transform 300ms;
+  -moz-transition: opacity 300ms, -moz-transform 300ms;
+  transition: opacity 300ms, transform 300ms;
   opacity: 0.5;
-  -webkit-transition: opacity 0.3s;
-  -moz-transition: opacity 0.3s;
-  transition: opacity 0.3s;
 }
 
 .dismitted {
+  -webkit-transition: opacity 300ms, -webkit-transform 300ms;
+  -moz-transition: opacity 300ms, -moz-transform 300ms;
+  transition: opacity 300ms, transform 300ms;
   opacity: 0;
-  -webkit-transition: opacity 0.3s;
-  -moz-transition: opacity 0.3s;
-  transition: opacity 0.3s;
 }
 
 .list-group-item-home {
@@ -158,3 +152,5 @@ pre {
 input.scrollable-header {
   border-bottom: 3px solid #ccc;
 }
+
+.toucharea {width: 100%; height: 100%;}

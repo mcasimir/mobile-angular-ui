@@ -844,9 +844,9 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 
           if (firstHash === -1 && firstSearchMark === -1) {
             newPath = locationHref;
-          } else if (firstHash != -1 && firstHash > firstSearchMark) {
+          } else if (firstHash !== -1 && firstHash > firstSearchMark) {
             newPath = locationHref.slice(0, plainUrlLength + firstHash);
-          } else if (firstSearchMark != -1 && firstSearchMark > firstHash) {
+          } else if (firstSearchMark !== -1 && firstSearchMark > firstHash) {
             newPath = locationHref.slice(0, plainUrlLength + firstSearchMark);
           }
           
@@ -894,7 +894,9 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
        return {
          resetAll: function() {
            for (var name in yielders) {
-             this.resetYielder(name);
+            if (yielders.hasOwnProperty(name)) {
+              this.resetYielder(name); 
+            }
            }
          },
          
@@ -972,25 +974,25 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 
 }());
 (function () {
-   'use strict';
-   var module = angular.module('mobile-angular-ui.core.fastclick', []);
+  'use strict';
+  var module = angular.module('mobile-angular-ui.core.fastclick', []);
 
-     module.run(['$window', '$document', function($window, $document) {
-         $window.addEventListener("load", (function() {
-            FastClick.attach($document[0].body);
-         }), false);
-     }]);
+  module.run(function() {
+    window.addEventListener('load', function() {
+      FastClick.attach(document.body);
+    }, false);
+  });
 
-     angular.forEach(['select', 'input', 'textarea'], function(directiveName){
-       module.directive(directiveName, function(){
-         return {
-           restrict: "E",
-           compile: function(elem) {
-             elem.addClass("needsclick");
-           }
-         };
-       });
-     });
+  angular.forEach(['select', 'input', 'textarea'], function(directiveName){
+    module.directive(directiveName, function(){
+      return {
+        restrict: 'E',
+        compile: function(elem) {
+          elem.addClass('needsclick');
+        }
+      };
+    });
+  });
 }());
 (function () {
    'use strict';
@@ -1034,7 +1036,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
              if (value) {
                // prevents race conditions 
                // activating with other click events
-               t = $timeout(function(scope) {
+               t = $timeout(function() {
                  $document.on('click tap', handleOuterClick);
                }, 0);
 
@@ -1078,8 +1080,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 
   module.factory('SharedState', [
     '$rootScope',
-    '$parse',
-    function($rootScope, $parse){
+    function($rootScope){
       var values = {};    // values, context object for evals
       var statusesMeta = {};  // status info
       var scopes = {};    // scopes references
@@ -1145,11 +1146,12 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
           if (statusesMeta[id] !== undefined) {
             var prev = values[id];
             values[id] = value;
-            if (prev != value) {
+            if (prev !== value) {
               $rootScope.$broadcast('mobile-angular-ui.state.changed.' + id, value, prev);
             }
             return value;
           } else {
+            /* global console: false */
             if (console) {
               console.warn('Warning: Attempt to set uninitialized shared state:', id);
             }
@@ -1177,7 +1179,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
             var egStatuses = Object.keys(exclusionGroups[eg]);
             for (var i = 0; i < egStatuses.length; i++) {
               var item = egStatuses[i];
-              if (item != id) {
+              if (item !== id) {
                 this.turnOff(item);
               }
             }
@@ -1244,9 +1246,8 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
   };
 
   module.directive('uiState', [
-    'SharedState', 
-    '$parse',
-    function(SharedState, $parse){
+    'SharedState',
+    function(SharedState){
       return {
         restrict: 'EA',
         priority: 601, // more than ng-if
@@ -1284,7 +1285,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
                 compile: function(elem, attrs) {
                   var fn = methodName === 'set' ?
                     $parse(attrs[directiveName]) :
-                      function(scope) {
+                      function() {
                         return attrs[directiveName]; 
                       };
 
@@ -1349,7 +1350,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
       var blockNodes = [node];
       do {
         node = node.nextSibling;
-        if (!node) break;
+        if (!node) { break; }
         blockNodes.push(node);
       } while (node !== endNode);
 
@@ -1417,8 +1418,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
       restrict: 'A',
       multiElement: true,
       link: function(scope, element, attr) {
-        var exprFn = $parse(attr.uiHide),
-        uiHideFn = parseUiCondition('uiHide', attr, scope, SharedState, $parse);
+        var uiHideFn = parseUiCondition('uiHide', attr, scope, SharedState, $parse);
         scope.$watch(uiHideFn, function uiHideWatchAction(value){
           $animate[value ? 'addClass' : 'removeClass'](element,NG_HIDE_CLASS, {
             tempClasses : NG_HIDE_IN_PROGRESS_CLASS
@@ -1437,8 +1437,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
       restrict: 'A',
       multiElement: true,
       link: function(scope, element, attr) {
-        var exprFn = $parse(attr.uiShow),
-        uiShowFn = parseUiCondition('uiShow', attr, scope, SharedState, $parse);
+        var uiShowFn = parseUiCondition('uiShow', attr, scope, SharedState, $parse);
         scope.$watch(uiShowFn, function uiShowWatchAction(value){
           $animate[value ? 'removeClass' : 'addClass'](element, NG_HIDE_CLASS, {
             tempClasses : NG_HIDE_IN_PROGRESS_CLASS
@@ -1454,8 +1453,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
     return {
       restrict: 'A',
       link: function(scope, element, attr) {
-        var exprFn = $parse(attr.uiClass),
-        uiClassFn = parseUiCondition('uiClass', attr, scope, SharedState, $parse);
+        var uiClassFn = parseUiCondition('uiClass', attr, scope, SharedState, $parse);
         scope.$watch(uiClassFn, function uiClassWatchAction(value){
           var classesToAdd = "";
           var classesToRemove = "";

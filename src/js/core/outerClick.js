@@ -40,7 +40,7 @@
              if (value) {
                // prevents race conditions 
                // activating with other click events
-               t = $timeout(function(scope) {
+               t = $timeout(function() {
                  $document.on('click tap', handleOuterClick);
                }, 0);
 

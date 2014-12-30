@@ -21,7 +21,9 @@
        return {
          resetAll: function() {
            for (var name in yielders) {
-             this.resetYielder(name);
+            if (yielders.hasOwnProperty(name)) {
+              this.resetYielder(name); 
+            }
            }
          },
          

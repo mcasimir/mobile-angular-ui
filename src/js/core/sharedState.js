@@ -4,8 +4,7 @@
 
   module.factory('SharedState', [
     '$rootScope',
-    '$parse',
-    function($rootScope, $parse){
+    function($rootScope){
       var values = {};    // values, context object for evals
       var statusesMeta = {};  // status info
       var scopes = {};    // scopes references
@@ -71,11 +70,12 @@
           if (statusesMeta[id] !== undefined) {
             var prev = values[id];
             values[id] = value;
-            if (prev != value) {
+            if (prev !== value) {
               $rootScope.$broadcast('mobile-angular-ui.state.changed.' + id, value, prev);
             }
             return value;
           } else {
+            /* global console: false */
             if (console) {
               console.warn('Warning: Attempt to set uninitialized shared state:', id);
             }
@@ -103,7 +103,7 @@
             var egStatuses = Object.keys(exclusionGroups[eg]);
             for (var i = 0; i < egStatuses.length; i++) {
               var item = egStatuses[i];
-              if (item != id) {
+              if (item !== id) {
                 this.turnOff(item);
               }
             }
@@ -170,9 +170,8 @@
   };
 
   module.directive('uiState', [
-    'SharedState', 
-    '$parse',
-    function(SharedState, $parse){
+    'SharedState',
+    function(SharedState){
       return {
         restrict: 'EA',
         priority: 601, // more than ng-if
@@ -210,7 +209,7 @@
                 compile: function(elem, attrs) {
                   var fn = methodName === 'set' ?
                     $parse(attrs[directiveName]) :
-                      function(scope) {
+                      function() {
                         return attrs[directiveName]; 
                       };
 
@@ -275,7 +274,7 @@
       var blockNodes = [node];
       do {
         node = node.nextSibling;
-        if (!node) break;
+        if (!node) { break; }
         blockNodes.push(node);
       } while (node !== endNode);
 
@@ -343,8 +342,7 @@
       restrict: 'A',
       multiElement: true,
       link: function(scope, element, attr) {
-        var exprFn = $parse(attr.uiHide),
-        uiHideFn = parseUiCondition('uiHide', attr, scope, SharedState, $parse);
+        var uiHideFn = parseUiCondition('uiHide', attr, scope, SharedState, $parse);
         scope.$watch(uiHideFn, function uiHideWatchAction(value){
           $animate[value ? 'addClass' : 'removeClass'](element,NG_HIDE_CLASS, {
             tempClasses : NG_HIDE_IN_PROGRESS_CLASS
@@ -363,8 +361,7 @@
       restrict: 'A',
       multiElement: true,
       link: function(scope, element, attr) {
-        var exprFn = $parse(attr.uiShow),
-        uiShowFn = parseUiCondition('uiShow', attr, scope, SharedState, $parse);
+        var uiShowFn = parseUiCondition('uiShow', attr, scope, SharedState, $parse);
         scope.$watch(uiShowFn, function uiShowWatchAction(value){
           $animate[value ? 'removeClass' : 'addClass'](element, NG_HIDE_CLASS, {
             tempClasses : NG_HIDE_IN_PROGRESS_CLASS
@@ -380,8 +377,7 @@
     return {
       restrict: 'A',
       link: function(scope, element, attr) {
-        var exprFn = $parse(attr.uiClass),
-        uiClassFn = parseUiCondition('uiClass', attr, scope, SharedState, $parse);
+        var uiClassFn = parseUiCondition('uiClass', attr, scope, SharedState, $parse);
         scope.$watch(uiClassFn, function uiClassWatchAction(value){
           var classesToAdd = "";
           var classesToRemove = "";

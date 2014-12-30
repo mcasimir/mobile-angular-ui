@@ -1,0 +1,168 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min.js"></script>
+    <script src="/dist/js/mobile-angular-ui.min.js"></script>
+    <script src="/dist/js/mobile-angular-ui.gestures.min.js"></script>
+    <script>
+      var app = angular.module('TestApp', [
+        'mobile-angular-ui', 
+        'mobile-angular-ui.gestures'
+      ]);
+
+      // Cross-Browser style properties
+      var cssPrefix,
+          transformProperty,
+          styleProperty,
+          prefixes = ['', 'webkit', 'Moz', 'O', 'ms'],
+          d = document.createElement('div');
+      
+      for (var i = 0; i < prefixes.length; i++) {
+        var prefix = prefixes[i];
+        if ( (prefix + 'Perspective') in d.style ) {
+          cssPrefix = (prefix === '' ? '' : '-' + prefix.toLowerCase() + '-');
+          styleProperty = prefix + (prefix === '' ? 'transform' : 'Transform');
+          transformProperty = cssPrefix + 'transform';
+          break;
+        }
+      }
+
+      d = null;
+
+      // return current element transform matrix in a cross-browser way
+      var getElementTransformProperty = function(e) {
+        e = e.length ? e[0] : e;
+        var tr = window
+                .getComputedStyle(e, null)
+                .getPropertyValue(transformProperty);
+        return tr;
+      };
+
+      // set current element transform matrix in a cross-browser way
+      var setElementTransformProperty = function(elem, value) {
+        elem = elem.length ? elem[0] : elem;
+        elem.style[styleProperty] = value;
+      };
+
+      var printMatrix = function(m) {
+        return JSON.stringify(m, null, '  ');
+      };
+
+      app.run(function($rootScope, Transform) {
+        
+        $rootScope.et = function(id) {
+          var transform = Transform.fromElement(document.getElementById(id));
+          return transform;
+        };
+
+        window.Transform = Transform;
+
+        window.create2dRotationTransform = function(w) {
+          var a = (w / 180) * Math.PI;
+          var T = Transform.identity();
+          var M = T.M;
+          M[0][0] = Math.cos(a);
+          M[0][1] = -Math.sin(a);
+          M[1][0] = Math.sin(a);
+          M[1][1] = Math.cos(a);
+          M[2][2] = 0;
+          return T;
+        };
+
+        $rootScope.translate3d = Transform.identity()
+                                          .translate3d(20, 15, 12);
+
+        $rootScope.rotate3d = Transform.identity()
+                                        .rotate3d(0, 1, 1, 30);
+
+        $rootScope.scale3d = Transform.identity()
+                                        .scale3d(0.5, 1, 1.5);
+
+        // NB: this is the same of: rotate3d(0, 1, 1, 30deg) translate3d(20px, 15px, 12px);
+        // Here we are actually rotating the translation (appearently not the same of doing the opposite)
+        $rootScope.rotate3d_translate3d = Transform.identity()
+                                          .translate3d(20, 15, 12)
+                                          .rotate3d(0, 1, 1, 30);
+
+        $rootScope.scale3d_rotate3d_translate3d = Transform.identity()
+                                          .translate3d(20, 15, 12)
+                                          .rotate3d(0, 1, 1, 30)
+                                          .scale3d(0.5, 1, 1.5);
+
+        $rootScope.translate3d_rotate3d_scale3d = Transform.identity()
+                                          .scale3d(0.5, 1, 1.5)
+                                          .rotate3d(0, 1, 1, 30)
+                                          .translate3d(20, 15, 12);
+      });
+    </script>
+    <style>
+
+      .target { background: #444; width: 100px; height: 100px; }
+      .target-primary {  background: #007aff; }
+      .target-success {  background: #4cd964; }
+      .target-warning {  background: #fc0; }
+      .target-danger {  background: #ff3b30; }
+      .target-info {  background: #34aadc; }
+
+      #translate3d {
+        transform: translate3d(20px, 15px, 12px);
+      }
+      
+      #rotate3d {
+        transform: rotate3d(0, 1, 1, 30deg);
+      }
+
+      #scale3d {
+        transform: scale3d(0.5, 1, 1.5);
+      }
+
+      #rotate3d_translate3d {
+        transform: rotate3d(0, 1, 1, 30deg) translate3d(20px, 15px, 12px);
+      }
+
+      #scale3d_rotate3d_translate3d {
+        transform: scale3d(0.5, 1, 1.5) rotate3d(0, 1, 1, 30deg) translate3d(20px, 15px, 12px);
+      }
+      
+      #translate3d_rotate3d_scale3d {
+        transform: translate3d(20px, 15px, 12px) rotate3d(0, 1, 1, 30deg) scale3d(0.5, 1, 1.5); 
+      }
+
+    </style>
+    <link rel="stylesheet" href="/dist/css/mobile-angular-ui-base.css" />
+  </head>
+  <body ng-app="TestApp">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-6">
+          <div id="translate3d-orig-matrix">{{et('translate3d').toCss(2)}}</div>
+          <div id="translate3d-comp-matrix">{{translate3d.toCss(2)}}</div>
+
+          <div id="rotate3d-orig-matrix">{{et('rotate3d').toCss(2)}}</div>
+          <div id="rotate3d-comp-matrix">{{rotate3d.toCss(2)}}</div>
+
+          <div id="scale3d-orig-matrix">{{et('scale3d').toCss(2)}}</div>
+          <div id="scale3d-comp-matrix">{{scale3d.toCss(2)}}</div>
+
+          <div id="rotate3d_translate3d-orig-matrix">{{et('rotate3d_translate3d').toCss(2)}}</div>
+          <div id="rotate3d_translate3d-comp-matrix">{{rotate3d_translate3d.toCss(2)}}</div>
+
+          <div id="scale3d_rotate3d_translate3d-orig-matrix">{{et('scale3d_rotate3d_translate3d').toCss(2)}}</div>
+          <div id="scale3d_rotate3d_translate3d-comp-matrix">{{scale3d_rotate3d_translate3d.toCss(2)}}</div>
+          
+          <div id="translate3d_rotate3d_scale3d-orig-matrix">{{et('translate3d_rotate3d_scale3d').toCss(2)}}</div>
+          <div id="translate3d_rotate3d_scale3d-comp-matrix">{{translate3d_rotate3d_scale3d.toCss(2)}}</div>
+        </div>
+        <div class="col-xs-6">
+          <div id="translate3d" class='target'></div>
+          <div id="rotate3d" class='target'></div>
+          <div id="scale3d" class='target'></div>
+          <div id="rotate3d_translate3d" class='target'></div>
+          <div id="scale3d_rotate3d_translate3d" class='target target-info'></div>
+          <div id="translate3d_rotate3d_scale3d" class='target target-warning'></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>  

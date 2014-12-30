@@ -2,27 +2,26 @@
    'use strict';
 
    angular.module('mobile-angular-ui.gestures.drag', [
-     'mobile-angular-ui.gestures.swipe',
+     'mobile-angular-ui.gestures.touch',
      'mobile-angular-ui.gestures.transform'
    ])
 
-  // `$drag` Service wraps `$swipe` to extend its behavior moving target element through css transform according to the `$swipe` coords thus creating 
+  // `$drag` Service wraps `$touch` to extend its behavior moving target element through css transform according to the `$touch` coords thus creating 
   // a drag effect.
 
-  // $drag interface is very close to `$swipe`:
+  // $drag interface is very close to `$touch`:
 
   // app.controller('MyController', function($drag, $element){
   //   var unbindDrag = $drag.bind($element, {
   //    // drag callbacks
   //    // - rect is the current result of getBoundingClientRect() for bound element
-  //    // - cancelFn issue a "touchcancel" on element
   //    // - resetFn restore the initial transform
   //    // - undoFn undoes the current movement
-  //    // - swipeCoords are the coordinates exposed by the underlying $swipe service
-  //    start: function(rect, cancelFn, resetFn, swipeCoords){},
-  //    move: function(rect, cancelFn, resetFn, swipeCoords){},
-  //    end: function(rect, undoFn, resetFn, swipeCoords) {};
-  //    cancel: function(rect, resetFn){},
+  //    // - swipeCoords are the coordinates exposed by the underlying $touch service
+  //    start: function(dragInfo, reset, event) {},
+  //    move: function(dragInfo, undo, reset, event) {},
+  //    end: function(dragInfo, undo, reset, event) {},
+  //    cancel: function(dragInfo) {};
 
   //    // constraints for the movement
   //    // you can use a "static" object of the form:
@@ -37,11 +36,6 @@
   //    // instantiates the Trasform according to touch movement (defaults to `t.translate(dx, dy);`)
   //    // dx, dy are the distances of movement for x and y axis after constraints are applyied
   //    transform: function(transform, dx, dy, currSwipeX, currSwipeY, startSwipeX, startSwipeY) {},
-
-  //    // changes the Transform before is applied to element (useful to add something like easing or accelleration)
-  //    adaptTransform: function(transform, dx, dy, currSwipeX, currSwipeY, startSwipeX, startSwipeY) {}
-
-  //   });
     
   //   // This is automatically called when element is disposed so it is not necessary
   //   // that you call this manually but if you have to detatch $drag service before
@@ -49,7 +43,7 @@
   //   unbindDrag();
   // });
 
-  // Main differences with `$swipe` are:
+  // Main differences with `$touch` are:
   //  - bound elements will move following swipe direction automatically
   //  - coords param take into account css transform so you can easily detect collision with other elements.
   //  - start, move, end callback receive a cancel funcion that can be used to cancel the motion and reset
@@ -62,12 +56,12 @@
   // app.directive('dragToDismiss', function($drag, $parse, $timeout){
   //   return {
   //     restrict: 'A',
-  //     compile: function(elem, attrs) {
+  //     compile: function($element, attrs) {
   //       var dismissFn = $parse(attrs.dragToDismiss);
-  //       return function(scope, elem, attrs){
+  //       return function(scope, $element, attrs){
   //         var dismiss = false;
 
-  //         $drag.bind(elem, {
+  //         $drag.bind($element, {
   //           constraint: {
   //             minX: 0, 
   //             minY: 0, 
@@ -76,18 +70,18 @@
   //           move: function(c) {
   //             if( c.left >= c.width / 4) {
   //               dismiss = true;
-  //               elem.addClass('dismiss');
+  //               $element.addClass('dismiss');
   //             } else {
   //               dismiss = false;
-  //               elem.removeClass('dismiss');
+  //               $element.removeClass('dismiss');
   //             }
   //           },
   //           cancel: function(){
-  //             elem.removeClass('dismiss');
+  //             $element.removeClass('dismiss');
   //           },
   //           end: function(c, undo, reset) {
   //             if (dismiss) {
-  //               elem.addClass('dismitted');
+  //               $element.addClass('dismitted');
   //               $timeout(function() { 
   //                 scope.$apply(function() {
   //                   dismissFn(scope);  
@@ -104,8 +98,9 @@
   // });
 
   .provider('$drag', function() {
-    this.$get = ['$swipe', '$document', 'Transform', function($swipe, $document, Transform) {
+    this.$get = ['$touch', '$document', '$transform', function($touch, $document, $transform) {
 
+      // Add some css rules to be used while moving elements
       var style = document.createElement('style');
       style.appendChild(document.createTextNode(''));
       document.head.appendChild(style);
@@ -118,176 +113,216 @@
       // Makes text unselectable
       sheet.insertRule('html .ui-drag-move, html .ui-drag-move *{-webkit-touch-callout: none !important;-webkit-user-select: none !important;-khtml-user-select: none !important;-moz-user-select: none !important;-ms-user-select: none !important;user-select: none !important;}', 0);
 
+      style = sheet = null;   // we wont use them anymore so make 
+                             // their memory immediately claimable
+
       return {
-        Transform: Transform,
-        bind: function(elem, options) {
-          var defaults = {
-            constraint: {}
+
+        // 
+        // built-in transforms
+        // 
+        NULL_TRANSFORM: function(element, transform) {
+          return transform;
+        },
+
+        TRANSLATE_BOTH: function(element, transform, touch) {
+          transform.translateX = touch.distanceX;
+          transform.translateY = touch.distanceY;
+          return transform;
+        },
+
+        TRANSLATE_HORIZONTAL: function(element, transform, touch) {
+          transform.translateX = touch.distanceX;
+          transform.translateY = 0;
+          return transform;
+        },
+
+        TRANSLATE_UP: function(element, transform, touch) {
+          transform.translateY = touch.distanceY <= 0 ? touch.distanceY : 0;
+          transform.translateX = 0;
+          return transform;
+        },
+
+        TRANSLATE_DOWN: function(element, transform, touch) {
+          transform.translateY = touch.distanceY >= 0 ? touch.distanceY : 0;
+          transform.translateX = 0;
+          return transform;
+        },
+
+        TRANSLATE_LEFT: function(element, transform, touch) {
+          transform.translateX = touch.distanceX <= 0 ? touch.distanceX : 0;
+          transform.translateY = 0;
+          return transform;
+        },
+
+        TRANSLATE_RIGHT: function(element, transform, touch) {
+          transform.translateX = touch.distanceX >= 0 ? touch.distanceX : 0;
+          transform.translateY = 0;
+          return transform;
+        },
+
+        TRANSLATE_VERTICAL: function(element, transform, touch) {
+          transform.translateX = 0;
+          transform.translateY = touch.distanceY;
+          return transform;
+        },
+
+        TRANSLATE_INSIDE: function(wrapperElementOrRectangle) {
+          wrapperElementOrRectangle = wrapperElementOrRectangle.length ? wrapperElementOrRectangle[0] : wrapperElementOrRectangle;
+          
+          return function(element, transform, touch) {
+            element = element.length ? element[0] : element;
+            var re = element.getBoundingClientRect();
+            var rw = wrapperElementOrRectangle instanceof HTMLElement ? wrapperElementOrRectangle.getBoundingClientRect() : wrapperElementOrRectangle;
+            var tx, ty;
+
+            if (re.width >= rw.width) {
+              tx = 0;   
+            } else {
+              // compute translateX so that re.left and re.right will stay between rw.left and rw.right
+              if (re.right + touch.stepX > rw.right) {
+                tx = rw.right - re.right;
+              } else if (re.left + touch.stepX < rw.left) {
+                tx = rw.left - re.left;
+              } else {
+                tx = touch.stepX;
+              }
+
+            }
+
+            if (re.height >= rw.height) {
+              ty = 0;   
+            } else {
+              if (re.bottom + touch.stepY > rw.bottom) {
+                ty = rw.bottom - re.bottom;
+              } else if (re.top + touch.stepY < rw.top) {
+                ty = rw.top - re.top;
+              } else {
+                ty = touch.stepY;
+              }
+            }
+
+            transform.translateX += tx;
+            transform.translateY += ty;
+            return transform;
           };
+        },
 
-          options = angular.extend({}, defaults, options || {});
+        // 
+        // bind function
+        // 
+        bind: function($element, dragOptions, touchOptions) {
+          $element = angular.element($element);
+          dragOptions = dragOptions || {};
+          touchOptions = touchOptions || {};
+          
+          var startEventHandler = dragOptions.start,
+              endEventHandler = dragOptions.end,
+              moveEventHandler = dragOptions.move,
+              cancelEventHandler = dragOptions.cancel,
+              transformEventHandler = dragOptions.transform || this.TRANSLATE_BOTH;
 
-          var
-            e = angular.element(elem)[0],
-            moving = false,
-            deltaXTot = 0, // total movement since elem is bound
-            deltaYTot = 0,
-            x0, y0, // touch coords on start 
-            t0, // transform on start
-            tOrig = Transform.fromElement(e),
-            x, y, // current touch coords
-            t, // current transform
-            minX = options.constraint.minX !== undefined ? options.constraint.minX : Number.NEGATIVE_INFINITY,
-            maxX = options.constraint.maxX !== undefined ? options.constraint.maxX : Number.POSITIVE_INFINITY,
-            minY = options.constraint.minY !== undefined ? options.constraint.minY : Number.NEGATIVE_INFINITY,
-            maxY = options.constraint.maxY !== undefined ? options.constraint.maxY : Number.POSITIVE_INFINITY,
+          var domElement = $element[0],
+              tO = $transform.get($element), // original transform
+              rO = domElement.getBoundingClientRect(), // original bounding rect
+              tS, // transform at start
+              rS;
+
+            var moving = false;
             
-            preventedWhileMoving = ['click', 'tap', 'mouseup', 'touchend'],
+            var isMoving = function() {
+              return moving;
+            };
+            
+            var cleanup = function() {
+              moving = false;
+              tS = rS = null;
+              $element.removeClass('ui-drag-move');
+            };
+            
+            var reset = function() {
+              $transform.set(domElement, tO);
+            };
 
-            captureClicks = function(e) {
-              e.stopPropagation();
-            },
+            var undo = function() {
+              $transform.set(domElement, tS || tO);
+            };
 
-            cancelFn = function(){
-              elem.triggerHandler('touchcancel');
-            },
+            var setup = function() {
+              moving = true;
+              rS = domElement.getBoundingClientRect();
+              tS = $transform.get(domElement);
+              $element.addClass('ui-drag-move');
+            };
 
-            resetFn = function(){
-              elem.triggerHandler('touchcancel');
-              deltaXTot = 0;
-              deltaYTot = 0;
-              tOrig.set(e);
-            },
+            var createDragInfo = function(touch) {
+              touch = angular.extend({}, touch);
+              touch.originalTransform = tO;
+              touch.originalRect = rO;
+              touch.startRect = rS;
+              touch.rect = domElement.getBoundingClientRect();
+              touch.startTransform = tS;
+              touch.transform = $transform.get(domElement);
+              touch.reset = reset;
+              touch.undo = undo;
+              return touch;
+            };
 
-            callbacks = {
-              move: function(c, event) {
-                event.stopPropagation();
-                event.preventDefault();
+            var onTouchMove = function(touch, event) {
+              // preventDefault no matter what 
+              // it is (ie. maybe html5 drag for images or scroll)
+              event.preventDefault();
 
-                if (elem[0].addEventListener) {
-                  for (var i = 0; i < preventedWhileMoving.length; i++) {
-                    
-                    // Sorry.. for IE8 we are not capturing clicks
-                    // for inner elements, hope it wont cause too 
-                    // much problems
-                    elem[0].addEventListener(preventedWhileMoving[i], captureClicks, true);
-                  }                  
+              // $touch calls start on the first touch
+              // to ensure $drag.start is called only while actually
+              // dragging and not for touches we will bind $drag.start
+              // to the first time move is called
+              
+              if (!isMoving()) { // drag start
+                setup();
+                if (startEventHandler) {
+                  startEventHandler(createDragInfo(touch), event);
                 }
+              } else { // drag move
+                touch = createDragInfo(touch);
 
-                if (!moving) {    // $swipe calls start at the first touch
-                                  // to ensure $drag start is called only while actually
-                                  // dragging and not for touches we will bind $drag.start
-                                  // to the first time move is called.
+                var transform = transformEventHandler($element, angular.extend({}, touch.transform), touch, event);
 
-                  t0 = Transform.fromElement(e);
-                  x  = x0 = c.x;
-                  y  = y0 = c.y; 
+                $transform.set(domElement, transform);
 
-                  elem.addClass('ui-drag-move');
-
-                  if (options.start) {
-                    options.start(e.getBoundingClientRect(), cancelFn, resetFn, c);    
-                  }
-
-                  moving = true;
-                }
-
-                // total movement shoud match constraints
-                var dx, dy,
-                deltaX, deltaY, r,
-                rectBefore = e.getBoundingClientRect(),
-                _maxX = angular.isFunction(maxX) ? maxX() : maxX,
-                _maxY = angular.isFunction(maxY) ? maxY() : maxY,
-                _minX = angular.isFunction(minX) ? minX() : minX,
-                _minY = angular.isFunction(minY) ? minY() : minY;
-
-                deltaX = Math.max(Math.min(_maxX - deltaXTot, c.x - x0), _minX - deltaXTot);
-                deltaY = Math.max(Math.min(_maxY - deltaYTot, c.y - y0), _minY - deltaYTot);
-
-                dx = deltaX - (x - x0);
-                dy = deltaY - (y - y0);
-
-                t = Transform.fromElement(e); 
-
-                if (options.transform) {
-                  r = options.transform(t, dx, dy, c.x, c.y, x0, y0);
-                  t = r || t;
-                } else {
-                  t.translate(dx, dy);
-                }
-
-                if (options.adaptTransform) {
-                  r = options.adaptTransform(t, dx, dy, c.x, c.y, x0, y0);
-                  t = r || t;
-                }
-                
-                x = deltaX + x0;
-                y = deltaY + y0;
-
-                t.set(e);
-
-                if (options.move) {
-                  options.move(e.getBoundingClientRect(), cancelFn, resetFn, c);  
-                }
-
-              },
-
-              end: function(c) {
-                moving = false;
-                if (elem[0].removeEventListener) {
-                  for (var i = 0; i < preventedWhileMoving.length; i++) {
-                    elem[0].removeEventListener(preventedWhileMoving[i], captureClicks);
-                  }                  
-                }
-
-                var deltaXTotOld = deltaXTot;
-                var deltaYTotOld = deltaYTot;
-
-                var undoFn = function() {
-                  deltaXTot = deltaXTotOld;
-                  deltaYTot = deltaYTotOld;
-                  t0.set(e);
-                };
-
-                deltaXTot = deltaXTot + x - x0;
-                deltaYTot = deltaYTot + y - y0;
-                
-                if (options.end) {
-                  options.end(e.getBoundingClientRect(), undoFn, resetFn, c);
-                }
-                
-                elem.removeClass('ui-drag-move');
-              },
-
-              cancel: function() {
-                if (elem[0].removeEventListener) {
-                  for (var i = 0; i < preventedWhileMoving.length; i++) {
-                    elem[0].removeEventListener(preventedWhileMoving[i], captureClicks);
-                  }                  
-                }
-
-                if (moving) {
-                  t0.set(e);  
-                  if (options.cancel) {
-                    options.cancel(e.getBoundingClientRect(), resetFn);
-                  }
-                  moving = false;
-                  elem.removeClass('ui-drag-move');
+                if (moveEventHandler) {
+                  moveEventHandler(touch, event);
                 }
               }
             };
 
-          elem.on('$destroy', function() { 
-            $document.unbind('mouseout', cancelFn);
-            callbacks = options = e = moving = deltaXTot = deltaYTot = x0 = y0 = t0 = tOrig = x = y = t = minX = maxX = minY = maxY = null;
-          });
+            var onTouchEnd = function(touch, event) {
+              if (!isMoving()) { return; }
+              
+              touch = createDragInfo(touch);
+              cleanup();
+              
+              if (endEventHandler) {
+                endEventHandler(touch, event);
+              }
+            };
 
-          var unbind = $swipe.bind(elem, callbacks);
-          $document.on('mouseout', cancelFn);
-          return unbind;
-        }
-      };
-    }];
+            var onTouchCancel = function(touch, event) {
+              if (!isMoving()) { return; }
+              
+              touch = createDragInfo(touch);
+              undo(); // on cancel movement is undoed automatically;
+              cleanup();
+
+              if (cancelEventHandler) {
+                cancelEventHandler(touch, event);
+              }
+            };
+
+            return $touch.bind($element, {move: onTouchMove, end: onTouchEnd, cancel: onTouchCancel});
+          } // ~ bind
+        }; // ~ return $drag
+      }]; // ~ $get
   });
 
 }());

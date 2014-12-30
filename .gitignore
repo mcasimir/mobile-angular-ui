@@ -100,3 +100,5 @@ site/tmp
 
 site/crash.log
 site/Gemfile.lock
+
+TODO.md

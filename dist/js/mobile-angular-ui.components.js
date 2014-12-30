@@ -356,7 +356,7 @@
       function($rootElement) {
         return {
           restrict: 'C',
-          link: function(scope, elem) {
+          link: function(scope) {
             $rootElement.addClass('has-navbar-' + side);
             scope.$on('$destroy', function(){
               $rootElement.removeClass('has-navbar-' + side);
@@ -402,7 +402,7 @@
             scrollableContent.scrollTop = elementOrNumber - marginTop;
           } else {
             var target = angular.element(elementOrNumber)[0];
-            if ((! target.offsetParent) || target.offsetParent == scrollable) {
+            if ((! target.offsetParent) || target.offsetParent === scrollable) {
               scrollableContent.scrollTop = target.offsetTop - marginTop;
             } else {
               // recursively subtract offsetTop from marginTop until it reaches scrollable element.
@@ -411,7 +411,7 @@
           }
         };
       }],
-      link: function(scope, element, attr) {
+      link: function(scope, element) {
         if (overthrow.support !== 'native') {
           element.addClass('overthrow');
           overthrow.forget();
@@ -460,7 +460,7 @@
         return elem.scrollTop === 0;
       }, 
       uiScrollBottom: function(elem){
-        return elem.scrollHeight == elem.scrollTop + elem.clientHeight;
+        return elem.scrollHeight === elem.scrollTop + elem.clientHeight;
       }
     }, 
     function(reached, directiveName){
@@ -489,13 +489,13 @@
           function($window) {
                   return {
                     restrict: 'C',
-                    link: function(scope, element, attr) {
+                    link: function(scope, element) {
                       var el = element[0],
                           parentStyle = element.parent()[0].style;
 
                       var adjustParentPadding = function() {
                         var styles = $window.getComputedStyle(el),
-                            margin = parseInt(styles.marginTop) + parseInt(styles.marginBottom);
+                            margin = parseInt(styles.marginTop, 10) + parseInt(styles.marginBottom, 10);
                         parentStyle['padding' + side] = el.offsetHeight + margin + 'px';
                       };
 
@@ -548,7 +548,7 @@
               stateName = attrs.id;
             }
 
-            var outerClickCb = function (scope){
+            var outerClickCb = function (){
               SharedState.turnOff(stateName);
             };
 
@@ -615,10 +615,10 @@
     ]);
   });
 
-  module.directive('app', ['$rootScope', 'SharedState', function($rootScope, SharedState) {
+  module.directive('app', ['$rootScope', function($rootScope) {
     return {
       restrict: 'C',
-      link: function(scope, element, attributes) {
+      link: function(scope, element) {
         
         element.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend', function() {
           $rootScope.$broadcast('mobile-angular-ui.app.transitionend');

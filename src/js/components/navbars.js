@@ -10,7 +10,7 @@
       function($rootElement) {
         return {
           restrict: 'C',
-          link: function(scope, elem) {
+          link: function(scope) {
             $rootElement.addClass('has-navbar-' + side);
             scope.$on('$destroy', function(){
               $rootElement.removeClass('has-navbar-' + side);

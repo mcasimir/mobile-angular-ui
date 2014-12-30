@@ -34,7 +34,7 @@
               stateName = attrs.id;
             }
 
-            var outerClickCb = function (scope){
+            var outerClickCb = function (){
               SharedState.turnOff(stateName);
             };
 
@@ -101,10 +101,10 @@
     ]);
   });
 
-  module.directive('app', ['$rootScope', 'SharedState', function($rootScope, SharedState) {
+  module.directive('app', ['$rootScope', function($rootScope) {
     return {
       restrict: 'C',
-      link: function(scope, element, attributes) {
+      link: function(scope, element) {
         
         element.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend', function() {
           $rootScope.$broadcast('mobile-angular-ui.app.transitionend');

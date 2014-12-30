@@ -1,206 +1,443 @@
 (function() {
   'use strict';
-  angular.module('mobile-angular-ui.gestures.transform', [])
+  
+  var module = angular.module('mobile-angular-ui.gestures.transform', []);
 
-  .factory('Transform', [
-    '$window',
-    function($window){
+  // $transform Service is designed with the specific aim to provide a cross-browser way to
+  // interpolate CSS 3d transform without having to deal with CSS Matrix, and being able
+  // to take into account any previous unknown transform already applied to an element.
+  // 
+  // Usage
+  // 
+  // ``` css
+  // .myelem {
+  //   transform: translate(12px) rotate(20deg);
+  // }
+  // ```
+  // 
+  // ``` html
+  // <div class='myelem'></div>
+  // ```
+  // 
+  // ``` js
+  //   t = $transform.get(e);
+  //   t.rotationZ += 15;
+  //   t.translateX += 1;
+  //   $transform.set(e, t);
+  // ```
+  module.factory('$transform', function(){
 
-      function matrixHeight(m) {
-        return m.length;
+    /*==============================================================
+    =            Cross-Browser Property Prefix Handling            =
+    ==============================================================*/
+
+    // Cross-Browser style properties
+    var cssPrefix,
+        transformProperty,
+        styleProperty,
+        prefixes = ['', 'webkit', 'Moz', 'O', 'ms'],
+        d = document.createElement('div');
+    
+    for (var i = 0; i < prefixes.length; i++) {
+      var prefix = prefixes[i];
+      if ( (prefix + 'Perspective') in d.style ) {
+        cssPrefix = (prefix === '' ? '' : '-' + prefix.toLowerCase() + '-');
+        styleProperty = prefix + (prefix === '' ? 'transform' : 'Transform');
+        transformProperty = cssPrefix + 'transform';
+        break;
       }
+    }
 
-      function matrixWidth(m) {
-        return m[0] ? m[0].length : 0;
-      }
+    d = null;
 
-      function matrixMult(m1, m2) {
-        var width1  = matrixWidth(m1), 
-            width2  = matrixWidth(m2), 
-            height1 = matrixHeight(m1), 
-            height2 = matrixHeight(m2);
+    // return current element transform matrix in a cross-browser way
+    var getElementTransformProperty = function(e) {
+      e = e.length ? e[0] : e;
+      var tr = window
+              .getComputedStyle(e, null)
+              .getPropertyValue(transformProperty);
+      return tr;
+    };
 
-        if (width1 != height2) {
-          throw new Error("error: incompatible sizes");
+    // set current element transform matrix in a cross-browser way
+    var setElementTransformProperty = function(elem, value) {
+      elem = elem.length ? elem[0] : elem;
+      elem.style[styleProperty] = value;
+    };
+
+    /*======================================================
+    =            Transform Matrix Decomposition            =
+    ======================================================*/
+
+    var SMALL_NUMBER = 1.e-7;
+
+    var rad2deg = function(angle) {
+      return angle * 180 / Math.PI;
+    };
+
+    var sqrt = Math.sqrt,
+        asin = Math.asin,
+        atan2 = Math.atan2,
+        cos = Math.cos,
+        abs = Math.abs,
+        floor = Math.floor;
+
+    var cloneMatrix = function(m) {
+      var res = [[],[],[],[]];
+      for (var i = 0; i < m.length; i++) {
+        for (var j = 0; j < m[i].length; j++) {
+          res[i][j] = m[i][j];
         }
+      }
+      return res;
+    };
+
+    var determinant2x2 = function(a, b, c, d) {
+       return a * d - b * c;
+    };
+
+    var determinant3x3 = function(a1, a2, a3, b1, b2, b3, c1, c2, c3) {
+      return a1 * determinant2x2(b2, b3, c2, c3) - b1 * determinant2x2(a2, a3, c2, c3) + c1 * determinant2x2(a2, a3, b2, b3);  
+    };
+
+    var determinant4x4 = function(m) {
+      var a1 = m[0][0], b1 = m[0][1], c1 = m[0][2], d1 = m[0][3], a2 = m[1][0], b2 = m[1][1], c2 = m[1][2], d2 = m[1][3], a3 = m[2][0], b3 = m[2][1], c3 = m[2][2], d3 = m[2][3], a4 = m[3][0], b4 = m[3][1], c4 = m[3][2], d4 = m[3][3];
+      return a1 * determinant3x3(b2, b3, b4, c2, c3, c4, d2, d3, d4) - b1 * determinant3x3(a2, a3, a4, c2, c3, c4, d2, d3, d4) + c1 * determinant3x3(a2, a3, a4, b2, b3, b4, d2, d3, d4) - d1 * determinant3x3(a2, a3, a4, b2, b3, b4, c2, c3, c4);
+    };
+
+    var adjoint = function(m) {
+      var res = [[],[],[],[]], a1 = m[0][0], b1 = m[0][1], c1 = m[0][2], d1 = m[0][3], a2 = m[1][0], b2 = m[1][1], c2 = m[1][2], d2 = m[1][3], a3 = m[2][0], b3 = m[2][1], c3 = m[2][2], d3 = m[2][3], a4 = m[3][0], b4 = m[3][1], c4 = m[3][2], d4 = m[3][3];
+
+      res[0][0]  =   determinant3x3(b2, b3, b4, c2, c3, c4, d2, d3, d4);
+      res[1][0]  = - determinant3x3(a2, a3, a4, c2, c3, c4, d2, d3, d4);
+      res[2][0]  =   determinant3x3(a2, a3, a4, b2, b3, b4, d2, d3, d4);
+      res[3][0]  = - determinant3x3(a2, a3, a4, b2, b3, b4, c2, c3, c4);
+      res[0][1]  = - determinant3x3(b1, b3, b4, c1, c3, c4, d1, d3, d4);
+      res[1][1]  =   determinant3x3(a1, a3, a4, c1, c3, c4, d1, d3, d4);
+      res[2][1]  = - determinant3x3(a1, a3, a4, b1, b3, b4, d1, d3, d4);
+      res[3][1]  =   determinant3x3(a1, a3, a4, b1, b3, b4, c1, c3, c4);
+      res[0][2]  =   determinant3x3(b1, b2, b4, c1, c2, c4, d1, d2, d4);
+      res[1][2]  = - determinant3x3(a1, a2, a4, c1, c2, c4, d1, d2, d4);
+      res[2][2]  =   determinant3x3(a1, a2, a4, b1, b2, b4, d1, d2, d4);
+      res[3][2]  = - determinant3x3(a1, a2, a4, b1, b2, b4, c1, c2, c4);
+      res[0][3]  = - determinant3x3(b1, b2, b3, c1, c2, c3, d1, d2, d3);
+      res[1][3]  =   determinant3x3(a1, a2, a3, c1, c2, c3, d1, d2, d3);
+      res[2][3]  = - determinant3x3(a1, a2, a3, b1, b2, b3, d1, d2, d3);
+      res[3][3]  =   determinant3x3(a1, a2, a3, b1, b2, b3, c1, c2, c3);
+
+      return res;
+    };
+
+    var inverse = function(m) {
+      var res = adjoint(m),
+          det = determinant4x4(m);
+      if (abs(det) < SMALL_NUMBER) { return false; }
       
-        var result = [];
-        for (var i = 0; i < height1; i++) {
-            result[i] = [];
-            for (var j = 0; j < width2; j++) {
-                var sum = 0;
-                for (var k = 0; k < width1; k++) {
-                    sum += m1[i][k] * m2[k][j];
-                }
-                result[i][j] = sum;
-            }
-        }
-        return result; 
+      for (var i = 0; i < 4; i++) {
+          for (var j = 0; j < 4; j++) {
+              res[i][j] = res[i][j] / det;
+          }
       }
+      return res;
+    };
 
-      //
-      // Cross-Browser stuffs
-      // 
-      var cssPrefix,
-          transformProperty,
-          styleProperty,
-          prefixes = ['', 'webkit', 'Moz', 'O', 'ms'],
-          d = $window.document.createElement('div');
+    var transposeMatrix4 = function(m) {
+      var res = [[],[],[],[]];
+      for (var i = 0; i < 4; i++) {
+        for (var j = 0; j < 4; j++) {
+          res[i][j] = m[j][i];
+        }
+      }
+      return res;
+    };
+
+    var v4MulPointByMatrix = function(p, m) {
+      var res = [];
+
+      res[0] = (p[0] * m[0][0]) + (p[1] * m[1][0]) +
+                  (p[2] * m[2][0]) + (p[3] * m[3][0]);
+      res[1] = (p[0] * m[0][1]) + (p[1] * m[1][1]) +
+                  (p[2] * m[2][1]) + (p[3] * m[3][1]);
+      res[2] = (p[0] * m[0][2]) + (p[1] * m[1][2]) +
+                  (p[2] * m[2][2]) + (p[3] * m[3][2]);
+      res[3] = (p[0] * m[0][3]) + (p[1] * m[1][3]) +
+                  (p[2] * m[2][3]) + (p[3] * m[3][3]);
+
+      return res;
+    };
+
+    var v3Length = function(a) {
+      return sqrt((a[0] * a[0]) + (a[1] * a[1]) + (a[2] * a[2]));
+    };
+
+    var v3Scale = function(v, desiredLength) {
+      var res = [], len = v3Length(v);
+      if (len !== 0) {
+          var l = desiredLength / len;
+          res[0] *= l;
+          res[1] *= l;
+          res[2] *= l;
+      }
+      return res;
+    };
+
+    var v3Dot = function(a, b){
+        return (a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2]);
+    };
+
+    var v3Combine = function(a, b, ascl, bscl) {
+      var res = [];
+      res[0] = (ascl * a[0]) + (bscl * b[0]);
+      res[1] = (ascl * a[1]) + (bscl * b[1]);
+      res[2] = (ascl * a[2]) + (bscl * b[2]);
+      return res;
+    };
+
+    var v3Cross = function(a, b) {
+      var res = [];
+      res[0] = (a[1] * b[2]) - (a[2] * b[1]);
+      res[1] = (a[2] * b[0]) - (a[0] * b[2]);
+      res[2] = (a[0] * b[1]) - (a[1] * b[0]);
+      return res;
+    };
+
+    var decompose = function(mat) {
+      var result = {}, localMatrix = cloneMatrix(mat), i, j;
       
-      for (var i = 0; i < prefixes.length; i++) {
-        var prefix = prefixes[i];
-        if ( (prefix + 'Perspective') in d.style ) {
-          cssPrefix = (prefix === '' ? '' : '-' + prefix.toLowerCase() + '-');
-          styleProperty = prefix + (prefix === '' ? 'transform' : 'Transform');
-          transformProperty = cssPrefix + 'transform';
-          break;
+      // Normalize the matrix.
+      if (localMatrix[3][3] === 0) {
+        return false;
+      }
+
+      for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j++) {
+          localMatrix[i][j] /= localMatrix[3][3];
         }
       }
 
-      d = null;
-
-      //
-      // Represents a 2d transform, 
-      // behind the scene is a transform matrix exposing methods to get/set
-      // meaningfull primitives like rotation, translation and scale.
-      // 
-      // Allows to apply multiple transforms through #merge.
-      //
-      function Transform(matrix) {
-        this.mtx = matrix || [
-          [1,0,0],
-          [0,1,0],
-          [0,0,1]
-        ];
+      var perspectiveMatrix = cloneMatrix(localMatrix);
+      for (i = 0; i < 3; i++) {
+        perspectiveMatrix[i][3] = 0;
       }
+      perspectiveMatrix[3][3] = 1;
+
+      if (determinant4x4(perspectiveMatrix) === 0) {
+        return false;
+      }
+
+      // First, isolate perspective.  This is the messiest.
+      if (localMatrix[0][3] !== 0 || localMatrix[1][3] !== 0 || localMatrix[2][3] !== 0) {
+          // rightHandSide is the right hand side of the equation.
+          var rightHandSide = [];
+          rightHandSide[0] = localMatrix[0][3];
+          rightHandSide[1] = localMatrix[1][3];
+          rightHandSide[2] = localMatrix[2][3];
+          rightHandSide[3] = localMatrix[3][3];
+
+          // Solve the equation by inverting perspectiveMatrix and multiplying
+          // rightHandSide by the inverse. (This is the easiest way, not
+          // necessarily the best.)
+          var inversePerspectiveMatrix = inverse(perspectiveMatrix);
+          var transposedInversePerspectiveMatrix = transposeMatrix4(inversePerspectiveMatrix);
+          var perspectivePoint = v4MulPointByMatrix(rightHandSide, transposedInversePerspectiveMatrix);
+
+          result.perspectiveX = perspectivePoint[0];
+          result.perspectiveY = perspectivePoint[1];
+          result.perspectiveZ = perspectivePoint[2];
+          result.perspectiveW = perspectivePoint[3];
+          
+          // Clear the perspective partition
+          localMatrix[0][3] = localMatrix[1][3] = localMatrix[2][3] = 0;
+          localMatrix[3][3] = 1;
+      } else {
+          // No perspective.
+          result.perspectiveX = result.perspectiveY = result.perspectiveZ = 0;
+          result.perspectiveW = 1;
+      }
+
+      // Next take care of translation (easy).
+      result.translateX = localMatrix[3][0];
+      localMatrix[3][0] = 0;
+      result.translateY = localMatrix[3][1];
+      localMatrix[3][1] = 0;
+      result.translateZ = localMatrix[3][2];
+      localMatrix[3][2] = 0;
+
+      // Now get scale and shear.
+      var row = [[],[],[]], pdum3;
       
-      Transform.getElementTransformProperty = function(e) {
-        e = e.length ? e[0] : e;
-        var tr = $window
-                .getComputedStyle(e, null)
-                .getPropertyValue(transformProperty);
-        return tr;
-      };
+      for (i = 0; i < 3; i++) {
+          row[i][0] = localMatrix[i][0];
+          row[i][1] = localMatrix[i][1];
+          row[i][2] = localMatrix[i][2];
+      }
 
-      Transform.setElementTransformProperty = function(e, value) {
-        e = e.length ? e[0] : e;
-        e.style[styleProperty] = value;
-      };
+      // Compute X scale factor and normalize first row.
+      result.scaleX = v3Length(row[0]);
+      v3Scale(row[0], 1.0);
 
-      Transform.fromElement = function(e) {
-        e = e.length ? e[0] : e;
-        var tr = Transform.getElementTransformProperty(e);
+      // Compute XY shear factor and make 2nd row orthogonal to 1st.
+      result.skewXY = v3Dot(row[0], row[1]);
+      v3Combine(row[1], row[0], row[1], 1.0, -result.skewXY);
 
-        if (!tr || tr === 'none') {
-          return new Transform();
-        }
+      // Now, compute Y scale and normalize 2nd row.
+      result.scaleY = v3Length(row[1]);
+      v3Scale(row[1], 1.0);
+      result.skewXY /= result.scaleY;
 
-        if (tr.match('matrix3d')) {
-          throw new Error('Handling 3d transform is not supported yet');
-        }
+      // Compute XZ and YZ shears, orthogonalize 3rd row.
+      result.skewXZ = v3Dot(row[0], row[2]);
+      v3Combine(row[2], row[0], row[2], 1.0, -result.skewXZ);
+      result.skewYZ = v3Dot(row[1], row[2]);
+      v3Combine(row[2], row[1], row[2], 1.0, -result.skewYZ);
 
-        var values = 
-          tr.split('(')[1]
-            .split(')')[0]
-            .split(',')
-            .map(Number);
+      // Next, get Z scale and normalize 3rd row.
+      result.scaleZ = v3Length(row[2]);
+      v3Scale(row[2], 1.0);
+      result.skewXZ /= result.scaleZ;
+      result.skewYZ /= result.scaleZ;
+      
+      // At this point, the matrix (in rows[]) is orthonormal.
+      // Check for a coordinate system flip.  If the determinant
+      // is -1, then negate the matrix and the scaling factors.
+      pdum3 = v3Cross(row[1], row[2]);
+      
+      if (v3Dot(row[0], pdum3) < 0) {
+          for (i = 0; i < 3; i++) {
+              result.scaleX *= -1;
+              row[i][0] *= -1;
+              row[i][1] *= -1;
+              row[i][2] *= -1;
+          }
+      }
 
-        var mtx = [
-          [values[0], values[2], values[4]],
-          [values[1], values[3], values[5]],
-          [        0,         0,        1 ],
-        ];
+      // Rotation (angles smaller then SMALL_NUMBER are zeroed)
+      result.rotateY = rad2deg(asin(-row[0][2]))  || 0;
+      if (cos(result.rotateY) !== 0) {
+        result.rotateX = rad2deg(atan2(row[1][2], row[2][2]))  || 0;
+        result.rotateZ = rad2deg(atan2(row[0][1], row[0][0]))  || 0;
+      } else {
+        result.rotateX = rad2deg(atan2(-row[2][0], row[1][1])) || 0;
+        result.rotateZ = 0;
+      }
 
-        return new Transform(mtx);
-      };
+      return result;
+    };
 
-      Transform.prototype.apply = function(e, options) {
-        e = e.length ? e[0] : e;
-        var mtx = Transform.fromElement(e).merge(this).mtx;
-        e.style[styleProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
-        return this;
-      };
+    /*=========================================
+    =            Factory interface            =
+    =========================================*/
 
-      Transform.prototype.set = function(e) {
-        e = e.length ? e[0] : e;
-        var mtx = this.mtx;
-        e.style[styleProperty] = 'matrix(' + [ mtx[0][0], mtx[1][0], mtx[0][1], mtx[1][1], mtx[0][2], mtx[1][2] ].join(',') + ')';
-        return this;
-      };
+    var fCom = function(n, def) {
+      // avoid scientific notation with toFixed
+      var val = (n || def || 0);
+      return '' + val.toFixed(20);
+    };
 
-      Transform.prototype.rotate = function(a) {
-        a = a * (Math.PI / 180); // deg2rad
-        var t = [
-          [Math.cos(a), -Math.sin(a),  0],
-          [Math.sin(a),  Math.cos(a),  0],
-          [          0,            0,  1]
-        ];
+    var fPx = function(n, def) {
+      return fCom(n, def) + 'px';
+    };
 
-        this.mtx = matrixMult(t, this.mtx);
-        return this;
-      };
+    var fDeg = function(n, def) {
+      return fCom(n, def) + 'deg';
+    };
 
-      Transform.prototype.translate = function(x, y) {
-        y = (y === null || y === undefined) ? x : y;
-        var t = [
-          [1,0,x],
-          [0,1,y],
-          [0,0,1]
-        ];
-        this.mtx = matrixMult(t, this.mtx);
-        return this;
-      };
+    return {
+      fromCssMatrix: function(tr) {
+        var M = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
 
-      Transform.prototype.scale = function(a) {
-        var t = [
-          [a,0,0],
-          [0,a,0],
-          [0,0,1]
-        ];
-        this.mtx = matrixMult(t, this.mtx);
-        return this;
-      };
+        // Just returns identity in case no transform is setup for the element
+        if (tr && tr !== 'none') { 
+          var elems = tr.split('(')[1].split(')')[0].split(',').map(Number);
 
-      Transform.prototype.merge = function(t) {
-        this.mtx = matrixMult(this.mtx, t.mtx);
-        return this;
-      };
+          // Is a 2d transform: matrix(a, b, c, d, tx, ty) is a shorthand 
+          // for matrix3d(a, b, 0, 0, c, d, 0, 0, 0, 0, 1, 0, tx, ty, 0, 1)
+          if (tr.match(/^matrix\(/)) {
+            M[0][0] = elems[0];
+            M[1][0] = elems[1];
+            M[0][1] = elems[2];
+            M[1][1] = elems[3];
+            M[3][0] = elems[4];
+            M[3][1] = elems[5];
 
-      Transform.prototype.getRotation = function() {
-        var mtx = this.mtx;
-        return Math.round(Math.atan2(mtx[1][0], mtx[0][0]) * (180/Math.PI)); // rad2deg
-      };
-
-      Transform.prototype.getTranslation = function() {
-        var mtx = this.mtx;
-        return {
-          x: mtx[0][2],
-          y: mtx[1][2]
-        };
-      };
-
-      Transform.prototype.getScale = function() {
-        var mtx = this.mtx, a = mtx[0][0], b = mtx[1][0], d = 10;
-        return Math.round( Math.sqrt( a*a + b*b ) * d ) / d;
-      };
-
-      Transform.prototype.matrixToString = function() {
-        var mtx = this.mtx;
-        var res = "";
-        for (var i = 0; i < mtx.length; i++) {
-          for (var j = 0; j < mtx[i].length; j++) {
-            var n = '' + mtx[i][j];
-            res += n;
-            for (var k = 0; k < 5 - n.length; k++) {
-              res += ' ';
+          // Is a 3d transform, set elements by rows
+          } else {
+            for (var i = 0; i < 16; i++) {
+              var row = floor(i / 4),
+                  col = i % 4;
+              M[row][col] = elems[i];
             }
           }
-          res += '\n';
         }
-        return res;
-      };
+        return decompose(M);
+      },
 
-      return Transform;
-    }
-  ]);
+      toCssMatrix: function(t) {
+        // 
+        // Transforms are recomposed as a composition of:
+        // 
+        // matrix3d(1,0,0,0, 0,1,0,0, 0,0,1,0, perspective[0], perspective[1], perspective[2], perspective[3])
+        // translate3d(translation[0], translation[1], translation[2])
+        // rotateX(rotation[0]) rotateY(rotation[1]) rotateZ(rotation[2])
+        // matrix3d(1,0,0,0, 0,1,0,0, 0,skew[2],1,0, 0,0,0,1)
+        // matrix3d(1,0,0,0, 0,1,0,0, skew[1],0,1,0, 0,0,0,1)
+        // matrix3d(1,0,0,0, skew[0],1,0,0, 0,0,1,0, 0,0,0,1)
+        // scale3d(scale[0], scale[1], scale[2])
+        // 
+        
+        var perspective = [
+          fCom(t.perspectiveX),
+          fCom(t.perspectiveY),
+          fCom(t.perspectiveZ),
+          fCom(t.perspectiveW, 1)
+        ],
+        translate = [
+          fPx(t.translateX), 
+          fPx(t.translateY), 
+          fPx(t.translateZ)
+        ],
+        scale = [
+          fCom(t.scaleX), 
+          fCom(t.scaleY),
+          fCom(t.scaleZ)
+        ],
+        rotation = [
+          fDeg(t.rotateX),
+          fDeg(t.rotateY),
+          fDeg(t.rotateZ)
+        ],
+        skew = [
+          fCom(t.skewXY),
+          fCom(t.skewXZ),
+          fCom(t.skewYZ)
+        ];
+        
+        return [
+          'matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,' + perspective.join(',') + ')',
+          'translate3d(' + translate.join(',') + ')',
+          'rotateX('+ rotation[0] + ') rotateY(' + rotation[1] + ') rotateZ(' + rotation[2] + ')',
+          'matrix3d(1,0,0,0,0,1,0,0,0,' + skew[2] + ',1,0,0,0,0,1)',
+          'matrix3d(1,0,0,0,0,1,0,0,' + skew[1] + ',0,1,0,0,0,0,1)',
+          'matrix3d(1,0,0,0,' + skew[0] + ',1,0,0,0,0,1,0,0,0,0,1)',
+          'scale3d(' + scale.join(',') + ')'
+        ].join(' ');
+      },
+
+      // 
+      // Returns a decomposition of the transform matrix applied
+      // to `e`;
+      //  
+      // NOTE: 2d matrices are translated to 3d matrices
+      //       before any other operation.
+      //       
+      get: function(e) {
+        return this.fromCssMatrix(getElementTransformProperty(e));
+      },
+
+      // Recompose a transform from decomposition `t` and apply it to element `e`
+      set: function(e, t) {
+        setElementTransformProperty(e, this.toCssMatrix(t));
+      }
+    };
+  });
 }());

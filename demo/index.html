@@ -17,7 +17,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular-route.min.js"></script>
     <script src="/dist/js/mobile-angular-ui.min.js"></script>
     <!-- Required to use $swipe, $drag and Translate services -->
-    <script src="/dist/js/mobile-angular-ui.gestures.min.js"></script>
+    <script src="/dist/js/mobile-angular-ui.gestures.js"></script>
     <script src="demo.js"></script>
   </head>
 
@@ -34,7 +34,8 @@
     <div ng-include="'sidebarRight.html'" 
             class="sidebar sidebar-right"></div>
 
-    <div class="app" ng-swipe-right='Ui.turnOn("uiSidebarLeft")' ng-swipe-left='Ui.turnOff("uiSidebarLeft")'>
+    <div class="app"> 
+    <!-- ng-swipe-right='Ui.turnOn("uiSidebarLeft")' ng-swipe-left='Ui.turnOff("uiSidebarLeft")'> -->
 
       <!-- Navbars -->
 
