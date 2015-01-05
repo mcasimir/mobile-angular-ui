@@ -42,7 +42,7 @@
   // options is an object specifing:
   // 
   // - movementThreshold: 10
-  // - preventScroll: (fn->bool or bool) wether yield to scroll or prevent it
+  // - valid: (fn->bool or bool) wether yield to scroll or prevent it
   // - pointerTypes: (array) which kind of pointer events you wish 
   //                  to handle ie. ['mouse', 'touch', 'pen']
 
@@ -54,7 +54,10 @@
     =            Configuration            =
     =====================================*/
 
-    var PREVENT_SCROLL = true;
+    var VALID = function() {
+      return true;
+    };
+    
     var MOVEMENT_THRESHOLD = 1;
 
     var POINTER_EVENTS = {
@@ -73,11 +76,10 @@
 
     var POINTER_TYPES = ['mouse', 'touch'];
 
-    // if set to `true` emulates behaviour of touchmove so
-    // it will continue after touch goes outside element,
-    // bear in mind that disabling this may lead
-    // to inconsistencies between devices
-    var ALLOW_OUTER_MOVEMENT = true;
+    // function or element or rect
+    var SENSITIVE_AREA = function($element) {
+      return $element[0].ownerDocument.documentElement.getBoundingClientRect();
+    };
 
     this.setPointerEvents = function(pe) {
       POINTER_EVENTS = pe;
@@ -87,23 +89,23 @@
       POINTER_EVENTS = pt;
     };
 
-    this.setPreventScroll = function(v) {
-      PREVENT_SCROLL = v;
+    this.setValid = function(fn) {
+      VALID = fn;
     };
 
     this.setMovementThreshold = function(v) {
       MOVEMENT_THRESHOLD = v;
     };
 
-    this.setAllowOuterMovement = function(v) {
-      ALLOW_OUTER_MOVEMENT = !!v;
+    this.setSensitiveArea = function(fnOrElementOrRect) {
+      SENSITIVE_AREA = fnOrElementOrRect;
     };
 
     // 
     // Shorthands for minification
     //
     var abs = Math.abs,
-        asin = Math.asin,
+        atan2 = Math.atan2,
         sqrt = Math.sqrt;
 
     /*===============================
@@ -172,9 +174,30 @@
           dx = x - x0, dy = y - y0, d = len(dx, dy),
           // velocity (px per second)
           v = durationl > 0 ? abs(dl / ( durationl / 1000 )) : 0,
-          // direction (angle between distance vector and x axis)
-          // given as the arcsin of normalized direction vector in degrees
-          dir = d !== 0 ? asin(dy/d) * (180 / Math.PI) : null;
+          tv = duration > 0 ? abs(total / (duration / 1000)) : 0,
+          // main direction: 'LEFT', 'RIGHT', 'TOP', 'BOTTOM'
+          dir = abs(dx) > abs(dy) ?
+            (dx < 0 ? 'LEFT' : 'RIGHT'):
+            (dy < 0 ? 'TOP' : 'BOTTOM'),
+          // angle (angle between distance vector and x axis)
+          // angle will be:
+          //  0 for x > 0 and y = 0
+          //  90 for y < 0 and x = 0
+          //  180 for x < 0 and y = 0
+          //  -90 for y > 0 and x = 0
+          //  
+          //              -90°
+          //               |
+          //               |
+          //               |
+          //  180° --------|-------- 0°
+          //               |
+          //               |
+          //               |
+          //              90°
+          //          
+          angle = dx !== 0 || dy !== 0  ? atan2(dy, dx) * (180 / Math.PI) : null;
+          angle = angle === -180 ? 180 : angle;
 
       return {
         type: type,
@@ -192,6 +215,7 @@
         stepY: dyl,
 
         velocity: v,
+        averageVelocity: tv,
         
         distance: d, // distance from start
         distanceX: dx,
@@ -201,8 +225,8 @@
                       // considering turnaround
         totalX: totalX,
         totalY: totalY,
-
-        direction: dir
+        direction: dir,
+        angle: angle
       };
     };
 
@@ -210,7 +234,7 @@
     =            Factory Method            =
     ======================================*/
 
-    this.$get = ['$document', function($document) {
+    this.$get = [function() {
       
       return {
         bind: function($element, eventHandlers, options) {
@@ -221,9 +245,9 @@
           options = options || {};
           // uses default pointer types in case of none passed
           var pointerTypes = options.pointerTypes || POINTER_TYPES,
-              preventScroll = options.preventScroll === undefined ? PREVENT_SCROLL : options.preventScroll,
-              movementThreshold = options.movementThreshold === undefined ? MOVEMENT_THRESHOLD : options.preventScroll,
-              allowOuterMovement = options.allowOuterMovement === undefined ? ALLOW_OUTER_MOVEMENT : options.allowOuterMovement;
+              isValid = options.valid === undefined ? VALID : options.valid,
+              movementThreshold = options.movementThreshold === undefined ? MOVEMENT_THRESHOLD : options.valid,
+              sensitiveArea = options.sensitiveArea === undefined ? SENSITIVE_AREA : options.sensitiveArea;
 
           var // first and last touch
               t0, tl,
@@ -238,12 +262,13 @@
               moveEventHandler = eventHandlers.move,
               cancelEventHandler = eventHandlers.cancel;
 
-          var $movementTarget = allowOuterMovement ? $document : $element;
+          var $movementTarget = angular.element($element[0].ownerDocument);
 
           var resetTouch = function() {
             t0 = tl = null;
             $movementTarget.off(moveEvents, onTouchMove);
             $movementTarget.off(endEvents, onTouchEnd);
+            if (cancelEvents) { $movementTarget.off(cancelEvents, onTouchCancel); }
           };
 
           var isActive = function() {
@@ -259,6 +284,7 @@
             tl = t0 = buildTouchInfo('touchstart', getCoordinates(event));
             $movementTarget.on(moveEvents, onTouchMove);
             $movementTarget.on(endEvents, onTouchEnd);
+            if (cancelEvents) { $movementTarget.on(cancelEvents, onTouchCancel); }
             if (startEventHandler) {
               startEventHandler(t0, event); 
             }
@@ -279,8 +305,15 @@
             
             var coords = getCoordinates(event);
 
-            // wont fire outside the window
-            if (coords.x < 0 || coords.x > window.innerWidth || coords.y < 0 || coords.y > window.innerHeight){ return; }
+            // 
+            // wont fire outside sensitive area
+            // 
+            var mva = typeof sensitiveArea === 'function' ? sensitiveArea($element) : sensitiveArea;
+            mva = mva.length ? mva[0] : mva;
+            
+            var mvaRect = mva instanceof Element ? mva.getBoundingClientRect() : mva;
+
+            if (coords.x < mvaRect.left || coords.x > mvaRect.right || coords.y < mvaRect.top || coords.y > mvaRect.bottom){ return; }
 
             var t = buildTouchInfo('touchmove', coords, t0, tl),
                 totalX = t.totalX,
@@ -291,50 +324,48 @@
             if (totalX < movementThreshold && totalY < movementThreshold) {
               return;
             }
-            
-            var shouldPreventScroll = typeof preventScroll === 'function' ? preventScroll(t) : preventScroll;
 
-            if (shouldPreventScroll) {
-              event.preventDefault();
-            } else {
-              resetTouch();
-              if (cancelEventHandler) {
-                cancelEventHandler(t, event);
+            if (isValid(t, event)) {
+              if (event.cancelable === undefined || event.cancelable) {
+                event.preventDefault();              
               }
-              return;
-            }
-
-            if (moveEventHandler) {
-              moveEventHandler(t, event);
+              if (moveEventHandler) {
+                moveEventHandler(t, event);
+              }
             }
           };
 
           // on touchEnd
           var onTouchEnd = function(event) {
             if (!isActive()) { return; }
-            var tlbkp = tl;
-            if (endEventHandler) {
-              setTimeout(function() {
-                endEventHandler(angular.extend({}, tlbkp, {type: 'touchend'}), event);
-              }, 0);
-            }  
+            var t = angular.extend({}, tl, {type: 'touchend'});
+            if (isValid(t, event)) {
+              if (event.cancelable === undefined || event.cancelable) {
+                event.preventDefault();              
+              }
+              if (endEventHandler) {
+                setTimeout(function() { // weird workaround to avoid 
+                                        // delays with dom manipulations
+                                        // inside the handler
+                  endEventHandler(t, event);
+                }, 0);
+              }
+            }
             resetTouch();
           };
 
-
           $element.on(startEvents, onTouchStart);
-          if (cancelEvents) { $element.on(cancelEvents, onTouchCancel); }
 
           return function unbind() {
             if ($element) { // <- wont throw if accidentally called twice
               $element.off(startEvents, onTouchStart);
-              if (cancelEvents) { $element.off(cancelEvents, onTouchCancel); }
+              if (cancelEvents) { $movementTarget.off(cancelEvents, onTouchCancel); }
               $movementTarget.off(moveEvents, onTouchMove);
               $movementTarget.off(endEvents, onTouchEnd);
 
               // Clear all those variables we carried out from `#bind` method scope
               // to local scope and that we don't have to use anymore
-              $element = $movementTarget = startEvents = cancelEvents = moveEvents = endEvents = onTouchStart = onTouchCancel = onTouchMove = onTouchEnd = pointerTypes = preventScroll = movementThreshold = allowOuterMovement = null;
+              $element = $movementTarget = startEvents = cancelEvents = moveEvents = endEvents = onTouchStart = onTouchCancel = onTouchMove = onTouchEnd = pointerTypes = isValid = movementThreshold = sensitiveArea = null;
             }
           };
         }

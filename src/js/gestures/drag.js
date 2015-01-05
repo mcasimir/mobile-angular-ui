@@ -98,7 +98,7 @@
   // });
 
   .provider('$drag', function() {
-    this.$get = ['$touch', '$document', '$transform', function($touch, $document, $transform) {
+    this.$get = ['$touch', '$transform', function($touch, $transform) {
 
       // Add some css rules to be used while moving elements
       var style = document.createElement('style');
@@ -173,7 +173,7 @@
           return function(element, transform, touch) {
             element = element.length ? element[0] : element;
             var re = element.getBoundingClientRect();
-            var rw = wrapperElementOrRectangle instanceof HTMLElement ? wrapperElementOrRectangle.getBoundingClientRect() : wrapperElementOrRectangle;
+            var rw = wrapperElementOrRectangle instanceof Element ? wrapperElementOrRectangle.getBoundingClientRect() : wrapperElementOrRectangle;
             var tx, ty;
 
             if (re.width >= rw.width) {
@@ -301,7 +301,7 @@
               
               touch = createDragInfo(touch);
               cleanup();
-              
+
               if (endEventHandler) {
                 endEventHandler(touch, event);
               }
@@ -319,7 +319,9 @@
               }
             };
 
-            return $touch.bind($element, {move: onTouchMove, end: onTouchEnd, cancel: onTouchCancel});
+            return $touch.bind($element, 
+              {move: onTouchMove, end: onTouchEnd, cancel: onTouchCancel},
+              touchOptions);
           } // ~ bind
         }; // ~ return $drag
       }]; // ~ $get

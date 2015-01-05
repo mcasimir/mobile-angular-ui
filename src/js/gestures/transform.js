@@ -436,7 +436,8 @@
 
       // Recompose a transform from decomposition `t` and apply it to element `e`
       set: function(e, t) {
-        setElementTransformProperty(e, this.toCssMatrix(t));
+        var str = (typeof t === 'string') ? t : this.toCssMatrix(t);
+        setElementTransformProperty(e, str);  
       }
     };
   });

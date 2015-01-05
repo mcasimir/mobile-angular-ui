@@ -1,0 +1,63 @@
+<html describe="gestures/transform">
+  <head>
+    <script>
+      app.run(function($rootScope, $transform) {
+
+      });
+    </script>
+    <style>
+
+#translate3d  
+{ transform: translate3d(20px, 15px, 12px); }
+
+#rotate3d
+{ transform: rotate3d(0, 1, 1, 30deg); }
+
+#scale3d      
+{ transform: scale3d(0.5, 1, 1.5); }
+
+#rotate3d_translate3d 
+{ transform: rotate3d(0, 1, 1, 30deg) translate3d(20px, 15px, 12px); }
+
+#scale3d_rotate3d_translate3d 
+{ transform: scale3d(0.5, 1, 1.5) rotate3d(0, 1, 1, 30deg) translate3d(20px, 15px, 12px); }
+
+#translate3d_rotate3d_scale3d 
+{ transform: translate3d(20px, 15px, 12px) rotate3d(0, 1, 1, 30deg) scale3d(0.5, 1, 1.5); }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-6">
+          <div id="translate3d-orig-matrix">{{et('translate3d').toCss(2)}}</div>
+          <div id="translate3d-comp-matrix">{{translate3d.toCss(2)}}</div>
+
+          <div id="rotate3d-orig-matrix">{{et('rotate3d').toCss(2)}}</div>
+          <div id="rotate3d-comp-matrix">{{rotate3d.toCss(2)}}</div>
+
+          <div id="scale3d-orig-matrix">{{et('scale3d').toCss(2)}}</div>
+          <div id="scale3d-comp-matrix">{{scale3d.toCss(2)}}</div>
+
+          <div id="rotate3d_translate3d-orig-matrix">{{et('rotate3d_translate3d').toCss(2)}}</div>
+          <div id="rotate3d_translate3d-comp-matrix">{{rotate3d_translate3d.toCss(2)}}</div>
+
+          <div id="scale3d_rotate3d_translate3d-orig-matrix">{{et('scale3d_rotate3d_translate3d').toCss(2)}}</div>
+          <div id="scale3d_rotate3d_translate3d-comp-matrix">{{scale3d_rotate3d_translate3d.toCss(2)}}</div>
+          
+          <div id="translate3d_rotate3d_scale3d-orig-matrix">{{et('translate3d_rotate3d_scale3d').toCss(2)}}</div>
+          <div id="translate3d_rotate3d_scale3d-comp-matrix">{{translate3d_rotate3d_scale3d.toCss(2)}}</div>
+        </div>
+        <div class="col-xs-6">
+          <div id="translate3d" class='square'></div>
+          <div id="rotate3d" class='square'></div>
+          <div id="scale3d" class='square'></div>
+          <div id="rotate3d_translate3d" class='square'></div>
+          <div id="scale3d_rotate3d_translate3d" class='square square-info'></div>
+          <div id="translate3d_rotate3d_scale3d" class='square square-warning'></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

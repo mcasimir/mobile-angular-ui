@@ -1,0 +1,70 @@
+<html describe='gestures/swipe'>
+  <head>
+    <script>
+      app.run(function($rootScope) {
+        $rootScope.swipeLeft = false;
+        $rootScope.swipeRight = false;
+        $rootScope.swipeLeftInner = false;
+        $rootScope.swipeLeftOuter = false;
+      });
+    </script>
+  </head>
+  <body ng-app="TestApp">
+    <div style="height: 50px; width: 100%; background: #ccc;" 
+         ng-swipe-left="swipeLeft = true"
+         ng-swipe-right="swipeRight = true"
+         id='target'></div>
+
+    <div style="background: #444;" 
+         ng-swipe-left="swipeLeftOuter = true"
+         id='outer'>
+
+      <div style="height: 50px; width: 80%; margin: 50px auto; background: #aaa;"
+        ng-swipe-left="swipeLeftInner = true"
+        id='inner'>
+      </div>
+    </div>
+  </body>
+
+  <script type="application/protractor" 
+          spec="should work as expected with ng-swipe-left/right">
+          
+          ngExpect('$rootScope.swipeLeft').toEqual(false);
+          ngExpect('$rootScope.swipeRight').toEqual(false);
+
+          browser.actions()
+                 .mouseDown($('#target'))
+                 .mouseMove({x: 100, y: 0})
+                 .mouseUp()
+                 .perform();
+
+          ngExpect('$rootScope.swipeLeft').toEqual(false);
+          ngExpect('$rootScope.swipeRight').toEqual(true);
+          
+          browser.actions()
+                 .mouseDown($('#target'))
+                 .mouseMove({x: -100, y: 0})
+                 .mouseUp()
+                 .perform();
+
+          ngExpect('$rootScope.swipeLeft').toEqual(true);
+  </script>
+
+  <script type="application/protractor" 
+          spec="nested swipe directives should work only for inner one">
+          
+          ngExpect('$rootScope.swipeLeftOuter').toEqual(false);
+          ngExpect('$rootScope.swipeLeftInner').toEqual(false);
+
+          browser.actions()
+                 .mouseDown($('#inner'))
+                 .mouseMove({x: -100, y: 0})
+                 .mouseUp()
+                 .perform();
+
+          ngExpect('$rootScope.swipeLeftOuter').toEqual(false);   
+          ngExpect('$rootScope.swipeLeftInner').toEqual(true);
+  </script>
+
+</html>
+  

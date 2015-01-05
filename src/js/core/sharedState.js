@@ -1,7 +1,54 @@
 (function() {
   'use strict';  
+  /**
+   * @module mobile-angular-ui.core.sharedState
+   *
+   * @description
+   * 
+   * `SharedState` aims to provide a proper way to create directives and components that previously used scope variables to communicate.
+   * 
+   * `mobile-angular-ui.core.sharedState` is expose the homonymous service `SharedState` and a group of directives to access it.
+   * 
+   */
   var module = angular.module('mobile-angular-ui.core.sharedState', []);
 
+  /**
+   * @ngdoc service
+   * @class SharedState
+   *
+   * @description
+   * 
+   * A `SharedState` state can be considered as a global variable identified by an `id`.
+   * 
+   * `SharedState` service exposes methods to interact with statuses to create, read and update states. 
+   * 
+   * It acts as a BUS between UI elements to share UI related state that is automatically disposed when all scopes requiring it are destroyed.
+   * 
+   * eg.
+   * 
+   * ``` js
+   * app.controller('controller1', function($scope, SharedState){
+   *   SharedState.initialize($scope, 'myId');
+   * });
+   * 
+   * app.controller('controller2', function(SharedState){
+   *   SharedState.toggle('myId');
+   * });
+   * ```
+   * 
+   * Data structures retaining statuses will stay outside angular scopes thus they are not evaluated against digest cycle until its necessary. Also although statuses are sort of global variables `SharedState` will take care of disposing them when no scopes are requiring them anymore.
+   * 
+   * A set of `ui-*` directives are available to interact with `SharedState` module and will hopefully let you spare your controllers and your time for something that is more meaningful than this:
+   * 
+   * ``` js
+   * $scope.activeTab = 1;
+   * 
+   * $scope.setActiveTab = function(n) {
+   *   $scope.activeTab = n;
+   * };
+   * ```
+   *
+   */
   module.factory('SharedState', [
     '$rootScope',
     function($rootScope){
@@ -11,6 +58,23 @@
       var exclusionGroups = {}; // support exclusive boolean sets
 
       return {
+        /**
+         * @function initialize
+         * @memberOf module:'sharedState'~SharedState
+         * @description
+         *
+         * Declare a dependency between the new or existent state identified
+         * by `id` and `scope`
+         * 
+         * @param  {scope} scope The scope to bound this state
+         * @param  {string} id The unique name of this state 
+         * @param  {object} options Options
+         * @param  {object} options.defaultValue Default value if is a new state
+         * @param  {object} options.exclusionGroup The exclusion group for this state. 
+         *                  When exclusion group is specified turning on this state will
+         *                  result in turning off any other state belonging to 
+         *                  the same exclusion group.
+         */
         initialize: function(scope, id, options) {
           options = options || {};
           
@@ -141,7 +205,7 @@
 
         referenceCount: function(id) {
           var status = statusesMeta[id];
-          return status === undefined ? undefined : status.references;
+          return status === undefined ? 0 : status.references;
         },
 
         equals: function(id, value) {

@@ -34,6 +34,7 @@ app.config(function($routeProvider) {
   $routeProvider.when('/forms',         {templateUrl: 'forms.html', reloadOnSearch: false});
   $routeProvider.when('/dropdown',      {templateUrl: 'dropdown.html', reloadOnSearch: false});
   $routeProvider.when('/touch',         {templateUrl: 'touch.html', reloadOnSearch: false});
+  $routeProvider.when('/swipe',         {templateUrl: 'swipe.html', reloadOnSearch: false});
   $routeProvider.when('/drag',          {templateUrl: 'drag.html', reloadOnSearch: false});
   $routeProvider.when('/drag2',         {templateUrl: 'drag2.html', reloadOnSearch: false});
   $routeProvider.when('/carousel',      {templateUrl: 'carousel.html', reloadOnSearch: false});
@@ -73,8 +74,6 @@ app.directive('toucharea', ['$touch', function($touch){
     }
   };
 }]);
-
-
 
 //
 // `$drag` example: drag to dismiss
@@ -238,6 +237,28 @@ app.directive('dragMeTo', ['$drag', function($drag){
           end: function(drag) {
             // go back to initial position
             drag.reset();
+          }
+        },
+        { // release touch when movement is outside bounduaries
+          sensitiveArea: $element.parent()
+        }
+      );
+    }
+  };
+}]);
+
+
+// 
+// $swipe service example
+// 
+
+app.directive('swipeExample', ['$swipe', function($swipe){
+  return {
+    controller: function($scope, $element) {
+      $swipe.bind($element, 
+        {
+          end: function(swipe) {
+            alert("Swiped: " + swipe.swipe);
           }
         }
       );

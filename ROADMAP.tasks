@@ -1,0 +1,59 @@
+/*=================================================
+=            MOBILE ANGULAR UI ROADMAP            =
+=================================================*/
+
+This file will contain an extremely detailed tasks list
+to follow development of new releases.
+
+Unscheduled:
+  ❑ Try to use closure compiler or similar to perform maximum compression/optimization and structure sources better
+
+Unscheduled 1.2:
+  ❑ Make shared states exportable to QP
+  ❑ Make it simpler to deal with ng-repeat and multiple shared states
+  ❑ Fix migration for ui-swipe
+  ❑ Fix $transform issues decomposing previous rotations
+  ❑ Fix or invalidate old ui-switch issues:
+    ❑ https://github.com/mcasimir/mobile-angular-ui/issues/92
+    ❑ https://github.com/mcasimir/mobile-angular-ui/issues/87
+    ❑ https://github.com/mcasimir/mobile-angular-ui/issues/86
+    ❑ https://github.com/mcasimir/mobile-angular-ui/issues/85
+
+--- ✄ -----------------------
+
+1.2.0.beta.11 (gestures and gulp):
+  ✔ check for SVG compatibility (remove HTMLElement references and use something more generic) @done (14-12-30 17:04)
+  ✔ $touch should accept bounduaries either as rect {top, bottom, left, right} or element @done (14-12-30 17:02)
+    ✔ Add { area: rectOrElement } to options   @done (14-12-30 17:02)
+    ✔ it should treat element and window the same way (or should we use element.ownerDocument instead?) @done (14-12-30 17:02)
+    ✔ remove option for allowing outer movement (should be the default) @done (14-12-30 17:02)
+  ✔ $drag.TRANSLATE_INSIDE(elem) should work @done (14-12-30 07:42)
+  ✔ fix carousel in demo @done (14-12-30 07:42)
+  ✔ Better detect swipes using direction and velocity @done (14-12-31 00:45)
+  ✔ Switch to gulp @done (15-01-02 00:39)
+  ✔ add gestures to bower.json @done (15-01-02 00:39)
+  ✔ remove tests and any other unnecessary files from bower.json @done (15-01-02 00:44)
+  ✔ release should take care of npm too @done (15-01-02 00:44)
+  ✔ simplify testing @done (15-01-04 07:31)
+    ✔ a test shoudl be an .html file only @done (15-01-04 07:32)
+    ✔ inspect angular simpler  @done (15-01-04 07:33)
+    ✔ selectively filter tests by id or name @done (15-01-04 07:33)
+    ✔ automatically ensure console is free from errors @done (15-01-04 09:09)
+  ❑ multiple $touch bindings should not interfere each other   
+  ❑ $touch should allow to define a preventDefault option to setup preventDefault on touchstart
+  ❑ $touch sensitiveArea should trigger touchcancel? Should I add an option for that?
+  ❑ Support ms devices through -ms- touch property
+  ❑ Allow for nested $swipe an $drag
+  ❑ $touch valid should allow per-touch-type handlers
+  ❑ $touch should expose preventDefault: boolOrArrayOrFn(touch, event)
+  ✔ move $touch's touch.direction to touch.angle and use touch.direction for 'LEFT', 'RIGHT', 'UP' and 'DOWN'  @done (15-01-04 07:34)
+  ❑ detect multitouch and handle or prevent them
+  ❑ Add tests for $touch and $drag, adapt those for $swipe and $transform
+  ❑ Fix compatibility between $swipe and FastClick    
+  ❑ Use nobounce tricks to avoid IOS bouncing after scroll or dragging
+  ❑ Document everything
+  ❑ Split docs in Getting Started+Overview and API
+  ❑ Generate API docs from sources somehow
+    ✔ Parse jsdoc + ngdoc from sources  @done (15-01-05 16:59)
+    ❑ generate tree
+    ❑ render tree

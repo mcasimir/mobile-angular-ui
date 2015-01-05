@@ -3,13 +3,12 @@ exports.config = {
   chromeDriver: require('chromedriver').path,
   
   specs: [
-    '**/*.test.js',
+    'htmlTests.js'
   ],
   multiCapabilities: [{
     'browserName': 'chrome'
   }],
-
-  baseUrl: 'http://localhost:3001',
+  onPrepare: require('./onprepare'),
   rootElement: 'body',
   jasmineNodeOpts: { includeStackTrace: true }
 };

@@ -24,13 +24,13 @@
   right: 0;
   margin: -5px -5px -5px -5px;
   background: rgba(255, 255, 255, 0.95);
-  z-index: 1040;
+  z-index: 1039;
 }
 .overlay .overlay-inner > .overlay-dismiss {
   position: absolute;
   right: 10px;
   top: 10px;
-  z-index: 1051;
+  z-index: 1041;
   font-size: 24px;
 }
 .overlay .overlay-inner > .overlay-content {
@@ -41,7 +41,7 @@
   text-align: center;
   color: #000000;
   height: 100%;
-  z-index: 1050;
+  z-index: 1040;
   position: absolute;
   left: 0;
   top: 0;
