@@ -1,8 +1,10 @@
-/**
-
-@module mobile-angular-ui.core
-
-@description
+---
+title: "mobile-angular-ui.core"
+name: "core"
+type: "module"
+src: "src/js/mobile-angular-ui.core.js"
+path: "mobile-angular-ui/core"
+---
 
 It has all the core functionalities of Mobile Angular UI. It aims to act as a common base 
 for an UI framework providing services and directives to create components and implement 
@@ -25,15 +27,3 @@ Although `.core` module is required by `mobile-angular-ui` by default you can us
 ```
 angular.module('myApp', ['mobile-angular-ui.core']);
 ```
-
-*/
-(function () {
-  'use strict';
-  angular.module('mobile-angular-ui.core', [
-    'mobile-angular-ui.core.fastclick',
-    'mobile-angular-ui.core.activeLinks',
-    'mobile-angular-ui.core.capture',
-    'mobile-angular-ui.core.outerClick',
-    'mobile-angular-ui.core.sharedState'
-  ]);
-}());

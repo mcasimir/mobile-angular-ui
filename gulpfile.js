@@ -283,8 +283,6 @@ makeTestTask('test:firefox', 'test/firefox.conf.js');
 gulp.task('docs', function(done) {
   del(['docs/api/**'], function() {
     docgen('src/js', {
-        outputJsdoc: true, 
-        outputDoclets: true, 
         outputTree: true 
       })
       .pipe(gulp.dest('docs/api'))
