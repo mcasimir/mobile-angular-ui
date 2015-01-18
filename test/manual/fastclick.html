@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/dist/css/mobile-angular-ui-hover.min.css" />
+<link rel="stylesheet" href="/dist/css/mobile-angular-ui-base.min.css" />
+<link rel="stylesheet" href="/dist/css/mobile-angular-ui-desktop.min.css" />
+<style type="text/css">
+  p, .test { font-family: sans-serif; }
+  .test { margin: 1em auto; width: 6em; line-height: 4em; border: 1px solid black; font-size: 2em; text-align: center; }
+  .stats, .stats input { font-family: monospace; font-size: 0.9em; }
+  input { width: 10em; }
+
+  /* Disable certain interactions on touch devices */
+  body { -webkit-touch-callout: none; -webkit-text-size-adjust: none; -webkit-user-select: none; -webkit-highlight: none; -webkit-tap-highlight-color: rgba(0,0,0,0); }
+</style>
+
+<script type="application/javascript" src="/bower_components/fastclick/lib/fastclick.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular-route.min.js"></script>
+<script src="/dist/js/mobile-angular-ui.gestures.min.js"></script>
+<script type="application/javascript">
+
+  var app = angular.module('myApp', ['mobile-angular-ui.gestures']);
+
+  app.controller('MainController', function($rootScope, $scope){
+
+    $scope.swiped = function(direction) {
+      alert('Swiped ' + direction);
+    };
+
+  });
+
+  window.addEventListener('load', function() {
+    var testA, testB, teTime, cTime;
+
+    testA = document.getElementById('test-a');
+    testB = document.getElementById('test-b');
+
+    // Android 2.2 needs FastClick to be instantiated before the other listeners so that the stopImmediatePropagation hack can work.
+    FastClick.attach(testB);
+
+    testA.addEventListener('touchend', function(event) {
+      teTime = Date.now();
+      document.getElementById('te-time').value = teTime;
+    }, false);
+
+    testA.addEventListener('click', function(event) {
+      cTime = Date.now();
+      document.getElementById('c-time').value = cTime;
+      document.getElementById('d-time').value = cTime - teTime;
+      testA.style.backgroundColor = testA.style.backgroundColor ? '' : 'YellowGreen';
+    }, false);
+
+    testB.addEventListener('touchend', function(event) {
+      teTime = Date.now();
+      document.getElementById('te-time').value = teTime;
+      document.getElementById('d-time').value = cTime - teTime;
+    }, false);
+
+    testB.addEventListener('click', function(event) {
+      cTime = Date.now();
+      document.getElementById('c-time').value = cTime;
+      testB.style.backgroundColor = testB.style.backgroundColor ? '' : 'YellowGreen';
+    }, false);
+  }, false);
+</script>
+</head>
+<body ng-app="myApp" ng-controller='MainController' ng-swipe-left="swiped('LEFT')" ng-swipe-right="swiped('RIGHT')">
+  <p>Layer A responds to click events normally, which on iOS will introduce a 300ms delay.</p>
+  <p>Layer B is enhanced with FastClick, and will fire the click handler with no delay.</p>
+  <p>The layers will behave normally on platforms that don't support touch events.</p>
+  <p class="stats">Touch end time: <input id="te-time" value="0" /></p>
+  <p class="stats">Click event time: <input id="c-time" /></p>
+  <p class="stats">Difference: <input id="d-time" /></p>
+  <div>
+    <div class="test" id="test-a">A</div>
+    <div class="test" id="test-b">B</div>
+  </div>
+</body>
+</html>

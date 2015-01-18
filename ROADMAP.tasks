@@ -10,10 +10,13 @@ Unscheduled:
       compression/optimization and structure sources better
 
 Unscheduled 1.2:
+  ❑ Support ms devices through -ms- touch property
+      For IE11+, you can use touch-action: manipulation; to disable double-tap-to-zoom on certain elements (like links and buttons). For IE10 use -ms-touch-action: manipulation
+  ❑ Add tests for $touch and $drag, adapt those for $swipe and $transform
   ❑ Define multiple states in "ui-state"
   ❑ Make shared states exportable to QP
   ❑ Make it simpler to deal with ng-repeat and multiple shared states
-  ❑ Fix migration for ui-swipe
+  ❑ Fix migration for ui-switch
   ❑ Fix $transform issues decomposing previous rotations
   ❑ Fix or invalidate old ui-switch issues:
     ❑ https://github.com/mcasimir/mobile-angular-ui/issues/92
@@ -53,11 +56,7 @@ Unscheduled 1.2:
     ❑ $touch valid should allow per-touch-type handlers
     ❑ detect multitouch and handle or prevent them
 
-  ❑ Support ms devices through -ms- touch property
-
   ❑ $swipe
-    ❑ Allow for nested $swipe
-    ❑ Fix compatibility between $swipe and FastClick
+    ✔ Allow for nested $swipe @done (15-01-18 23:03)
+    ✔ Fix compatibility between $swipe and FastClick @done (15-01-19 00:09)
     ✔ move $touch's touch.direction to touch.angle and use touch.direction for 'LEFT', 'RIGHT', 'UP' and 'DOWN'  @done (15-01-04 07:34)
-  
-  ❑ Add tests for $touch and $drag, adapt those for $swipe and $transform
