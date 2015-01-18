@@ -322,6 +322,9 @@ app.directive('dragMe', ['$drag', function($drag){
 
             var onTouchEnd = function(touch, event) {
               if (!isMoving()) { return; }
+
+              // prevents outer swipes
+              event.__UiSwipeHandled__ = true;
               
               touch = createDragInfo(touch);
               cleanup();
