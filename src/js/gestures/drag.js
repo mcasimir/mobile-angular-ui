@@ -1,3 +1,118 @@
+/**
+@module mobile-angular-ui.gestures.drag
+@description
+
+`mobile-angular-ui.gestures.drag` module exposes the `$drag` service that is used 
+to handle drag gestures. `$drag` service wraps [$touch](../module:touch) service adding
+CSS transforms reacting to `touchmove` events.
+
+## Usage
+
+``` js
+angular.module('myApp', ['mobile-angular-ui.gestures']);
+```
+
+Or
+
+``` js
+angular.module('myApp', ['mobile-angular-ui.gestures.drag']);
+```
+
+``` js
+var dragOptions = {
+  transform: $drag.TRANSLATE_BOTH,
+  start:  function(dragInfo, event){},
+  end:    function(dragInfo, event){},
+  move:   function(dragInfo, event){},
+  cancel: function(dragInfo, event){}
+};
+
+$drag.bind(element, dragOptions, touchOptions);
+```
+
+Where:
+
+- `transform` is a `function(element, currentTransform, touch) -> newTransform`
+   returning taking an `element`, its `currentTransform` and returning the `newTransform` 
+   for the element in response to `touch`. See [$transform](../module:transform) for more.
+   Default to `$drag.TRANSLATE_BOTH`.
+- `start`, `end`, `move`, `cancel` are optional callbacks responding to `drag` movement phases.
+- `dragInfo` is an extended version of `touchInfo` from [$touch](../module:touch), 
+  extending it with:
+  - `originalTransform`: The [$transform](../module:transform) object relative to CSS transform before `$drag` is bound.
+  - `originalRect`: The [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect) for bound element before any drag action.
+  - `startRect`: The [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect) for bound element registered at `start` event.
+  - `startTransform`: The [$transform](../module:transform) at `start` event.
+  - `rect`: The current [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect) for bound element.
+  - `transform`: The current [$transform](../module:transform).
+  - `reset`: A function restoring element to `originalTransform`.
+  - `undo`: A function restoring element to `startTransform`.
+- `touchOptions` is an option object to be passed to underlying [`$touch`](../module:touch) service.
+
+### Predefined transforms
+
+- `$drag.NULL_TRANSFORM`: No transform follow movement
+- `$drag.TRANSLATE_BOTH`: Transform translate following movement on both x and y axis.
+- `$drag.TRANSLATE_HORIZONTAL`: Transform translate following movement on x axis.
+- `$drag.TRANSLATE_UP`: Transform translate following movement on negative y axis.
+- `$drag.TRANSLATE_DOWN`: Transform translate following movement on positive y axis.
+- `$drag.TRANSLATE_LEFT`: Transform translate following movement on negative x axis.
+- `$drag.TRANSLATE_RIGHT`: Transform translate following movement on positive x axis.
+- `$drag.TRANSLATE_VERTICAL`: Transform translate following movement on y axis.
+- `$drag.TRANSLATE_INSIDE`: Is a function and should be used like:
+   
+   ``` js
+    { 
+      transform: $drag.TRANSLATE_INSIDE(myElement)
+    }
+   ```
+
+   It returns a transform function that contains translate movement inside 
+   the passed element. 
+
+### `.ui-drag-move` style
+
+While moving an `.ui-drag-move` class is attached to element. Style for this class is defined via
+[insertRule](https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet.insertRule) and aims to
+fix common problems while dragging, specifically:
+
+- Brings the element in front of other elements
+- Disable transitions
+- Makes text unselectable
+
+**NOTE** Transitions are disabled cause they may introduce conflicts between `transition: transform` 
+ and `dragOptions.transform` function.
+
+They will be re-enabled after drag, and this can be used to achieve some graceful effects.
+
+If you need transition that does not involve transforms during movement you can apply them to an
+inner or wrapping element. 
+
+### Examples
+
+#### Limit movement to an element
+
+``` js
+app.directive('dragMe', ['$drag', function($drag){
+  return {
+    controller: function($scope, $element) {
+      $drag.bind($element, 
+        {
+          transform: $drag.TRANSLATE_INSIDE($element.parent()),
+          end: function(drag) {
+            drag.reset();
+          }
+        },
+        { // release touch when movement is outside bounduaries
+          sensitiveArea: $element.parent()
+        }
+      );
+    }
+  };
+}]);
+```
+
+*/
 (function () {
    'use strict';
 
@@ -5,97 +120,6 @@
      'mobile-angular-ui.gestures.touch',
      'mobile-angular-ui.gestures.transform'
    ])
-
-  // `$drag` Service wraps `$touch` to extend its behavior moving target element through css transform according to the `$touch` coords thus creating 
-  // a drag effect.
-
-  // $drag interface is very close to `$touch`:
-
-  // app.controller('MyController', function($drag, $element){
-  //   var unbindDrag = $drag.bind($element, {
-  //    // drag callbacks
-  //    // - rect is the current result of getBoundingClientRect() for bound element
-  //    // - resetFn restore the initial transform
-  //    // - undoFn undoes the current movement
-  //    // - swipeCoords are the coordinates exposed by the underlying $touch service
-  //    start: function(dragInfo, reset, event) {},
-  //    move: function(dragInfo, undo, reset, event) {},
-  //    end: function(dragInfo, undo, reset, event) {},
-  //    cancel: function(dragInfo) {};
-
-  //    // constraints for the movement
-  //    // you can use a "static" object of the form:
-  //    // {top: .., lelf: .., bottom: .., rigth: ..}
-  //    // or pass a function that is called on each movement 
-  //    // and return it in a dynamic way.
-  //    // This is useful if you have to constraint drag movement while bounduaries are
-  //    // changing over time.
-
-  //    constraint: function(){ return {top: y1, left: x1, bottom: y2, right: x2}; }, // or just {top: y1, left: x1, bottom: y2, right: x2}
-
-  //    // instantiates the Trasform according to touch movement (defaults to `t.translate(dx, dy);`)
-  //    // dx, dy are the distances of movement for x and y axis after constraints are applyied
-  //    transform: function(transform, dx, dy, currSwipeX, currSwipeY, startSwipeX, startSwipeY) {},
-    
-  //   // This is automatically called when element is disposed so it is not necessary
-  //   // that you call this manually but if you have to detatch $drag service before
-  //   // this you could just call:
-  //   unbindDrag();
-  // });
-
-  // Main differences with `$touch` are:
-  //  - bound elements will move following swipe direction automatically
-  //  - coords param take into account css transform so you can easily detect collision with other elements.
-  //  - start, move, end callback receive a cancel funcion that can be used to cancel the motion and reset
-  //    the transform.
-  //  - you can configure the transform behavior passing a transform function to options.
-  //  - you can constraint the motion through the constraint option (setting relative movement limits)
-   
-  // Example (drag to dismiss):
-
-  // app.directive('dragToDismiss', function($drag, $parse, $timeout){
-  //   return {
-  //     restrict: 'A',
-  //     compile: function($element, attrs) {
-  //       var dismissFn = $parse(attrs.dragToDismiss);
-  //       return function(scope, $element, attrs){
-  //         var dismiss = false;
-
-  //         $drag.bind($element, {
-  //           constraint: {
-  //             minX: 0, 
-  //             minY: 0, 
-  //             maxY: 0 
-  //           },
-  //           move: function(c) {
-  //             if( c.left >= c.width / 4) {
-  //               dismiss = true;
-  //               $element.addClass('dismiss');
-  //             } else {
-  //               dismiss = false;
-  //               $element.removeClass('dismiss');
-  //             }
-  //           },
-  //           cancel: function(){
-  //             $element.removeClass('dismiss');
-  //           },
-  //           end: function(c, undo, reset) {
-  //             if (dismiss) {
-  //               $element.addClass('dismitted');
-  //               $timeout(function() { 
-  //                 scope.$apply(function() {
-  //                   dismissFn(scope);  
-  //                 });
-  //               }, 400);
-  //             } else {
-  //               reset();
-  //             }
-  //           }
-  //         });
-  //       };
-  //     }
-  //   };
-  // });
 
   .provider('$drag', function() {
     this.$get = ['$touch', '$transform', function($touch, $transform) {

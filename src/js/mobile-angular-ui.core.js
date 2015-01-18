@@ -22,7 +22,7 @@ UI interactions with angular.
 
 Although `.core` module is required by `mobile-angular-ui` by default you can use it alone.
 
-```
+``` js
 angular.module('myApp', ['mobile-angular-ui.core']);
 ```
 

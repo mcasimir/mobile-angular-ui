@@ -1,30 +1,108 @@
+/**
+@module mobile-angular-ui.gestures.transform
+@description
+
+`mobile-angular-ui.gestures.transform` provides the `$transform` service is designed 
+with the specific aim to provide a cross-browser way to interpolate CSS 3d transform 
+without having to deal with CSS Matrix, and being able to take into account any previous
+unknown transform already applied to an element.
+
+## Usage
+
+Require this module doing either
+
+``` js
+angular.module('myApp', ['mobile-angular-ui.gestures']);
+```
+
+Or standalone
+
+``` js
+angular.module('myApp', ['mobile-angular-ui.gestures.transform']);
+```
+
+Say we have an element with applyed css: 
+
+``` html
+<div class='myelem'></div>
+```
+
+``` css
+.myelem {
+  transform: translate(12px) rotate(20deg);
+}
+```
+
+Then you can use `$transform` like this:
+
+``` js
+  t = $transform.get(e);
+  t.rotationZ += 15;
+  t.translateX += 1;
+  $transform.set(e, t);
+```
+
+### `$transform` service API
+
+#### `$transform.fromCssMatrix(cssMatrixString) -> transform`
+
+Returns a decomposition of the transform matrix `cssMatrixString`. 
+NOTE: 2d matrices are translated to 3d matrices before any other operation.
+
+#### `$transform.toCss(decomposedTransform)`
+
+Recompose a css string from `decomposedTransform`. 
+
+Transforms are recomposed as a composition of:
+
+``` css
+matrix3d(1,0,0,0, 0,1,0,0, 0,0,1,0, perspective[0], perspective[1], perspective[2], perspective[3])
+translate3d(translation[0], translation[1], translation[2])
+rotateX(rotation[0]) rotateY(rotation[1]) rotateZ(rotation[2])
+matrix3d(1,0,0,0, 0,1,0,0, 0,skew[2],1,0, 0,0,0,1)
+matrix3d(1,0,0,0, 0,1,0,0, skew[1],0,1,0, 0,0,0,1)
+matrix3d(1,0,0,0, skew[0],1,0,0, 0,0,1,0, 0,0,0,1)
+scale3d(scale[0], scale[1], scale[2])
+```
+
+#### `$transform.get(e) -> transform`
+
+Returns a decomposition of the transform matrix applied to `e`.
+
+#### `$transform.set(element, transform)`
+
+If transform is a string just set it for element `element`. Otherwise is considered as a
+decomposed transform and is recomposed with `$transform.toCss` and then set to element.
+
+### The decomposed transform object
+
+Result of transform matrix decomposition is an object with the following properties:
+
+```
+translateX
+translateY
+translateZ
+perspectiveX
+perspectiveY
+perspectiveZ
+perspectiveW
+scaleX
+scaleY
+scaleZ
+rotateX
+rotateY
+rotateZ
+skewXY
+skewXZ
+skewYZ
+``` 
+
+*/
 (function() {
   'use strict';
   
   var module = angular.module('mobile-angular-ui.gestures.transform', []);
 
-  // $transform Service is designed with the specific aim to provide a cross-browser way to
-  // interpolate CSS 3d transform without having to deal with CSS Matrix, and being able
-  // to take into account any previous unknown transform already applied to an element.
-  // 
-  // Usage
-  // 
-  // ``` css
-  // .myelem {
-  //   transform: translate(12px) rotate(20deg);
-  // }
-  // ```
-  // 
-  // ``` html
-  // <div class='myelem'></div>
-  // ```
-  // 
-  // ``` js
-  //   t = $transform.get(e);
-  //   t.rotationZ += 15;
-  //   t.translateX += 1;
-  //   $transform.set(e, t);
-  // ```
   module.factory('$transform', function(){
 
     /*==============================================================
@@ -372,7 +450,7 @@
         return decompose(M);
       },
 
-      toCssMatrix: function(t) {
+      toCss: function(t) {
         // 
         // Transforms are recomposed as a composition of:
         // 
@@ -436,7 +514,7 @@
 
       // Recompose a transform from decomposition `t` and apply it to element `e`
       set: function(e, t) {
-        var str = (typeof t === 'string') ? t : this.toCssMatrix(t);
+        var str = (typeof t === 'string') ? t : this.toCss(t);
         setElementTransformProperty(e, str);  
       }
     };

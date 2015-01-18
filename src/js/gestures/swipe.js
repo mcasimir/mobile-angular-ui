@@ -1,11 +1,31 @@
+/**
+@module mobile-angular-ui.gestures.swipe
+@description
+
+An adaptation of `ngTouch.$swipe`, it is basically the same despite of:
+
+- It is based on [$touch](../module:touch)
+- Swipes are recognized by touch velocity and direction
+- It does not require ngTouch thus is better compatible with fastclick.js 
+- Swipe directives are nestable
+- It allows to unbind
+- It has only one difference in interface, and its about how to pass `pointerTypes`:
+
+  ``` js
+    // ngTouch.$swipe
+    $swipe.bind(..., { mouse: ... }); 
+
+    // mobile-angular-ui.gestures.swipe.$swipe
+    $swipe.bind(..., pointerTypes: { mouse: ... });
+  ```
+  This is due to the fact that the second parameter of `$swipe.bind` is destinated to options for
+  underlying `$touch` service.
+
+*/
+
 (function() {
   'use strict';
 
-  // An adaptation of ngTouch.$swipe
-  // basically the same despite of:
-  // 1) It is based on 'mobile-angular-ui.gestures.touch'
-  // 2) It does not require ngTouch thus is better compatible with fastclick.js 
-  // 3) It allows to unbind
   var module = angular.module('mobile-angular-ui.gestures.swipe', 
     ['mobile-angular-ui.gestures.touch']);
 

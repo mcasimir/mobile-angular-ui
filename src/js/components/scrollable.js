@@ -1,3 +1,73 @@
+/**  
+ * @module mobile-angular-ui.components.scrollable
+ * @description
+ * 
+ * One thing you'll always have to deal with approaching mobile web app development is scroll and `position:fixed` bugs.
+ * 
+ * Due to the lack of support in some devices fixed positioned elements may bounce or disappear during scroll. Also mobile interaction often leverages horizontal scroll eg. in carousels or sliders.
+ * 
+ * We use `overflow:auto` to create scrollable areas and solve any problems related to scroll.
+ * 
+ * Since `overflow:auto` is not always available in touch devices we use [Overthrow](http://filamentgroup.github.io/Overthrow/) to polyfill that.
+ * 
+ * Markup for any scrollable areas is as simple as:
+ * 
+ * ``` html
+ * <div class="scrollable">
+ *   <div class="scrollable-content">...</div>
+ * </div>
+ * ```
+ * 
+ * This piece of code will trigger a directive that properly setup a new `Overthrow` instance for the `.scrollable` node.
+ * 
+ * #### Headers and footers
+ * 
+ * `.scrollable-header/.scrollable-footer` can be used to add fixed header/footer to a scrollable area without having to deal with css height and positioning to avoid breaking scroll.
+ * 
+ * ``` html
+ * <div class="scrollable">
+ *   <div class="scrollable-header"><!-- ... --></div>
+ *   <div class="scrollable-content"><!-- ... --></div>
+ *   <div class="scrollable-footer"><!-- ... --></div>
+ * </div>
+ * ```
+ * 
+ * #### scrollTo
+ * 
+ * `.scrollable-content` controller exposes a `scrollTo` function: `scrollTo(offsetOrElement, margin)` 
+ * 
+ * You have to require it in your directives to use it or obtain through `element().controller`:
+ * 
+ * ``` js
+ * var elem = element(document.getElementById('myScrollableContent'));
+ * var scrollableContentController = elem.controller('scrollableContent');
+ * 
+ * // - Scroll to top of containedElement
+ * scrollableContentController.scrollTo(containedElement);
+ * 
+ * // - Scroll to top of containedElement with a margin of 10px;
+ * scrollableContentController.scrollTo(containedElement, 10);
+ * 
+ * // - Scroll top by 200px;
+ * scrollableContentController.scrollTo(200);
+ * ```
+ * 
+ * #### `ui-scroll-bottom/ui-scroll-top`
+ * 
+ * You can use `ui-scroll-bottom/ui-scroll-top` directives handle that events and implement features like _infinite scroll_.
+ * 
+ * ``` html
+ * <div class="scrollable">
+ *   <div class="scrollable-content section" ui-scroll-bottom="loadMore()">
+ *     <ul>
+ *       <li ng-repeat="item in items">
+ *         {{item.name}}
+ *       </li>
+ *     </ul>
+ *   </div>
+ * </div>
+ * ```
+ */
 (function() {
   'use strict';
   var module = angular.module('mobile-angular-ui.components.scrollable', []);
@@ -11,20 +81,6 @@
 
         this.scrollableContent = scrollableContent;
 
-        // scrollTo function.
-        // 
-        // Usage: 
-        // obtain scrollableContent controller somehow. Then:
-        // 
-        // - Scroll to top of containedElement
-        // scrollableContentController.scrollTo(containedElement);
-        // 
-        // - Scroll to top of containedElement with a margin of 10px;
-        // scrollableContentController.scrollTo(containedElement, 10);
-        // 
-        // - Scroll top by 200px;
-        // scrollableContentController.scrollTo(200);
-        // 
         this.scrollTo = function(elementOrNumber, marginTop) {
           marginTop = marginTop || 0;
 
@@ -77,13 +133,21 @@
     }]);
   });
 
-  // uiScrollTop/uiScrollBottom
-  // 
-  // usage:
-  // <div class="scrollable">
-  //    <div class="scrollable-content" ui-scroll-bottom='loadMore()'>
-  //    </div>
-  // </div>
+  /**
+   * @directive uiScrollTop
+   * @restrict A
+   *
+   * @param {expression} uiScrollTop The expression to be evaluated when scroll 
+   * reaches top of element.
+   */
+
+  /**
+   * @directive uiScrollBottom
+   * @restrict A
+   *
+   * @param {expression} uiScrollBottom The expression to be evaluated when scroll 
+   * reaches bottom of element.
+   */
   angular.forEach(
     {
       uiScrollTop: function(elem){
@@ -112,6 +176,15 @@
       }]);
     });
 
+  /**
+   * @directive uiScrollableHeader
+   * @restrict C
+   */
+
+  /**
+   * @directive uiScrollableFooter
+   * @restrict C
+   */
   angular.forEach({Top: 'scrollableHeader', Bottom: 'scrollableFooter'}, 
     function(directiveName, side) {
         module.directive(directiveName, [

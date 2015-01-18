@@ -8,7 +8,7 @@
 var gulp              = require('gulp'),
     concat            = require('gulp-concat'),
     connect           = require('gulp-connect'),
-    cssmin            = require('gulp-cssmin'),
+    csso              = require('gulp-csso'),
     del               = require('del'),
     jshint            = require('gulp-jshint'),
     less              = require('gulp-less'),
@@ -20,8 +20,7 @@ var gulp              = require('gulp'),
     os                = require('os'),
     seq               = require('run-sequence'),
     sourcemaps        = require('gulp-sourcemaps'),
-    uglify            = require('gulp-uglify'),
-    docgen            = require('./docs/docgen');
+    uglify            = require('gulp-uglify');
 
 var exitConnect = function() {
   connect.serverClose();
@@ -158,7 +157,7 @@ gulp.task('css:copy', function() {
 
 gulp.task('css:minify', function() {
   return gulp.src(path.join('dist', 'css', '*.css'))
-    .pipe(cssmin())
+    .pipe(csso())
     .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest(path.join('dist', 'css')));
 });
@@ -275,20 +274,6 @@ function makeTestTask(name, conf, args) {
 makeTestTask('test', 'test/all.conf.js');
 makeTestTask('test:chrome', 'test/chrome.conf.js');
 makeTestTask('test:firefox', 'test/firefox.conf.js');
-
-/*============================
-=            Docs            =
-============================*/
-
-gulp.task('docs', function(done) {
-  del(['docs/api/**'], function() {
-    docgen('src/js', {
-        outputTree: true 
-      })
-      .pipe(gulp.dest('docs/api'))
-      .on('end', done);    
-  });
-});
 
 /*===============================
 =            Release            =

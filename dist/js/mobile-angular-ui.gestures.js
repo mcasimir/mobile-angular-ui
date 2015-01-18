@@ -1,3 +1,118 @@
+/**
+@module mobile-angular-ui.gestures.drag
+@description
+
+`mobile-angular-ui.gestures.drag` module exposes the `$drag` service that is used 
+to handle drag gestures. `$drag` service wraps [$touch](../module:touch) service adding
+CSS transforms reacting to `touchmove` events.
+
+## Usage
+
+``` js
+angular.module('myApp', ['mobile-angular-ui.gestures']);
+```
+
+Or
+
+``` js
+angular.module('myApp', ['mobile-angular-ui.gestures.drag']);
+```
+
+``` js
+var dragOptions = {
+  transform: $drag.TRANSLATE_BOTH,
+  start:  function(dragInfo, event){},
+  end:    function(dragInfo, event){},
+  move:   function(dragInfo, event){},
+  cancel: function(dragInfo, event){}
+};
+
+$drag.bind(element, dragOptions, touchOptions);
+```
+
+Where:
+
+- `transform` is a `function(element, currentTransform, touch) -> newTransform`
+   returning taking an `element`, its `currentTransform` and returning the `newTransform` 
+   for the element in response to `touch`. See [$transform](../module:transform) for more.
+   Default to `$drag.TRANSLATE_BOTH`.
+- `start`, `end`, `move`, `cancel` are optional callbacks responding to `drag` movement phases.
+- `dragInfo` is an extended version of `touchInfo` from [$touch](../module:touch), 
+  extending it with:
+  - `originalTransform`: The [$transform](../module:transform) object relative to CSS transform before `$drag` is bound.
+  - `originalRect`: The [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect) for bound element before any drag action.
+  - `startRect`: The [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect) for bound element registered at `start` event.
+  - `startTransform`: The [$transform](../module:transform) at `start` event.
+  - `rect`: The current [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect) for bound element.
+  - `transform`: The current [$transform](../module:transform).
+  - `reset`: A function restoring element to `originalTransform`.
+  - `undo`: A function restoring element to `startTransform`.
+- `touchOptions` is an option object to be passed to underlying [`$touch`](../module:touch) service.
+
+### Predefined transforms
+
+- `$drag.NULL_TRANSFORM`: No transform follow movement
+- `$drag.TRANSLATE_BOTH`: Transform translate following movement on both x and y axis.
+- `$drag.TRANSLATE_HORIZONTAL`: Transform translate following movement on x axis.
+- `$drag.TRANSLATE_UP`: Transform translate following movement on negative y axis.
+- `$drag.TRANSLATE_DOWN`: Transform translate following movement on positive y axis.
+- `$drag.TRANSLATE_LEFT`: Transform translate following movement on negative x axis.
+- `$drag.TRANSLATE_RIGHT`: Transform translate following movement on positive x axis.
+- `$drag.TRANSLATE_VERTICAL`: Transform translate following movement on y axis.
+- `$drag.TRANSLATE_INSIDE`: Is a function and should be used like:
+   
+   ``` js
+    { 
+      transform: $drag.TRANSLATE_INSIDE(myElement)
+    }
+   ```
+
+   It returns a transform function that contains translate movement inside 
+   the passed element. 
+
+### `.ui-drag-move` style
+
+While moving an `.ui-drag-move` class is attached to element. Style for this class is defined via
+[insertRule](https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet.insertRule) and aims to
+fix common problems while dragging, specifically:
+
+- Brings the element in front of other elements
+- Disable transitions
+- Makes text unselectable
+
+**NOTE** Transitions are disabled cause they may introduce conflicts between `transition: transform` 
+ and `dragOptions.transform` function.
+
+They will be re-enabled after drag, and this can be used to achieve some graceful effects.
+
+If you need transition that does not involve transforms during movement you can apply them to an
+inner or wrapping element. 
+
+### Examples
+
+#### Limit movement to an element
+
+``` js
+app.directive('dragMe', ['$drag', function($drag){
+  return {
+    controller: function($scope, $element) {
+      $drag.bind($element, 
+        {
+          transform: $drag.TRANSLATE_INSIDE($element.parent()),
+          end: function(drag) {
+            drag.reset();
+          }
+        },
+        { // release touch when movement is outside bounduaries
+          sensitiveArea: $element.parent()
+        }
+      );
+    }
+  };
+}]);
+```
+
+*/
 (function () {
    'use strict';
 
@@ -5,97 +120,6 @@
      'mobile-angular-ui.gestures.touch',
      'mobile-angular-ui.gestures.transform'
    ])
-
-  // `$drag` Service wraps `$touch` to extend its behavior moving target element through css transform according to the `$touch` coords thus creating 
-  // a drag effect.
-
-  // $drag interface is very close to `$touch`:
-
-  // app.controller('MyController', function($drag, $element){
-  //   var unbindDrag = $drag.bind($element, {
-  //    // drag callbacks
-  //    // - rect is the current result of getBoundingClientRect() for bound element
-  //    // - resetFn restore the initial transform
-  //    // - undoFn undoes the current movement
-  //    // - swipeCoords are the coordinates exposed by the underlying $touch service
-  //    start: function(dragInfo, reset, event) {},
-  //    move: function(dragInfo, undo, reset, event) {},
-  //    end: function(dragInfo, undo, reset, event) {},
-  //    cancel: function(dragInfo) {};
-
-  //    // constraints for the movement
-  //    // you can use a "static" object of the form:
-  //    // {top: .., lelf: .., bottom: .., rigth: ..}
-  //    // or pass a function that is called on each movement 
-  //    // and return it in a dynamic way.
-  //    // This is useful if you have to constraint drag movement while bounduaries are
-  //    // changing over time.
-
-  //    constraint: function(){ return {top: y1, left: x1, bottom: y2, right: x2}; }, // or just {top: y1, left: x1, bottom: y2, right: x2}
-
-  //    // instantiates the Trasform according to touch movement (defaults to `t.translate(dx, dy);`)
-  //    // dx, dy are the distances of movement for x and y axis after constraints are applyied
-  //    transform: function(transform, dx, dy, currSwipeX, currSwipeY, startSwipeX, startSwipeY) {},
-    
-  //   // This is automatically called when element is disposed so it is not necessary
-  //   // that you call this manually but if you have to detatch $drag service before
-  //   // this you could just call:
-  //   unbindDrag();
-  // });
-
-  // Main differences with `$touch` are:
-  //  - bound elements will move following swipe direction automatically
-  //  - coords param take into account css transform so you can easily detect collision with other elements.
-  //  - start, move, end callback receive a cancel funcion that can be used to cancel the motion and reset
-  //    the transform.
-  //  - you can configure the transform behavior passing a transform function to options.
-  //  - you can constraint the motion through the constraint option (setting relative movement limits)
-   
-  // Example (drag to dismiss):
-
-  // app.directive('dragToDismiss', function($drag, $parse, $timeout){
-  //   return {
-  //     restrict: 'A',
-  //     compile: function($element, attrs) {
-  //       var dismissFn = $parse(attrs.dragToDismiss);
-  //       return function(scope, $element, attrs){
-  //         var dismiss = false;
-
-  //         $drag.bind($element, {
-  //           constraint: {
-  //             minX: 0, 
-  //             minY: 0, 
-  //             maxY: 0 
-  //           },
-  //           move: function(c) {
-  //             if( c.left >= c.width / 4) {
-  //               dismiss = true;
-  //               $element.addClass('dismiss');
-  //             } else {
-  //               dismiss = false;
-  //               $element.removeClass('dismiss');
-  //             }
-  //           },
-  //           cancel: function(){
-  //             $element.removeClass('dismiss');
-  //           },
-  //           end: function(c, undo, reset) {
-  //             if (dismiss) {
-  //               $element.addClass('dismitted');
-  //               $timeout(function() { 
-  //                 scope.$apply(function() {
-  //                   dismissFn(scope);  
-  //                 });
-  //               }, 400);
-  //             } else {
-  //               reset();
-  //             }
-  //           }
-  //         });
-  //       };
-  //     }
-  //   };
-  // });
 
   .provider('$drag', function() {
     this.$get = ['$touch', '$transform', function($touch, $transform) {
@@ -328,14 +352,34 @@
   });
 
 }());
+/**
+@module mobile-angular-ui.gestures.swipe
+@description
+
+An adaptation of `ngTouch.$swipe`, it is basically the same despite of:
+
+- It is based on [$touch](../module:touch)
+- Swipes are recognized by touch velocity and direction
+- It does not require ngTouch thus is better compatible with fastclick.js 
+- Swipe directives are nestable
+- It allows to unbind
+- It has only one difference in interface, and its about how to pass `pointerTypes`:
+
+  ``` js
+    // ngTouch.$swipe
+    $swipe.bind(..., { mouse: ... }); 
+
+    // mobile-angular-ui.gestures.swipe.$swipe
+    $swipe.bind(..., pointerTypes: { mouse: ... });
+  ```
+  This is due to the fact that the second parameter of `$swipe.bind` is destinated to options for
+  underlying `$touch` service.
+
+*/
+
 (function() {
   'use strict';
 
-  // An adaptation of ngTouch.$swipe
-  // basically the same despite of:
-  // 1) It is based on 'mobile-angular-ui.gestures.touch'
-  // 2) It does not require ngTouch thus is better compatible with fastclick.js 
-  // 3) It allows to unbind
   var module = angular.module('mobile-angular-ui.gestures.swipe', 
     ['mobile-angular-ui.gestures.touch']);
 
@@ -402,54 +446,106 @@
   makeSwipeDirective('ngSwipeLeft', -1, 'swipeleft');
   makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
 }());
+/**
+@module mobile-angular-ui.gestures.touch
+@description
+
+Device agnostic touch handling.
+
+`touch` module just exposes corresponding `$touch` service, that is an abstraction 
+of touch event handling that works with any kind of input devices. It is intended 
+for single touch only and provides extended infos about touch like: movement, 
+direction, velocity, duration, and more.
+
+$touch service is intended as base to build any single-touch gesture handlers.
+
+## Usage
+
+Require this module doing either
+
+``` js
+angular.module('myApp', ['mobile-angular-ui.gestures']);
+```
+
+Or standalone
+
+``` js
+angular.module('myApp', ['mobile-angular-ui.gestures.touch']);
+```
+
+Then you will be able to use the `$touch` service like that:
+
+``` js
+var unbindFn = $touch.bind(element, {
+   start: function(touchInfo, e);
+   move: function(touchInfo, e);
+   end: function(touchInfo, e);
+   cancel: function(touchInfo, e);
+}, options);
+```
+
+Where `options` is an object optionally specifing:
+
+- `movementThreshold`: {integer} Minimum movement distance to start handling `touchmove`
+- `valid`: {function():bool}` A function returning a boolean value to decide whether handle the touch event or ignore it.
+- `sensitiveArea`: A [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect) or an element 
+   or a function that takes the bound element and returns one of the previous.
+   Sensitive area define bounduaries to release touch when movement is outside.
+   Default is to:
+   
+   ``` js
+   function($element) {
+     $element[0].ownerDocument.documentElement.getBoundingClientRect();
+   }
+   ```
+                   
+- `pointerTypes`: {object} Which kind of pointer events you wish to handle, with 
+  corresponding event names, by device. eg. 
+
+  ``` js
+  {
+    'mouse': {
+      start: 'mousedown',
+      move: 'mousemove',
+      end: 'mouseup'
+    },
+    'touch': {
+      start: 'touchstart',
+      move: 'touchmove',
+      end: 'touchend',
+      cancel: 'touchcancel'
+    }
+  }
+  ```
+
+And `touchInfo` is an object containing the following extended informations about the touch event:
+
+- `type`: Normalized event type. Despite of pointer device is always one of `touchstart`, `touchend`, `touchmove`, `touchcancel`.
+- `timestamp`: The time object corresponding to the moment this touch event happened.
+- `duration`: The difference between this touch event and the corresponding `touchstart`. 
+- `startX`: X coord of related `touchstart`.
+- `startY`: Y coord of related `touchstart`.
+- `prevX`: X coord of previous `touchstart` or `touchmove`.
+- `prevY`: Y coord of previous `touchstart` or `touchmove`.
+- `x`: X coord of this touch event.
+- `y`: Y coord of this touch event.
+- `step`: Distance between `<prevX, prevY>` and `<x, y>` points.
+- `stepX`: Distance between `prevX` and `x`.
+- `stepY`: Distance between `prevY` and `y`.
+- `velocity`: Instantaneous velocity of a touch event in pixels per second.
+- `averageVelocity`: Average velocity of a touch event from its corresponding `touchstart` in pixels per second.
+- `distance`: Distance between `<startX, startY>` and `<x, y>` points.
+- `distanceX`: Distance between `startX` and `x`.
+- `distanceY`: Distance between `startY` and `y`.
+- `total`: Total number of pixels covered by movement, taking account of direction changes and turnarounds.
+- `totalX`: Total number of pixels covered by horizontal movement, taking account of direction changes and turnarounds.
+- `totalY`: Total number of pixels covered by vertical, taking account of direction changes and turnarounds.
+- `direction`: The prevalent, current direction for this touch, one of 'LEFT', 'RIGHT', 'TOP', 'BOTTOM'.
+- `angle`: Angle in degree between x axis and the vector `[x, y]`, is `null` when no movement happens.
+
+*/
 (function() {
   'use strict';
-
-  // input-device agnostic touch handling. 
-  // $touch service is an abstraction of touch event handling that works with any kind of
-  // input devices. It is intended for single touch only and it provides extended infos
-  // about touch like: movement direction, velocity, duration ...
-  // 
-  // $touch service is intended as base to build any single-touch gesture handlers
-  // 
-  // Usage:
-  // 
-  // $touch.bind(element, {
-  //    start: function(touchInfo, e);
-  //    move: function(touchInfo, e);
-  //    end: function(touchInfo, e);
-  //    cancel: function(touchInfo, e);
-  // }, options);
-  // 
-  // touchInfo is an object containing:
-  // - timestamp
-  // - duration
-  // - startX
-  // - startY
-  // - prevX
-  // - prevY
-  // - x
-  // - y
-  // - step
-  // - stepX
-  // - stepY
-  // - velocity
-  // - distance: linear distance from start
-  // - distanceX
-  // - distanceY
-  // - total: total length of the movement (considering turnarounds etc ...)
-  // - totalX
-  // - totalY
-  // 
-  // - direction: angle of movement from start in degree (or null)
-  // 
-  // options is an object specifing:
-  // 
-  // - movementThreshold: 10
-  // - valid: (fn->bool or bool) wether yield to scroll or prevent it
-  // - pointerTypes: (array) which kind of pointer events you wish 
-  //                  to handle ie. ['mouse', 'touch', 'pen']
-
   var module = angular.module('mobile-angular-ui.gestures.touch', []);
 
   module.provider('$touch', function() {
@@ -487,10 +583,6 @@
 
     this.setPointerEvents = function(pe) {
       POINTER_EVENTS = pe;
-    };
-
-    this.setPointerTypes = function(pt) {
-      POINTER_EVENTS = pt;
     };
 
     this.setValid = function(fn) {
@@ -777,33 +869,111 @@
     }];
   });
 }());
+/**
+@module mobile-angular-ui.gestures.transform
+@description
+
+`mobile-angular-ui.gestures.transform` provides the `$transform` service is designed 
+with the specific aim to provide a cross-browser way to interpolate CSS 3d transform 
+without having to deal with CSS Matrix, and being able to take into account any previous
+unknown transform already applied to an element.
+
+## Usage
+
+Require this module doing either
+
+``` js
+angular.module('myApp', ['mobile-angular-ui.gestures']);
+```
+
+Or standalone
+
+``` js
+angular.module('myApp', ['mobile-angular-ui.gestures.transform']);
+```
+
+Say we have an element with applyed css: 
+
+``` html
+<div class='myelem'></div>
+```
+
+``` css
+.myelem {
+  transform: translate(12px) rotate(20deg);
+}
+```
+
+Then you can use `$transform` like this:
+
+``` js
+  t = $transform.get(e);
+  t.rotationZ += 15;
+  t.translateX += 1;
+  $transform.set(e, t);
+```
+
+### `$transform` service API
+
+#### `$transform.fromCssMatrix(cssMatrixString) -> transform`
+
+Returns a decomposition of the transform matrix `cssMatrixString`. 
+NOTE: 2d matrices are translated to 3d matrices before any other operation.
+
+#### `$transform.toCss(decomposedTransform)`
+
+Recompose a css string from `decomposedTransform`. 
+
+Transforms are recomposed as a composition of:
+
+``` css
+matrix3d(1,0,0,0, 0,1,0,0, 0,0,1,0, perspective[0], perspective[1], perspective[2], perspective[3])
+translate3d(translation[0], translation[1], translation[2])
+rotateX(rotation[0]) rotateY(rotation[1]) rotateZ(rotation[2])
+matrix3d(1,0,0,0, 0,1,0,0, 0,skew[2],1,0, 0,0,0,1)
+matrix3d(1,0,0,0, 0,1,0,0, skew[1],0,1,0, 0,0,0,1)
+matrix3d(1,0,0,0, skew[0],1,0,0, 0,0,1,0, 0,0,0,1)
+scale3d(scale[0], scale[1], scale[2])
+```
+
+#### `$transform.get(e) -> transform`
+
+Returns a decomposition of the transform matrix applied to `e`.
+
+#### `$transform.set(element, transform)`
+
+If transform is a string just set it for element `element`. Otherwise is considered as a
+decomposed transform and is recomposed with `$transform.toCss` and then set to element.
+
+### The decomposed transform object
+
+Result of transform matrix decomposition is an object with the following properties:
+
+```
+translateX
+translateY
+translateZ
+perspectiveX
+perspectiveY
+perspectiveZ
+perspectiveW
+scaleX
+scaleY
+scaleZ
+rotateX
+rotateY
+rotateZ
+skewXY
+skewXZ
+skewYZ
+``` 
+
+*/
 (function() {
   'use strict';
   
   var module = angular.module('mobile-angular-ui.gestures.transform', []);
 
-  // $transform Service is designed with the specific aim to provide a cross-browser way to
-  // interpolate CSS 3d transform without having to deal with CSS Matrix, and being able
-  // to take into account any previous unknown transform already applied to an element.
-  // 
-  // Usage
-  // 
-  // ``` css
-  // .myelem {
-  //   transform: translate(12px) rotate(20deg);
-  // }
-  // ```
-  // 
-  // ``` html
-  // <div class='myelem'></div>
-  // ```
-  // 
-  // ``` js
-  //   t = $transform.get(e);
-  //   t.rotationZ += 15;
-  //   t.translateX += 1;
-  //   $transform.set(e, t);
-  // ```
   module.factory('$transform', function(){
 
     /*==============================================================
@@ -1151,7 +1321,7 @@
         return decompose(M);
       },
 
-      toCssMatrix: function(t) {
+      toCss: function(t) {
         // 
         // Transforms are recomposed as a composition of:
         // 
@@ -1215,12 +1385,46 @@
 
       // Recompose a transform from decomposition `t` and apply it to element `e`
       set: function(e, t) {
-        var str = (typeof t === 'string') ? t : this.toCssMatrix(t);
+        var str = (typeof t === 'string') ? t : this.toCss(t);
         setElementTransformProperty(e, str);  
       }
     };
   });
 }());
+/**
+@module mobile-angular-ui.gestures
+@memberof!
+@position 100
+@description
+
+It has directives and services to support `touch`, `swipe` and `drag` gestures.
+
+It does not need any `.css` to work.
+
+<div class="alert alert-warning">
+<p>
+<i class="fa fa-warning"></i> This module will not work with `ngTouch` cause it is intended, among offering more features, to be a drop-in replacement for it.  
+</p>
+<p>
+Be aware that `ngTouch` is still not playing well with `fastclick.js` and its usage with `mobile-angular-ui` is currently discouraged anyway.  
+</p>
+</div>
+
+## Usage
+
+`.gestures` module is not required by `mobile-angular-ui` module. It has no dependency on other modules and is intended to be used alone with any other angular framework.
+
+You have to include `mobile-angular-ui.gestures.min.js` to your project in order to use it. Ie.
+
+``` html
+<script src="/dist/js/mobile-angular-ui.gestures.min.js"></script>
+```
+
+``` js
+angular.module('myApp', ['mobile-angular-ui.gestures']);
+```
+
+*/
 (function () {
    'use strict';
 

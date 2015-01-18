@@ -820,6 +820,31 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 	window.FastClick = FastClick;
 }
 
+/**
+@module mobile-angular-ui.core.activeLinks
+@description
+
+`mobile-angular-ui.activeLinks` module sets up `.active` class for `a` elements those `href` attribute matches the current angular `$location` url. It takes care of excluding both search part and hash part from comparison.
+
+`.active` classes are added/removed each time one of `$locationChangeSuccess` or `$includeContentLoaded` is fired.
+
+## Usage
+
+Just declare it as a dependency to your app unless you have already included one of its super-modules.
+
+```
+angular.module('myApp', ['mobile-angular-ui.core.activeLinks']);
+```
+
+**NOTE:** if you are using it without Bootstrap you may need to add some css to your stylesheets to reflect the activation state of links. I.e.
+
+``` css
+a.active {
+  color: blue;
+}
+```
+
+*/
 (function () {
   'use strict';
 
@@ -871,6 +896,116 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 }());
 
 
+/** 
+@module mobile-angular-ui.core.capture
+@description
+
+The `capture` module exposes directives to let you extract markup which can be used in other parts of a template using `uiContentFor` and `uiYieldTo` directives.
+
+It provides a way to move or clone a block of markup to other parts of the document.
+
+This method is particularly useful to setup parts of the layout within an angular view. Since blocks of html are transplanted within their original `$scope` is easy to create layout interactions depending on the context. Some tipical task you can accomplish with these directives are: _setup the navbar title depending on the view_ or _place a submit button for a form inside a navbar_.
+
+## Usage
+
+Declare it as a dependency to your app unless you have already included some of its super-modules.
+
+```
+angular.module('myApp', ['mobile-angular-ui']);
+```
+
+Or
+
+```
+angular.module('myApp', ['mobile-angular-ui']);
+```
+
+Or
+
+```
+angular.module('myApp', ['mobile-angular-ui.core.capture']);
+```
+
+Use `ui-yield-to` as a placeholder.
+
+``` html
+<!-- index.html -->
+
+<div class="navbar">
+  <div ui-yield-to="title" class="navbar-brand">
+    <span>Default Title</span>
+  </div>
+</div>
+
+<div class="app-body">
+  <ng-view class="app-content"></ng-view>
+</div>
+```
+
+Use `ui-content-for` inside any view to populate the `ui-yield-to` content.
+
+``` html
+<!-- myView.html -->
+
+<div ui-content-for="title">
+  <span>My View Title</span>
+</div>
+```
+
+Since the original scope is preserved you can use directives inside `ui-content-for` blocks to interact with the current scope. In the following example we will add a navbar button to submit a form inside a nested view.  
+
+
+``` html
+<!-- index.html -->
+
+<div class="navbar">
+  <div ui-yield-to="navbarAction">
+  </div>
+</div>
+
+<div class="app-body">
+  <ng-view class="app-content"></ng-view>
+</div>
+```
+
+``` html
+<!-- newCustomer.html -->
+
+<form ng-controller="newCustomerController">
+
+  <div class="inputs">
+    <input type="text" ng-model="customer.name" />  
+  </div>
+
+  <div ui-content-for="navbarAction">
+    <button ng-click="createCustomer()">
+      Save
+    </button>
+  </div>
+
+</form>
+```
+
+``` javascript
+app.controller('newCustomerController', function($scope, Store){
+  $scope.customer = {};
+  $scope.createCustomer = function(){
+    Store.create($scope.customer);
+    // ...
+  }
+});
+```
+
+If you wish you can also duplicate markup instead of move it. Just add `duplicate` parameter to `uiContentFor` directive to specify this behaviour.
+
+``` html
+<div ui-content-for="navbarAction" duplicate>
+  <button ng-click="createCustomer()">
+    Save
+  </button>
+</div>
+```
+*/
 (function () {
    'use strict';
 
@@ -935,6 +1070,21 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
      }
    ])
 
+  /**
+   * @directive uiContentFor
+   * @restrict A
+   *
+   * `ui-content-for` makes inner contents to replace the corresponding 
+   * `ui-yield-to` placeholder contents.
+   *
+   * `uiContentFor` is intended to be used inside a view in order to populate outer placeholders.
+   * Any content you send to placeholders via `ui-content-for` is
+   * reverted to placeholder defaults after view changes (ie. on `$routeChangeStart`).
+   * 
+   * @param {string} uiContentFor The id of the placeholder to be replaced
+   * @param {boolean} uiDuplicate If present duplicates the content instead of moving it (default to `false`)
+   *
+   */
    .directive('uiContentFor', [
      'Capture', 
      function(Capture) {
@@ -954,6 +1104,17 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
      }
    ])
 
+   /**
+    * @directive uiYieldTo
+    * @restrict A
+    *
+    * `ui-yield-to` defines a placeholder which contents will be further replaced by `ui-content-for` directive.
+    *
+    * Inner html is considered to be a default. Default is restored any time `$routeChangeStart` happens.
+    * 
+    * @param {string} uiYieldTo The unique id of this placeholder.
+    *
+    */
    .directive('uiYieldTo', [
      '$compile', 'Capture', function($compile, Capture) {
        return {
@@ -994,6 +1155,63 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
     });
   });
 }());
+/**
+
+@module mobile-angular-ui.core.outerClick
+@description
+
+Provides a directive to specifiy a behaviour when click/tap events 
+happen outside an element. This can be easily used 
+to implement eg. __close on outer click__ feature for a dropdown.
+
+## Usage
+
+Declare it as a dependency to your app unless you have already 
+included some of its super-modules.
+
+```
+angular.module('myApp', ['mobile-angular-ui']);
+```
+
+Or
+
+```
+angular.module('myApp', ['mobile-angular-ui.core']);
+```
+
+Or
+
+```
+angular.module('myApp', ['mobile-angular-ui.core.outerClick']);
+```
+
+Use `ui-outer-click` to define an expression to evaluate when an _Outer Click_ event happens.
+Use `ui-outer-click-if` parameter to define a condition to enable/disable the listener.
+
+``` html
+<div class="btn-group">
+  <a ui-turn-on='myDropdown' class='btn'>
+    <i class="fa fa-ellipsis-v"></i>
+  </a>
+  <ul 
+    class="dropdown-menu"
+    ui-outer-click="Ui.turnOff('myDropdown')"
+    ui-outer-click-if="Ui.active('myDropdown')"
+    role="menu"
+    ui-show="myDropdown" 
+    ui-state="myDropdown"
+    ui-turn-off="myDropdown">
+
+    <li><a>Action</a></li>
+    <li><a>Another action</a></li>
+    <li><a>Something else here</a></li>
+    <li class="divider"></li>
+    <li><a>Separated link</a></li>
+  </ul>
+</div>
+```
+
+*/
 (function () {
    'use strict';
 
@@ -1012,6 +1230,34 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 
    angular.module('mobile-angular-ui.core.outerClick', [])
 
+   /**
+    * @service bindOuterClick
+    * @as function
+    * 
+    * @description
+    * This is a service function that binds a callback to be conditionally executed
+    * when a click event happens outside a specified element.
+    *
+    * ## Usage
+    *
+    * ``` js
+    * app.directive('myDirective', function('bindOuterClick'){
+    *   return {
+    *     link: function(scope, element) {
+    *       bindOuterClick(element, function(e){
+    *         alert('You clicked ouside me!');
+    *       }, function(e){
+    *         return element.hasClass('disabled') ? true : false;
+    *       });
+    *     }
+    *   };
+    * });
+    * ```
+    * @scope {scope} the scope to eval callbacks
+    * @param {DomElement|$element} element The element to bind to. 
+    * @param {function} callback Parsed function to call when an _Outer Click_ event happens.
+    * @param {string|function} condition Angular `$watch` expression to decide whether to run `callback` or not.
+    */
    .factory('bindOuterClick', [
      '$document',
      '$timeout',
@@ -1057,6 +1303,16 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
      }
    ])
 
+
+  /**
+   * @directive outerClick
+   * 
+   * @description
+   * Evaluates an expression when an _Outer Click_ event happens.
+   * 
+   * @param {expression} uiOuterClick Expression to evaluate when an _Outer Click_ event happens.
+   * @param {expression} uiOuterClickIf Condition to enable/disable the listener. Defaults to `true`.
+   */
    .directive('uiOuterClick', [
      'bindOuterClick', 
      '$parse',
@@ -1240,13 +1496,14 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
      * Broadcasted on `$rootScope` the value of a state changes.
      * 
      * ``` js
-     * $scope.$on(`mobile-angular-ui.state.changed.uiSidebarLeft`, function(e, newVal, oldVal) {
+     * $scope.$on('mobile-angular-ui.state.changed.uiSidebarLeft', function(e, newVal, oldVal) {
      *   if (newVal === true) {
      *     console.log('sidebar opened');
      *   } else {
      *     console.log('sidebar closed');
      *   }
      * });
+     * ```
      * 
      * @param {any} newValue
      * @param {any} oldValue
@@ -1634,7 +1891,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
        * @ngdoc directive
        * 
        * @param {object} uiTurnOff the target shared state
-       * @param {string} [uiTriggers] the event triggering the call. Defaults to `click tap`
+       * @param {string} [uiTriggers='click tap'] the event triggering the call.
        */
 
       /**
@@ -1646,7 +1903,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
        * @ngdoc directive
        * 
        * @param {object} uiSet The object to pass to SharedState#set
-       * @param {string} [uiTriggers] the event triggering the call. Defaults to `click tap`
+       * @param {string} [uiTriggers='click tap'] the event triggering the call.
        */
       
       module.directive(directiveName, [
@@ -1967,7 +2224,7 @@ UI interactions with angular.
 
 Although `.core` module is required by `mobile-angular-ui` by default you can use it alone.
 
-```
+``` js
 angular.module('myApp', ['mobile-angular-ui.core']);
 ```
 

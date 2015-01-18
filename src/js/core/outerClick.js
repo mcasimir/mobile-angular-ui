@@ -1,3 +1,60 @@
+/**
+
+@module mobile-angular-ui.core.outerClick
+@description
+
+Provides a directive to specifiy a behaviour when click/tap events 
+happen outside an element. This can be easily used 
+to implement eg. __close on outer click__ feature for a dropdown.
+
+## Usage
+
+Declare it as a dependency to your app unless you have already 
+included some of its super-modules.
+
+```
+angular.module('myApp', ['mobile-angular-ui']);
+```
+
+Or
+
+```
+angular.module('myApp', ['mobile-angular-ui.core']);
+```
+
+Or
+
+```
+angular.module('myApp', ['mobile-angular-ui.core.outerClick']);
+```
+
+Use `ui-outer-click` to define an expression to evaluate when an _Outer Click_ event happens.
+Use `ui-outer-click-if` parameter to define a condition to enable/disable the listener.
+
+``` html
+<div class="btn-group">
+  <a ui-turn-on='myDropdown' class='btn'>
+    <i class="fa fa-ellipsis-v"></i>
+  </a>
+  <ul 
+    class="dropdown-menu"
+    ui-outer-click="Ui.turnOff('myDropdown')"
+    ui-outer-click-if="Ui.active('myDropdown')"
+    role="menu"
+    ui-show="myDropdown" 
+    ui-state="myDropdown"
+    ui-turn-off="myDropdown">
+
+    <li><a>Action</a></li>
+    <li><a>Another action</a></li>
+    <li><a>Something else here</a></li>
+    <li class="divider"></li>
+    <li><a>Separated link</a></li>
+  </ul>
+</div>
+```
+
+*/
 (function () {
    'use strict';
 
@@ -16,6 +73,34 @@
 
    angular.module('mobile-angular-ui.core.outerClick', [])
 
+   /**
+    * @service bindOuterClick
+    * @as function
+    * 
+    * @description
+    * This is a service function that binds a callback to be conditionally executed
+    * when a click event happens outside a specified element.
+    *
+    * ## Usage
+    *
+    * ``` js
+    * app.directive('myDirective', function('bindOuterClick'){
+    *   return {
+    *     link: function(scope, element) {
+    *       bindOuterClick(element, function(e){
+    *         alert('You clicked ouside me!');
+    *       }, function(e){
+    *         return element.hasClass('disabled') ? true : false;
+    *       });
+    *     }
+    *   };
+    * });
+    * ```
+    * @scope {scope} the scope to eval callbacks
+    * @param {DomElement|$element} element The element to bind to. 
+    * @param {function} callback Parsed function to call when an _Outer Click_ event happens.
+    * @param {string|function} condition Angular `$watch` expression to decide whether to run `callback` or not.
+    */
    .factory('bindOuterClick', [
      '$document',
      '$timeout',
@@ -61,6 +146,16 @@
      }
    ])
 
+
+  /**
+   * @directive outerClick
+   * 
+   * @description
+   * Evaluates an expression when an _Outer Click_ event happens.
+   * 
+   * @param {expression} uiOuterClick Expression to evaluate when an _Outer Click_ event happens.
+   * @param {expression} uiOuterClickIf Condition to enable/disable the listener. Defaults to `true`.
+   */
    .directive('uiOuterClick', [
      'bindOuterClick', 
      '$parse',

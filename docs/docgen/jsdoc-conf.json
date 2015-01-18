@@ -1,5 +1,0 @@
-{
-  "plugins": [
-    "node_modules/angular-jsdoc/plugins/ngdoc"
-  ]
-}

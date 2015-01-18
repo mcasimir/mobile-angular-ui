@@ -820,6 +820,31 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 	window.FastClick = FastClick;
 }
 
+/**
+@module mobile-angular-ui.core.activeLinks
+@description
+
+`mobile-angular-ui.activeLinks` module sets up `.active` class for `a` elements those `href` attribute matches the current angular `$location` url. It takes care of excluding both search part and hash part from comparison.
+
+`.active` classes are added/removed each time one of `$locationChangeSuccess` or `$includeContentLoaded` is fired.
+
+## Usage
+
+Just declare it as a dependency to your app unless you have already included one of its super-modules.
+
+```
+angular.module('myApp', ['mobile-angular-ui.core.activeLinks']);
+```
+
+**NOTE:** if you are using it without Bootstrap you may need to add some css to your stylesheets to reflect the activation state of links. I.e.
+
+``` css
+a.active {
+  color: blue;
+}
+```
+
+*/
 (function () {
   'use strict';
 
@@ -871,6 +896,116 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 }());
 
 
+/** 
+@module mobile-angular-ui.core.capture
+@description
+
+The `capture` module exposes directives to let you extract markup which can be used in other parts of a template using `uiContentFor` and `uiYieldTo` directives.
+
+It provides a way to move or clone a block of markup to other parts of the document.
+
+This method is particularly useful to setup parts of the layout within an angular view. Since blocks of html are transplanted within their original `$scope` is easy to create layout interactions depending on the context. Some tipical task you can accomplish with these directives are: _setup the navbar title depending on the view_ or _place a submit button for a form inside a navbar_.
+
+## Usage
+
+Declare it as a dependency to your app unless you have already included some of its super-modules.
+
+```
+angular.module('myApp', ['mobile-angular-ui']);
+```
+
+Or
+
+```
+angular.module('myApp', ['mobile-angular-ui']);
+```
+
+Or
+
+```
+angular.module('myApp', ['mobile-angular-ui.core.capture']);
+```
+
+Use `ui-yield-to` as a placeholder.
+
+``` html
+<!-- index.html -->
+
+<div class="navbar">
+  <div ui-yield-to="title" class="navbar-brand">
+    <span>Default Title</span>
+  </div>
+</div>
+
+<div class="app-body">
+  <ng-view class="app-content"></ng-view>
+</div>
+```
+
+Use `ui-content-for` inside any view to populate the `ui-yield-to` content.
+
+``` html
+<!-- myView.html -->
+
+<div ui-content-for="title">
+  <span>My View Title</span>
+</div>
+```
+
+Since the original scope is preserved you can use directives inside `ui-content-for` blocks to interact with the current scope. In the following example we will add a navbar button to submit a form inside a nested view.  
+
+
+``` html
+<!-- index.html -->
+
+<div class="navbar">
+  <div ui-yield-to="navbarAction">
+  </div>
+</div>
+
+<div class="app-body">
+  <ng-view class="app-content"></ng-view>
+</div>
+```
+
+``` html
+<!-- newCustomer.html -->
+
+<form ng-controller="newCustomerController">
+
+  <div class="inputs">
+    <input type="text" ng-model="customer.name" />  
+  </div>
+
+  <div ui-content-for="navbarAction">
+    <button ng-click="createCustomer()">
+      Save
+    </button>
+  </div>
+
+</form>
+```
+
+``` javascript
+app.controller('newCustomerController', function($scope, Store){
+  $scope.customer = {};
+  $scope.createCustomer = function(){
+    Store.create($scope.customer);
+    // ...
+  }
+});
+```
+
+If you wish you can also duplicate markup instead of move it. Just add `duplicate` parameter to `uiContentFor` directive to specify this behaviour.
+
+``` html
+<div ui-content-for="navbarAction" duplicate>
+  <button ng-click="createCustomer()">
+    Save
+  </button>
+</div>
+```
+*/
 (function () {
    'use strict';
 
@@ -935,6 +1070,21 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
      }
    ])
 
+  /**
+   * @directive uiContentFor
+   * @restrict A
+   *
+   * `ui-content-for` makes inner contents to replace the corresponding 
+   * `ui-yield-to` placeholder contents.
+   *
+   * `uiContentFor` is intended to be used inside a view in order to populate outer placeholders.
+   * Any content you send to placeholders via `ui-content-for` is
+   * reverted to placeholder defaults after view changes (ie. on `$routeChangeStart`).
+   * 
+   * @param {string} uiContentFor The id of the placeholder to be replaced
+   * @param {boolean} uiDuplicate If present duplicates the content instead of moving it (default to `false`)
+   *
+   */
    .directive('uiContentFor', [
      'Capture', 
      function(Capture) {
@@ -954,6 +1104,17 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
      }
    ])
 
+   /**
+    * @directive uiYieldTo
+    * @restrict A
+    *
+    * `ui-yield-to` defines a placeholder which contents will be further replaced by `ui-content-for` directive.
+    *
+    * Inner html is considered to be a default. Default is restored any time `$routeChangeStart` happens.
+    * 
+    * @param {string} uiYieldTo The unique id of this placeholder.
+    *
+    */
    .directive('uiYieldTo', [
      '$compile', 'Capture', function($compile, Capture) {
        return {
@@ -994,6 +1155,63 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
     });
   });
 }());
+/**
+
+@module mobile-angular-ui.core.outerClick
+@description
+
+Provides a directive to specifiy a behaviour when click/tap events 
+happen outside an element. This can be easily used 
+to implement eg. __close on outer click__ feature for a dropdown.
+
+## Usage
+
+Declare it as a dependency to your app unless you have already 
+included some of its super-modules.
+
+```
+angular.module('myApp', ['mobile-angular-ui']);
+```
+
+Or
+
+```
+angular.module('myApp', ['mobile-angular-ui.core']);
+```
+
+Or
+
+```
+angular.module('myApp', ['mobile-angular-ui.core.outerClick']);
+```
+
+Use `ui-outer-click` to define an expression to evaluate when an _Outer Click_ event happens.
+Use `ui-outer-click-if` parameter to define a condition to enable/disable the listener.
+
+``` html
+<div class="btn-group">
+  <a ui-turn-on='myDropdown' class='btn'>
+    <i class="fa fa-ellipsis-v"></i>
+  </a>
+  <ul 
+    class="dropdown-menu"
+    ui-outer-click="Ui.turnOff('myDropdown')"
+    ui-outer-click-if="Ui.active('myDropdown')"
+    role="menu"
+    ui-show="myDropdown" 
+    ui-state="myDropdown"
+    ui-turn-off="myDropdown">
+
+    <li><a>Action</a></li>
+    <li><a>Another action</a></li>
+    <li><a>Something else here</a></li>
+    <li class="divider"></li>
+    <li><a>Separated link</a></li>
+  </ul>
+</div>
+```
+
+*/
 (function () {
    'use strict';
 
@@ -1012,6 +1230,34 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 
    angular.module('mobile-angular-ui.core.outerClick', [])
 
+   /**
+    * @service bindOuterClick
+    * @as function
+    * 
+    * @description
+    * This is a service function that binds a callback to be conditionally executed
+    * when a click event happens outside a specified element.
+    *
+    * ## Usage
+    *
+    * ``` js
+    * app.directive('myDirective', function('bindOuterClick'){
+    *   return {
+    *     link: function(scope, element) {
+    *       bindOuterClick(element, function(e){
+    *         alert('You clicked ouside me!');
+    *       }, function(e){
+    *         return element.hasClass('disabled') ? true : false;
+    *       });
+    *     }
+    *   };
+    * });
+    * ```
+    * @scope {scope} the scope to eval callbacks
+    * @param {DomElement|$element} element The element to bind to. 
+    * @param {function} callback Parsed function to call when an _Outer Click_ event happens.
+    * @param {string|function} condition Angular `$watch` expression to decide whether to run `callback` or not.
+    */
    .factory('bindOuterClick', [
      '$document',
      '$timeout',
@@ -1057,6 +1303,16 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
      }
    ])
 
+
+  /**
+   * @directive outerClick
+   * 
+   * @description
+   * Evaluates an expression when an _Outer Click_ event happens.
+   * 
+   * @param {expression} uiOuterClick Expression to evaluate when an _Outer Click_ event happens.
+   * @param {expression} uiOuterClickIf Condition to enable/disable the listener. Defaults to `true`.
+   */
    .directive('uiOuterClick', [
      'bindOuterClick', 
      '$parse',
@@ -1240,13 +1496,14 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
      * Broadcasted on `$rootScope` the value of a state changes.
      * 
      * ``` js
-     * $scope.$on(`mobile-angular-ui.state.changed.uiSidebarLeft`, function(e, newVal, oldVal) {
+     * $scope.$on('mobile-angular-ui.state.changed.uiSidebarLeft', function(e, newVal, oldVal) {
      *   if (newVal === true) {
      *     console.log('sidebar opened');
      *   } else {
      *     console.log('sidebar closed');
      *   }
      * });
+     * ```
      * 
      * @param {any} newValue
      * @param {any} oldValue
@@ -1634,7 +1891,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
        * @ngdoc directive
        * 
        * @param {object} uiTurnOff the target shared state
-       * @param {string} [uiTriggers] the event triggering the call. Defaults to `click tap`
+       * @param {string} [uiTriggers='click tap'] the event triggering the call.
        */
 
       /**
@@ -1646,7 +1903,7 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
        * @ngdoc directive
        * 
        * @param {object} uiSet The object to pass to SharedState#set
-       * @param {string} [uiTriggers] the event triggering the call. Defaults to `click tap`
+       * @param {string} [uiTriggers='click tap'] the event triggering the call.
        */
       
       module.directive(directiveName, [
@@ -1967,7 +2224,7 @@ UI interactions with angular.
 
 Although `.core` module is required by `mobile-angular-ui` by default you can use it alone.
 
-```
+``` js
 angular.module('myApp', ['mobile-angular-ui.core']);
 ```
 
@@ -2290,10 +2547,118 @@ angular.module('myApp', ['mobile-angular-ui.core']);
 		
 })( this, this.overthrow );
 
+/**
+@module mobile-angular-ui.components.modals
+
+@description
+
+This module will provide directives to create modals and overlays components.
+
+Modals are basically the same of Bootstrap 3 but you have to use uiState 
+with `ngIf/uiIf` or `ngHide/uiHide` to `activate/dismiss` it.
+
+By default both modals and overlay are made always showing up by 
+css rule `.modal {display:block}`, so you can use it with 
+`ngAnimate` and other angular directives in a simpler way.
+
+### Note
+
+For modals and overlays to cover the entire page you have to attach them 
+as child of `body` element. To achieve this from a view is a common use for
+`contentFor/yieldTo` directives contained from 
+[capture module](/docs/module:mobile-angular-ui/module:core/module:capture):
+
+``` html
+<body ng-app="myApp">
+
+  <!-- ... -->
+  <!-- Modals and Overlays -->
+  <div ui-yield-to="modals"></div>
+
+</body>
+```
+
+Then you can wrap your modals and overlays in `contentFor`:
+
+``` html
+<div ui-content-for="modals">
+* <div class="modal"><!-- ... --></div>
+</div>
+```
+
+### Example
+
+``` html
+<div ui-content-for="modals">
+  <div class="modal" ui-if="modal1" ui-state='modal1'>
+    <div class="modal-backdrop in"></div>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" 
+                  ui-turn-off="modal1">&times;</button>
+          <h4 class="modal-title">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio quo illum nihil voluptatem earum optio repellendus, molestias illo facere, ea non. Possimus assumenda illo accusamus voluptatibus, vel corporis maxime quam.</p>
+        </div>
+        <div class="modal-footer">
+          <button ui-turn-off="modal1" class="btn btn-default">Close</button>
+          <button ui-turn-off="modal1" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+An overlay is a styling of modal that looks more native in mobile devices providing a blurred
+overlay as background.
+
+Overlays are just modals so you'll need to use `modalOverlay` in conjunction with `modal` to
+make it work.
+
+You can create an overlay adding `.modal-overlay` class to a modal.
+
+### Example
+
+``` html
+<div ui-content-for="modals">
+  <div class="modal modal-overlay" ui-if='modal2' ui-state='modal2'>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close"
+                  ui-turn-off="modal2">&times;</button>
+          <h4 class="modal-title">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, amet harum reiciendis enim adipisci magni fugit suscipit eaque corporis? Saepe eius ipsum optio dolorum a qui adipisci, reprehenderit totam temporibus!</p>
+        </div>
+        <div class="modal-footer">
+          <button ui-turn-off="modal2" class="btn btn-default">Close</button>
+          <button ui-turn-off="modal2" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+*/
+
 (function () {
   'use strict';
   angular.module('mobile-angular-ui.components.modals', [])
 
+
+  /**
+   * @directive modal
+   * @restrict C
+   * @description
+   * 
+   * Modal dialog componenent.
+   * 
+   */
   .directive('modal', [
     '$rootElement',
     function($rootElement) {
@@ -2311,11 +2676,28 @@ angular.module('myApp', ['mobile-angular-ui.core']);
       };
   }])
 
+  /**
+   * @directive modalOverlay
+   * @restrict C
+   * @requires modal
+   * @description
+   *
+   * Overlay dialog component.
+   * 
+   * This directive makes a modals looking more native in mobile devices 
+   * providing a blurred overlay as background.
+   *
+   * Overlays are modals so you'll need to use `modalOverlay` in conjunction with `modal` to
+   * make it work.
+   *
+   * You can create an overlay adding `.modal-overlay` class to a modal.
+   */
   .directive('modalOverlay', [
     '$rootElement',
     function($rootElement) {
       return {
         restrict: 'C',
+        require: ['modal'],
         link: function(scope, elem) {
           $rootElement.addClass('has-modal-overlay');
           elem.on('$destroy', function(){
@@ -2328,11 +2710,121 @@ angular.module('myApp', ['mobile-angular-ui.core']);
       };
   }]);   
 }());
+/** 
+ * @module mobile-angular-ui.components.navbars 
+ * @description
+ * 
+ * Bootstrap default navbars are awesome for responsive websites, but are not the
+ * best with a small screen. Also fixed positioning is yet not an option to create
+ * navbars standing in top or bottom of the screen.
+ * 
+ * Mobile Angular Ui offers an alternative to bootstrap navbars that is more
+ * suitable for mobile.
+ * 
+ * It uses scrollable areas to avoid scroll issues. In the following figure you can
+ * see the difference between fixed navbars and navbars with absolute positioning.
+ * 
+ * <figure class="full-width-figure">
+ *   <img src="/assets/img/figs/fixed-overflow.png" alt=""/>
+ * </figure>
+ * 
+ * Here is the basic markup to achieve this.
+ * 
+ * ``` html
+ * <div class="app">
+ *   <div class="navbar navbar-app navbar-absolute-top">
+ *     <!-- ... -->
+ *   </div>
+ * 
+ *   <div class="navbar navbar-app navbar-absolute-bottom">
+ *     <!-- ... -->
+ *   </div>
+ * 
+ *   <div class="app-body">
+ *     <ng-view></ng-view>
+ *   </div>
+ * </div>
+ * ```
+ * 
+ * As you can notice the base class is `.navbar-app` while the positioning is
+ * obtained adding either `.navbar-absolute-top` or `.navbar-absolute-bottom`
+ * class.
+ * 
+ * ### Mobile Navbar Layout
+ * 
+ * Top navbar in mobile design most of the times follows a clear pattern: a
+ * centered title surrounded by one or two action buttons, the _back_ or the
+ * _menu_ buttons are two common examples.
+ * 
+ * Twitter Bootstrap ships with a different arrangement of components for navbars
+ * since they are supposed to host an horizontal navigation menu.
+ * 
+ * `.navbar-app` is specifically designed to support this different type of
+ * `.interaction and arrangement.
+ * 
+ * Consider the following example:
+ * 
+ * ``` html
+ * <div class="navbar navbar-app navbar-absolute-top">
+ * 
+ *   <div class="navbar-brand navbar-brand-center">
+ *     Navbar Brand
+ *   </div>
+ * 
+ *   <div class="btn-group pull-left">
+ *     <div class="btn btn-navbar">
+ *       Left Action
+ *     </div>
+ *   </div>
+ * 
+ *   <div class="btn-group pull-right">
+ *     <div class="btn btn-navbar">
+ *       Right Action
+ *     </div>
+ *   </div>
+ * </div>
+ * 
+ * ```
+ * 
+ * `.navbar-brand-center` is a specialization of BS3's `.navbar-brand`.  It will
+ * render the title centered and below the two button groups. Note that `.navbar-
+ * brand-center` will position the title with absolute positioning ensuring that
+ * it will never cover the buttons, which would cause interaction problems.
+ * 
+ */
+
 (function() {
   'use strict';
 
   var module = angular.module('mobile-angular-ui.components.navbars', []);
 
+ /** 
+  * @directive navbarAbsoluteTop
+  * @restrict C
+  * @description
+  *
+  * Setup absolute positioned top navbar.
+  * 
+  * ``` html
+  *  <div class="navbar navbar-app navbar-absolute-top">
+  *    <!-- ... -->
+  *  </div>
+  * ``` 
+  */
+
+ /** 
+  * @directive navbarAbsoluteBottom
+  * @restrict C
+  * @description
+  * 
+  * Setup absolute positioned bottom navbar.
+  * 
+  * ``` html
+  *  <div class="navbar navbar-app navbar-absolute-bottom">
+  *    <!-- ... -->
+  *  </div>
+  * ``` 
+  */
   angular.forEach(['top', 'bottom'], function(side) {
     var directiveName = 'navbarAbsolute' + side.charAt(0).toUpperCase() + side.slice(1);
     module.directive(directiveName, [
@@ -2352,6 +2844,76 @@ angular.module('myApp', ['mobile-angular-ui.core']);
   });
 
 })();
+/**  
+ * @module mobile-angular-ui.components.scrollable
+ * @description
+ * 
+ * One thing you'll always have to deal with approaching mobile web app development is scroll and `position:fixed` bugs.
+ * 
+ * Due to the lack of support in some devices fixed positioned elements may bounce or disappear during scroll. Also mobile interaction often leverages horizontal scroll eg. in carousels or sliders.
+ * 
+ * We use `overflow:auto` to create scrollable areas and solve any problems related to scroll.
+ * 
+ * Since `overflow:auto` is not always available in touch devices we use [Overthrow](http://filamentgroup.github.io/Overthrow/) to polyfill that.
+ * 
+ * Markup for any scrollable areas is as simple as:
+ * 
+ * ``` html
+ * <div class="scrollable">
+ *   <div class="scrollable-content">...</div>
+ * </div>
+ * ```
+ * 
+ * This piece of code will trigger a directive that properly setup a new `Overthrow` instance for the `.scrollable` node.
+ * 
+ * #### Headers and footers
+ * 
+ * `.scrollable-header/.scrollable-footer` can be used to add fixed header/footer to a scrollable area without having to deal with css height and positioning to avoid breaking scroll.
+ * 
+ * ``` html
+ * <div class="scrollable">
+ *   <div class="scrollable-header"><!-- ... --></div>
+ *   <div class="scrollable-content"><!-- ... --></div>
+ *   <div class="scrollable-footer"><!-- ... --></div>
+ * </div>
+ * ```
+ * 
+ * #### scrollTo
+ * 
+ * `.scrollable-content` controller exposes a `scrollTo` function: `scrollTo(offsetOrElement, margin)` 
+ * 
+ * You have to require it in your directives to use it or obtain through `element().controller`:
+ * 
+ * ``` js
+ * var elem = element(document.getElementById('myScrollableContent'));
+ * var scrollableContentController = elem.controller('scrollableContent');
+ * 
+ * // - Scroll to top of containedElement
+ * scrollableContentController.scrollTo(containedElement);
+ * 
+ * // - Scroll to top of containedElement with a margin of 10px;
+ * scrollableContentController.scrollTo(containedElement, 10);
+ * 
+ * // - Scroll top by 200px;
+ * scrollableContentController.scrollTo(200);
+ * ```
+ * 
+ * #### `ui-scroll-bottom/ui-scroll-top`
+ * 
+ * You can use `ui-scroll-bottom/ui-scroll-top` directives handle that events and implement features like _infinite scroll_.
+ * 
+ * ``` html
+ * <div class="scrollable">
+ *   <div class="scrollable-content section" ui-scroll-bottom="loadMore()">
+ *     <ul>
+ *       <li ng-repeat="item in items">
+ *         {{item.name}}
+ *       </li>
+ *     </ul>
+ *   </div>
+ * </div>
+ * ```
+ */
 (function() {
   'use strict';
   var module = angular.module('mobile-angular-ui.components.scrollable', []);
@@ -2365,20 +2927,6 @@ angular.module('myApp', ['mobile-angular-ui.core']);
 
         this.scrollableContent = scrollableContent;
 
-        // scrollTo function.
-        // 
-        // Usage: 
-        // obtain scrollableContent controller somehow. Then:
-        // 
-        // - Scroll to top of containedElement
-        // scrollableContentController.scrollTo(containedElement);
-        // 
-        // - Scroll to top of containedElement with a margin of 10px;
-        // scrollableContentController.scrollTo(containedElement, 10);
-        // 
-        // - Scroll top by 200px;
-        // scrollableContentController.scrollTo(200);
-        // 
         this.scrollTo = function(elementOrNumber, marginTop) {
           marginTop = marginTop || 0;
 
@@ -2431,13 +2979,21 @@ angular.module('myApp', ['mobile-angular-ui.core']);
     }]);
   });
 
-  // uiScrollTop/uiScrollBottom
-  // 
-  // usage:
-  // <div class="scrollable">
-  //    <div class="scrollable-content" ui-scroll-bottom='loadMore()'>
-  //    </div>
-  // </div>
+  /**
+   * @directive uiScrollTop
+   * @restrict A
+   *
+   * @param {expression} uiScrollTop The expression to be evaluated when scroll 
+   * reaches top of element.
+   */
+
+  /**
+   * @directive uiScrollBottom
+   * @restrict A
+   *
+   * @param {expression} uiScrollBottom The expression to be evaluated when scroll 
+   * reaches bottom of element.
+   */
   angular.forEach(
     {
       uiScrollTop: function(elem){
@@ -2466,6 +3022,15 @@ angular.module('myApp', ['mobile-angular-ui.core']);
       }]);
     });
 
+  /**
+   * @directive uiScrollableHeader
+   * @restrict C
+   */
+
+  /**
+   * @directive uiScrollableFooter
+   * @restrict C
+   */
   angular.forEach({Top: 'scrollableHeader', Bottom: 'scrollableFooter'}, 
     function(directiveName, side) {
         module.directive(directiveName, [
@@ -2496,6 +3061,48 @@ angular.module('myApp', ['mobile-angular-ui.core']);
         ]);
     });
 }());
+/**
+@module mobile-angular-ui.components.sidebars
+
+@description
+
+Sidebars can be placed either in left side or right side adding respectively `.sidebar-left` and `.sidebar-right` classes.
+
+``` html
+<div class="sidebar sidebar-left">
+  <div class="scrollable">
+    <h1 class="scrollable-header app-name">My App</h1>  
+    <div class="scrollable-content">
+      <div class="list-group" ui-turn-off='uiSidebarLeft'>
+        <a class="list-group-item" href="#/link1">Link 1 
+          <i class="fa fa-chevron-right pull-right"></i></a>
+        <a class="list-group-item" href="#/link2">Link 2
+          <i class="fa fa-chevron-right pull-right"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sidebar sidebar-rigth">
+  <!-- -->
+</div>
+```
+
+#### Interacting with sidebars
+
+Under the hood sidebar uses `SharedState` exposing respective statuses: `uiSidebarLeft` and `uiSidebarRight` unless you define different state name through `id` attribute on sidebar elements.
+
+``` html
+<a href ui-toggle='uiSidebarLeft'>Toggle sidebar left</a>
+
+<a href ui-toggle='uiSidebarRight'>Toggle sidebar right</a>
+```
+
+You can put `ui-turn-off='uiSidebarLeft'` or `ui-turn-off='uiSidebarLeft'` inside the sidebar to make it close after clicking links inside them.
+
+By default sidebar are closed by clicking/tapping outside them.
+
+*/
 (function() {
   'use strict';
 
@@ -2612,6 +3219,23 @@ angular.module('myApp', ['mobile-angular-ui.core']);
     };
   }]);
 }());
+/**
+@module mobile-angular-ui.components.switch
+@description
+
+The `ui-switch` directive (not to be confused with `ng-switch`) lets you create a toggle switch control bound to a boolean `ngModel` value.
+
+<figure class="full-width-figure">
+  <img src="/assets/img/figs/switch.png" alt=""/>
+</figure>
+
+It requires `ngModel`. You can also use `ngChange` in conjunction with `[switch]` to trigger functions in response to model changes.
+
+``` html
+<ui-switch  ng-model="invoice.paid"></ui-switch>
+```
+
+*/
 (function() {
   'use strict';  
   angular.module('mobile-angular-ui.components.switch', [])
@@ -2643,6 +3267,27 @@ angular.module('myApp', ['mobile-angular-ui.core']);
     };
   });
 }());
+/**
+@module mobile-angular-ui.components
+
+@description
+
+It has directives and services providing mobile friendly 
+components like navbars and sidebars. 
+It requires `mobile-angular-ui.base.css` 
+in order to work properly.
+
+## Standalone Usage
+
+Although `.components` module is required by `mobile-angular-ui` by default 
+you can use it alone. Some submodules requires `mobile-angular-ui.core` to work,
+so be sure its sources are available.
+
+``` js
+angular.module('myApp', ['mobile-angular-ui.components']);
+```
+
+*/
 (function() {
   'use strict';
 
@@ -2654,17 +3299,23 @@ angular.module('myApp', ['mobile-angular-ui.core']);
     'mobile-angular-ui.components.switch'
   ]);
 }());
-
 /**
-
 @module mobile-angular-ui
-
+@position 0
 @description
 
 This is the main angular module of `mobile-angular-ui` framework.
 
-By requiring this module you will have all 'mobile-angular-ui.core'
+By requiring this module you will have all `mobile-angular-ui.core`
 and `mobile-angular-ui.components` features required as well. 
+
+## Usage
+
+Declare it as a dependency for your application:
+
+``` js
+angular.module('myApp', ['mobile-angular-ui']);
+```
 
 */
 (function() {

@@ -6,9 +6,11 @@ This file will contain an extremely detailed tasks list
 to follow development of new releases.
 
 Unscheduled:
-  ❑ Try to use closure compiler or similar to perform maximum compression/optimization and structure sources better
+  ❑ Try to use closure compiler or similar to perform maximum 
+      compression/optimization and structure sources better
 
 Unscheduled 1.2:
+  ❑ Define multiple states in "ui-state"
   ❑ Make shared states exportable to QP
   ❑ Make it simpler to deal with ng-repeat and multiple shared states
   ❑ Fix migration for ui-swipe
@@ -39,21 +41,23 @@ Unscheduled 1.2:
     ✔ inspect angular simpler  @done (15-01-04 07:33)
     ✔ selectively filter tests by id or name @done (15-01-04 07:33)
     ✔ automatically ensure console is free from errors @done (15-01-04 09:09)
-  ❑ multiple $touch bindings should not interfere each other   
-  ❑ $touch should allow to define a preventDefault option to setup preventDefault on touchstart
-  ❑ $touch sensitiveArea should trigger touchcancel? Should I add an option for that?
+  
+  ❑ NOBOUNCE
+      ❑ Use nobounce tricks to avoid IOS bouncing after scroll or dragging
+
+  ❑ $touch
+    ❑ multiple $touch bindings should not interfere each other
+    ❑ $touch should expose preventDefault: boolOrArrayOrFn(touch, event)
+    ❑ $touch should allow to define a preventDefault option to setup preventDefault on touchstart
+    ❑ $touch sensitiveArea should trigger touchcancel? Should I add an option for that?
+    ❑ $touch valid should allow per-touch-type handlers
+    ❑ detect multitouch and handle or prevent them
+
   ❑ Support ms devices through -ms- touch property
-  ❑ Allow for nested $swipe an $drag
-  ❑ $touch valid should allow per-touch-type handlers
-  ❑ $touch should expose preventDefault: boolOrArrayOrFn(touch, event)
-  ✔ move $touch's touch.direction to touch.angle and use touch.direction for 'LEFT', 'RIGHT', 'UP' and 'DOWN'  @done (15-01-04 07:34)
-  ❑ detect multitouch and handle or prevent them
+
+  ❑ $swipe
+    ❑ Allow for nested $swipe
+    ❑ Fix compatibility between $swipe and FastClick
+    ✔ move $touch's touch.direction to touch.angle and use touch.direction for 'LEFT', 'RIGHT', 'UP' and 'DOWN'  @done (15-01-04 07:34)
+  
   ❑ Add tests for $touch and $drag, adapt those for $swipe and $transform
-  ❑ Fix compatibility between $swipe and FastClick    
-  ❑ Use nobounce tricks to avoid IOS bouncing after scroll or dragging
-  ❑ Document everything
-  ❑ Split docs in Getting Started+Overview and API
-  ❑ Generate API docs from sources somehow
-    ✔ Parse jsdoc + ngdoc from sources  @done (15-01-05 16:59)
-    ❑ generate tree
-    ❑ render tree
