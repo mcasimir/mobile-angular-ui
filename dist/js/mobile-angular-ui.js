@@ -1238,13 +1238,13 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
     * This is a service function that binds a callback to be conditionally executed
     * when a click event happens outside a specified element.
     *
-    * ## Usage
-    *
+    * Ie.
+    * 
     * ``` js
     * app.directive('myDirective', function('bindOuterClick'){
     *   return {
     *     link: function(scope, element) {
-    *       bindOuterClick(element, function(e){
+    *       bindOuterClick(element, function(scope, extra){
     *         alert('You clicked ouside me!');
     *       }, function(e){
     *         return element.hasClass('disabled') ? true : false;
@@ -1255,7 +1255,7 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
     * ```
     * @scope {scope} the scope to eval callbacks
     * @param {DomElement|$element} element The element to bind to. 
-    * @param {function} callback Parsed function to call when an _Outer Click_ event happens.
+    * @param {function} callback A `function(scope, options)`, usually the result of `$parse`, that is called when an _outer click_ event happens.
     * @param {string|function} condition Angular `$watch` expression to decide whether to run `callback` or not.
     */
    .factory('bindOuterClick', [
@@ -1336,26 +1336,45 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
    * @module mobile-angular-ui.core.sharedState
    *
    * @description
-   * 
-   * `SharedState` aims to provide a proper way to create directives and components that previously used scope variables to communicate.
-   * 
-   * `mobile-angular-ui.core.sharedState` is expose the homonymous service `SharedState` and a group of directives to access it.
-   * 
-   * eg.
-   * 
-   * ``` js
-   * app.controller('controller1', function($scope, SharedState){
-   *   SharedState.initialize($scope, 'myId');
-   * });
-   * 
-   * app.controller('controller2', function(SharedState){
-   *   SharedState.toggle('myId');
-   * });
+   * `mobile-angular-ui.core.sharedState` is expose the homonymous service
+   * `SharedState` and a group of directives to access it.
+   *
+   * `SharedState` allows to use elementary angular or angularish directives
+   * to create interactive components.
+   *
+   * Ie.
+   *
+   * ``` html
+   * <div class="tab-nav" ui-state='activeTab'>
+   *   <a ui-set="{activeTab: 1}">Tab1</a>
+   *   <a ui-set="{activeTab: 2}">Tab2</a>
+   *   <a ui-set="{activeTab: 3}">Tab3</a>
+   * </div>
+   * <div class="tabs">
+   *   <div ui-if="activeTab == 1">Tab1</div>
+   *   <div ui-if="activeTab == 2">Tab2</div>
+   *   <div ui-if="activeTab == 3">Tab3</div>
+   * </div>
    * ```
    * 
-   * Data structures retaining statuses will stay outside angular scopes thus they are not evaluated against digest cycle until its necessary. Also although statuses are sort of global variables `SharedState` will take care of disposing them when no scopes are requiring them anymore.
+   * Using `SharedState` you will be able to:
    * 
-   * A set of `ui-*` directives are available to interact with `SharedState` module and will hopefully let you spare your controllers and your time for something that is more meaningful than this:
+   * - Create interactive components without having to write javascript code
+   * - Have your controller free from UI logic
+   * - Separe `ng-click` triggering application logic from those having a visual effect only
+   * - Export state of components to urls
+   * - Easily make components comunicate each other
+   *
+   * Also note that:
+   *
+   * Data structures retaining statuses will stay outside angular scopes
+   * thus they are not evaluated against digest cycle until its necessary. 
+   * Also although statuses are sort of global variables `SharedState` will 
+   * take care of disposing them when no scopes are requiring them anymore.
+   * 
+   * A set of `ui-*` directives are available to interact with `SharedState`
+   * module and will hopefully let you spare your controllers and your time 
+   * for something that is more meaningful than this:
    * 
    * ``` js
    * $scope.activeTab = 1;
@@ -1469,6 +1488,7 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
   
    /**
     * @event 'mobile-angular-ui.state.initialized.ID'
+    * @shortname initialized
     * @memberOf mobile-angular-ui.core.sharedState~SharedState 
     * 
     * @description
@@ -1481,6 +1501,7 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
    
    /**
     * @event 'mobile-angular-ui.state.destroyed.ID'
+    * @shortname destroyed
     * @memberOf mobile-angular-ui.core.sharedState~SharedState
     * 
     * @description
@@ -1490,6 +1511,7 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
    
     /**
      * @event 'mobile-angular-ui.state.changed.ID'
+     * @shortname changed
      * @memberOf mobile-angular-ui.core.sharedState~SharedState
      * 
      * @description
@@ -1629,7 +1651,7 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
          * SharedState.setMany({ activeTab: 'firstTab', sidebarIn: false });
          * ```
          * 
-         * @param {object} object An object of the form {state1: value1, ..., stateN: valueN}
+         * @param {object} object An object of the form `{state1: value1, ..., stateN: valueN}`
          */
         setMany: function(map) {
           angular.forEach(map, function(value, id) {
@@ -1648,7 +1670,7 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
          * it is the same of `setMany`, otherwise is the 
          * same of `setOne`.
          * 
-         * @param {string|object} idOrMap A state id or a <state,value> map object.
+         * @param {string|object} idOrMap A state id or a `{state: value}` map object.
          * @param {any} [value] The value to assign in case idOrMap is a string.
          */
         set: function(idOrMap, value) {
@@ -1664,8 +1686,12 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
          * @memberOf mobile-angular-ui.core.sharedState~SharedState
          * @description
          * 
-         * Set shared state identified by `id` to `true`. If the shared state has been initialized with `exclusionGroup` option it will also turn off (set to `false`) all other statuses from the same exclusion group.
+         * Set shared state identified by `id` to `true`. If the 
+         * shared state has been initialized with `exclusionGroup` 
+         * option it will also turn off (set to `false`) all other 
+         * statuses from the same exclusion group.
          * 
+         * @param  {string} id The unique name of this state
          */
         turnOn: function(id) {
           // Turns off other statuses belonging to the same exclusion group.
@@ -1688,7 +1714,8 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
          * 
          * @description
          * Set shared state identified by `id` to `false`.
-         * 
+         *
+         * @param  {string} id The unique name of this state
          */
         turnOff: function(id) {
           return this.setOne(id, false);
@@ -1699,7 +1726,12 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
          * @memberOf mobile-angular-ui.core.sharedState~SharedState
          * @description
          *
-         * If current value for shared state identified by `id` evaluates to `true` it calls `turnOff` on it otherwise calls `turnOn`. Be aware that it will take into account `exclusionGroup` option. See `#turnOn` and `#initialize` for more.
+         * If current value for shared state identified by `id` evaluates 
+         * to `true` it calls `turnOff` on it otherwise calls `turnOn`. 
+         * Be aware that it will take into account `exclusionGroup` option. 
+         * See `#turnOn` and `#initialize` for more.
+         *
+         * @param  {string} id The unique name of this state
          */
         toggle: function(id) {
           return this.get(id) ? this.turnOff(id) : this.turnOn(id);
@@ -1708,9 +1740,12 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
         /**
          * @function get
          * @memberOf mobile-angular-ui.core.sharedState~SharedState
+         * 
          * @description
-         *
          * Returns the current value of the state identified by `id`.
+         *
+         * @param  {string} id The unique name of this state
+         * @returns {any}
          */
         get: function(id) {
           return statusesMeta[id] && values[id];
@@ -1722,6 +1757,9 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
          * @description
          *
          * Return `true` if the boolean conversion of `#get(id)` evaluates to `true`.
+         *
+         * @param  {string} id The unique name of this state
+         * @returns {bool}
          */
         isActive: function(id) {
           return !! this.get(id);
@@ -1731,9 +1769,12 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
          * @function active
          * @alias mobile-angular-ui.core.sharedState~SharedState.isActive
          * @memberOf mobile-angular-ui.core.sharedState~SharedState
-         * 
          * @description
+         * 
          * Alias for `#isActive`.
+         * 
+         * @param  {string} id The unique name of this state
+         * @returns {bool}
          */
         active: function(id) {
           return this.isActive(id);
@@ -1743,26 +1784,37 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
          * @function isUndefined
          * @memberOf mobile-angular-ui.core.sharedState~SharedState
          * @description
+         * 
          * Return `true` if state identified by `id` is not defined.
+         * 
+         * @param  {string} id The unique name of this state
+         * @returns {bool}
          */
         isUndefined: function(id) {
           return statusesMeta[id] === undefined || this.get(id) === undefined;
         },
 
         /**
+         * Returns `true` if state identified by `id` exsists.
+         * 
+         * @param  {string} id The unique name of this state
+         * @returns {bool}
+         * 
          * @function has
          * @memberOf mobile-angular-ui.core.sharedState~SharedState
-         * @description
-         * Return `true` if state identified by `id` exsists.
          */
         has: function(id) {
           return statusesMeta[id] !== undefined;
         },
 
         /**
+         * Returns the number of references of a status.
+         * 
+         * @param  {string} id The unique name of this state
+         * @returns {integer}
+         * 
          * @function referenceCount
          * @memberOf mobile-angular-ui.core.sharedState~SharedState
-         * 
          */
         referenceCount: function(id) {
           var status = statusesMeta[id];
@@ -1770,11 +1822,14 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
         },
 
         /**
+         * Returns `true` if `#get(id)` is exactly equal (`===`) to `value` param.
+         *
+         * @param  {string} id The unique name of this state
+         * @param  {any} value The value for comparison
+         * @returns {bool} 
+         * 
          * @function equals
          * @memberOf mobile-angular-ui.core.sharedState~SharedState
-         * @description
-         * Return `true` if `#get(id)` is exactly equal (`===`) to `value` param.
-         * 
          */
         equals: function(id, value) {
           return this.get(id) === value;
@@ -1782,29 +1837,34 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
 
 
         /**
+         * Alias for `#equals`
+         * 
+         * @param  {string} id The unique name of this state
+         * @param  {any} value The value for comparison
+         * @returns {bool} 
+         * 
          * @function eq
          * @memberOf mobile-angular-ui.core.sharedState~SharedState
          * @alias mobile-angular-ui.core.sharedState~SharedState.equals
-         * @description
-         * Alias for `#equals`
-         * 
          */
         eq: function(id, value) {
           return this.equals(id, value);
         },
 
         /**
-         * @function values
-         * @memberOf mobile-angular-ui.core.sharedState~SharedState
-         * @alias mobile-angular-ui.core.sharedState~SharedState.equals
-         * @description
+         * Returns an object with all the status values currently stored. 
+         * It has the form of `{statusId: statusValue}`.
          * 
-         * Returns an object with all the status values currently stored. It has the form of `{statusId: statusValue}`.
-         * 
-         * Bear in mind that in order to spare resources it currently returns just the internal object retaining statuses values. Thus it is not intended to be modified and direct changes to it will be not tracked or notified.
+         * Bear in mind that in order to spare resources it currently 
+         * returns just the internal object retaining statuses values. 
+         * Thus it is not intended to be modified and direct changes to it will be not tracked or notified.
          * 
          * Just clone before apply any change to it.
          * 
+         * @returns {object}
+         * 
+         * @function values
+         * @memberOf mobile-angular-ui.core.sharedState~SharedState
          */
         values: function() {
           return values;
@@ -1824,15 +1884,12 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
   };
 
   /**
-   * @function uiState
-   * 
-   * @description
    * Calls `SharedState#initialize` on the scope relative to the element using it.
    * 
-   * @ngdoc directive
-   * 
    * @param {string} uiState The shared state id
-   * @param {expression} uiDefault the default value
+   * @param {expression} [uiDefault] the default value
+   * 
+   * @directive uiState
    */
   module.directive('uiState', [
     'SharedState',
@@ -1859,15 +1916,12 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
       var directiveName = 'ui' + methodName[0].toUpperCase() + methodName.slice(1);
 
       /**
-       * @function uiToggle
-       * 
-       * @description
        * Calls `SharedState#toggle` when triggering events happens on the element using it.
-       * 
-       * @ngdoc directive
        * 
        * @param {object} uiToggle the target shared state
        * @param {expression} uiDefault the default value
+       *
+       * @directive uiToggle
        */
       
       /**
@@ -2168,14 +2222,14 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
       link: function(scope, element, attr) {
         var uiClassFn = parseUiCondition('uiClass', attr, scope, SharedState, $parse);
         scope.$watch(uiClassFn, function uiClassWatchAction(value){
-          var classesToAdd = "";
-          var classesToRemove = "";
+          var classesToAdd = '';
+          var classesToRemove = '';
           angular.forEach(value, function(expr, className) {
             if (expr) {
-              classesToAdd += " " + className;
+              classesToAdd += ' ' + className;
             } 
             else {
-              classesToRemove += " " + className;
+              classesToRemove += ' ' + className;
             }
             if (classesToAdd.length) {
               element.addClass(classesToAdd);  
@@ -2213,7 +2267,7 @@ UI interactions with angular.
 <div class="alert alert-success">
   <b>NOTE</b>
   <ul>
-    <li>It has no dependency on Bootstrap.</li>
+    <li>It has no dependency on Bootstrap.</li>
     <li>It is not related to mobile apps only.</li>
     <li>It is not requiring CSS support.</li>
     <li><b>You can use it on any Angular Application and with any CSS framework.</b></li>

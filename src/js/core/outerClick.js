@@ -81,13 +81,13 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
     * This is a service function that binds a callback to be conditionally executed
     * when a click event happens outside a specified element.
     *
-    * ## Usage
-    *
+    * Ie.
+    * 
     * ``` js
     * app.directive('myDirective', function('bindOuterClick'){
     *   return {
     *     link: function(scope, element) {
-    *       bindOuterClick(element, function(e){
+    *       bindOuterClick(element, function(scope, extra){
     *         alert('You clicked ouside me!');
     *       }, function(e){
     *         return element.hasClass('disabled') ? true : false;
@@ -98,7 +98,7 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
     * ```
     * @scope {scope} the scope to eval callbacks
     * @param {DomElement|$element} element The element to bind to. 
-    * @param {function} callback Parsed function to call when an _Outer Click_ event happens.
+    * @param {function} callback A `function(scope, options)`, usually the result of `$parse`, that is called when an _outer click_ event happens.
     * @param {string|function} condition Angular `$watch` expression to decide whether to run `callback` or not.
     */
    .factory('bindOuterClick', [

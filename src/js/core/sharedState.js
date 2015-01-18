@@ -156,6 +156,7 @@
   
    /**
     * @event 'mobile-angular-ui.state.initialized.ID'
+    * @shortname initialized
     * @memberOf mobile-angular-ui.core.sharedState~SharedState 
     * 
     * @description
@@ -168,6 +169,7 @@
    
    /**
     * @event 'mobile-angular-ui.state.destroyed.ID'
+    * @shortname destroyed
     * @memberOf mobile-angular-ui.core.sharedState~SharedState
     * 
     * @description
@@ -177,6 +179,7 @@
    
     /**
      * @event 'mobile-angular-ui.state.changed.ID'
+     * @shortname changed
      * @memberOf mobile-angular-ui.core.sharedState~SharedState
      * 
      * @description
@@ -553,10 +556,6 @@
    * 
    * @param {string} uiState The shared state id
    * @param {expression} [uiDefault] the default value
-   *
-   * ``` html
-   * <div ui-state='isAuth'>
-   * ```
    * 
    * @directive uiState
    */
@@ -891,14 +890,14 @@
       link: function(scope, element, attr) {
         var uiClassFn = parseUiCondition('uiClass', attr, scope, SharedState, $parse);
         scope.$watch(uiClassFn, function uiClassWatchAction(value){
-          var classesToAdd = "";
-          var classesToRemove = "";
+          var classesToAdd = '';
+          var classesToRemove = '';
           angular.forEach(value, function(expr, className) {
             if (expr) {
-              classesToAdd += " " + className;
+              classesToAdd += ' ' + className;
             } 
             else {
-              classesToRemove += " " + className;
+              classesToRemove += ' ' + className;
             }
             if (classesToAdd.length) {
               element.addClass(classesToAdd);  

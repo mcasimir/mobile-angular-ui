@@ -7,6 +7,7 @@ exports.config = {
     'browserName': 'firefox'
   }],
 
+  onPrepare: require('./onprepare'),
   rootElement: 'body',
 
   jasmineNodeOpts: { includeStackTrace: true }

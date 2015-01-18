@@ -18,6 +18,7 @@ var gulp              = require('gulp'),
     releaseTasks      = require('gulp-release-tasks'),
     rename            = require('gulp-rename'),
     os                = require('os'),
+    fs                = require('fs'),
     seq               = require('run-sequence'),
     sourcemaps        = require('gulp-sourcemaps'),
     uglify            = require('gulp-uglify');
@@ -244,8 +245,11 @@ gulp.task('default', function(done){
 ==============================*/
 
 gulp.task('jshint', function() {
+  var jshintrc = JSON.parse(fs.readFileSync('.jshintrc').toString());
+  jshintrc.lookup = false;
+  jshintrc.nocomma = false;
   return gulp.src(['src/js/*.js', 'src/js/core/*.js','src/js/gestures/*.js','src/js/components/*.js'])
-  .pipe(jshint())
+  .pipe(jshint(jshintrc))
   .pipe(jshint.reporter('default'))
   .on('error', function(e) { throw e });
 });

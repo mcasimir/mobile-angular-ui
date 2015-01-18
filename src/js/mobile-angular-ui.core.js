@@ -11,7 +11,7 @@ UI interactions with angular.
 <div class="alert alert-success">
   <b>NOTE</b>
   <ul>
-    <li>It has no dependency on Bootstrap.</li>
+    <li>It has no dependency on Bootstrap.</li>
     <li>It is not related to mobile apps only.</li>
     <li>It is not requiring CSS support.</li>
     <li><b>You can use it on any Angular Application and with any CSS framework.</b></li>

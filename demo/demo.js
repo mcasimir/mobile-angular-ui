@@ -247,31 +247,15 @@ app.directive('dragMeTo', ['$drag', function($drag){
   };
 }]);
 
-
-// 
-// $swipe service example
-// 
-
-app.directive('swipeExample', ['$swipe', function($swipe){
-  return {
-    controller: function($scope, $element) {
-      $swipe.bind($element, 
-        {
-          end: function(swipe) {
-            alert("Swiped: " + swipe.swipe);
-          }
-        }
-      );
-    }
-  };
-}]);
-
-
 //
 // For this trivial demo we have just a unique MainController 
 // for everything
 //
 app.controller('MainController', function($rootScope, $scope){
+
+  $scope.swiped = function(direction) {
+    alert('Swiped ' + direction);
+  };
 
   // User agent displayed in home page
   $scope.userAgent = navigator.userAgent;
