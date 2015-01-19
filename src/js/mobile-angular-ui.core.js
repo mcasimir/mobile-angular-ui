@@ -34,6 +34,7 @@ angular.module('myApp', ['mobile-angular-ui.core']);
     'mobile-angular-ui.core.activeLinks',
     'mobile-angular-ui.core.capture',
     'mobile-angular-ui.core.outerClick',
-    'mobile-angular-ui.core.sharedState'
+    'mobile-angular-ui.core.sharedState',
+    'mobile-angular-ui.core.nobounce'
   ]);
 }());

@@ -278,6 +278,7 @@ function makeTestTask(name, conf, args) {
 makeTestTask('test', 'test/all.conf.js');
 makeTestTask('test:chrome', 'test/chrome.conf.js');
 makeTestTask('test:firefox', 'test/firefox.conf.js');
+makeTestTask('test:iphone', 'test/iphone5.conf.js');
 
 /*===============================
 =            Release            =

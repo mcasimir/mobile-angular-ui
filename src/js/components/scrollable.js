@@ -70,14 +70,38 @@
  */
 (function() {
   'use strict';
-  var module = angular.module('mobile-angular-ui.components.scrollable', []);
+  var module = angular.module('mobile-angular-ui.components.scrollable', 
+    ['mobile-angular-ui.core.nobounce']);
 
   module.directive('scrollableContent', function() {
     return {
       restrict: 'C',
-      controller: ['$element', function($element) {
+      controller: ['$element', 'allowTouchmoveDefault', function($element, allowTouchmoveDefault) {
         var scrollableContent = $element[0],
             scrollable = $element.parent()[0];
+
+        // Handle nobounce behaviour
+        if ('ontouchmove' in document) {
+          var allowUp, allowDown, prevTop, prevBot, lastY;
+          var setupTouchstart = function(event) {
+            allowUp = (scrollableContent.scrollTop > 0);
+            allowDown = (scrollableContent.scrollTop < scrollableContent.scrollHeight - scrollableContent.clientHeight);
+            prevTop = null; 
+            prevBot = null;
+            lastY = event.pageY;
+          }
+
+          $element.on('touchstart', setupTouchstart);
+          $element.on('$destroy', function() {
+            $element.off('touchstart');
+          });
+
+          allowTouchmoveDefault($element, function(event) {
+            var up = (event.pageY > lastY), down = !up;
+            lastY = event.pageY;
+            return (up && allowUp) || (down && allowDown);
+          });
+        }
 
         this.scrollableContent = scrollableContent;
 

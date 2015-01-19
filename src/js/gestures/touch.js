@@ -1,105 +1,67 @@
 /**
-@module mobile-angular-ui.gestures.touch
-@description
-
-Device agnostic touch handling.
-
-`touch` module just exposes corresponding `$touch` service, that is an abstraction 
-of touch event handling that works with any kind of input devices. It is intended 
-for single touch only and provides extended infos about touch like: movement, 
-direction, velocity, duration, and more.
-
-$touch service is intended as base to build any single-touch gesture handlers.
-
-## Usage
-
-Require this module doing either
-
-``` js
-angular.module('myApp', ['mobile-angular-ui.gestures']);
-```
-
-Or standalone
-
-``` js
-angular.module('myApp', ['mobile-angular-ui.gestures.touch']);
-```
-
-Then you will be able to use the `$touch` service like that:
-
-``` js
-var unbindFn = $touch.bind(element, {
-   start: function(touchInfo, e);
-   move: function(touchInfo, e);
-   end: function(touchInfo, e);
-   cancel: function(touchInfo, e);
-}, options);
-```
-
-Where `options` is an object optionally specifing:
-
-- `movementThreshold`: {integer} Minimum movement distance to start handling `touchmove`
-- `valid`: {function():bool}` A function returning a boolean value to decide whether handle the touch event or ignore it.
-- `sensitiveArea`: A [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect) or an element 
-   or a function that takes the bound element and returns one of the previous.
-   Sensitive area define bounduaries to release touch when movement is outside.
-   Default is to:
-   
-   ``` js
-   function($element) {
-     $element[0].ownerDocument.documentElement.getBoundingClientRect();
-   }
-   ```
-                   
-- `pointerTypes`: {object} Which kind of pointer events you wish to handle, with 
-  corresponding event names, by device. eg. 
-
-  ``` js
-  {
-    'mouse': {
-      start: 'mousedown',
-      move: 'mousemove',
-      end: 'mouseup'
-    },
-    'touch': {
-      start: 'touchstart',
-      move: 'touchmove',
-      end: 'touchend',
-      cancel: 'touchcancel'
-    }
-  }
-  ```
-
-And `touchInfo` is an object containing the following extended informations about the touch event:
-
-- `type`: Normalized event type. Despite of pointer device is always one of `touchstart`, `touchend`, `touchmove`, `touchcancel`.
-- `timestamp`: The time object corresponding to the moment this touch event happened.
-- `duration`: The difference between this touch event and the corresponding `touchstart`. 
-- `startX`: X coord of related `touchstart`.
-- `startY`: Y coord of related `touchstart`.
-- `prevX`: X coord of previous `touchstart` or `touchmove`.
-- `prevY`: Y coord of previous `touchstart` or `touchmove`.
-- `x`: X coord of this touch event.
-- `y`: Y coord of this touch event.
-- `step`: Distance between `<prevX, prevY>` and `<x, y>` points.
-- `stepX`: Distance between `prevX` and `x`.
-- `stepY`: Distance between `prevY` and `y`.
-- `velocity`: Instantaneous velocity of a touch event in pixels per second.
-- `averageVelocity`: Average velocity of a touch event from its corresponding `touchstart` in pixels per second.
-- `distance`: Distance between `<startX, startY>` and `<x, y>` points.
-- `distanceX`: Distance between `startX` and `x`.
-- `distanceY`: Distance between `startY` and `y`.
-- `total`: Total number of pixels covered by movement, taking account of direction changes and turnarounds.
-- `totalX`: Total number of pixels covered by horizontal movement, taking account of direction changes and turnarounds.
-- `totalY`: Total number of pixels covered by vertical, taking account of direction changes and turnarounds.
-- `direction`: The prevalent, current direction for this touch, one of 'LEFT', 'RIGHT', 'TOP', 'BOTTOM'.
-- `angle`: Angle in degree between x axis and the vector `[x, y]`, is `null` when no movement happens.
-
-*/
+ * Device agnostic touch handling.
+ *
+ * **Usage**
+ *
+ * Require this module doing either
+ *
+ * ``` js
+ * angular.module('myApp', ['mobile-angular-ui.gestures']);
+ * ```
+ *
+ * Or standalone
+ *
+ * ``` js
+ * angular.module('myApp', ['mobile-angular-ui.gestures.touch']);
+ * ```
+ * 
+ * Then you will be able to use the `$touch` service like that:
+ * 
+ * ``` js
+ * var unbindFn = $touch.bind(element, {
+ *    start: function(touchInfo, e);
+ *    move: function(touchInfo, e);
+ *    end: function(touchInfo, e);
+ *    cancel: function(touchInfo, e);
+ * }, options);
+ * ```
+ * 
+ * @module mobile-angular-ui.gestures.touch
+ */
 (function() {
   'use strict';
   var module = angular.module('mobile-angular-ui.gestures.touch', []);
 
+  /** 
+   * `$touch` is an abstraction of touch event handling that works with 
+   * any kind of input devices.
+   * 
+   * It is intended for single touch only and provides 
+   * extended infos about touch like: movement, direction, velocity, duration, and more.
+   * $touch service is intended as base to build any single-touch gesture handlers.
+   * 
+   * **Usage**
+   * 
+   * ``` js
+   * var unbindFn = $touch.bind(element, {
+   *    start: function(touchInfo, e);
+   *    move: function(touchInfo, e);
+   *    end: function(touchInfo, e);
+   *    cancel: function(touchInfo, e);
+   * }, options);
+   * ```
+   * 
+   * @service $touch
+   * @as class
+   */
+  
+
+  /**
+   * Configurable provider for `$touch` service
+   * @class  $touchProvider
+   * @ngdoc  provider
+   * @memberOf mobile-angular-ui.gestures.touch~$touch
+   */
   module.provider('$touch', function() {
 
     /*=====================================
@@ -133,18 +95,117 @@ And `touchInfo` is an object containing the following extended informations abou
       return $element[0].ownerDocument.documentElement.getBoundingClientRect();
     };
 
-    this.setPointerEvents = function(pe) {
-      POINTER_EVENTS = pe;
+    /**
+     * Set default pointer events option.
+     * Pointer Events option specifies a device-by-device map between device specific events and
+     * touch events. 
+     *
+     * The default Pointer Events Map is defined as:
+     *
+     * ``` js
+     * var POINTER_EVENTS = {
+     *   'mouse': {
+     *     start: 'mousedown',
+     *     move: 'mousemove',
+     *     end: 'mouseup'
+     *   },
+     *   'touch': {
+     *     start: 'touchstart',
+     *     move: 'touchmove',
+     *     end: 'touchend',
+     *     cancel: 'touchcancel'
+     *   }
+     * };
+     * ```
+     * 
+     * Ie.
+     *
+     * ```
+     * app.config(function($touchProvider){
+     *   $touchProvider.setPointerEvents({ pen: {start: "pendown", end: "penup", move: "penmove" }});
+     * });
+     * ```
+     *
+     * @name setPointerEvents
+     * @param {object} pointerEvents The pointer events map object
+     * @memberOf mobile-angular-ui.gestures.touch~$touch.$touchProvider
+     */
+    this.setPointerEvents = function(pointerEvents) {
+      POINTER_EVENTS = pointerEvents;
+      POINTER_TYPES = Object.keys(POINTER_EVENTS);
     };
 
+    /**
+     * Set default validity function for a touch.
+     * 
+     * The default is defined as always true:
+     *
+     * ``` js
+     * $touchProvider.setValid(function(touch, event) {
+     *   return true;
+     * });
+     * ```
+     * 
+     * @param {function} validityFunction The validity function. A function that takes two 
+     *                   arguments: `touchInfo` and `event`, and returns
+     *                   a `Boolean` indicating wether the corresponding touch
+     *                   should be considered valid and its handlers triggered, 
+     *                   or considered invalid and its handlers be ignored.                  
+     * @method setValid
+     * @memberOf mobile-angular-ui.gestures.touch~$touch.$touchProvider
+     */
     this.setValid = function(fn) {
       VALID = fn;
     };
 
+    /**
+     * Set default amount of pixels of movement before
+     * start to trigger `touchmove` handlers.
+     *
+     * Default is `1`.
+     *
+     * ie.
+     * 
+     * ``` js
+     * $touchProvider.setMovementThreshold(120);
+     * ```
+     * 
+     * @param {integer}  threshold The new treeshold.
+     * 
+     * @method  setMovementThreshold
+     * @memberOf mobile-angular-ui.gestures.touch~$touch.$touchProvider
+     */
     this.setMovementThreshold = function(v) {
       MOVEMENT_THRESHOLD = v;
     };
-
+    /**
+     * Set default sensitive area.
+     *
+     * The sensitive area of a touch is the area of the screen inside what 
+     * we consider a touch to be meaningful thus triggering its handlers.
+     *
+     * **NOTE:** if movement goes out the sensitive area the touch event is not cancelled,
+     * instead its handler are just ignored. 
+     * 
+     * By default sensitive area is defined as `ownerDocument` bounding rectangle 
+     * of the bound element.
+     *
+     * ie.
+     * 
+     * ``` js
+     * $touchProvider.setSensitiveArea(function($element) {
+     *   return $element[0].ownerDocument.documentElement.getBoundingClientRect();
+     * });
+     * ```
+     * 
+     * @param {function|Element|TextRectangle} sensitiveArea The new default sensitive area, 
+     *                                                       either static or as function 
+     *                                                       taking an element and returning another
+     *                                                       element or a [rectangle](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect).
+     *
+     * @method  setSensitiveArea
+     * @memberOf mobile-angular-ui.gestures.touch~$touch.$touchProvider
+     */
     this.setSensitiveArea = function(fnOrElementOrRect) {
       SENSITIVE_AREA = fnOrElementOrRect;
     };
@@ -197,12 +258,45 @@ And `touchInfo` is an object containing the following extended informations abou
       return sqrt(x*x + y*y);
     };
 
-    // Compute values for new TouchInfo based on coordinates and previus touches.
-    // - c is coords of new touch
-    // - t0 is first touch: useful to compute duration and distance (how far pointer 
-    //                    got from first touch)
-    // - tl is last touch: useful to compute velocity and length (total length of the movement)
+    /**
+     * `TouchInfo` is an object containing the following extended informations about any touch 
+     * event.
+     * 
+     * @property {string} type Normalized event type. Despite of pointer device is always one of `touchstart`, `touchend`, `touchmove`, `touchcancel`.
+     * @property {Date} timestamp The time object corresponding to the moment this touch event happened.
+     * @property {integer} duration The difference between this touch event and the corresponding `touchstart`. 
+     * @property {float} startX X coord of related `touchstart`.
+     * @property {float} startY Y coord of related `touchstart`.
+     * @property {float} prevX X coord of previous `touchstart` or `touchmove`.
+     * @property {float} prevY Y coord of previous `touchstart` or `touchmove`.
+     * @property {float} x X coord of this touch event.
+     * @property {float} y Y coord of this touch event.
+     * @property {float} step Distance between `[prevX, prevY]` and `[x, y]` points.
+     * @property {float} stepX Distance between `prevX` and `x`.
+     * @property {float} stepY Distance between `prevY` and `y`.
+     * @property {float} velocity Instantaneous velocity of a touch event in pixels per second.
+     * @property {float} averageVelocity Average velocity of a touch event from its corresponding `touchstart` in pixels per second.
+     * @property {float} distance Distance between `[startX, startY]` and `[x, y]` points.
+     * @property {float} distanceX Distance between `startX` and `x`.
+     * @property {float} distanceY Distance between `startY` and `y`.
+     * @property {float} total Total number of pixels covered by movement, taking account of direction changes and turnarounds.
+     * @property {float} totalX Total number of pixels covered by horizontal movement, taking account of direction changes and turnarounds.
+     * @property {float} totalY Total number of pixels covered by vertical, taking account of direction changes and turnarounds.
+     * @property {string} direction The current prevalent direction for this touch, one of `LEFT`, `RIGHT`, `TOP`, `BOTTOM`.
+     * @property {float} angle Angle in degree between x axis and the vector `[x, y]`, is `null` when no movement happens.
+     * 
+     * @class TouchInfo
+     * @ngdoc type
+     * @memberOf mobile-angular-ui.gestures.touch~$touch
+     */
+
     var buildTouchInfo = function(type, c, t0, tl) {
+      // Compute values for new TouchInfo based on coordinates and previus touches.
+      // - c is coords of new touch
+      // - t0 is first touch: useful to compute duration and distance (how far pointer 
+      //                    got from first touch)
+      // - tl is last touch: useful to compute velocity and length (total length of the movement)
+
       t0 = t0 || {}; 
       tl = tl || {}; 
 
@@ -285,6 +379,38 @@ And `touchInfo` is an object containing the following extended informations abou
     this.$get = [function() {
       
       return {
+        /**
+         *
+         * Bind touch handlers for an element.
+         *
+         * ``` js
+         * var unbind = $touch.bind(elem, { 
+         *   end: function(touch) { 
+         *     console.log('Avg Speed:', touch.averageVelocity);
+         *     unbind();
+         *   }
+         * });
+         * ```
+         * 
+         * @param  {Element|$element} element The element to bound to.
+         * @param  {object} eventHandlers An object with handlers for specific touch events.
+         * @param  {function} [eventHandlers.start]  The callback for `touchstart` event.
+         * @param  {function} [eventHandlers.end]  The callback for `touchend` event.
+         * @param  {function} [eventHandlers.move]  The callback for `touchmove` event.
+         * @param  {function} [eventHandlers.cancel]  The callback for `touchcancel` event.
+         * @param  {object} [options] Options.
+         * @param  {integer} [options.movementThreshold] Amount of pixels of movement before start to trigger `touchmove` handlers.
+         * @param  {function} [options.valid] Validity function. A `function(TouchInfo, event)⟶boolean` deciding if a touch should be handled or ignored.
+         * @param  {function|Element|TextRectangle} [options.sensitiveArea] A [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect) or an element 
+         *                                                                  or a function that takes the bound element and returns one of the previous.
+         *                                                                  Sensitive area define bounduaries to release touch when movement is outside.
+         * @param  {array} [options.pointerTypes] Pointer types to handle. An array of pointer types that is intended to be 
+         *                                        a subset of keys from default pointer events map (see `$touchProvider.setPointerEvents`).
+         *
+         * @returns {function} The unbind function.
+         * 
+         * @memberOf mobile-angular-ui.gestures.touch~$touch
+         */
         bind: function($element, eventHandlers, options) {
 
           // ensure element to be an angular element 
