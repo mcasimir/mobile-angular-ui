@@ -5,20 +5,22 @@
 <div class="scrollable">
   <div class="scrollable-content">
     <div class="section">
-      <div class="panel panel-default">
+        
+      <div class="panel panel-default" ng-repeat="idx in [1,2,3]">
         <div class="panel-heading">
           <div class="btn-group pull-right">
-            <a ui-turn-on='myDropdown' class='btn'>
+            <a ui-turn-on='myDropdown{{idx}}' class='btn'>
               <i class="fa fa-ellipsis-v"></i>
             </a>
             <ul 
+              ui-state="myDropdown{{idx}}"
+
               class="dropdown-menu"
-              ui-outer-click="Ui.turnOff('myDropdown')"
-              ui-outer-click-if="Ui.active('myDropdown')"
+              ui-outer-click="Ui.turnOff('myDropdown' + idx)"
+              ui-outer-click-if="Ui.active('myDropdown' + idx)"
               role="menu"
-              ui-show="myDropdown" 
-              ui-state="myDropdown"
-              ui-turn-off="myDropdown">
+              ui-show="myDropdown{{idx}}"
+              ui-turn-off="myDropdown{{idx}}">
 
               <li><a>Action</a></li>
               <li><a>Another action</a></li>
@@ -33,6 +35,7 @@
            {{lorem}}
         </div>
       </div>
+
     </div>
   </div>
 </div>

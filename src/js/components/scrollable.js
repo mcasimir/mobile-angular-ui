@@ -101,7 +101,7 @@
             prevTop = null; 
             prevBot = null;
             lastY = getTouchY(event);
-          }
+          };
 
           $element.on('touchstart', setupTouchstart);
           $element.on('$destroy', function() {

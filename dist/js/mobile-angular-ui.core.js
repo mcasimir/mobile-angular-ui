@@ -2008,7 +2008,7 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
       /**
        * Calls `SharedState#toggle` when triggering events happens on the element using it.
        * 
-       * @param {object} uiToggle the target shared state
+       * @param {string} uiToggle the target shared state
        * @param {expression} uiDefault the default value
        *
        * @directive uiToggle
@@ -2019,10 +2019,11 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
        * 
        * @description
        * Calls `SharedState#turnOn` when triggering events happens on the element using it.
+       *
        * 
        * @ngdoc directive
        * 
-       * @param {object} uiTurnOn the target shared state
+       * @param {string} uiTurnOn the target shared state
        * @param {expression} uiDefault the default value
        */
 
@@ -2034,7 +2035,7 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
        * 
        * @ngdoc directive
        * 
-       * @param {object} uiTurnOff the target shared state
+       * @param {string} uiTurnOff the target shared state
        * @param {string} [uiTriggers='click tap'] the event triggering the call.
        */
 
@@ -2052,8 +2053,9 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
       
       module.directive(directiveName, [
         '$parse',
+        '$interpolate',
         'SharedState',
-        function($parse, SharedState) {
+        function($parse, $interpolate, SharedState) {
               var method = SharedState[methodName];
               return {
                 restrict: 'A',
@@ -2064,11 +2066,16 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
                              // before ng-click fires.
 
                 compile: function(elem, attrs) {
-                  var fn = methodName === 'set' ?
-                    $parse(attrs[directiveName]) :
-                      function() {
-                        return attrs[directiveName]; 
-                      };
+                  var attr = attrs[directiveName];
+                  var needsInterpolation = attr.match(/\{\{/);
+                  var fn = function($scope) {
+                    var expr = attr;
+                    if (needsInterpolation) {
+                      var interpolateFn = $interpolate(expr);
+                      expr = interpolateFn($scope);
+                    }
+                    return methodName === 'set' ? $parse(expr) : expr;
+                  };
 
                   return function(scope, elem, attrs) {
                     var callback = function() {
@@ -2088,13 +2095,45 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
   * @inner 
   * @description
   * 
-  * `uiScopeContext` is not a directive, but a parameter common to any of the following `ui-*` directives.
+  * `uiScopeContext` is not a directive, but a parameter common to any of the 
+  * `ui-*` directives in this module.
+  *
+  * By default all `ui-*` conditions in this module evaluates in the context of 
+  * `SharedState` only, thus scope variable are not accessible. To use them you have 
+  * two options:
+  *
+  * #### 1. pre-interpolation
   * 
-  * It allows to use current scope vars inside ui-* conditions. That will leave other scope vars (or the entire scope if not present) apart from the condition evaluation process.
+  * You can use pre-interpolation in expression attribute. For instance the following syntax
+  * is ligit:
   * 
-  * Hopefully this will keep evaluation running against a flat and small data structure instead of taking into account the whole scope. 
+  * ``` html
+  * <div ui-if='state{{idx}}'><!-- ... --></div>
+  * ```
+  *
+  * In this case `idx` value is taken from scope and embedded into
+  * conditions before parse them.
+  *
+  * This works as expected and is fine for the most cases, but it has a little caveat:
+  *
+  * The condition has to be re-parsed at each digest loop and has to walk scopes 
+  * in watchers.
+  *
+  * #### 2. uiScopeContext
+  *
+  * If you are concerned about performance issues using the first approach 
+  * `uiScopeContext` is a more verbose but also lightweight alternative 
+  * to accomplish the same.
+  *  
+  * It allows to use current scope vars inside `ui-*` conditions, leaving
+  * other scope vars (or the entire scope if not present) apart from the
+  * condition evaluation process.
   * 
-  * It is a list `scopeVar[ as aliasName] [, ...]` specifing one of more scope variables to take into account when evaluating conditions. ie:
+  * Hopefully this will keep evaluation running against a flat and small data 
+  * structure instead of taking into account the whole scope. 
+  * 
+  * It is a list `scopeVar[ as aliasName] [, ...]` specifing one of more scope
+  * variables to take into account when evaluating conditions. ie:
   * 
   * ``` html
   * <!-- use item from ng-repeat -->
@@ -2147,8 +2186,21 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
     }
   };
 
-  var parseUiCondition = function(name, attrs, $scope, SharedState, $parse) {
-    var exprFn = $parse(attrs[name]);
+  var parseUiCondition = function(name, attrs, $scope, SharedState, $parse, $interpolate) {
+    var expr = attrs[name];
+    var needsInterpolation = expr.match(/\{\{/);
+    var exprFn;
+
+    if (needsInterpolation) {
+      exprFn = function(context) {
+        var interpolateFn = $interpolate(expr);
+        var parseFn = $parse(interpolateFn($scope));
+        return parseFn(context);
+      };
+    } else {
+      exprFn = $parse(expr);
+    }
+
     var uiScopeContext = parseScopeContext(attrs.uiScopeContext);
     return function() {
       var context;
@@ -2173,7 +2225,7 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
   * @param {expression} uiIf A condition to decide wether to attach the element to the dom
   * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]` specifing one of more scope variables to take into account when evaluating condition.
   */ 
-  module.directive('uiIf', ['$animate', 'SharedState', '$parse', function($animate, SharedState, $parse) {
+  module.directive('uiIf', ['$animate', 'SharedState', '$parse', '$interpolate', function($animate, SharedState, $parse, $interpolate) {
     function getBlockNodes(nodes) {
       var node = nodes[0];
       var endNode = nodes[nodes.length - 1];
@@ -2196,7 +2248,7 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
       $$tlb: true,
       link: function ($scope, $element, $attr, ctrl, $transclude) {
           var block, childScope, previousElements, 
-          uiIfFn = parseUiCondition('uiIf', $attr, $scope, SharedState, $parse);
+          uiIfFn = parseUiCondition('uiIf', $attr, $scope, SharedState, $parse, $interpolate);
 
           $scope.$watch(uiIfFn, function uiIfWatchAction(value) {
             if (value) {
@@ -2250,7 +2302,7 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
    * @param {expression} uiShow A condition to decide wether to hide the element
    * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]` specifing one of more scope variables to take into account when evaluating condition.
    */ 
-  module.directive('uiHide', ['$animate', 'SharedState', '$parse', function($animate, SharedState, $parse) {
+  module.directive('uiHide', ['$animate', 'SharedState', '$parse', '$interpolate', function($animate, SharedState, $parse, $interpolate) {
     var NG_HIDE_CLASS = 'ng-hide';
     var NG_HIDE_IN_PROGRESS_CLASS = 'ng-hide-animate';
 
@@ -2258,7 +2310,7 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
       restrict: 'A',
       multiElement: true,
       link: function(scope, element, attr) {
-        var uiHideFn = parseUiCondition('uiHide', attr, scope, SharedState, $parse);
+        var uiHideFn = parseUiCondition('uiHide', attr, scope, SharedState, $parse, $interpolate);
         scope.$watch(uiHideFn, function uiHideWatchAction(value){
           $animate[value ? 'addClass' : 'removeClass'](element,NG_HIDE_CLASS, {
             tempClasses : NG_HIDE_IN_PROGRESS_CLASS
@@ -2278,7 +2330,7 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
    * @param {expression} uiShow A condition to decide wether to show the element
    * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]` specifing one of more scope variables to take into account when evaluating condition.
    */ 
-  module.directive('uiShow', ['$animate', 'SharedState', '$parse', function($animate, SharedState, $parse) {
+  module.directive('uiShow', ['$animate', 'SharedState', '$parse', '$interpolate', function($animate, SharedState, $parse) {
     var NG_HIDE_CLASS = 'ng-hide';
     var NG_HIDE_IN_PROGRESS_CLASS = 'ng-hide-animate';
 
@@ -2306,7 +2358,7 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
    * @param {expression} uiClass An expression that has to evaluate to an object of the form `{'className': expr}`, where `expr` decides wether the class should appear to element's class list.
    * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]` specifing one of more scope variables to take into account when evaluating condition.
    */ 
-  module.directive('uiClass', ['SharedState', '$parse', function(SharedState, $parse) {
+  module.directive('uiClass', ['SharedState', '$parse', '$interpolate', function(SharedState, $parse) {
     return {
       restrict: 'A',
       link: function(scope, element, attr) {

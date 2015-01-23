@@ -1,0 +1,43 @@
+<html describe='core/sharedstate/interpolation'>
+  <head>
+    <script>
+      app.run(function($rootScope, SharedState) {
+        $rootScope.x = 1;
+      });
+    </script>
+  </head>
+  <body>
+    <div ui-state='state{{x}}' ui-default='true'></div>
+
+    <div ui-if='state{{x}}' id='test1'></div>
+    <div ui-show='state{{x}}' id='test2'>Test</div>
+    <div ui-hide='state{{x}}' id='test3'></div>
+    <div ui-class="{ 'active': state{{x}} }" id='test4'></div>
+  </body>
+
+  <script type='application/protractor'
+    spec="ui-state should accept interpolation">
+    ngExpect('SharedState.has("state1")').toEqual(true);
+    ngExpect('SharedState.active("state1")').toEqual(true);
+  </script>
+
+  <script type='application/protractor'
+    spec="ui-if should accept interpolation">
+    expect($('#test1').isPresent()).toBe(true);
+  </script>
+
+  <script type='application/protractor'
+    spec="ui-show should accept interpolation">
+    expect($('#test2').isDisplayed()).toBe(true);    
+  </script>
+
+  <script type='application/protractor'
+    spec="ui-hide should accept interpolation">
+    expect($('#test3').isDisplayed()).toBe(false);
+  </script>
+
+  <script type='application/protractor'
+    spec="ui-class should accept interpolation">
+    expect($('#test4')).toHaveClass('active');
+  </script>
+</html>

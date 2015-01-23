@@ -6,16 +6,17 @@ This file will contain an extremely detailed tasks list
 to follow development of new releases.
 
 Unscheduled:
-  ❑ Try to use closure compiler or similar to perform maximum 
-      compression/optimization and structure sources better
+  ❑ Look forward to use typescript/closure compiler or similar to perform maximum compression/optimization and structure sources better
+  ❑ Support basic material design principles and visual feedbacks
+      
 
 Unscheduled 1.2:
   ❑ Support ms devices through -ms- touch property
       For IE11+, you can use touch-action: manipulation; to disable double-tap-to-zoom on certain elements (like links and buttons). For IE10 use -ms-touch-action: manipulation
-  ❑ Add tests for $touch and $drag, adapt those for $swipe and $transform
+  ✔ Add tests for $touch and $drag, adapt those for $swipe and $transform @done (15-01-23 22:01)
   ❑ Define multiple states in "ui-state"
   ❑ Make shared states exportable to QP
-  ❑ Make it simpler to deal with ng-repeat and multiple shared states
+  ✔ Make it simpler to deal with ng-repeat and multiple shared states @done (15-01-23 22:01)
   ❑ Fix migration for ui-switch
   ❑ Fix $transform issues decomposing previous rotations
   ❑ Check for: https://github.com/scottjehl/device-bugs/issues/2 !!!
