@@ -1164,7 +1164,7 @@ If you wish you can also duplicate markup instead of move it. Just add `duplicat
  * So any `touchmove` default behaviour is automatically prevented.
  * 
  * If you wish to allow the default behaviour, for example to allow 
- * inner elements to scroll you have to explicitly setup `e.allowTouchmoveDefault` 
+ * inner elements to scroll, you have to explicitly setup `e.allowTouchmoveDefault` 
  * to `true`.
  *
  * Mobile Angular UI already handles this for `scrollable` elements.
@@ -1178,13 +1178,10 @@ If you wish you can also duplicate markup instead of move it. Just add `duplicat
   'use strict';
   var module = angular.module('mobile-angular-ui.core.nobounce', []);
 
-  var isTouchDevice = 'ontouchmove' in document;
-  var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
-
-  if (isTouchDevice) {
+  if ('ontouchmove' in document) {
     module.run(function() {
       angular.element(document).on('touchmove', function(e) {
-        if (!e.allowTouchmoveDefault === true) {
+        if (e.allowTouchmoveDefault !== true) {
           e.preventDefault();
         }
       });
@@ -3034,7 +3031,16 @@ angular.module('myApp', ['mobile-angular-ui.core']);
   var module = angular.module('mobile-angular-ui.components.scrollable', 
     ['mobile-angular-ui.core.nobounce']);
 
-  var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
+
+  var getTouchY = function(event) {
+    var touches = event.touches && event.touches.length ? event.touches : [event];
+    var e = (event.changedTouches && event.changedTouches[0]) ||
+        (event.originalEvent && event.originalEvent.changedTouches &&
+            event.originalEvent.changedTouches[0]) ||
+        touches[0].originalEvent || touches[0];
+
+    return e.clientY;
+  };
 
   module.directive('scrollableContent', function() {
     return {
@@ -3044,14 +3050,15 @@ angular.module('myApp', ['mobile-angular-ui.core']);
             scrollable = $element.parent()[0];
 
         // Handle nobounce behaviour
-        if (iOS && 'ontouchstart' in document) {
+        if ('ontouchmove' in document) {
           var allowUp, allowDown, prevTop, prevBot, lastY;
           var setupTouchstart = function(event) {
             allowUp = (scrollableContent.scrollTop > 0);
+
             allowDown = (scrollableContent.scrollTop < scrollableContent.scrollHeight - scrollableContent.clientHeight);
             prevTop = null; 
             prevBot = null;
-            lastY = event.pageY;
+            lastY = getTouchY(event);
           }
 
           $element.on('touchstart', setupTouchstart);
@@ -3060,8 +3067,9 @@ angular.module('myApp', ['mobile-angular-ui.core']);
           });
 
           allowTouchmoveDefault($element, function(event) {
-            var up = (event.pageY > lastY), down = !up;
-            lastY = event.pageY;
+            var currY = getTouchY(event);
+            var up = (currY > lastY), down = !up;
+            lastY = currY;
             return (up && allowUp) || (down && allowDown);
           });
         }

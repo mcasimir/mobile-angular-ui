@@ -1164,7 +1164,7 @@ If you wish you can also duplicate markup instead of move it. Just add `duplicat
  * So any `touchmove` default behaviour is automatically prevented.
  * 
  * If you wish to allow the default behaviour, for example to allow 
- * inner elements to scroll you have to explicitly setup `e.allowTouchmoveDefault` 
+ * inner elements to scroll, you have to explicitly setup `e.allowTouchmoveDefault` 
  * to `true`.
  *
  * Mobile Angular UI already handles this for `scrollable` elements.
@@ -1178,13 +1178,10 @@ If you wish you can also duplicate markup instead of move it. Just add `duplicat
   'use strict';
   var module = angular.module('mobile-angular-ui.core.nobounce', []);
 
-  var isTouchDevice = 'ontouchmove' in document;
-  var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
-
-  if (isTouchDevice) {
+  if ('ontouchmove' in document) {
     module.run(function() {
       angular.element(document).on('touchmove', function(e) {
-        if (!e.allowTouchmoveDefault === true) {
+        if (e.allowTouchmoveDefault !== true) {
           e.preventDefault();
         }
       });

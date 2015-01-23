@@ -73,6 +73,17 @@
   var module = angular.module('mobile-angular-ui.components.scrollable', 
     ['mobile-angular-ui.core.nobounce']);
 
+
+  var getTouchY = function(event) {
+    var touches = event.touches && event.touches.length ? event.touches : [event];
+    var e = (event.changedTouches && event.changedTouches[0]) ||
+        (event.originalEvent && event.originalEvent.changedTouches &&
+            event.originalEvent.changedTouches[0]) ||
+        touches[0].originalEvent || touches[0];
+
+    return e.clientY;
+  };
+
   module.directive('scrollableContent', function() {
     return {
       restrict: 'C',
@@ -85,10 +96,11 @@
           var allowUp, allowDown, prevTop, prevBot, lastY;
           var setupTouchstart = function(event) {
             allowUp = (scrollableContent.scrollTop > 0);
+
             allowDown = (scrollableContent.scrollTop < scrollableContent.scrollHeight - scrollableContent.clientHeight);
             prevTop = null; 
             prevBot = null;
-            lastY = event.pageY;
+            lastY = getTouchY(event);
           }
 
           $element.on('touchstart', setupTouchstart);
@@ -97,8 +109,9 @@
           });
 
           allowTouchmoveDefault($element, function(event) {
-            var up = (event.pageY > lastY), down = !up;
-            lastY = event.pageY;
+            var currY = getTouchY(event);
+            var up = (currY > lastY), down = !up;
+            lastY = currY;
             return (up && allowUp) || (down && allowDown);
           });
         }
