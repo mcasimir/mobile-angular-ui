@@ -2068,18 +2068,22 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
                 compile: function(elem, attrs) {
                   var attr = attrs[directiveName];
                   var needsInterpolation = attr.match(/\{\{/);
-                  var fn = function($scope) {
-                    var expr = attr;
+                  
+                  var exprFn = function($scope) {
+                    var res = attr;
                     if (needsInterpolation) {
-                      var interpolateFn = $interpolate(expr);
-                      expr = interpolateFn($scope);
+                      var interpolateFn = $interpolate(res);
+                      res = interpolateFn($scope);
                     }
-                    return methodName === 'set' ? $parse(expr) : expr;
+                    if (methodName === 'set') {
+                      res = ($parse(res))($scope);    
+                    }
+                    return res;                                          
                   };
 
                   return function(scope, elem, attrs) {
                     var callback = function() {
-                      var arg = fn(scope);
+                      var arg = exprFn(scope);
                       return method.call(SharedState, arg);
                     };
                     uiBindEvent(scope, elem, attrs.uiTriggers, callback);
