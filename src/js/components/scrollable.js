@@ -71,7 +71,7 @@
 (function() {
   'use strict';
   var module = angular.module('mobile-angular-ui.components.scrollable', 
-    ['mobile-angular-ui.core.nobounce']);
+    ['mobile-angular-ui.core.touchmoveDefaults']);
 
 
   var getTouchY = function(event) {

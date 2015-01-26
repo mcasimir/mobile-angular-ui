@@ -112,6 +112,7 @@ app.directive('dragMe', ['$drag', function($drag){
 }]);
 ```
 
+<iframe class='embedded-example' src='/examples/drag.html'></iframe>
 */
 (function () {
    'use strict';
@@ -962,6 +963,8 @@ app.directive('dragMe', ['$drag', function($drag){
 
           // on touchstart
           var onTouchStart = function(event) {
+            // don't handle multi-touch
+            if (event.touches && event.touches.length > 1) { return; } 
             tl = t0 = buildTouchInfo('touchstart', getCoordinates(event));
             $movementTarget.on(moveEvents, onTouchMove);
             $movementTarget.on(endEvents, onTouchEnd);
@@ -982,6 +985,9 @@ app.directive('dragMe', ['$drag', function($drag){
 
           // on touchMove
           var onTouchMove = function(event) {
+            // don't handle multi-touch
+            if (event.touches && event.touches.length > 1) { return; } 
+
             if (!isActive()) { return; }
             
             var coords = getCoordinates(event);
@@ -1018,6 +1024,9 @@ app.directive('dragMe', ['$drag', function($drag){
 
           // on touchEnd
           var onTouchEnd = function(event) {
+            // don't handle multi-touch
+            if (event.touches && event.touches.length > 1) { return; } 
+
             if (!isActive()) { return; }
             var t = angular.extend({}, tl, {type: 'touchend'});
             if (isValid(t, event)) {

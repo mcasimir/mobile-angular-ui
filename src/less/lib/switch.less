@@ -1,3 +1,7 @@
+ui-switch {
+  display: block;
+}
+
 .switch {
   cursor: pointer;
   position: relative;
@@ -8,6 +12,11 @@
   border: 1px solid @input-border;
   border-radius: @switch-border-radius;
 
+  &[disabled] {
+    cursor: default;
+    .opacity(0.4);
+  }
+  
   // Sliding handle
   .switch-handle {
     position: absolute;

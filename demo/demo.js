@@ -224,7 +224,7 @@ app.directive('carouselItem', function($drag) {
   };
 });
 
-app.directive('dragMeTo', ['$drag', function($drag){
+app.directive('dragMe', ['$drag', function($drag){
   return {
     controller: function($scope, $element) {
       $drag.bind($element, 

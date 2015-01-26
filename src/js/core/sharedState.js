@@ -95,6 +95,8 @@
    * </div>
    * ```
    * 
+   * <iframe class='embedded-example' src='/examples/tabs.html'></iframe>
+   * 
    * NOTE: `ui-toggle/set/turnOn/turnOff` responds to `click/tap` without stopping propagation so you can use them along with ng-click too. You can also change events to respond to with `ui-triggers` attribute.
    * 
    * Any `SharedState` method is exposed through `Ui` object in `$rootScope`. So you could always do `ng-click="Ui.turnOn('myVar')"`.

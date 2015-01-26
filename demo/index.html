@@ -24,6 +24,7 @@
   <body 
     ng-app="MobileAngularUiExamples" 
     ng-controller="MainController"
+    ui-prevent-touchmove-defaults
     >
 
     <!-- Sidebars -->
@@ -35,8 +36,8 @@
             class="sidebar sidebar-right"></div>
 
     <div class="app" 
-         ng-swipe-right='Ui.turnOn("uiSidebarLeft")'
-         ng-swipe-left='Ui.turnOff("uiSidebarLeft")'>
+         ui-swipe-right='Ui.turnOn("uiSidebarLeft")'
+         ui-swipe-left='Ui.turnOff("uiSidebarLeft")'>
 
       <!-- Navbars -->
 

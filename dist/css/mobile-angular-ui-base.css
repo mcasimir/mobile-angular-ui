@@ -8046,6 +8046,10 @@ a.panel-heading {
   filter: blur(5px);
 }
 
+ui-switch {
+  display: block;
+}
+
 .switch {
   cursor: pointer;
   position: relative;
@@ -8055,6 +8059,12 @@ a.panel-heading {
   background-color: #ffffff;
   border: 1px solid #cccccc;
   border-radius: 999px;
+}
+
+.switch[disabled] {
+  cursor: default;
+  opacity: 0.3;
+  filter: alpha(opacity=30);
 }
 
 .switch .switch-handle {

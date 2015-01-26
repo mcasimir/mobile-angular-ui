@@ -1158,94 +1158,6 @@ If you wish you can also duplicate markup instead of move it. Just add `duplicat
   });
 }());
 /**
- * Enable prevention of window bounce in IOS.
- *
- * Requiring this module the `touchmove.preventDefault` logic is inverted. 
- * So any `touchmove` default behaviour is automatically prevented.
- * 
- * If you wish to allow the default behaviour, for example to allow 
- * inner elements to scroll, you have to explicitly setup `e.allowTouchmoveDefault` 
- * to `true`.
- *
- * Mobile Angular UI already handles this for `scrollable` elements.
- *
- * You can easily disable this for an element, or under some circumstances through
- * the `allowTouchmoveDefault` service provided in this module.
- * 
- * @module mobile-angular-ui.core.nobounce
- */
-(function () {
-  'use strict';
-  var module = angular.module('mobile-angular-ui.core.nobounce', []);
-
-  if ('ontouchmove' in document) {
-    module.run(function() {
-      angular.element(document).on('touchmove', function(e) {
-        if (e.allowTouchmoveDefault !== true) {
-          e.preventDefault();
-        }
-      });
-    });
-  }
-
-  /**
-   * Bind a listener to an element to allow `touchmove` default behaviour
-   * when `touchmove` happens inside the bound element.
-   * 
-   * You can also provide a function to decide when to allow and 
-   * when to prevent it.
-   *
-   * ``` js
-   * // always allow touchmove default
-   * allowTouchmoveDefault(myelem);
-   * 
-   * // allow touchmove default only under certain conditions
-   * allowTouchmoveDefault(myelem, function(touchmove){
-   *   return touchmove.pageY > 100;
-   * });
-   * ```
-   *
-   * @param {Element|$element} element The element to bind.
-   * @param {function} condition A `function(touchmove)⟶boolean` to decide
-   *                             whether to allow default behavior or not. 
-   * 
-   * @service allowTouchmoveDefault
-   * @as function
-   * @returns function Function to unbind the listener
-   */
-  
-  module.factory('allowTouchmoveDefault', function(){
-    var fnTrue = function() { return true; };
-
-    if ('ontouchmove' in document) {
-        return function($element, condition) {
-          condition = condition || fnTrue;
-
-          var allowTouchmoveDefaultCallback = function(e) {
-            if (condition(e)) { e.allowTouchmoveDefault = true; }
-          };
-
-          $element = angular.element($element);
-          $element.on('touchmove',  allowTouchmoveDefaultCallback);
-
-          $element.on('$destroy', function() {
-            $element.off('touchmove', allowTouchmoveDefaultCallback);
-            $element = null;
-          });
-
-          return function() {
-            if ($element) {
-              $element.off('touchmove', allowTouchmoveDefaultCallback);              
-            }
-          };
-        };
-    } else {
-      return angular.noop;
-    }
-  });
-
-}());
-/**
 
 @module mobile-angular-ui.core.outerClick
 @description
@@ -1516,6 +1428,8 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
    * 
    * </div>
    * ```
+   * 
+   * <iframe class='embedded-example' src='/examples/tabs.html'></iframe>
    * 
    * NOTE: `ui-toggle/set/turnOn/turnOff` responds to `click/tap` without stopping propagation so you can use them along with ng-click too. You can also change events to respond to with `ui-triggers` attribute.
    * 
@@ -2401,6 +2315,126 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
 }());
 
 /**
+ * Provides directives and service to prevent touchmove default behaviour 
+ * for touch devices (ie. bounce on overscroll in IOS).
+ *
+ * #### Usage
+ *
+ * Use `ui-prevent-touchmove-defaults` directive on root element of your app:
+ * 
+ * ``` html
+ * <body ng-app='myApp' ui-prevent-touchmove-defaults>
+ *   <!-- ... -->
+ * </body>
+ * ```
+ *
+ * Doing so `touchmove.preventDefault` logic for inner elements is inverted,
+ * so any `touchmove` default behaviour is automatically prevented.
+ * 
+ * If you wish to allow the default behaviour, for example to allow 
+ * inner elements to scroll, you have to explicitly mark an event to allow 
+ * touchmove default.
+ *
+ * Mobile Angular UI already handles this for `scrollable` elements, so you don't have
+ * to do anything in order to support scroll.
+ *
+ * If you wish to allow touchmove defaults for certain element under certain conditions
+ * you can use the `allowTouchmoveDefault` service.
+ *
+ * ie.
+ * 
+ * ``` js
+ * // always allow touchmove default for an element
+ * allowTouchmoveDefault(myelem);
+ * ```
+ * 
+ * ``` js
+ * // allow touchmove default for an element only under certain conditions
+ * allowTouchmoveDefault(myelem, function(touchmove){
+ *   return touchmove.pageY > 100;
+ * });
+ * ```
+ * 
+ * @module mobile-angular-ui.core.touchmoveDefaults
+ */
+(function () {
+  'use strict';
+  var module = angular.module('mobile-angular-ui.core.touchmoveDefaults', []);
+
+  module.directive('uiPreventTouchmoveDefaults', function() {
+    var preventTouchmoveDefaultsCb = function(e) {
+      if (e.allowTouchmoveDefault !== true) {
+        e.preventDefault();
+      }
+    };
+
+    return {
+      compile: function(element) {
+        if ('ontouchmove' in document) {
+          element.on('touchmove', preventTouchmoveDefaultsCb);
+        }
+      }
+    };
+  });
+
+  /**
+   * Bind a listener to an element to allow `touchmove` default behaviour
+   * when `touchmove` happens inside the bound element.
+   * 
+   * You can also provide a function to decide when to allow and 
+   * when to prevent it.
+   *
+   * ``` js
+   * // always allow touchmove default
+   * allowTouchmoveDefault(myelem);
+   * 
+   * // allow touchmove default only under certain conditions
+   * allowTouchmoveDefault(myelem, function(touchmove){
+   *   return touchmove.pageY > 100;
+   * });
+   * ```
+   *
+   * @param {Element|$element} element The element to bind.
+   * @param {function} condition A `function(touchmove)⟶boolean` to decide
+   *                             whether to allow default behavior or not. 
+   * 
+   * @service allowTouchmoveDefault
+   * @as function
+   * @returns function Function to unbind the listener
+   */
+  
+  module.factory('allowTouchmoveDefault', function(){
+    var fnTrue = function() { return true; };
+
+    if ('ontouchmove' in document) {
+        return function($element, condition) {
+          condition = condition || fnTrue;
+
+          var allowTouchmoveDefaultCallback = function(e) {
+            if (condition(e)) { e.allowTouchmoveDefault = true; }
+          };
+
+          $element = angular.element($element);
+          $element.on('touchmove',  allowTouchmoveDefaultCallback);
+
+          $element.on('$destroy', function() {
+            $element.off('touchmove', allowTouchmoveDefaultCallback);
+            $element = null;
+          });
+
+          return function() {
+            if ($element) {
+              $element.off('touchmove', allowTouchmoveDefaultCallback);              
+            }
+          };
+        };
+    } else {
+      return angular.noop;
+    }
+  });
+
+}());
+/**
 
 @module mobile-angular-ui.core
 
@@ -2437,7 +2471,7 @@ angular.module('myApp', ['mobile-angular-ui.core']);
     'mobile-angular-ui.core.capture',
     'mobile-angular-ui.core.outerClick',
     'mobile-angular-ui.core.sharedState',
-    'mobile-angular-ui.core.nobounce'
+    'mobile-angular-ui.core.touchmoveDefaults'
   ]);
 }());
 /*! Overthrow. An overflow:auto polyfill for responsive design. (c) 2012: Scott Jehl, Filament Group, Inc. http://filamentgroup.github.com/Overthrow/license.txt */
@@ -3085,7 +3119,7 @@ angular.module('myApp', ['mobile-angular-ui.core']);
 (function() {
   'use strict';
   var module = angular.module('mobile-angular-ui.components.scrollable', 
-    ['mobile-angular-ui.core.nobounce']);
+    ['mobile-angular-ui.core.touchmoveDefaults']);
 
 
   var getTouchY = function(event) {
@@ -3425,52 +3459,137 @@ By default sidebar are closed by clicking/tapping outside them.
   }]);
 }());
 /**
-@module mobile-angular-ui.components.switch
-@description
-
-The `ui-switch` directive (not to be confused with `ng-switch`) lets you create a toggle switch control bound to a boolean `ngModel` value.
+The `ui-switch` directive (not to be confused with `ng-switch`) lets 
+you create a toggle switch control bound to a boolean `ngModel` value.
 
 <figure class="full-width-figure">
   <img src="/assets/img/figs/switch.png" alt=""/>
 </figure>
 
-It requires `ngModel`. You can also use `ngChange` in conjunction with `[switch]` to trigger functions in response to model changes.
+It requires `ngModel`. It supports `ngChange` and `ngDisabled`.
 
 ``` html
 <ui-switch  ng-model="invoice.paid"></ui-switch>
 ```
 
+``` html
+<ui-switch  ng-model="invoice.paid" disabled></ui-switch>
+```
+
+``` html
+<ui-switch  ng-model="invoice.paid" ng-disabled='{{...}}'></ui-switch>
+```
+
+Note that if `$drag` service from `mobile-angular-ui.gestures` is available 
+`ui-switch` will support drag too.
+
+@module mobile-angular-ui.components.switch
 */
 (function() {
   'use strict';  
   angular.module('mobile-angular-ui.components.switch', [])
-  .directive("uiSwitch", function() {
+  .directive('uiSwitch', ['$injector', function($injector) {
+    var $drag = $injector.has('$drag') && $injector.get('$drag');
+
     return {
-      restrict: "EA",
-      replace: true,
+      restrict: 'EA',
       scope: {
-        model: "=ngModel",
-        changeExpr: "@ngChange",
-        disabled: "@"
+        model: '=ngModel',
+        changeExpr: '@ngChange'
       },
-      template: "<div class='switch' ng-class='{active: model}'><div class='switch-handle'></div></div>",
       link: function(scope, elem, attrs) {
+        elem.addClass('switch');
+        
+        var disabled = attrs.disabled || elem.attr('disabled');
 
-        elem.on('click tap', function(){
-          if (attrs.disabled === null || attrs.disabled === undefined) {
-            scope.model = !scope.model;
+        var unwatchDisabled = scope.$watch(
+          function() { 
+            return attrs.disabled || elem.attr('disabled'); 
+          },
+          function(value) {
+            if (!value || value === 'false' || value === '0') {
+              disabled = false;
+            } else {
+              disabled = true;
+            }
+          }
+        );
+
+        var handle = angular.element('<div class="switch-handle"></div>');
+        elem.append(handle);
+
+        if (scope.model) {
+          elem.addClass('active');
+        }
+        elem.addClass('switch-transition-enabled');
+
+        var unwatch = scope.$watch('model', function(value) {
+          if (value) {
+            elem.addClass('active');
+          } else {
+            elem.removeClass('active');
+          }
+        });
+        
+        var isEnabled = function() {
+          return !disabled;
+        };
+
+        var setModel = function(value) {
+          if (isEnabled() && value !== scope.model) {
+            scope.model = value;
             scope.$apply();
-
             if (scope.changeExpr !== null && scope.changeExpr !== undefined) {
               scope.$parent.$eval(scope.changeExpr);
             }
           }
-        });
+        };
 
-        elem.addClass('switch-transition-enabled');
+        var clickCb = function() {
+          setModel(!scope.model);
+        };
+
+        elem.on('click tap', clickCb);
+
+        var unbind = angular.noop();
+
+        if ($drag) {
+          unbind = $drag.bind(handle, {
+            transform: $drag.TRANSLATE_INSIDE(elem),
+            start: function() {
+              elem.off('click tap', clickCb);
+            },
+            cancel: function() {
+              handle.removeAttr('style');
+              elem.off('click tap', clickCb);
+              elem.on('click tap', clickCb);
+            },
+            end: function() {
+              var rh = handle[0].getBoundingClientRect();
+              var re = elem[0].getBoundingClientRect();
+              if (rh.left - re.left < 5) {
+                setModel(false);
+                handle.removeAttr('style');
+              } else if (re.right - rh.right < 5) {
+                setModel(true);
+                handle.removeAttr('style');
+              } else {
+                handle.removeAttr('style');
+              }
+              elem.on('click tap', clickCb);
+            }
+          });  
+        }
+
+        elem.on('$destroy', function() {
+          unbind();
+          unwatchDisabled();
+          unwatch();
+          isEnabled = setModel = unbind = unwatch = unwatchDisabled = clickCb = null;
+        });
       }
     };
-  });
+  }]);
 }());
 /**
 @module mobile-angular-ui.components

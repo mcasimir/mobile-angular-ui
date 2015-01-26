@@ -455,6 +455,8 @@
 
           // on touchstart
           var onTouchStart = function(event) {
+            // don't handle multi-touch
+            if (event.touches && event.touches.length > 1) { return; } 
             tl = t0 = buildTouchInfo('touchstart', getCoordinates(event));
             $movementTarget.on(moveEvents, onTouchMove);
             $movementTarget.on(endEvents, onTouchEnd);
@@ -475,6 +477,9 @@
 
           // on touchMove
           var onTouchMove = function(event) {
+            // don't handle multi-touch
+            if (event.touches && event.touches.length > 1) { return; } 
+
             if (!isActive()) { return; }
             
             var coords = getCoordinates(event);
@@ -511,6 +516,9 @@
 
           // on touchEnd
           var onTouchEnd = function(event) {
+            // don't handle multi-touch
+            if (event.touches && event.touches.length > 1) { return; } 
+
             if (!isActive()) { return; }
             var t = angular.extend({}, tl, {type: 'touchend'});
             if (isValid(t, event)) {

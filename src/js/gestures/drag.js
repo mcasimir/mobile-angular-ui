@@ -112,6 +112,7 @@ app.directive('dragMe', ['$drag', function($drag){
 }]);
 ```
 
+<iframe class='embedded-example' src='/examples/drag.html'></iframe>
 */
 (function () {
    'use strict';
