@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+      <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0" />
+      <title>Custom components and SharedState</title>
+      <link rel="stylesheet" href="/dist/css/mobile-angular-ui-base.min.css" />
+      <style id='example-css'>
+        .fa-lightbulb-o {
+          font-size: 100px;
+          display: block;
+          text-align: center;
+          margin-bottom: 22px;
+        }
+      </style>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min.js"></script>
+      <script src="/dist/js/mobile-angular-ui.min.js"></script>
+      <script>
+        angular.module('myApp', ['mobile-angular-ui']);
+      </script>
+    </head>
+    <body ng-app="myApp">
+      <div class="scrollable">
+        <div class="scrollable-content">
+          <div class='section' id='example-html'>
+
+<div ui-state='lightbulb'>
+  <div ui-class="{'text-primary': lightbulb}" 
+       class="text-default">
+    <i class="fa fa-lightbulb-o"></i>
+  </div>  
+</div>
+
+<div class="btn-group justified">
+  <a  
+     ui-toggle="lightbulb"
+     ui-class="{'active': lightbulb}"
+     class="btn btn-default" href>
+      Toggle
+  </a>
+  <a  
+     ui-turn-on="lightbulb"
+     ui-class="{'active': lightbulb}"
+     class="btn btn-default" href>
+      Turn On
+  </a>
+  <a  
+     ui-turn-off="lightbulb"
+     ui-class="{'active': !lightbulb}"
+     class="btn btn-default" href>
+      Turn Off
+  </a>       
+</div>
+
+
+          </div>
+        </div>
+      </div>
+    </body>
+</html>

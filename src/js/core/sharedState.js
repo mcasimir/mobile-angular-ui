@@ -13,7 +13,7 @@
    * Ie.
    *
    * ``` html
-   * <div class="tab-nav" ui-state='activeTab'>
+   * <div class="nav nav-tabs" ui-state='activeTab'>
    *   <a ui-set="{activeTab: 1}">Tab1</a>
    *   <a ui-set="{activeTab: 2}">Tab2</a>
    *   <a ui-set="{activeTab: 3}">Tab3</a>
@@ -54,7 +54,8 @@
    * 
    * ## Usage
    * 
-   * Declare it as a dependency to your app unless you have already included some of its super-modules.
+   * Declare it as a dependency to your app unless you have already included some 
+   * of its super-modules.
    * 
    * ```
    * angular.module('myApp', ['mobile-angular-ui.core.sharedState']);
@@ -62,41 +63,14 @@
    * 
    * Use `ui-state` directive to require/initialize a state from the target element scope
    * 
-   * Example: Tabs
-   * 
-   * ``` html
-   * 
-   * <div class="tabs" ui-state="activeTab">
-   * 
-   *   <ul class="nav nav-tabs">
-   *     <li ui-class="{'active': activeTab == 1)}">
-   *       <a ui-set="{'activeTab': 1}">Tab 1</a>
-   *     </li>
-   *     <li ui-class="{'active': activeTab == 2)}">
-   *       <a ui-set="{'activeTab': 2}">Tab 2</a>
-   *     </li>
-   *     <li ui-class="{'active': activeTab == 3)}">
-   *       <a ui-set="{'activeTab': 3}">Tab 3</a>
-   *     </li>
-   *   </ul>
-   * 
-   *   <div ui-if="activeTab == 1">
-   *     Tab 1
-   *   </div>
-   * 
-   *   <div ui-if="activeTab == 2">
-   *     Tab 2
-   *   </div>
-   * 
-   *   <div ui-if="activeTab == 3">
-   *     Tab 3
-   *   </div>
-   * 
-   * </div>
-   * ```
+   * **Example.** Tabs
    * 
    * <iframe class='embedded-example' src='/examples/tabs.html'></iframe>
-   * 
+   *
+   * **Example.** Custom components
+   *
+   * <iframe class='embedded-example'  src='/examples/lightbulb.html'></iframe>
+   *
    * NOTE: `ui-toggle/set/turnOn/turnOff` responds to `click/tap` without stopping propagation so you can use them along with ng-click too. You can also change events to respond to with `ui-triggers` attribute.
    * 
    * Any `SharedState` method is exposed through `Ui` object in `$rootScope`. So you could always do `ng-click="Ui.turnOn('myVar')"`.
@@ -953,10 +927,11 @@
           angular.forEach(value, function(expr, className) {
             if (expr) {
               classesToAdd += ' ' + className;
-            } 
-            else {
+            } else {
               classesToRemove += ' ' + className;
             }
+            classesToAdd = classesToAdd.trim();
+            classesToRemove = classesToRemove.trim();
             if (classesToAdd.length) {
               element.addClass(classesToAdd);  
             }

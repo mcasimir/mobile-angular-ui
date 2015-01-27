@@ -47,7 +47,7 @@
    * </div>
    * ```
    * 
-   * ##### Example. Create a Modal.
+   * **Example.** Create a Modal.
    * 
    * ``` html
    * <div ui-content-for="modals">
@@ -73,7 +73,7 @@
    * </div>
    * ```
    * 
-   * ##### Example. Create an Overlay.
+   * **Example.** Create an Overlay.
    * 
    * ``` html
    * <div ui-content-for="modals">

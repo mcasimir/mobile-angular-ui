@@ -8063,8 +8063,8 @@ ui-switch {
 
 .switch[disabled] {
   cursor: default;
-  opacity: 0.3;
-  filter: alpha(opacity=30);
+  opacity: 0.4;
+  filter: alpha(opacity=40);
 }
 
 .switch .switch-handle {

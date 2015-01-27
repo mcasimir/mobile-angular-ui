@@ -57,10 +57,9 @@ a.active {
           for (var i = 0; i < domLinks.length; i++) {
             var domLink = domLinks[i];
             var link    = angular.element(domLink);
-
-            if (domLink.href === newPath) {
+            if (link.attr('href') && link.attr('href') !== '' && domLink.href === newPath) {
               link.addClass('active');
-            } else if (domLink.href && domLink.href.length) {
+            } else if (link.attr('href') && link.attr('href') !== '' && domLink.href && domLink.href.length) {
               link.removeClass('active');
             }
           }

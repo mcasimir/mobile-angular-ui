@@ -1,33 +1,46 @@
 /**
-The `ui-switch` directive (not to be confused with `ng-switch`) lets 
-you create a toggle switch control bound to a boolean `ngModel` value.
-
-<figure class="full-width-figure">
-  <img src="/assets/img/figs/switch.png" alt=""/>
-</figure>
-
-It requires `ngModel`. It supports `ngChange` and `ngDisabled`.
-
-``` html
-<ui-switch  ng-model="invoice.paid"></ui-switch>
-```
-
-``` html
-<ui-switch  ng-model="invoice.paid" disabled></ui-switch>
-```
-
-``` html
-<ui-switch  ng-model="invoice.paid" ng-disabled='{{...}}'></ui-switch>
-```
-
-Note that if `$drag` service from `mobile-angular-ui.gestures` is available 
-`ui-switch` will support drag too.
-
-@module mobile-angular-ui.components.switch
-*/
+ * A module with just a directive to create a switch input component.
+ * 
+ * @module mobile-angular-ui.components.switch
+ */
 (function() {
   'use strict';  
   angular.module('mobile-angular-ui.components.switch', [])
+
+  /** 
+   * @directive uiSwitch
+   * @restrict EA
+   * @requires ngModel
+   * @description
+   * 
+   * The `ui-switch` directive (not to be confused with `ng-switch`) lets 
+   * you create a toggle switch control bound to a boolean `ngModel` value.
+   * 
+   * <figure class="full-width-figure">
+   *   <img src="/assets/img/figs/switch.png" alt=""/>
+   * </figure>
+   * 
+   * It requires `ngModel`. It supports `ngChange` and `ngDisabled`.
+   * 
+   * ``` html
+   * <ui-switch  ng-model="invoice.paid"></ui-switch>
+   * ```
+   * 
+   * ``` html
+   * <ui-switch  ng-model="invoice.paid" disabled></ui-switch>
+   * ```
+   * 
+   * ``` html
+   * <ui-switch  ng-model="invoice.paid" ng-disabled='{{...}}'></ui-switch>
+   * ```
+   * 
+   * Note that if `$drag` service from `mobile-angular-ui.gestures` is available 
+   * `ui-switch` will support drag too.
+   * 
+   * @param {expression} ngModel The model bound to this component.
+   * @param {boolean} [disabled] Whether this component should be disabled.
+   * @param {expression} [ngChange] An expression to be evaluated when model changes.
+   */
   .directive('uiSwitch', ['$injector', function($injector) {
     var $drag = $injector.has('$drag') && $injector.get('$drag');
 
@@ -107,10 +120,10 @@ Note that if `$drag` service from `mobile-angular-ui.gestures` is available
             end: function() {
               var rh = handle[0].getBoundingClientRect();
               var re = elem[0].getBoundingClientRect();
-              if (rh.left - re.left < 5) {
+              if (rh.left - re.left < rh.width / 3) {
                 setModel(false);
                 handle.removeAttr('style');
-              } else if (re.right - rh.right < 5) {
+              } else if (re.right - rh.right < rh.width / 3) {
                 setModel(true);
                 handle.removeAttr('style');
               } else {

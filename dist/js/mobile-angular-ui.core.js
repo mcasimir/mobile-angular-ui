@@ -879,10 +879,9 @@ a.active {
           for (var i = 0; i < domLinks.length; i++) {
             var domLink = domLinks[i];
             var link    = angular.element(domLink);
-
-            if (domLink.href === newPath) {
+            if (link.attr('href') && link.attr('href') !== '' && domLink.href === newPath) {
               link.addClass('active');
-            } else if (domLink.href && domLink.href.length) {
+            } else if (link.attr('href') && link.attr('href') !== '' && domLink.href && domLink.href.length) {
               link.removeClass('active');
             }
           }
@@ -897,115 +896,115 @@ a.active {
 
 
 /** 
-@module mobile-angular-ui.core.capture
-@description
-
-The `capture` module exposes directives to let you extract markup which can be used in other parts of a template using `uiContentFor` and `uiYieldTo` directives.
-
-It provides a way to move or clone a block of markup to other parts of the document.
-
-This method is particularly useful to setup parts of the layout within an angular view. Since blocks of html are transplanted within their original `$scope` is easy to create layout interactions depending on the context. Some tipical task you can accomplish with these directives are: _setup the navbar title depending on the view_ or _place a submit button for a form inside a navbar_.
-
-## Usage
-
-Declare it as a dependency to your app unless you have already included some of its super-modules.
-
-```
-angular.module('myApp', ['mobile-angular-ui']);
-```
-
-Or
-
-```
-angular.module('myApp', ['mobile-angular-ui']);
-```
-
-Or
-
-```
-angular.module('myApp', ['mobile-angular-ui.core.capture']);
-```
-
-Use `ui-yield-to` as a placeholder.
-
-``` html
-<!-- index.html -->
-
-<div class="navbar">
-  <div ui-yield-to="title" class="navbar-brand">
-    <span>Default Title</span>
-  </div>
-</div>
-
-<div class="app-body">
-  <ng-view class="app-content"></ng-view>
-</div>
-```
-
-Use `ui-content-for` inside any view to populate the `ui-yield-to` content.
-
-``` html
-<!-- myView.html -->
-
-<div ui-content-for="title">
-  <span>My View Title</span>
-</div>
-```
-
-Since the original scope is preserved you can use directives inside `ui-content-for` blocks to interact with the current scope. In the following example we will add a navbar button to submit a form inside a nested view.  
-
-
-``` html
-<!-- index.html -->
-
-<div class="navbar">
-  <div ui-yield-to="navbarAction">
-  </div>
-</div>
-
-<div class="app-body">
-  <ng-view class="app-content"></ng-view>
-</div>
-```
-
-``` html
-<!-- newCustomer.html -->
-
-<form ng-controller="newCustomerController">
-
-  <div class="inputs">
-    <input type="text" ng-model="customer.name" />  
-  </div>
-
-  <div ui-content-for="navbarAction">
-    <button ng-click="createCustomer()">
-      Save
-    </button>
-  </div>
-
-</form>
-```
-
-``` javascript
-app.controller('newCustomerController', function($scope, Store){
-  $scope.customer = {};
-  $scope.createCustomer = function(){
-    Store.create($scope.customer);
-    // ...
-  }
-});
-```
-
-If you wish you can also duplicate markup instead of move it. Just add `duplicate` parameter to `uiContentFor` directive to specify this behaviour.
-
-``` html
-<div ui-content-for="navbarAction" duplicate>
-  <button ng-click="createCustomer()">
-    Save
-  </button>
-</div>
-```
-*/
+ * @module mobile-angular-ui.core.capture
+ * @description
+ * 
+ * The `capture` module exposes directives to let you extract markup which can be used in other parts of a template using `uiContentFor` and `uiYieldTo` directives.
+ * 
+ * It provides a way to move or clone a block of markup to other parts of the document.
+ * 
+ * This method is particularly useful to setup parts of the layout within an angular view. Since blocks of html are transplanted within their original `$scope` is easy to create layout interactions depending on the context. Some tipical task you can accomplish with these directives are: _setup the navbar title depending on the view_ or _place a submit button for a form inside a navbar_.
+ * 
+ * ## Usage
+ * 
+ * Declare it as a dependency to your app unless you have already included some of its super-modules.
+ * 
+ * ```
+ * angular.module('myApp', ['mobile-angular-ui']);
+ * ```
+ * 
+ * Or
+ * 
+ * ```
+ * angular.module('myApp', ['mobile-angular-ui']);
+ * ```
+ * 
+ * Or
+ * 
+ * ```
+ * angular.module('myApp', ['mobile-angular-ui.core.capture']);
+ * ```
+ * 
+ * Use `ui-yield-to` as a placeholder.
+ * 
+ * ``` html
+ * <!-- index.html -->
+ * 
+ * <div class="navbar">
+ *   <div ui-yield-to="title" class="navbar-brand">
+ *     <span>Default Title</span>
+ *   </div>
+ * </div>
+ * 
+ * <div class="app-body">
+ *   <ng-view class="app-content"></ng-view>
+ * </div>
+ * ```
+ * 
+ * Use `ui-content-for` inside any view to populate the `ui-yield-to` content.
+ * 
+ * ``` html
+ * <!-- myView.html -->
+ * 
+ * <div ui-content-for="title">
+ *   <span>My View Title</span>
+ * </div>
+ * ```
+ * 
+ * Since the original scope is preserved you can use directives inside `ui-content-for` blocks to interact with the current scope. In the following example we will add a navbar button to submit a form inside a nested view.  
+ * 
+ * 
+ * ``` html
+ * <!-- index.html -->
+ * 
+ * <div class="navbar">
+ *   <div ui-yield-to="navbarAction">
+ *   </div>
+ * </div>
+ * 
+ * <div class="app-body">
+ *   <ng-view class="app-content"></ng-view>
+ * </div>
+ * ```
+ * 
+ * ``` html
+ * <!-- newCustomer.html -->
+ * 
+ * <form ng-controller="newCustomerController">
+ * 
+ *   <div class="inputs">
+ *     <input type="text" ng-model="customer.name" />  
+ *   </div>
+ * 
+ *   <div ui-content-for="navbarAction">
+ *     <button ng-click="createCustomer()">
+ *       Save
+ *     </button>
+ *   </div>
+ * 
+ * </form>
+ * ```
+ * 
+ * ``` javascript
+ * app.controller('newCustomerController', function($scope, Store){
+ *   $scope.customer = {};
+ *   $scope.createCustomer = function(){
+ *     Store.create($scope.customer);
+ *     // ...
+ *   }
+ * });
+ * ```
+ * 
+ * If you wish you can also duplicate markup instead of move it. Just add `duplicate` parameter to `uiContentFor` directive to specify this behaviour.
+ * 
+ * ``` html
+ * <div ui-content-for="navbarAction" duplicate>
+ *   <button ng-click="createCustomer()">
+ *     Save
+ *   </button>
+ * </div>
+ * ```
+ */
 (function () {
    'use strict';
 
@@ -1073,7 +1072,8 @@ If you wish you can also duplicate markup instead of move it. Just add `duplicat
   /**
    * @directive uiContentFor
    * @restrict A
-   *
+   * @description
+   * 
    * `ui-content-for` makes inner contents to replace the corresponding 
    * `ui-yield-to` placeholder contents.
    *
@@ -1107,6 +1107,7 @@ If you wish you can also duplicate markup instead of move it. Just add `duplicat
    /**
     * @directive uiYieldTo
     * @restrict A
+    * @description
     *
     * `ui-yield-to` defines a placeholder which contents will be further replaced by `ui-content-for` directive.
     *
@@ -1347,7 +1348,7 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
    * Ie.
    *
    * ``` html
-   * <div class="tab-nav" ui-state='activeTab'>
+   * <div class="nav nav-tabs" ui-state='activeTab'>
    *   <a ui-set="{activeTab: 1}">Tab1</a>
    *   <a ui-set="{activeTab: 2}">Tab2</a>
    *   <a ui-set="{activeTab: 3}">Tab3</a>
@@ -1388,7 +1389,8 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
    * 
    * ## Usage
    * 
-   * Declare it as a dependency to your app unless you have already included some of its super-modules.
+   * Declare it as a dependency to your app unless you have already included some 
+   * of its super-modules.
    * 
    * ```
    * angular.module('myApp', ['mobile-angular-ui.core.sharedState']);
@@ -1396,41 +1398,14 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
    * 
    * Use `ui-state` directive to require/initialize a state from the target element scope
    * 
-   * Example: Tabs
-   * 
-   * ``` html
-   * 
-   * <div class="tabs" ui-state="activeTab">
-   * 
-   *   <ul class="nav nav-tabs">
-   *     <li ui-class="{'active': activeTab == 1)}">
-   *       <a ui-set="{'activeTab': 1}">Tab 1</a>
-   *     </li>
-   *     <li ui-class="{'active': activeTab == 2)}">
-   *       <a ui-set="{'activeTab': 2}">Tab 2</a>
-   *     </li>
-   *     <li ui-class="{'active': activeTab == 3)}">
-   *       <a ui-set="{'activeTab': 3}">Tab 3</a>
-   *     </li>
-   *   </ul>
-   * 
-   *   <div ui-if="activeTab == 1">
-   *     Tab 1
-   *   </div>
-   * 
-   *   <div ui-if="activeTab == 2">
-   *     Tab 2
-   *   </div>
-   * 
-   *   <div ui-if="activeTab == 3">
-   *     Tab 3
-   *   </div>
-   * 
-   * </div>
-   * ```
+   * **Example.** Tabs
    * 
    * <iframe class='embedded-example' src='/examples/tabs.html'></iframe>
-   * 
+   *
+   * **Example.** Custom components
+   *
+   * <iframe class='embedded-example'  src='/examples/lightbulb.html'></iframe>
+   *
    * NOTE: `ui-toggle/set/turnOn/turnOff` responds to `click/tap` without stopping propagation so you can use them along with ng-click too. You can also change events to respond to with `ui-triggers` attribute.
    * 
    * Any `SharedState` method is exposed through `Ui` object in `$rootScope`. So you could always do `ng-click="Ui.turnOn('myVar')"`.
@@ -2287,10 +2262,11 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
           angular.forEach(value, function(expr, className) {
             if (expr) {
               classesToAdd += ' ' + className;
-            } 
-            else {
+            } else {
               classesToRemove += ' ' + className;
             }
+            classesToAdd = classesToAdd.trim();
+            classesToRemove = classesToRemove.trim();
             if (classesToAdd.length) {
               element.addClass(classesToAdd);  
             }
