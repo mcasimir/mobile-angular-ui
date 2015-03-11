@@ -740,7 +740,9 @@
     for (var i = 0; i < scopeVars.length; i++) {
       var key = scopeVars[i][0];
       var alias = scopeVars[i][1] || key;
-      context[alias] = scope[key];
+      context[alias] = key.split('.').reduce(function (scope, nextKey) {
+        return scope[nextKey];
+      }, scope);
     }
   };
 
