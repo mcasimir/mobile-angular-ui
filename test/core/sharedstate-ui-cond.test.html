@@ -4,6 +4,7 @@
       app.run(function($rootScope, SharedState) {
         $rootScope.trueVar = true;
         $rootScope.falseVar = false;
+        $rootScope.nested = { trueProp: true };
         SharedState.initialize($rootScope, 'testState', {defaultValue: true});
       });
     </script>
@@ -28,6 +29,7 @@
     <div id="uiScopeContextUi3" ui-show="falseVar || testState" ui-scope-context='falseVar'>uiScopeContextUi3</div>
     <div id="uiScopeContextUi4" ui-hide="myVar || testState" ui-scope-context='falseVar as myVar'>uiScopeContextUi4</div>
     <div id="uiScopeContextUi5" ui-class="{'active': !myVar && trueVar}" ui-scope-context='trueVar, falseVar as myVar'>uiScopeContextUi5</div>
+    <div id='uiScopeContextUi6' ui-hide="trueVar" ui-scope-context="nested.trueProp as trueVar"></div>
 
   </body>
 
@@ -48,6 +50,7 @@
     expect($('#uiScopeContextUi3').isDisplayed()).toBe(true);
     expect($('#uiScopeContextUi4').isDisplayed()).toBe(false);
     expect($('#uiScopeContextUi5')).toHaveClass('active');
+    expect($('#uiScopeContextUi6').isDisplayed()).toBe(false);
   </script>
 
 </html>
