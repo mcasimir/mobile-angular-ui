@@ -1,5 +1,3 @@
-var orgHandler = null;
-
 (function () {
   'use strict';
   var module = angular.module('mobile-angular-ui.core.fastclick', []);
@@ -7,7 +5,7 @@ var orgHandler = null;
   module.run(['$window', function($window) {
   
 	//Temporarly bugfix in overthrow/fastclick:
-	orgHandler = FastClick.prototype.onTouchEnd;
+	var orgHandler = FastClick.prototype.onTouchEnd;
 	
 	// Some old versions of Android don't have Function.prototype.bind
 	function bind(method, context) {
