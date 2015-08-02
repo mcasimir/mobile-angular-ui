@@ -1,5 +1,5 @@
 // JSHint stuffs:
-/* global console: false, __dirname: false */
+/* global __dirname: false, require: false, JSON: false, process: false */
 
 /*========================================
 =            Requiring stuffs            =
@@ -78,10 +78,10 @@ gulp.task('connect:test', function() {
   connect.server({
     host: '0.0.0.0',
     port: 3001,
-    middleware: function(connect, opt) {
+    middleware: function() {
       return [middleware];
     }
-  })
+  });
 });
 
 /*==============================================================
@@ -124,13 +124,13 @@ gulp.task('fonts', function() {
 var CSS_TEMP_DIR = path.join(os.tmpdir(), 'mobile-angular-ui', 'css');
 
 gulp.task('css:less', function () {
-  var stream = gulp.src([
-      'src/less/mobile-angular-ui-base.less', 
+    gulp.src([
+      'src/less/mobile-angular-ui-base.less',
       'src/less/mobile-angular-ui-desktop.less',
       'src/less/mobile-angular-ui-migrate.less',
       'src/less/sm-grid.less'
     ])
-    .pipe(less({paths: GLOBS.vendorLess}))  
+    .pipe(less({paths: GLOBS.vendorLess}))
     .pipe(mobilizer('mobile-angular-ui-base.css', {
       'mobile-angular-ui-base.css': { hover: 'exclude', screens: ['0px'] },
       'mobile-angular-ui-hover.css': { hover: 'only', screens: ['0px'] }
@@ -216,7 +216,7 @@ gulp.task('watch', function () {
     gulp.watch(GLOBS[target], ['js:' + target]);
   });
 
-  gulp.watch(GLOBS.fonts, ['fonts']);  
+  gulp.watch(GLOBS.fonts, ['fonts']);
 });
 
 /*======================================
@@ -236,7 +236,7 @@ gulp.task('default', function(done){
 
   tasks.push('connect');
   tasks.push('watch');
-  
+
   seq('build', tasks, done);
 });
 
@@ -251,7 +251,7 @@ gulp.task('jshint', function() {
   return gulp.src(['src/js/*.js', 'src/js/core/*.js','src/js/gestures/*.js','src/js/components/*.js'])
   .pipe(jshint(jshintrc))
   .pipe(jshint.reporter('default'))
-  .on('error', function(e) { throw e });
+  .on('error', function(e) { throw e; });
 });
 
 /*=============================
@@ -259,17 +259,18 @@ gulp.task('jshint', function() {
 =============================*/
 
 function makeTestTask(name, conf, args) {
-  var protractorArgs = ['--baseUrl', 'http://localhost:3001']
-                  .concat(args || [])
-                  .concat(process.argv.length > 2 ? 
-                    process.argv.slice(3, process.argv.length) : []);
+  var protractorArgs = [
+    '--baseUrl', 'http://localhost:3001'
+  ]
+    .concat(args || [])
+    .concat(process.argv.length > 2 ? process.argv.slice(3, process.argv.length) : []);
 
-  gulp.task(name, ['jshint', 'connect:test'], function(){
+  gulp.task(name, ['jshint', 'build', 'connect:test'], function(){
     return gulp.src('use_config_specs')
         .pipe(protractor({
             configFile: conf,
             args: protractorArgs
-        })) 
+        }))
         .on('end', exitConnect)
         .on('error', exitConnect);
   });
