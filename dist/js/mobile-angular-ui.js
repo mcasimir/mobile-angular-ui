@@ -1139,15 +1139,32 @@ a.active {
   'use strict';
   var module = angular.module('mobile-angular-ui.core.fastclick', []);
 
-  module.run(function() {
-    if ('addEventListener' in document) {
-      document.addEventListener('DOMContentLoaded', function() {
-          FastClick.attach(document.body);
-      }, false);
+  module.run(['$window', function($window) {
+
+	//Temporarly bugfix in overthrow/fastclick:
+	var orgHandler = FastClick.prototype.onTouchEnd;
+
+	// Some old versions of Android don't have Function.prototype.bind
+	function bind(method, context) {
+		return function() { return method.apply(context, arguments); };
+	}
+
+	FastClick.prototype.onTouchEnd = function(event) {
+
+		if (!event.changedTouches) {
+      event.changedTouches = [{}];
     }
-  });
+    
+		orgHandler = bind(orgHandler, this);
+		orgHandler(event);
+	};
+
+	FastClick.attach($window.document.body);
+
+  }]);
 
   angular.forEach(['select', 'input', 'textarea'], function(directiveName){
+
     module.directive(directiveName, function(){
       return {
         restrict: 'E',
@@ -1158,6 +1175,7 @@ a.active {
     });
   });
 }());
+
 /**
 
 @module mobile-angular-ui.core.outerClick
@@ -2075,7 +2093,9 @@ Use `ui-outer-click-if` parameter to define a condition to enable/disable the li
     for (var i = 0; i < scopeVars.length; i++) {
       var key = scopeVars[i][0];
       var alias = scopeVars[i][1] || key;
-      context[alias] = scope[key];
+      context[alias] = key.split('.').reduce(function (scope, nextKey) {
+        return scope[nextKey];
+      }, scope);
     }
   };
 
