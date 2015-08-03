@@ -2,7 +2,7 @@
   <body>
     <div class="scrollable">
      <div class="scrollable-content" id="scrollableContent">
-      
+
       <!-- Pushes form below the first scroll -->
       <div style="height: 1000px;"></div>
 
@@ -15,9 +15,9 @@
   </body>
 
   <script type='application/protractor'
-    
+
   spec='should be able to scroll to an element'>
-    
+
     browser.driver.manage().window().setSize(600, 600);
     browser.executeAsyncScript(function(cb) {
       var elementInViewport = function(el) {
@@ -36,21 +36,21 @@
       controller.scrollTo(input);
       cb(elementInViewport(input));
     }).then(function(res) {
-      expect(res).toEqual(true); 
+      expect(res).toEqual(true, 'Element in viewport with scrollTo');
     });
 
   </script>
-  
-  <script type='application/protractor' 
+
+  <script type='application/protractor'
 
   spec='should center an element when focused and window resizes (aka soft keyboard workaround)'>
-    
+
     browser.driver.manage().window().setSize(600, 600);
     element(by.id('textInput')).click();
     browser.sleep(100);
     browser.driver.manage().window().setSize(600, 500);
     browser.sleep(600);
-    
+
     browser.executeAsyncScript(function(cb) {
       var elementInViewport = function(el) {
         var rect = el.getBoundingClientRect();

@@ -24,11 +24,6 @@ var gulp              = require('gulp'),
     uglify            = require('gulp-uglify'),
     ngrok             = require('ngrok');
 
-
-var exitConnect = function() {
-  connect.serverClose();
-};
-
 /*=============================
 =            Globs            =
 =============================*/
@@ -279,12 +274,24 @@ function makeTestTask(name, conf, args, tunnel) {
 
   gulp.task(name, ['jshint', 'connect:test'], function(done){
 
-    var testDone = function(){
-      exitConnect();
-      if (tunnel) {
-        ngrok.disconnect();
+    var finalize = function(){
+      try {
+        connect.serverClose();
+        if (tunnel) {
+          ngrok.disconnect();
+        }
+      } catch (e) {
+        console.error('Errors occurred while shutting down test runtime.', e);
       }
+    };
+
+    var testDone = function(){
+      finalize();
       done();
+    };
+
+    var testErr = function(){
+      process.exit(1);
     };
 
     tunnelWrapper(function(err, url){
@@ -294,7 +301,7 @@ function makeTestTask(name, conf, args, tunnel) {
               args: ['--baseUrl', url].concat(protractorArgs)
           }))
           .on('end', testDone)
-          .on('error', testDone);
+          .on('error', testErr);
     });
 
   });
