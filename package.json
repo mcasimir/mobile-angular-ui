@@ -8,7 +8,7 @@
     "dist": "dist"
   },
   "scripts": {
-    "test": "gulp build && gulp test:ci"
+    "test": "gulp build && gulp test"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,7 @@
     "gulp-connect": "^2.2.0",
     "gulp-csso": "^0.2.9",
     "gulp-jshint": "^1.9.0",
-    "gulp-less": "^2.0.1",
+    "gulp-less": "^3.0.3",
     "gulp-mobilizer": "0.0.3",
     "gulp-protractor": "0.0.12",
     "gulp-release-tasks": "0.0.3",

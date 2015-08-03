@@ -9,5 +9,5 @@ env:
 
 before_install:
   - npm install
-  - npm i -g bower
+  - npm install -g bower
   - bower install
