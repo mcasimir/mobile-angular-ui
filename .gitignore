@@ -34,7 +34,7 @@ $RECYCLE.BIN/
 .*
 !.gitignore
 !.git*
-!.travis
+!.travis.yml
 !.jshintrc
 *~
 

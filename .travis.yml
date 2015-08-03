@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+- '0.11'
+env:
+  global:
+    - secure: i33p1k4Wk1JFm1kiVPGG6StjhXUTdtg6EyMlVuARS5npioNymFgl3RgkNzar6joRIdGp7Fce0Px5B6Iy1U6LZgGOneogVk9VmEBWFtheiL/O3rzujiD3DTw7WeH6vllCjV9O9GodpZ+wbHxgq1I3aNr/n37iyL3Hc3cMspW+7kg=
+    - secure: cHXdgud0+4z21j8U82FsNj+LSRmMPNofgqg0Vroiv2a3GPcKXHzBki/1ZoTEGBDBY/UCADlD7pWRXq5JgxGxfjXGopT2/GBH5zGlXOoTyme3/PyuJgnQaAU1nXvrsxq69x9V11/mYxG/kQ0oCT0BgMFcRz6hoBdiBZYST7SdBAc=
+    - NODE_ENV: travis
+
+before_install:
+  - npm install
+  - npm i -g bower
+  - bower install
