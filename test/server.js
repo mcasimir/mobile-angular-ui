@@ -1,4 +1,4 @@
-/* global __dirname: false, module: true */
+/* global __dirname: false, module: true, require: true */
 
 var glob = require('glob'),
     path = require('path'),

@@ -21,7 +21,9 @@ var gulp              = require('gulp'),
     fs                = require('fs'),
     seq               = require('run-sequence'),
     sourcemaps        = require('gulp-sourcemaps'),
-    uglify            = require('gulp-uglify');
+    uglify            = require('gulp-uglify'),
+    ngrok             = require('ngrok');
+
 
 var exitConnect = function() {
   connect.serverClose();
@@ -74,12 +76,15 @@ gulp.task('connect', function() {
 });
 
 gulp.task('connect:test', function() {
-  var middleware = require('./test/server');
+  var server       = require('./test/server');
+  var serveFavicon = require('serve-favicon');
+  var favicon      = serveFavicon(__dirname + '/test/favicon.ico');
+
   connect.server({
     host: '0.0.0.0',
     port: 3001,
     middleware: function() {
-      return [middleware];
+      return [server, favicon];
     }
   });
 });
@@ -258,28 +263,50 @@ gulp.task('jshint', function() {
 =            Tests            =
 =============================*/
 
-function makeTestTask(name, conf, args) {
-  var protractorArgs = [
-    '--baseUrl', 'http://localhost:3001'
-  ]
-    .concat(args || [])
+var nullTunnel = function(cb){
+  cb(null, 'http://localhost:3001');
+};
+
+var ngRockTunnel = function(cb){
+  ngrok.connect({ port: 3001 }, cb);
+};
+
+function makeTestTask(name, conf, args, tunnel) {
+  var tunnelWrapper = tunnel ? ngRockTunnel : nullTunnel;
+
+  var protractorArgs = args || []
     .concat(process.argv.length > 2 ? process.argv.slice(3, process.argv.length) : []);
 
-  gulp.task(name, ['jshint', 'build', 'connect:test'], function(){
-    return gulp.src('use_config_specs')
-        .pipe(protractor({
-            configFile: conf,
-            args: protractorArgs
-        }))
-        .on('end', exitConnect)
-        .on('error', exitConnect);
+  gulp.task(name, ['jshint', 'connect:test'], function(done){
+
+    var testDone = function(){
+      exitConnect();
+      if (tunnel) {
+        ngrok.disconnect();
+      }
+      done();
+    };
+
+    tunnelWrapper(function(err, url){
+      gulp.src('use_config_specs')
+          .pipe(protractor({
+              configFile: conf,
+              args: ['--baseUrl', url].concat(protractorArgs)
+          }))
+          .on('end', testDone)
+          .on('error', testDone);
+    });
+
   });
+
 }
 
-makeTestTask('test', 'test/all.conf.js');
+makeTestTask('test', 'test/phantomjs.conf.js');
+makeTestTask('test:ci', 'test/ci.conf.js', [], true);
 makeTestTask('test:chrome', 'test/chrome.conf.js');
 makeTestTask('test:firefox', 'test/firefox.conf.js');
 makeTestTask('test:iphone', 'test/iphone5.conf.js');
+
 
 /*===============================
 =            Release            =
