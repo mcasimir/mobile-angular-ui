@@ -1,0 +1,13 @@
+{
+  "enforceall": true,
+  "latedef": true,
+  "undef": true,
+  "unused": true,
+  "browser": true,
+  "singleGroups": false,
+  "globals": {
+    "angular": false,
+    "FastClick": false,
+    "overthrow": false
+  }
+}
