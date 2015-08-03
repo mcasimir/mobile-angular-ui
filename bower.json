@@ -4,7 +4,6 @@
   "authors": [
     "mcasimir <maurizio.cas@gmail.com>"
   ],
-  "version": "1.2.0",
   "description": "Mobile UI for Bootstrap 3 and Angular JS",
   "main": [
     "dist/css/mobile-angular-ui-hover.css",
