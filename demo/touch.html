@@ -1,0 +1,22 @@
+<div ui-content-for="title">
+  <span>Touch</span>
+</div>
+
+<div class="section toucharea">
+    <div ng-show="touch">
+      <ul>
+        <li>type: {{touch.type}}</li>
+        <li>point: [{{touch.x}}, {{touch.y}}]</li>
+        <li>step: {{touch.step}} [{{touch.stepX}}, {{touch.stepY}}]</li>
+        <li>distance: {{touch.distance}} [{{touch.distanceX}}, {{touch.distanceY}}]</li>
+        <li>total: {{touch.total}} [{{touch.totalX}}, {{touch.totalY}}]</li>
+        <li>velocity: {{touch.velocity}} px/sec</li>
+        <li>averageVelocity: {{touch.averageVelocity}} px/sec</li>
+        <li>angle: {{touch.angle == null ? '-' : touch.angle}} deg</li>
+        <li>direction: {{touch.direction == null ? '-' : touch.direction}}</li>
+      </ul>
+    </div>
+    <div ng-hide="touch">
+      <h1>Touch Me!</h1>
+    <div>
+</div>

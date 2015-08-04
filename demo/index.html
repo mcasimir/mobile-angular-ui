@@ -16,7 +16,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular-route.min.js"></script>
     <script src="/dist/js/mobile-angular-ui.min.js"></script>
-    <!-- Required to use $swipe, $drag and Translate services -->
+    <!-- Required to use $touch, $swipe, $drag and $translate services -->
     <script src="/dist/js/mobile-angular-ui.gestures.min.js"></script>
     <script src="demo.js"></script>
   </head>
@@ -24,6 +24,7 @@
   <body 
     ng-app="MobileAngularUiExamples" 
     ng-controller="MainController"
+    ui-prevent-touchmove-defaults
     >
 
     <!-- Sidebars -->
@@ -34,7 +35,9 @@
     <div ng-include="'sidebarRight.html'" 
             class="sidebar sidebar-right"></div>
 
-    <div class="app" ng-swipe-right='Ui.turnOn("uiSidebarLeft")' ng-swipe-left='Ui.turnOff("uiSidebarLeft")'>
+    <div class="app" 
+         ui-swipe-right='Ui.turnOn("uiSidebarLeft")'
+         ui-swipe-left='Ui.turnOff("uiSidebarLeft")'>
 
       <!-- Navbars -->
 
@@ -56,7 +59,7 @@
 
       <div class="navbar navbar-app navbar-absolute-bottom">
         <div class="btn-group justified">
-          <a href="http://mobileangularui.com/" class="btn btn-navbar"><i class="fa fa-home fa-navbar"></i> Docs</a>
+          <a href="/docs" class="btn btn-navbar"><i class="fa fa-home fa-navbar"></i> Docs</a>
           <a href="https://github.com/mcasimir/mobile-angular-ui" class="btn btn-navbar"><i class="fa fa-github fa-navbar"></i> Sources</a>
           <a href="https://github.com/mcasimir/mobile-angular-ui/issues" class="btn btn-navbar"><i class="fa fa-exclamation-circle fa-navbar"></i> Issues</a>
         </div>

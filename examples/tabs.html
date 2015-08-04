@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+      <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0" />
+      <title>Tabs component</title>
+      <link rel="stylesheet" href="/dist/css/mobile-angular-ui-base.min.css" />
+      <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min.js"></script>
+      <script src="/dist/js/mobile-angular-ui.min.js"></script>
+      <script src="/dist/js/mobile-angular-ui.gestures.min.js"></script>
+      <!--style id='example-css'></style-->
+      <script>
+        angular.module('myApp', ['mobile-angular-ui']);
+      </script>
+    </head>
+    <body ng-app="myApp">
+      <div class="scrollable">
+        <div class="scrollable-content">
+          <div class='section' id='example-html'>
+<ui-state id='activeTab' default='1'></ui-state>
+
+<ul class="nav nav-tabs">
+  <li ui-class="{'active': activeTab == 1}">
+    <a ui-set="{'activeTab': 1}">Tab 1</a>
+  </li>
+  <li ui-class="{'active': activeTab == 2}">
+    <a ui-set="{'activeTab': 2}">Tab 2</a>
+  </li>
+  <li ui-class="{'active': activeTab == 3}">
+    <a ui-set="{'activeTab': 3}">Tab 3</a>
+  </li>
+</ul>
+
+<div ui-if="activeTab == 1">
+  <h3 class="page-header">Tab 1</h3>
+  <p>Content 1</p>
+</div>
+
+<div ui-if="activeTab == 2">
+  <h3 class="page-header">Tab 2</h3>
+  <p>Content 2</p>
+</div>
+
+<div ui-if="activeTab == 3">
+  <h3 class="page-header">Tab 3</h3>
+  <p>Content 3</p>
+</div>
+          </div>
+        </div>
+      </div>
+    </body>
+</html>

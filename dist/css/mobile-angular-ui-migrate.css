@@ -24,7 +24,7 @@
   right: 0;
   margin: -5px -5px -5px -5px;
   background: rgba(255, 255, 255, 0.95);
-  z-index: 1040;
+  z-index: 1049;
 }
 .overlay .overlay-inner > .overlay-dismiss {
   position: absolute;

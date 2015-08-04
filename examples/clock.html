@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="HTML Tidy for Linux (vers 25 March 2009), see www.w3.org">
+<meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+<title>Analog clock time picker with $drag</title>
+<link rel="stylesheet" href="/dist/css/mobile-angular-ui-base.min.css" type="text/css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min.js" type="text/javascript"></script>
+<script src="/dist/js/mobile-angular-ui.min.js" type="text/javascript"></script>
+<script src="/dist/js/mobile-angular-ui.gestures.min.js" type="text/javascript"></script>
+<style id='example-css' type="text/css">
+.clock-header {
+  background: #444;
+  color: #fff;
+  font-size: 23px;
+  line-height: 40px;
+  text-align: center;
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.clock-hour {
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.clock-hour, .clock-hand, .clock-hour:hover, .clock-hour:active, .clock-hour:focus {
+  border-radius: 999px;
+  background: #444;
+  color: #f4f4f4;
+  width: 30px;
+  height: 30px;
+  display: block;
+  position: absolute;
+  top: 50%; left: 50%;
+  margin-top: -15px;
+  margin-left: -15px;
+  text-align: center;
+  line-height: 30px;
+  text-decoration: none;
+}
+.clock-hand {
+  margin-top: -20px;
+  margin-left: -20px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 2px solid #444;
+}
+.clock-hour:hover {
+  text-decoration: none;
+  color: #fff;
+  background: #333;
+}
+.clock-hour:active {
+  opacity: .7;
+}
+clock {
+  display: block;
+  height: 100%;
+  width: 100%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+</style>
+<script type="text/javascript">//<![CDATA[
+        app = angular.module('myApp', ['mobile-angular-ui', 'mobile-angular-ui.gestures']);
+        function distanceBetweenRects(r1, r2) {
+            var
+              // compute centers
+              c_r1_x = r1.left + r1.width / 2,
+              c_r1_y = r1.top + r1.height / 2,
+              c_r2_x = r2.left + r2.width / 2,
+              c_r2_y = r2.top + r2.height / 2,
+
+              // compute distance by centers
+              dx = Math.abs(c_r1_x - c_r2_x),
+              dy = Math.abs(c_r1_y - c_r2_y);
+              d  = Math.sqrt(dx*dx + dy*dy);
+
+          return d;
+        }
+
+        function rad2deg(rads) {
+          return rads * (180 / Math.PI);
+        }
+
+        function rectCenter(rect) {
+          var
+            cx = rect.left + rect.width / 2,
+            cy = rect.top + rect.height / 2;
+          return {x: cx, y: cy};
+        }
+// ]]>
+</script>
+<script id='example-js' type="text/javascript">//<![CDATA[
+app.run(['$rootScope', function($rootScope){
+  $rootScope.selectedHour = 12;
+}]);
+
+app.directive('clock', function($drag, $transform) {
+  return {
+    restrict: 'E',
+    scope: {
+      model: "=ngModel"  
+    },
+    compile: function(clockElem) {
+      var $hour, $hand, $hours = [];
+      
+      for (var h = 1; h <= 12; h++) {
+        $hour = angular.element('<div class="clock-hour">' + h + '</div>');
+        clockElem.append($hour);
+        $transform.set($hour,
+          'rotate(' + (30 * h - 90) + 'deg) translateX(100px) rotate(' + (-30 * h + 90) + 'deg)');
+        $hours.push($hour);
+      }
+      $hand = angular.element('<div class="clock-hand"></div>');
+      clockElem.append($hand);
+
+      var centerHandToHour = function(hour) {
+        $transform.set($hand, 
+          'rotate(' + (30 * hour - 90) + 'deg) translateX(100px)');
+      };
+
+      return function postLink(scope, element) {
+        var dragging = false;
+
+        var unwatch = scope.$watch('model', function(h) {
+          if (!dragging) { centerHandToHour(h); }
+        });
+
+        element.on('$destroy', function() {
+          unwatch();
+        });
+
+        $drag.bind($hand, {
+          transform: function(element, transform, touch) {
+            var r = clockElem[0].getBoundingClientRect(),
+                c = rectCenter(r),
+                at = Math.atan2(touch.y - c.y, 
+                                touch.x - c.x) || 0
+                a  = rad2deg(at);
+            return 'rotate(' + a + 'deg) translateX(100px)';
+          },
+          start: function() {
+            dragging = true;
+          },
+          move: function(drag) {
+            // gets all the distances between the hand and hours
+            // and sets model to the nearest hour
+            var i, dist, 
+                dists = [],
+                rhand = $hand[0].getBoundingClientRect();
+
+            for (i = 0; i < $hours.length; i++) {
+              dists.push(distanceBetweenRects(rhand, $hours[i][0].getBoundingClientRect()));
+            }
+
+            var mindist = Infinity;
+            var nearest;
+
+            for (i = 0; i < dists.length; i++) {
+              if (dists[i] < mindist) {
+                mindist = dists[i];
+                nearest = i + 1;
+              }
+            }
+
+            if (nearest !== scope.model) {
+              scope.$apply(function() {
+                scope.model = nearest;
+              });
+            }
+          },
+          end: function(drag) {
+            centerHandToHour(scope.model);
+            dragging = false;
+          }
+        });        
+      }
+    }
+  };
+});
+// ]]>
+</script>
+</head>
+<body ng-app="myApp" id='example-html'>
+
+<div class="clock-header">
+  <div class="selected-hour">
+    {{ selectedHour || "--" }} : 00
+  </div>
+</div>
+<clock ng-model='selectedHour'></clock>
+
+</body>
+</html>
