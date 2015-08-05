@@ -85,6 +85,9 @@
         <loc>http://mobileangularui.com/forum/</loc>
     </url>
     <url>
+        <loc>http://mobileangularui.com/apps/3inkomzan/</loc>
+    </url>
+    <url>
         <loc>http://mobileangularui.com/apps/biggo/</loc>
     </url>
     <url>
@@ -94,7 +97,16 @@
         <loc>http://mobileangularui.com/apps/guda_iurii/</loc>
     </url>
     <url>
+        <loc>http://mobileangularui.com/apps/guezzit/</loc>
+    </url>
+    <url>
         <loc>http://mobileangularui.com/apps/hotelier_news/</loc>
+    </url>
+    <url>
+        <loc>http://mobileangularui.com/apps/tictac/</loc>
+    </url>
+    <url>
+        <loc>http://mobileangularui.com/apps/zaobao/</loc>
     </url>
     <url>
         <loc>http://mobileangularui.com/blog/migrate-to-1-2/</loc>
@@ -184,13 +196,13 @@
         <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:components/module:switch/</loc>
     </url>
     <url>
+        <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:core/module:activelinks/</loc>
+    </url>
+    <url>
         <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:core/module:capture/</loc>
     </url>
     <url>
         <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:core/module:outerclick/</loc>
-    </url>
-    <url>
-        <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:core/module:activelinks/</loc>
     </url>
     <url>
         <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:core/module:sharedstate/</loc>
