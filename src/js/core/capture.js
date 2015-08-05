@@ -120,6 +120,9 @@
        $rootScope.$on('$routeChangeSuccess', function() {
          Capture.resetAll();
        });
+       $rootScope.$on('$stateChangeStart', function() {
+         Capture.resetAll();
+       });
      }
    ])
 
