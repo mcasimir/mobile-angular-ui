@@ -11,3 +11,5 @@ before_install:
   - npm install
   - npm install -g bower
   - bower install
+addons:
+  sauce_connect: true
