@@ -44,6 +44,17 @@ GLOBS.livereloadTestMigrate = [ path.join('test', 'migrate', '*.html') ];
 
 console.log('Gulp running with env:', process.env.NODE_ENV || 'development');
 
+require('child_process').exec('pwd', function(err, stdout){
+  console.log('Working Dir:');
+  console.log(stdout);
+});
+
+require('child_process').exec('ls dist/css', function(err, stdout){
+  console.log('Bundle Content:');
+  console.log(stdout);
+});
+
+
 /*================================================
 =            Report Errors to Console            =
 ================================================*/
