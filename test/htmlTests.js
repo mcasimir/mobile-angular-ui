@@ -20,7 +20,7 @@ function testToModule(test) {
   var src = [
   'module.exports = function() {',
     test.describes.map(function(d) {
-      return 'describe(' + JSON.stringify(d) + ', function(){'; 
+      return 'describe(' + JSON.stringify(d) + ', function(){';
     }).join(''),
     'it(' + JSON.stringify(test.spec) + ', function(){',
     'browser.get(' + JSON.stringify(test.browserLoad) + ');',
@@ -28,7 +28,7 @@ function testToModule(test) {
     test.canThrow ? '' : ';expectNoErrors();',
     '});',
     test.describes.map(function() {
-      return '});'; 
+      return '});';
     }).join(''),
   '};'
   ].join('');
@@ -74,7 +74,7 @@ function parseTests(file) {
       var canThrow = node.attr('can-throw') === '' || node.attr('can-throw') === 'true';
 
       addTest({
-        describes: describes.slice(0, describes.length), 
+        describes: describes.slice(0, describes.length),
         id: node.attr('id') || slug(spec).toLowerCase(),
         spec: spec,
         filename: file,
@@ -100,13 +100,13 @@ for (var i = 0; i < testFiles.length; i++) {
   parseTests(abs);
 }
 
-// 
+//
 // Parse args
-// 
+//
 var index = process.argv.indexOf('--tests');
 var pattern = index !== -1 && process.argv[index + 1];
 
-// 
+//
 // run all tests
 //
 var testsToRun = [];

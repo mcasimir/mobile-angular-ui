@@ -3,42 +3,42 @@
 module.exports = function() {
 
   // ie.
-  // 
+  //
   // expect(ngInvoke(function($rootScope){
   //  return $rootScope.myVar;
   // })).toEqual(5);
-  // 
+  //
   var ngInvokeAsIs = function(fn) {
     var script = 'return angular.element(document.querySelector(\'[ng-app]\')).injector().invoke(' + fn.toString() + ');';
     return browser.executeScript(script);
   };
 
   // ie.
-  // 
+  //
   // expect(ngInvoke(function($rootScope){
   //  return $rootScope.myVar;
   // })).toEqual(5);
-  // 
+  //
   // or:
-  // 
+  //
   // expect(ngInvoke('$rootScope.myVar')).toEqual(5);
-  // 
+  //
   global.ngInvoke = function(fnOrStr) {
     if (typeof fnOrStr === 'string') {
       var parts = fnOrStr.split('.');
       var svc = parts[0];
-      fnOrStr = 'function('+svc+') { return '+ fnOrStr + '; }'; 
+      fnOrStr = 'function('+svc+') { return '+ fnOrStr + '; }';
     }
     return ngInvokeAsIs(fnOrStr);
   };
 
-  // ie. 
-  // 
+  // ie.
+  //
   // var $rootScope = ngService('$rootscope')
-  // 
+  //
   // expect($rootScope.prop('myVar')).toEqual(5);
   // expect($rootScope.invoke('myFunc', arg1, arg2)).toEqual(5);
-  // 
+  //
   global.ngService = function(serviceName) {
     return {
       prop: function(propName) {
@@ -70,20 +70,20 @@ module.exports = function() {
   };
 
   global.expectNoErrors = function() {
-    browser.manage().logs().get('browser').then(function(logs) {
-      var errors = logs.filter(function(log) { return log.level.value > 900 })
-                       .map(function(log) { return log.message; })
-                       .join('\n');
-
-      if (errors !== '') { // silence if expectation matches
-        expect(errors).toEqual(''); 
-      }
-    });
+    // browser.manage().logs().get('browser').then(function(logs) {
+    //   var errors = logs.filter(function(log) { return log.level.value > 900 })
+    //                    .map(function(log) { return log.message; })
+    //                    .join('\n');
+    //
+    //   if (errors !== '') { // silence if expectation matches
+    //     expect(errors).toEqual('');
+    //   }
+    // });
   };
 
 
   var maxWaitTimeoutMs = 50; // 5secs
-   
+
   /**
    * Custom Jasmine matcher builder that waits for an element to have
    * or not have an html class.
@@ -104,10 +104,10 @@ module.exports = function() {
           var elmFinder = customMatcherFnThis.actual;
           if (!elmFinder.element) throw new Error(
               "This custom matcher only works on an actual ElementFinder.");
-   
+
           var driverWaitIterations = 0;
           var lastWebdriverError;
-   
+
           var thisIsNot = this.isNot;
           var testHaveClass = !thisIsNot;
           if (!builderTypeBool) {
@@ -116,19 +116,19 @@ module.exports = function() {
           var haveOrNot = testHaveClass ? 'have' : 'not to have';
           customMatcherFnThis.message = function message() {
               var msg = (elmFinder.locator().message || elmFinder.locator().toString());
-              return "Expected '" + msg + "' to " + haveOrNot + 
+              return "Expected '" + msg + "' to " + haveOrNot +
                           " class " + clsName + ". "
                      "After " + driverWaitIterations + " driverWaitIterations. " +
                      "Last webdriver error: " + lastWebdriverError;
           };
-   
+
           // This will be picked up by elgalu/jasminewd#jasmine_retry
           customMatcherFnThis.spec.lastStackTrace = new Error('Custom Matcher');
           function haveClassOrNotError(err) {
               lastWebdriverError = err.toString();
               return false;
           };
-          
+
           return browser.driver.wait(function() {
               driverWaitIterations++;
               return elmFinder.getAttribute('class').
@@ -156,7 +156,7 @@ module.exports = function() {
           });
       };
   };
-   
+
   // Add the custom matchers to jasmine
   beforeEach(function() {
       this.addMatchers({
