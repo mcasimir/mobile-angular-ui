@@ -7,7 +7,9 @@ exports.config = {
   capabilities: {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
-    'browserName': 'chrome'
+    'browserName': 'iphone',
+    'deviceName': 'iPhone Simulator',
+    'deviceOrientation': 'portrait'
   },
   specs: [
     'htmlTests.js'

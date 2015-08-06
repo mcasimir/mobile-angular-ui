@@ -21,21 +21,21 @@
     <script src="demo.js"></script>
   </head>
 
-  <body 
-    ng-app="MobileAngularUiExamples" 
+  <body
+    ng-app="MobileAngularUiExamples"
     ng-controller="MainController"
     ui-prevent-touchmove-defaults
     >
 
     <!-- Sidebars -->
-    <div ng-include="'sidebar.html'" 
+    <div ng-include="'sidebar.html'"
             ui-track-as-search-param='true'
             class="sidebar sidebar-left"></div>
 
-    <div ng-include="'sidebarRight.html'" 
+    <div ng-include="'sidebarRight.html'"
             class="sidebar sidebar-right"></div>
 
-    <div class="app" 
+    <div class="app"
          ui-swipe-right='Ui.turnOn("uiSidebarLeft")'
          ui-swipe-left='Ui.turnOff("uiSidebarLeft")'>
 
@@ -70,7 +70,7 @@
         <div ng-show="loading" class="app-content-loading">
           <i class="fa fa-spinner fa-spin loading-spinner"></i>
         </div>
-        <div class="app-content">
+        <div class="app-content" ng-show="!loading">
           <ng-view></ng-view>
         </div>
       </div>

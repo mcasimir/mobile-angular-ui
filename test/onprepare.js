@@ -70,6 +70,18 @@ module.exports = function() {
   };
 
   global.expectNoErrors = function() {
+
+    browser.manage().logs().get('browser').then(function(logs) {
+      var errors = logs.filter(function(log) { return log.level.value > 900 })
+                       .map(function(log) { return log.message; })
+                       .join('\n');
+
+      if (errors !== '') { // silence if expectation matches
+        console.log('Console errors', errors);
+      }
+    });
+
+
     // browser.manage().logs().get('browser').then(function(logs) {
     //   var errors = logs.filter(function(log) { return log.level.value > 900 })
     //                    .map(function(log) { return log.message; })

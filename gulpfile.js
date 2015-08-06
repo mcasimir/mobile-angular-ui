@@ -323,7 +323,7 @@ function makeTestTask(name, conf, args, tunnel) {
 }
 
 makeTestTask('test', 'test/phantomjs.conf.js');
-makeTestTask('test:ci', 'test/ci.conf.js', [], true);
+makeTestTask('test:ci', 'test/ci.conf.js', [], false);
 makeTestTask('test:chrome', 'test/chrome.conf.js');
 makeTestTask('test:firefox', 'test/firefox.conf.js');
 makeTestTask('test:iphone', 'test/iphone5.conf.js');
