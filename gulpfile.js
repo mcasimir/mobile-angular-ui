@@ -41,6 +41,9 @@ GLOBS.livereloadTest        = [ path.join('test', '**', '*.html') ];
 GLOBS.livereloadTestManual  = [ path.join('test', 'manual', '*.html') ];
 GLOBS.livereloadTestMigrate = [ path.join('test', 'migrate', '*.html') ];
 
+
+console.log('Gulp running with env:', process.env.NODE_ENV || 'development');
+
 /*================================================
 =            Report Errors to Console            =
 ================================================*/
@@ -267,7 +270,7 @@ var ngRockTunnel = function(cb){
 };
 
 function makeTestTask(name, conf, args, tunnel) {
-  var tunnelWrapper = tunnel ? ngRockTunnel : nullTunnel;
+  var tunnelWrapper = tunnel && process.env.NODE_ENV !== 'travis' ? ngRockTunnel : nullTunnel;
 
   var protractorArgs = args || []
     .concat(process.argv.length > 2 ? process.argv.slice(3, process.argv.length) : []);
