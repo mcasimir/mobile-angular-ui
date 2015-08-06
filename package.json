@@ -8,7 +8,7 @@
     "dist": "dist"
   },
   "scripts": {
-    "test": "gulp build && gulp test"
+    "test": "gulp build && gulp test:ci"
   },
   "repository": {
     "type": "git",
