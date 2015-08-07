@@ -8,6 +8,8 @@ exports.config = {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'browserName': 'iphone',
+    'platform': 'OS X 10.10',
+    'version': '8.0',
     'deviceName': 'iPhone Simulator',
     'deviceOrientation': 'portrait'
   },
