@@ -1,6 +1,5 @@
 /**
 @module mobile-angular-ui.gestures
-@memberof!
 @position 100
 @description
 
@@ -10,10 +9,10 @@ It does not need any `.css` to work.
 
 <div class="alert alert-warning">
 <p>
-<i class="fa fa-warning"></i> This module will not work with `ngTouch` cause it is intended, among offering more features, to be a drop-in replacement for it.  
+<i class="fa fa-warning"></i> This module will not work with `ngTouch` cause it is intended, among offering more features, to be a drop-in replacement for it.
 </p>
 <p>
-Be aware that `ngTouch` is still not playing well with `fastclick.js` and its usage with `mobile-angular-ui` is currently discouraged anyway.  
+Be aware that `ngTouch` is still not playing well with `fastclick.js` and its usage with `mobile-angular-ui` is currently discouraged anyway.
 </p>
 </div>
 
