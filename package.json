@@ -1,6 +1,6 @@
 {
   "name": "mobile-angular-ui",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Mobile Angular UI",
   "main": "dist/mobile-angular-ui.js",
   "directories": {
