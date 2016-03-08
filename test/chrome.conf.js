@@ -1,4 +1,6 @@
-exports.config = {
+'use strict';
+
+module.exports.config = {
   directConnect: true,
   chromeDriver: require('chromedriver').path,
   specs: [
@@ -12,5 +14,5 @@ exports.config = {
   onPrepare: require('./onprepare'),
   rootElement: 'body',
 
-  jasmineNodeOpts: { includeStackTrace: true }
+  jasmineNodeOpts: {includeStackTrace: true}
 };

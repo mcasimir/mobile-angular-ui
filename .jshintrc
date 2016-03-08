@@ -1,13 +1,9 @@
 {
-  "enforceall": true,
-  "latedef": true,
-  "undef": true,
-  "unused": true,
+  "esnext": true,
+  "strict": true,
+  "node": true,
   "browser": true,
-  "singleGroups": false,
-  "globals": {
-    "angular": false,
-    "FastClick": false,
-    "overthrow": false
-  }
+  "quotmark": "single",
+  "unused": true,
+  "predef": []
 }

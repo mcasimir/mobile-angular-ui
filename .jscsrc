@@ -1,0 +1,14 @@
+{
+  "preset": "google",
+  "esnext": true,
+  "maximumLineLength": {
+    "value": 160,
+    "allExcept": ["comments", "regex"]
+  },
+  "excludeFiles": [
+    "node_modules/**",
+    "bower_components/**",
+    "docs/**",
+    "out/**"
+  ]
+}
