@@ -3,9 +3,9 @@
 module.exports = function(gulp, config) {
 
   gulp.task('depcheck:require-strict', function() {
-    let pkg = require('../package');
+    var pkg = require('../package');
 
-    let nonStrictDeps = getNonStrictDeps(pkg.dependencies || {})
+    var nonStrictDeps = getNonStrictDeps(pkg.dependencies || {})
       .concat(getNonStrictDeps(pkg.devDependencies || {}));
 
     if (nonStrictDeps.length) {
@@ -32,12 +32,12 @@ module.exports = function(gulp, config) {
 };
 
 function getNonStrictDeps(deps) {
-  let errors = [];
+  var errors = [];
 
   Object.keys(deps)
     .forEach(function(depName) {
-      let depVersion = deps[depName];
-      let url = require('url').parse(depVersion);
+      var depVersion = deps[depName];
+      var url = require('url').parse(depVersion);
       if (url.protocol) {
         depVersion = url.hash && url.hash.replace(/^#v?/, '') || '';
       }

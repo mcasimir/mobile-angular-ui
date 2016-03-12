@@ -1,6 +1,6 @@
 'use strict';
 
-let src = require('../config').globs.js;
+var src = require('../config').globs.js;
 
 module.exports = function(config) {
   config.set({
