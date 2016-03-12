@@ -5,8 +5,8 @@ module.exports = function(gulp, config) {
   gulp.task('depcheck:require-strict', function() {
     let pkg = require('../package');
 
-    let nonStrictDeps = getNonStrictDeps(pkg.dependencies)
-      .concat(getNonStrictDeps(pkg.devDependencies));
+    let nonStrictDeps = getNonStrictDeps(pkg.dependencies || {})
+      .concat(getNonStrictDeps(pkg.devDependencies || {}));
 
     if (nonStrictDeps.length) {
       return Promise.reject(new Error(`The following dependencies are not strict:\n${nonStrictDeps.join('\n')}`));
@@ -18,6 +18,9 @@ module.exports = function(gulp, config) {
   gulp.task('depcheck', ['depcheck:require-strict'], require('gulp-depcheck')({
     ignoreDirs: ['client', 'public'],
     ignoreMatches: assetsModules().concat([
+      'angular',
+      'angular-mocks',
+      'bootstrap',
       'mobile-angular-ui'
     ])
   }));

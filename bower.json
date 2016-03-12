@@ -31,11 +31,5 @@
     "bower_components",
     "test",
     "ROADMAP.tasks"
-  ],
-  "devDependencies": {
-    "font-awesome": "4",
-    "bootstrap": "3",
-    "fastclick": "1",
-    "overthrow": "0.7"
-  }
+  ]
 }

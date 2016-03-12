@@ -5,28 +5,25 @@ let path = require('path');
 let config = {
   globs: {
     core: [
-      'bower_components/fastclick/lib/fastclick.js',
+      'node_modules/fastclick/lib/fastclick.js',
       'src/js/core/**/*.js',
       'src/js/mobile-angular-ui.core.js'
     ],
     components: [
-      'bower_components/overthrow/src/overthrow-detect.js',
-      'bower_components/overthrow/src/overthrow-init.js',
-      'bower_components/overthrow/src/overthrow-polyfill.js',
+      'node_modules/fg-overthrow/src/overthrow-detect.js',
+      'node_modules/fg-overthrow/src/overthrow-init.js',
+      'node_modules/fg-overthrow/src/overthrow-polyfill.js',
       'src/js/components/**/*.js',
-      'src/js/mobile-angular-ui.components.js'],
+      'src/js/mobile-angular-ui.components.js'
+    ],
     gestures: [
       'src/js/gestures/**/*.js',
       'src/js/mobile-angular-ui.gestures.js'
     ],
-    migrate: [
-      'src/js/migrate/**/*.js',
-      'src/js/mobile-angular-ui.migrate.js'
-    ],
-    fonts: 'bower_components/font-awesome/fonts/fontawesome-webfont.*',
+    fonts: 'node_modules/font-awesome/fonts/fontawesome-webfont.*',
     vendorLess: [
       path.resolve(__dirname, 'src/less'),
-      path.resolve(__dirname, 'bower_components')
+      path.resolve(__dirname, 'node_modules')
     ],
     livereloadDemo: [
       path.join('demo', '*.html')
@@ -36,10 +33,7 @@ let config = {
     ],
     livereloadTestManual: [
       path.join('test', 'manual', '*.html')
-    ],
-    livereloadTestMigrate: [
-      path.join('test', 'migrate', '*.html')
-    ],
+    ]
   },
   lint: ['./src/**/*.js', './test/**/*.js', './*.js']
 };
@@ -51,7 +45,6 @@ config.globs.main = config.globs.core
 config.globs.js = []
   .concat(config.globs.core)
   .concat(config.globs.components)
-  .concat(config.globs.gestures)
-  .concat(config.globs.migrate);
+  .concat(config.globs.gestures);
 
 module.exports = config;
