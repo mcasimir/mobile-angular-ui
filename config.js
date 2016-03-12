@@ -1,8 +1,8 @@
 'use strict';
 
-let path = require('path');
+var path = require('path');
 
-let config = {
+var config = {
   globs: {
     core: [
       'node_modules/fastclick/lib/fastclick.js',
