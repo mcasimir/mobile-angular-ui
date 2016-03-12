@@ -48,4 +48,10 @@ config.globs.main = config.globs.core
   .concat(config.globs.components)
   .concat('src/js/mobile-angular-ui.js');
 
+config.globs.js = []
+  .concat(config.globs.core)
+  .concat(config.globs.components)
+  .concat(config.globs.gestures)
+  .concat(config.globs.migrate);
+
 module.exports = config;

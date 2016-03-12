@@ -1,24 +1,24 @@
 /**
-@module mobile-angular-ui.components
-
-@description
-
-It has directives and services providing mobile friendly 
-components like navbars and sidebars. 
-It requires `mobile-angular-ui.base.css` 
-in order to work properly.
-
-## Standalone Usage
-
-Although `.components` module is required by `mobile-angular-ui` by default 
-you can use it alone. Some submodules requires `mobile-angular-ui.core` to work,
-so be sure its sources are available.
-
-``` js
-angular.module('myApp', ['mobile-angular-ui.components']);
-```
-
-*/
+ * @module mobile-angular-ui.components
+ *
+ * @description
+ *
+ * It has directives and services providing mobile friendly
+ * components like navbars and sidebars.
+ * It requires `mobile-angular-ui.base.css`
+ * in order to work properly.
+ *
+ * ## Standalone Usage
+ *
+ * Although `.components` module is required by `mobile-angular-ui` by default
+ * you can use it alone. Some submodules requires `mobile-angular-ui.core` to work,
+ * so be sure its sources are available.
+ *
+ * ``` js
+ * angular.module('myApp', ['mobile-angular-ui.components']);
+ * ```
+ *
+ */
 (function() {
   'use strict';
 

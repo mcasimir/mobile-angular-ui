@@ -1,19 +1,19 @@
 (function() {
-  'use strict';  
+  'use strict';
   angular.module('mobile-angular-ui.migrate.switch', [])
-  .directive("switch", function() {
+  .directive('switch', function() {
     return {
-      restrict: "EA",
+      restrict: 'EA',
       replace: true,
       scope: {
-        model: "=ngModel",
-        changeExpr: "@ngChange",
-        disabled: "@"
+        model: '=ngModel',
+        changeExpr: '@ngChange',
+        disabled: '@'
       },
-      template: "<div class='switch' ng-class='{active: model}'><div class='switch-handle'></div></div>",
+      template: '<div class=\'switch\' ng-class=\'{active: model}\'><div class=\'switch-handle\'></div></div>',
       link: function(scope, elem, attrs) {
 
-        elem.on('click tap', function(){
+        elem.on('click tap', function() {
           if (attrs.disabled === null || attrs.disabled === undefined) {
             scope.model = !scope.model;
             scope.$apply();

@@ -3,10 +3,10 @@
 
   angular.module('mobile-angular-ui.migrate.disabled', []).run([
     '$document', function($document) {
-      return angular.element($document).on("click tap", function(e) {
+      return angular.element($document).on('click tap', function(e) {
         var target;
         target = angular.element(e.target);
-        if (target.hasClass("disabled")) {
+        if (target.hasClass('disabled')) {
           e.preventDefault();
           e.stopPropagation();
           target = null;

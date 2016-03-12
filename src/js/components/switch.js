@@ -1,42 +1,42 @@
 /**
  * A module with just a directive to create a switch input component.
- * 
+ *
  * @module mobile-angular-ui.components.switch
  */
 (function() {
-  'use strict';  
+  'use strict';
   angular.module('mobile-angular-ui.components.switch', [])
 
-  /** 
+  /**
    * @directive uiSwitch
    * @restrict EA
    * @requires ngModel
    * @description
-   * 
-   * The `ui-switch` directive (not to be confused with `ng-switch`) lets 
+   *
+   * The `ui-switch` directive (not to be confused with `ng-switch`) lets
    * you create a toggle switch control bound to a boolean `ngModel` value.
-   * 
+   *
    * <figure class="full-width-figure">
    *   <img src="/assets/img/figs/switch.png" alt=""/>
    * </figure>
-   * 
+   *
    * It requires `ngModel`. It supports `ngChange` and `ngDisabled`.
-   * 
+   *
    * ``` html
    * <ui-switch  ng-model="invoice.paid"></ui-switch>
    * ```
-   * 
+   *
    * ``` html
    * <ui-switch  ng-model="invoice.paid" disabled></ui-switch>
    * ```
-   * 
+   *
    * ``` html
    * <ui-switch  ng-model="invoice.paid" ng-disabled='{{...}}'></ui-switch>
    * ```
-   * 
-   * Note that if `$drag` service from `mobile-angular-ui.gestures` is available 
+   *
+   * Note that if `$drag` service from `mobile-angular-ui.gestures` is available
    * `ui-switch` will support drag too.
-   * 
+   *
    * @param {expression} ngModel The model bound to this component.
    * @param {boolean} [disabled] Whether this component should be disabled.
    * @param {expression} [ngChange] An expression to be evaluated when model changes.
@@ -52,12 +52,12 @@
       },
       link: function(scope, elem, attrs) {
         elem.addClass('switch');
-        
+
         var disabled = attrs.disabled || elem.attr('disabled');
 
         var unwatchDisabled = scope.$watch(
-          function() { 
-            return attrs.disabled || elem.attr('disabled'); 
+          function() {
+            return attrs.disabled || elem.attr('disabled');
           },
           function(value) {
             if (!value || value === 'false' || value === '0') {
@@ -83,7 +83,7 @@
             elem.removeClass('active');
           }
         });
-        
+
         var isEnabled = function() {
           return !disabled;
         };
@@ -131,7 +131,7 @@
               }
               elem.on('click tap', clickCb);
             }
-          });  
+          });
         }
 
         elem.on('$destroy', function() {

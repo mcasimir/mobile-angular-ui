@@ -1,29 +1,29 @@
-/**  
+/**
  * @module mobile-angular-ui.components.scrollable
  * @description
- * 
+ *
  * One thing you'll always have to deal with approaching mobile web app development is scroll and `position:fixed` bugs.
- * 
+ *
  * Due to the lack of support in some devices fixed positioned elements may bounce or disappear during scroll. Also mobile interaction often leverages horizontal scroll eg. in carousels or sliders.
- * 
+ *
  * We use `overflow:auto` to create scrollable areas and solve any problems related to scroll.
- * 
+ *
  * Since `overflow:auto` is not always available in touch devices we use [Overthrow](http://filamentgroup.github.io/Overthrow/) to polyfill that.
- * 
+ *
  * Markup for any scrollable areas is as simple as:
- * 
+ *
  * ``` html
  * <div class="scrollable">
  *   <div class="scrollable-content">...</div>
  * </div>
  * ```
- * 
+ *
  * This piece of code will trigger a directive that properly setup a new `Overthrow` instance for the `.scrollable` node.
- * 
+ *
  * #### Headers and footers
- * 
+ *
  * `.scrollable-header/.scrollable-footer` can be used to add fixed header/footer to a scrollable area without having to deal with css height and positioning to avoid breaking scroll.
- * 
+ *
  * ``` html
  * <div class="scrollable">
  *   <div class="scrollable-header"><!-- ... --></div>
@@ -31,31 +31,31 @@
  *   <div class="scrollable-footer"><!-- ... --></div>
  * </div>
  * ```
- * 
+ *
  * #### scrollTo
- * 
- * `.scrollable-content` controller exposes a `scrollTo` function: `scrollTo(offsetOrElement, margin)` 
- * 
+ *
+ * `.scrollable-content` controller exposes a `scrollTo` function: `scrollTo(offsetOrElement, margin)`
+ *
  * You have to require it in your directives to use it or obtain through `element().controller`:
- * 
+ *
  * ``` js
  * var elem = element(document.getElementById('myScrollableContent'));
  * var scrollableContentController = elem.controller('scrollableContent');
- * 
+ *
  * // - Scroll to top of containedElement
  * scrollableContentController.scrollTo(containedElement);
- * 
+ *
  * // - Scroll to top of containedElement with a margin of 10px;
  * scrollableContentController.scrollTo(containedElement, 10);
- * 
+ *
  * // - Scroll top by 200px;
  * scrollableContentController.scrollTo(200);
  * ```
- * 
+ *
  * #### `ui-scroll-bottom/ui-scroll-top`
- * 
+ *
  * You can use `ui-scroll-bottom/ui-scroll-top` directives handle that events and implement features like _infinite scroll_.
- * 
+ *
  * ``` html
  * <div class="scrollable">
  *   <div class="scrollable-content section" ui-scroll-bottom="loadMore()">
@@ -70,9 +70,8 @@
  */
 (function() {
   'use strict';
-  var module = angular.module('mobile-angular-ui.components.scrollable', 
+  var module = angular.module('mobile-angular-ui.components.scrollable',
     ['mobile-angular-ui.core.touchmoveDefaults']);
-
 
   var getTouchY = function(event) {
     var touches = event.touches && event.touches.length ? event.touches : [event];
@@ -88,17 +87,21 @@
     return {
       restrict: 'C',
       controller: ['$element', 'allowTouchmoveDefault', function($element, allowTouchmoveDefault) {
-        var scrollableContent = $element[0],
-            scrollable = $element.parent()[0];
+        var scrollableContent = $element[0];
+        var scrollable = $element.parent()[0];
 
         // Handle nobounce behaviour
         if ('ontouchmove' in document) {
-          var allowUp, allowDown, prevTop, prevBot, lastY;
+          var allowUp;
+          var allowDown;
+          var prevTop;
+          var prevBot;
+          var lastY;
           var setupTouchstart = function(event) {
             allowUp = (scrollableContent.scrollTop > 0);
 
             allowDown = (scrollableContent.scrollTop < scrollableContent.scrollHeight - scrollableContent.clientHeight);
-            prevTop = null; 
+            prevTop = null;
             prevBot = null;
             lastY = getTouchY(event);
           };
@@ -110,7 +113,8 @@
 
           allowTouchmoveDefault($element, function(event) {
             var currY = getTouchY(event);
-            var up = (currY > lastY), down = !up;
+            var up = (currY > lastY);
+            var down = !up;
             lastY = currY;
             return (up && allowUp) || (down && allowDown);
           });
@@ -125,7 +129,7 @@
             scrollableContent.scrollTop = elementOrNumber - marginTop;
           } else {
             var target = angular.element(elementOrNumber)[0];
-            if ((! target.offsetParent) || target.offsetParent === scrollable) {
+            if ((!target.offsetParent) || target.offsetParent === scrollable) {
               scrollableContent.scrollTop = target.offsetTop - marginTop;
             } else {
               // recursively subtract offsetTop from marginTop until it reaches scrollable element.
@@ -150,19 +154,19 @@
         require: '?^^scrollableContent',
         link: function(scope, elem, attrs, scrollable) {
           // Workaround to avoid soft keyboard hiding inputs
-          elem.on('focus', function(){
+          elem.on('focus', function() {
             if (scrollable && scrollable.scrollableContent) {
               var h1 = scrollable.scrollableContent.offsetHeight;
               $timeout(function() {
                 var h2 = scrollable.scrollableContent.offsetHeight;
-                // 
+                //
                 // if scrollableContent height is reduced in half second
                 // since an input got focus we assume soft keyboard is showing.
                 //
                 if (h1 > h2) {
-                  scrollable.scrollTo(elem, 10);  
+                  scrollable.scrollTo(elem, 10);
                 }
-              }, 500);              
+              }, 500);
             }
           });
         }
@@ -174,7 +178,7 @@
    * @directive uiScrollTop
    * @restrict A
    *
-   * @param {expression} uiScrollTop The expression to be evaluated when scroll 
+   * @param {expression} uiScrollTop The expression to be evaluated when scroll
    * reaches top of element.
    */
 
@@ -182,28 +186,28 @@
    * @directive uiScrollBottom
    * @restrict A
    *
-   * @param {expression} uiScrollBottom The expression to be evaluated when scroll 
+   * @param {expression} uiScrollBottom The expression to be evaluated when scroll
    * reaches bottom of element.
    */
   angular.forEach(
     {
-      uiScrollTop: function(elem){
+      uiScrollTop: function(elem) {
         return elem.scrollTop === 0;
-      }, 
-      uiScrollBottom: function(elem){
+      },
+      uiScrollBottom: function(elem) {
         return elem.scrollHeight === elem.scrollTop + elem.clientHeight;
       }
-    }, 
-    function(reached, directiveName){
+    },
+    function(reached, directiveName) {
       module.directive(directiveName, [function() {
         return {
           restrict: 'A',
           link: function(scope, elem, attrs) {
-            elem.on('scroll', function(){
+            elem.on('scroll', function() {
               /* If reached bottom */
-              if ( reached(elem[0]) ) {
+              if (reached(elem[0])) {
                 /* Do what is specified by onScrollBottom */
-                scope.$apply(function(){
+                scope.$apply(function() {
                   scope.$eval(attrs[directiveName]);
                 });
               }
@@ -222,26 +226,26 @@
    * @directive uiScrollableFooter
    * @restrict C
    */
-  angular.forEach({Top: 'scrollableHeader', Bottom: 'scrollableFooter'}, 
+  angular.forEach({Top: 'scrollableHeader', Bottom: 'scrollableFooter'},
     function(directiveName, side) {
-        module.directive(directiveName, [
-          '$window',
+      module.directive(directiveName, [
+        '$window',
           function($window) {
                   return {
                     restrict: 'C',
                     link: function(scope, element) {
-                      var el = element[0],
-                          parentStyle = element.parent()[0].style;
+                      var el = element[0];
+                      var parentStyle = element.parent()[0].style;
 
                       var adjustParentPadding = function() {
-                        var styles = $window.getComputedStyle(el),
-                            margin = parseInt(styles.marginTop, 10) + parseInt(styles.marginBottom, 10);
+                        var styles = $window.getComputedStyle(el);
+                        var margin = parseInt(styles.marginTop, 10) + parseInt(styles.marginBottom, 10);
                         parentStyle['padding' + side] = el.offsetHeight + margin + 'px';
                       };
 
                       var interval = setInterval(adjustParentPadding, 30);
 
-                      element.on('$destroy', function(){
+                      element.on('$destroy', function() {
                         parentStyle['padding' + side] = null;
                         clearInterval(interval);
                         interval = adjustParentPadding = element = null;

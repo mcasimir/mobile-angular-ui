@@ -2,38 +2,51 @@
   'use strict';
   var module = angular.module('mobile-angular-ui.migrate.overlay', []);
   module.directive('overlay', ['$compile', function($compile) {
-    
+
     return {
-        compile: function(tElem, tAttrs) {
-            var rawContent = tElem.html();
-            tElem.remove();
-            
-            return function postLink(scope, elem, attrs) {
-                var active = "";
-                var body = rawContent;
-                var id = attrs.overlay;
+      compile: function(tElem) {
+        var rawContent = tElem.html();
+        tElem.remove();
 
-                if (attrs["default"]) {
-                  active = "default='" + attrs["default"] + "'";
-                }
+        return function postLink(scope, elem, attrs) {
+          var active = '';
+          var body = rawContent;
+          var id = attrs.overlay;
 
-                var html = "<div class=\"overlay\" id=\"" + id + "\" toggleable " + active + " active-class=\"overlay-show\">\n  <div class=\"overlay-inner\">\n    <div class=\"overlay-background\"></div>\n    <a href=\"#" + id + "\" toggle=\"off\" class=\"overlay-dismiss\">\n      <i class=\"fa fa-times-circle-o\"></i>\n    </a>\n    <div class=\"overlay-content\">\n      <div class=\"overlay-body\">\n        " + body + "\n      </div>\n    </div>\n  </div>\n</div>";
+          if (attrs['default']) {
+            active = 'default=\'' + attrs['default'] + '\'';
+          }
 
-                var sameId = angular.element(document.getElementById(id));
+          var html = '<div class="overlay" id="' + id + '"' +
+            ' toggleable ' + active + ' active-class="overlay-show">' +
+            '<div class="overlay-inner">' +
+            '<div class="overlay-background"></div>' +
+            '<a href="#' + id + '" toggle="off" class="overlay-dismiss">' +
+            '<i class="fa fa-times-circle-o"></i>' +
+            '</a>' +
+            '<div class="overlay-content">' +
+            '<div class="overlay-body">' +
+            '' + body + '' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
 
-                if (sameId.length > 0 && sameId.hasClass('overlay')) {
-                  sameId.remove();
-                }
+          var sameId = angular.element(document.getElementById(id));
 
-                body = angular.element(document.body);
-                body.prepend($compile(html)(scope));
+          if (sameId.length > 0 && sameId.hasClass('overlay')) {
+            sameId.remove();
+          }
 
-                if (attrs["default"] === "active") {
-                  body.addClass('overlay-in');
-                }
-            };
-        }
-    };  
+          body = angular.element(document.body);
+          body.prepend($compile(html)(scope));
+
+          if (attrs['default'] === 'active') {
+            body.addClass('overlay-in');
+          }
+        };
+      }
+    };
 
   }]);
 }());

@@ -10,5 +10,22 @@
     "bower_components/**",
     "docs/**",
     "out/**"
-  ]
+  ],
+  "jsDoc": {
+    "checkAnnotations": {
+      "preset": "jsdoc3",
+      "extra": {
+        "module": true,
+        "position": true,
+        "directive": true,
+        "restrict": true,
+        "scope": true,
+        "as": true,
+        "service": true,
+        "ngdoc": true,
+        "shortname": true,
+        "memberOf": true
+      }
+    }
+  }
 }

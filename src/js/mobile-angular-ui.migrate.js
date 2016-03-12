@@ -1,5 +1,5 @@
 (function() {
-  'use strict';      
+  'use strict';
 
   angular.module('mobile-angular-ui.migrate', [
       'mobile-angular-ui.migrate.toggle',

@@ -23,8 +23,8 @@ module.exports = function(gulp, config) {
   }));
 
   function assetsModules() {
-    return config.assets.js
-    .concat(config.assets.fonts)
+    return config.globs.js
+    .concat(config.globs.fonts)
       .filter(function(path) {
         return path.match(/^node_modules/);
       }).map(function(path) {
