@@ -8,6 +8,10 @@ env:
     - NODE_ENV: travis
 
 before_install:
+  - pip install codecov
   - npm install
   - npm install -g bower
   - bower install
+
+after_success:
+  - codecov
