@@ -35,6 +35,18 @@ let config = {
       path.join('test', 'manual', '*.html')
     ]
   },
+  depcheck: {
+    ignore: [
+      'angular',
+      'angular-mocks',
+      'bootstrap',
+      'mobile-angular-ui',
+      'jasmine-core',
+      'karma-chrome-launcher',
+      'karma-jasmine',
+      'karma-mocha-reporter'
+    ]
+  },
   lint: ['./src/**/*.js', './test/**/*.js', './*.js']
 };
 

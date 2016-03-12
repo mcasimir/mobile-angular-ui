@@ -17,12 +17,7 @@ module.exports = function(gulp, config) {
 
   gulp.task('depcheck', ['depcheck:require-strict'], require('gulp-depcheck')({
     ignoreDirs: ['client', 'public'],
-    ignoreMatches: assetsModules().concat([
-      'angular',
-      'angular-mocks',
-      'bootstrap',
-      'mobile-angular-ui'
-    ])
+    ignoreMatches: assetsModules().concat(config.depcheck.ignore)
   }));
 
   function assetsModules() {
