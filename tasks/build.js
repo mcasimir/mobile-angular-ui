@@ -6,18 +6,18 @@ module.exports = function(gulp, config) {
   =            Requiring stuffs            =
   ========================================*/
 
-  let concat            = require('gulp-concat');
-  let connect           = require('gulp-connect');
-  let csso              = require('gulp-csso');
-  let del               = require('del');
-  let less              = require('gulp-less');
-  let mobilizer         = require('gulp-mobilizer');
-  let path              = require('path');
-  let rename            = require('gulp-rename');
-  let os                = require('os');
-  let seq               = require('run-sequence');
-  let sourcemaps        = require('gulp-sourcemaps');
-  let uglify            = require('gulp-uglify');
+  var concat            = require('gulp-concat');
+  var connect           = require('gulp-connect');
+  var csso              = require('gulp-csso');
+  var del               = require('del');
+  var less              = require('gulp-less');
+  var mobilizer         = require('gulp-mobilizer');
+  var path              = require('path');
+  var rename            = require('gulp-rename');
+  var os                = require('os');
+  var seq               = require('gulp-sequence');
+  var sourcemaps        = require('gulp-sourcemaps');
+  var uglify            = require('gulp-uglify');
 
   /*================================================
   =            Report Errors to Console            =
@@ -47,41 +47,12 @@ module.exports = function(gulp, config) {
     });
   });
 
-  gulp.task('connect:test', function() {
-    var server       = require('./test/server');
-    var serveFavicon = require('serve-favicon');
-    var favicon      = serveFavicon(__dirname + '/test/favicon.ico');
-
-    connect.server({
-      host: '0.0.0.0',
-      port: 3001,
-      middleware: function() {
-        return [server, favicon];
-      }
-    });
-  });
-
   /*==============================================================
   =            Setup live reloading on source changes            =
   ==============================================================*/
 
   gulp.task('livereload:demo', function() {
     return gulp.src(config.globs.livereloadDemo)
-      .pipe(connect.reload());
-  });
-
-  gulp.task('livereload:test', function() {
-    return gulp.src(config.globs.livereloadTest)
-      .pipe(connect.reload());
-  });
-
-  gulp.task('livereload:test:manual', function() {
-    return gulp.src(config.globs.livereloadTestManual)
-      .pipe(connect.reload());
-  });
-
-  gulp.task('livereload:test:migrate', function() {
-    return gulp.src(config.globs.livereloadTestMigrate)
       .pipe(connect.reload());
   });
 
@@ -104,7 +75,6 @@ module.exports = function(gulp, config) {
     gulp.src([
       'src/less/mobile-angular-ui-base.less',
       'src/less/mobile-angular-ui-desktop.less',
-      'src/less/mobile-angular-ui-migrate.less',
       'src/less/sm-grid.less'
     ])
     .pipe(less({paths: config.globs.vendorLess}))
@@ -127,7 +97,6 @@ module.exports = function(gulp, config) {
   gulp.task('css:copy', function() {
     return gulp.src([
       path.join(CSS_TEMP_DIR, 'mobile-angular-ui-hover.css'),
-      path.join(CSS_TEMP_DIR, 'mobile-angular-ui-migrate.css'),
       path.join(CSS_TEMP_DIR, 'mobile-angular-ui-desktop.css')
     ])
     .pipe(gulp.dest(path.join('dist', 'css')));
@@ -163,10 +132,6 @@ module.exports = function(gulp, config) {
     return compileJs('mobile-angular-ui.core.js', config.globs.core);
   });
 
-  gulp.task('js:migrate',  function() {
-    return compileJs('mobile-angular-ui.migrate.js', config.globs.migrate);
-  });
-
   gulp.task('js:gestures',  function() {
     return compileJs('mobile-angular-ui.gestures.js', config.globs.gestures);
   });
@@ -175,7 +140,7 @@ module.exports = function(gulp, config) {
     return compileJs('mobile-angular-ui.js', config.globs.main);
   });
 
-  gulp.task('js', ['js:main', 'js:gestures', 'js:migrate', 'js:core']);
+  gulp.task('js', ['js:main', 'js:gestures', 'js:core']);
 
   /*===================================================================
   =            Watch for source changes and rebuild/reload            =
@@ -185,11 +150,10 @@ module.exports = function(gulp, config) {
     gulp.watch(config.globs.livereloadDemo.concat('dist/**/*'), ['livereload:demo']);
     gulp.watch(config.globs.livereloadTest.concat('dist/**/*'), ['livereload:test']);
     gulp.watch(config.globs.livereloadTestManual.concat('dist/**/*'), ['livereload:test:manual']);
-    gulp.watch(config.globs.livereloadTestMigrate.concat('dist/**/*'), ['livereload:test:migrate']);
 
     gulp.watch(['./src/less/**/*'], ['css']);
 
-    ['core', 'gestures', 'migrate', 'main'].forEach(function(target) {
+    ['core', 'gestures', 'main'].forEach(function(target) {
       gulp.watch(config.globs[target], ['js:' + target]);
     });
 
