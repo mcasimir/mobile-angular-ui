@@ -1,13 +1,15 @@
 /* global __dirname: false, module: true, require: true */
 
-var glob = require('glob'),
-    path = require('path'),
-    url = require('url'),
-    fs = require('fs'),
-    cheerio = require('cheerio'),
-    layoutHtml = fs.readFileSync(path.resolve(__dirname, 'layout.html')),
-    testsDoms  = {},
-    testFiles = glob.sync(path.resolve(__dirname, '**/*.test.html'));
+'use strict';
+
+var glob = require('glob');
+var path = require('path');
+var url = require('url');
+var fs = require('fs');
+var cheerio = require('cheerio');
+var layoutHtml = fs.readFileSync(path.resolve(__dirname, 'layout.html'));
+var testsDoms  = {};
+var testFiles = glob.sync(path.resolve(__dirname, '**/*.test.html'));
 
 for (var i = 0; i < testFiles.length; i++) {
   var abs = testFiles[i];

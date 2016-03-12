@@ -7,14 +7,14 @@ exports.config = {
   multiCapabilities: [{
     browserName: 'chrome',
     chromeOptions: {
-        mobileEmulation: {
-            deviceName: 'Apple iPhone 5'
-        }
+      mobileEmulation: {
+        deviceName: 'Apple iPhone 5'
+      }
     }
   }],
 
   onPrepare: require('./onprepare'),
   rootElement: 'body',
 
-  jasmineNodeOpts: { includeStackTrace: true }
+  jasmineNodeOpts: {includeStackTrace: true}
 };

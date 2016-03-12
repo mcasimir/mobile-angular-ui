@@ -1,13 +1,15 @@
 /* global console: false, __dirname: false, module: true, process: true */
 
-var glob = require('glob'),
-    minimatch = require("minimatch"),
-    path = require('path'),
-    fs = require('fs'),
-    cheerio = require('cheerio'),
-    slug = require('slug'),
-    tests = {},
-    testFiles = glob.sync(path.resolve(__dirname, '**/*.test.html'));
+'use strict';
+
+var glob = require('glob');
+var minimatch = require('minimatch');
+var path = require('path');
+var fs = require('fs');
+var cheerio = require('cheerio');
+var slug = require('slug');
+var tests = {};
+var testFiles = glob.sync(path.resolve(__dirname, '**/*.test.html'));
 
 function requireFromString(src, filename) {
   var Module = module.constructor;
@@ -20,7 +22,7 @@ function testToModule(test) {
   var src = [
   'module.exports = function() {',
     test.describes.map(function(d) {
-      return 'describe(' + JSON.stringify(d) + ', function(){'; 
+      return 'describe(' + JSON.stringify(d) + ', function(){';
     }).join(''),
     'it(' + JSON.stringify(test.spec) + ', function(){',
     'browser.get(' + JSON.stringify(test.browserLoad) + ');',
@@ -28,7 +30,7 @@ function testToModule(test) {
     test.canThrow ? '' : ';expectNoErrors();',
     '});',
     test.describes.map(function() {
-      return '});'; 
+      return '});';
     }).join(''),
   '};'
   ].join('');
@@ -64,7 +66,7 @@ function parseTests(file) {
       var spec = node.attr('spec');
 
       if (!spec || spec.trim() === '') {
-        throw new Error('Parsing `'+ file +'`: script[type=\'application/protractor\'] requires `spec` attribute to be set.');
+        throw new Error('Parsing `' + file + '`: script[type=\'application/protractor\'] requires `spec` attribute to be set.');
       }
 
       var func = node.text();
@@ -74,7 +76,7 @@ function parseTests(file) {
       var canThrow = node.attr('can-throw') === '' || node.attr('can-throw') === 'true';
 
       addTest({
-        describes: describes.slice(0, describes.length), 
+        describes: describes.slice(0, describes.length),
         id: node.attr('id') || slug(spec).toLowerCase(),
         spec: spec,
         filename: file,
@@ -100,13 +102,13 @@ for (var i = 0; i < testFiles.length; i++) {
   parseTests(abs);
 }
 
-// 
+//
 // Parse args
-// 
+//
 var index = process.argv.indexOf('--tests');
 var pattern = index !== -1 && process.argv[index + 1];
 
-// 
+//
 // run all tests
 //
 var testsToRun = [];

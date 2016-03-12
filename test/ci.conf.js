@@ -14,5 +14,5 @@ exports.config = {
   onPrepare: require('./onprepare'),
   rootElement: 'body',
 
-  jasmineNodeOpts: { includeStackTrace: true }
+  jasmineNodeOpts: {includeStackTrace: true}
 };
