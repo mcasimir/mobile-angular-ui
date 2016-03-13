@@ -24,7 +24,16 @@ module.exports = function(config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    browsers: ['Chrome'],
+
+    browsers: ['ChromeNoSandbox'],
+
+    customLaunchers: {
+      ChromeNoSandbox: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
+      }
+    },
+
     singleRun: true,
     concurrency: Infinity
   });
