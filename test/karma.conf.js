@@ -8,13 +8,13 @@ var customLaunchersCi = {
     browserName: 'chrome',
     platform: 'Windows 7',
     version: '35'
-  },
-  ciIphone: {
-    base: 'SauceLabs',
-    browserName: 'iphone',
-    platform: 'OS X 10.9',
-    version: '7.1'
   }
+  // ciIphone: {
+  //   base: 'SauceLabs',
+  //   browserName: 'iphone',
+  //   platform: 'OS X 10.9',
+  //   version: '7.1'
+  // }
 };
 
 var customLaunchersLocal = {
@@ -45,6 +45,7 @@ module.exports = function(config) {
       'test/unit/*.spec.js'
     ]),
 
+    captureTimeout: 120000,
     sauceLabs: {
       testName: `mobile-angular-ui@${process.env.TRAVIS_BRANCH || 'local'} (build #${process.env.TRAVIS_BUILD_NUMBER || 'local'})`
     },
