@@ -47,6 +47,7 @@
     "karma-chrome-launcher": "0.2.2",
     "karma-jasmine": "0.3.7",
     "karma-mocha-reporter": "2.0.0",
+    "karma-sauce-launcher": "0.3.1",
     "require-all": "2.0.0"
   }
 }

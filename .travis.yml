@@ -1,9 +1,10 @@
 language: node_js
 node_js:
 - '4.4.0'
-sudo: required
-
-services:
-  - docker
+addons:
+  sauce_connect:
+    username: "mcasimir"
+    access_key:
+      secure: "SNGauHZ2ipnn2Ny7pwe0BIOmwdXHQpjSLrB1dKfCUYIwYXEQNMTx66uSBybvWG6CDxDt/pSXJx8u4NrUvQj0xHGKOnkhiNRfOy7CKWQ0wjBDUtYrNSPmgJTKsj94XQSb10hIw5AtD6RO+dk3vqX7NNJqtGiGB+xCo96YVuOor5Q="
 
 script: node_modules/.bin/gulp test:ci

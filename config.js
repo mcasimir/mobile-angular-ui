@@ -44,7 +44,8 @@ var config = {
       'jasmine-core',
       'karma-chrome-launcher',
       'karma-jasmine',
-      'karma-mocha-reporter'
+      'karma-mocha-reporter',
+      'karma-sauce-launcher'
     ]
   },
   lint: ['./src/**/*.js', './test/**/*.js', './*.js']
