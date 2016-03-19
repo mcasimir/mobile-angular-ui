@@ -6,5 +6,9 @@
   "quotmark": "single",
   "unused": true,
   "jasmine": true,
-  "predef": []
+  "predef": [
+    "angular",
+    "module",
+    "inject"
+  ]
 }

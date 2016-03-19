@@ -870,7 +870,7 @@
       link: function(scope, element, attr) {
         var uiHideFn = parseUiCondition('uiHide', attr, scope, SharedState, $parse, $interpolate);
         scope.$watch(uiHideFn, function uiHideWatchAction(value) {
-          $animate[value ? 'addClass' : 'removeClass'](element,NG_HIDE_CLASS, {
+          $animate[value ? 'addClass' : 'removeClass'](element, NG_HIDE_CLASS, {
             tempClasses: NG_HIDE_IN_PROGRESS_CLASS
           });
         });

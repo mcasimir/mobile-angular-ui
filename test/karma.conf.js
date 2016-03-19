@@ -42,7 +42,8 @@ module.exports = function(config) {
     ].concat(src)
       .concat([
       'node_modules/angular-mocks/angular-mocks.js',
-      'test/unit/*.spec.js'
+      'test/unit/helpers.js',
+      'test/unit/**/*.spec.js'
     ]),
 
     captureTimeout: 120000,
