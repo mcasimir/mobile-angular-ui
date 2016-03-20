@@ -9,6 +9,7 @@
   "predef": [
     "angular",
     "module",
-    "inject"
+    "inject",
+    "FastClick"
   ]
 }
