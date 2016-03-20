@@ -20,12 +20,9 @@ describe('core', function() {
     describe('ui-hide', function() {
       it('should not set ng-hide if state is false', function() {
         spyOn($animate, 'removeClass').and.callThrough();
-
         SharedState.initialize(scope, 'state1', {defaultValue: false});
 
-        scope.x = 1;
-
-        let elem = compile(angular.element(`<div ui-hide='state{{x}}' />`))(scope);
+        let elem = compile(angular.element(`<div ui-hide='state1' />`))(scope);
 
         scope.$digest();
         expect($animate.removeClass).toHaveBeenCalled();
@@ -37,9 +34,8 @@ describe('core', function() {
         spyOn($animate, 'removeClass').and.callThrough();
 
         SharedState.initialize(scope, 'state1', {defaultValue: true});
-        scope.x = 1;
 
-        let elem = angular.element(`<div ui-hide='state{{x}}' />`);
+        let elem = angular.element(`<div ui-hide='state1' />`);
         let directiveElement = compile(elem)(scope);
 
         scope.$digest();
@@ -51,6 +47,20 @@ describe('core', function() {
             tempClasses: 'ng-hide-animate'
           }));
         expect(directiveElement.attr('class')).toContain('ng-hide');
+      });
+
+      it('should allow interpolation', function() {
+        spyOn($animate, 'removeClass').and.callThrough();
+
+        SharedState.initialize(scope, 'state1', {defaultValue: false});
+
+        scope.x = 1;
+
+        let elem = compile(angular.element(`<div ui-hide='state{{x}}' />`))(scope);
+
+        scope.$digest();
+        expect($animate.removeClass).toHaveBeenCalled();
+        expect(elem.attr('class')).not.toContain('ng-hide');
       });
     });
   });

@@ -16,6 +16,28 @@ describe('core', function() {
     });
 
     describe('ui-if', function() {
+      it('should remove elem if state is false', function() {
+        SharedState.initialize(scope, 'state1', {defaultValue: false});
+
+        let elem = compile(angular.element(`
+          <div><div ui-if='state1'>content</div></div>
+        `.trim()))(scope);
+
+        scope.$digest();
+        expect(elem.text()).not.toContain('content');
+      });
+
+      it('should not remove elem if state is true', function() {
+        SharedState.initialize(scope, 'state1', {defaultValue: true});
+
+        let elem = compile(angular.element(`
+          <div><div ui-if='state1'>content</div></div>
+        `.trim()))(scope);
+
+        scope.$digest();
+        expect(elem.text()).toContain('content');
+      });
+
       it('should remove elem if interpolated state is false', function() {
         SharedState.initialize(scope, 'state1', {defaultValue: false});
 
