@@ -3,8 +3,7 @@
 [![Npm Version](https://badge.fury.io/js/mobile-angular-ui.svg)](https://www.npmjs.com/package/mobile-angular-ui)
 [![Dev Stories in Ready](https://badge.waffle.io/mcasimir/mobile-angular-ui.png?label=ready&title=Stories)](https://waffle.io/mcasimir/mobile-angular-ui)
 [![Join the chat at https://gitter.im/mcasimir/mobile-angular-ui](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mcasimir/mobile-angular-ui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) | [Forum](http://mobileangularui.com/forum/) | [Docs](http://mobileangularui.com/docs/)
-[![codecov.io](https://codecov.io/github/codecov/codecov-ruby/coverage.svg?branch=master)](https://codecov.io/github/codecov/codecov-ruby?branch=master)
-
+[![codecov.io](https://codecov.io/github/mcasimir/mobile-angular-ui/coverage.svg?branch=master)](https://codecov.io/github/mcasimir/mobile-angular-ui?branch=master)
 
 ## Angular &amp; Bootstrap 3 for Mobile web and applications
 
