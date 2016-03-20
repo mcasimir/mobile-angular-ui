@@ -15,12 +15,12 @@ describe('core', function() {
       });
     });
 
-    describe('ui-toggle', function() {
+    describe('ui-turn-off', function() {
       it('runs on click', function() {
-        spyOn(SharedState, 'toggle');
+        spyOn(SharedState, 'turnOff');
 
         let elem = angular.element(
-          `<div ui-toggle='state1'/>`
+          `<div ui-turn-off='state1'/>`
         );
 
         let directiveElement = compile(elem)(scope);
@@ -29,14 +29,14 @@ describe('core', function() {
 
         directiveElement.triggerHandler('click');
 
-        expect(SharedState.toggle).toHaveBeenCalledWith('state1');
+        expect(SharedState.turnOff).toHaveBeenCalledWith('state1');
       });
 
       it('does not run on click if uiTriggers is not click', function() {
-        spyOn(SharedState, 'toggle');
+        spyOn(SharedState, 'turnOff');
 
         let elem = angular.element(
-          `<div ui-toggle='state1' ui-triggers="tap"/>`
+          `<div ui-turn-off='state1' ui-triggers="tap"/>`
         );
 
         let directiveElement = compile(elem)(scope);
@@ -45,14 +45,14 @@ describe('core', function() {
 
         directiveElement.triggerHandler('click');
 
-        expect(SharedState.toggle).not.toHaveBeenCalledWith('state1');
+        expect(SharedState.turnOff).not.toHaveBeenCalledWith('state1');
       });
 
       it('runs on tap if uiTriggers is tap', function() {
-        spyOn(SharedState, 'toggle');
+        spyOn(SharedState, 'turnOff');
 
         let elem = angular.element(
-          `<div ui-toggle='state1' ui-triggers="tap"/>`
+          `<div ui-turn-off='state1' ui-triggers="tap"/>`
         );
 
         let directiveElement = compile(elem)(scope);
@@ -61,7 +61,7 @@ describe('core', function() {
 
         directiveElement.triggerHandler('tap');
 
-        expect(SharedState.toggle).toHaveBeenCalledWith('state1');
+        expect(SharedState.turnOff).toHaveBeenCalledWith('state1');
       });
 
       it('should bind after ng-click (1)', function() {
@@ -70,12 +70,12 @@ describe('core', function() {
           calls.push('ngClick');
         };
 
-        spyOn(SharedState, 'toggle').and.callFake(function() {
-          calls.push('toggle');
+        spyOn(SharedState, 'turnOff').and.callFake(function() {
+          calls.push('turnOff');
         });
 
         let elem = angular.element(
-          `<div ui-toggle='state1' ng-click='ngClickCallback()' />`
+          `<div ui-turn-off='state1' ng-click='ngClickCallback()' />`
         );
 
         let directiveElement = compile(elem)(scope);
@@ -86,7 +86,7 @@ describe('core', function() {
 
         expect(calls).toEqual([
           'ngClick',
-          'toggle'
+          'turnOff'
         ]);
       });
 
@@ -96,12 +96,12 @@ describe('core', function() {
           calls.push('ngClick');
         };
 
-        spyOn(SharedState, 'toggle').and.callFake(function() {
-          calls.push('toggle');
+        spyOn(SharedState, 'turnOff').and.callFake(function() {
+          calls.push('turnOff');
         });
 
         let elem = angular.element(
-          `<div ng-click='ngClickCallback()' ui-toggle='state1' />`
+          `<div ng-click='ngClickCallback()' ui-turn-off='state1' />`
         );
 
         let directiveElement = compile(elem)(scope);
@@ -112,9 +112,10 @@ describe('core', function() {
 
         expect(calls).toEqual([
           'ngClick',
-          'toggle'
+          'turnOff'
         ]);
       });
     });
+
   });
 });
