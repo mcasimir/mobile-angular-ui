@@ -9,12 +9,6 @@ var customLaunchersCi = {
     platform: 'Windows 7',
     version: '35'
   }
-  // ciIphone: {
-  //   base: 'SauceLabs',
-  //   browserName: 'iphone',
-  //   platform: 'OS X 10.9',
-  //   version: '7.1'
-  // }
 };
 
 var customLaunchersLocal = {
@@ -42,7 +36,6 @@ module.exports = function(config) {
     ].concat(src)
       .concat([
       'node_modules/angular-mocks/angular-mocks.js',
-      'test/unit/helpers.js',
       'test/unit/**/*.spec.js'
     ]),
 

@@ -45,7 +45,8 @@ var config = {
       'karma-chrome-launcher',
       'karma-jasmine',
       'karma-mocha-reporter',
-      'karma-sauce-launcher'
+      'karma-sauce-launcher',
+      'karma-coverage'
     ]
   },
   lint: ['./src/**/*.js', './test/**/*.js', './*.js']

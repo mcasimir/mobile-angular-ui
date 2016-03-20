@@ -1,12 +1,4 @@
-// <!-- uiScopeContext -->
-//
-// <div id="uiScopeContextUi1" ui-if="trueVar" ui-scope-context='trueVar'>uiScopeContextUi1</div>
-// <div id="uiScopeContextUi2" ui-if="falseVar" ui-scope-context='falseVar'>uiScopeContextUi2</div>
-// <div id="uiScopeContextUi3" ui-show="falseVar || testState" ui-scope-context='falseVar'>uiScopeContextUi3</div>
-// <div id="uiScopeContextUi4" ui-hide="myVar || testState" ui-scope-context='falseVar as myVar'>uiScopeContextUi4</div>
-// <div id="uiScopeContextUi5" ui-class="{'active': !myVar && trueVar}" ui-scope-context='trueVar, falseVar as myVar'>uiScopeContextUi5</div>
-// <div id='uiScopeContextUi6' ui-hide="trueVar" ui-scope-context="nested.trueProp as trueVar"></div>
-
+'use strict';
 
 describe('core', function() {
   describe('sharedState', function() {
