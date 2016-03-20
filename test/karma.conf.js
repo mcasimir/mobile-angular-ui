@@ -27,7 +27,7 @@ var customLaunchers = process.env.CI ?
   customLaunchersCi :
     customLaunchersLocal;
 
-var reporters = ['mocha'];
+var reporters = ['mocha', 'coverage'];
 
 if (process.env.CI) {
   reporters.push('saucelabs');
@@ -46,6 +46,10 @@ module.exports = function(config) {
       'test/unit/**/*.spec.js'
     ]),
 
+    preprocessors: {
+      'src/js/**/*.js': ['coverage']
+    },
+
     captureTimeout: 120000,
     sauceLabs: {
       testName: `mobile-angular-ui@${process.env.TRAVIS_BRANCH || 'local'} (build #${process.env.TRAVIS_BUILD_NUMBER || 'local'})`
@@ -56,6 +60,16 @@ module.exports = function(config) {
     colors: true,
     logLevel: config.LOG_INFO,
     reporters: reporters,
+    coverageReporter: {
+      reporters: [
+        {type: 'lcov'},
+        {type: 'text-summary'}
+      ],
+      dir: 'coverage',
+      subdir: function(browser) {
+        return browser.toLowerCase().split(/[ /-]/)[0];
+      }
+    },
     singleRun: true,
     concurrency: 1
   });

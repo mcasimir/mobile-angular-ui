@@ -45,6 +45,7 @@
     "jshint": "2.9.1",
     "karma": "0.13.22",
     "karma-chrome-launcher": "0.2.2",
+    "karma-coverage": "0.5.5",
     "karma-jasmine": "0.3.7",
     "karma-mocha-reporter": "2.0.0",
     "karma-sauce-launcher": "0.3.1",
