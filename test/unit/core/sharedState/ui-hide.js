@@ -2,10 +2,10 @@
 
 describe('core', function() {
   describe('sharedState', function() {
-    let scope;
-    let compile;
-    let SharedState;
-    let $animate;
+    var scope;
+    var compile;
+    var SharedState;
+    var $animate;
 
     beforeEach(function() {
       module('mobile-angular-ui.core');
@@ -22,7 +22,7 @@ describe('core', function() {
         spyOn($animate, 'removeClass').and.callThrough();
         SharedState.initialize(scope, 'state1', {defaultValue: false});
 
-        let elem = compile(angular.element(`<div ui-hide='state1' />`))(scope);
+        var elem = compile(angular.element('<div ui-hide="state1" />'))(scope);
 
         scope.$digest();
         expect($animate.removeClass).toHaveBeenCalled();
@@ -35,8 +35,8 @@ describe('core', function() {
 
         SharedState.initialize(scope, 'state1', {defaultValue: true});
 
-        let elem = angular.element(`<div ui-hide='state1' />`);
-        let directiveElement = compile(elem)(scope);
+        var elem = angular.element('<div ui-hide="state1" />');
+        var directiveElement = compile(elem)(scope);
 
         scope.$digest();
 
@@ -56,7 +56,7 @@ describe('core', function() {
 
         scope.x = 1;
 
-        let elem = compile(angular.element(`<div ui-hide='state{{x}}' />`))(scope);
+        var elem = compile(angular.element('<div ui-hide="state{{x}}" />'))(scope);
 
         scope.$digest();
         expect($animate.removeClass).toHaveBeenCalled();

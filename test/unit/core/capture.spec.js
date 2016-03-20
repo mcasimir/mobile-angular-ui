@@ -2,8 +2,8 @@
 
 describe('core', function() {
   describe('capture', function() {
-    let scope;
-    let compile;
+    var scope;
+    var compile;
 
     beforeEach(function() {
       module('mobile-angular-ui.core');
@@ -17,10 +17,8 @@ describe('core', function() {
       it('should allow ng-click to work', function() {
         scope.myVar = 0;
 
-        let elem = angular.element(
-          `<div ui-yield-to="placeholder">
-            <a href ng-click='myVar = 1' id='ngClick'>Ng Click</a>
-          </div>`
+        var elem = angular.element(
+          '<div ui-yield-to="placeholder"><a href ng-click="myVar = 1">Ng Click</a></div>'
         );
 
         elem = compile(elem)(scope);

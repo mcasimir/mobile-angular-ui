@@ -2,9 +2,9 @@
 
 describe('core', function() {
   describe('sharedState', function() {
-    let scope;
-    let scope2;
-    let SharedState;
+    var scope;
+    var scope2;
+    var SharedState;
 
     beforeEach(function() {
       module('mobile-angular-ui.core');

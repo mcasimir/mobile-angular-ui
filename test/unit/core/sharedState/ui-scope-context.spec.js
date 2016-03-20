@@ -2,9 +2,9 @@
 
 describe('core', function() {
   describe('sharedState', function() {
-    let scope;
-    let compile;
-    let SharedState;
+    var scope;
+    var compile;
+    var SharedState;
 
     beforeEach(function() {
       module('mobile-angular-ui.core');
@@ -20,8 +20,8 @@ describe('core', function() {
         SharedState.initialize(scope, 'state1', {defaultValue: false});
 
         scope.x = true;
-        let elem = angular.element(`<div ui-class="{ 'active': state1 || x }" ui-scope-context="x" />`);
-        let directiveElement = compile(elem)(scope);
+        var elem = angular.element('<div ui-class="{ \'active\': state1 || x }" ui-scope-context="x" />');
+        var directiveElement = compile(elem)(scope);
 
         scope.$digest();
 
@@ -32,8 +32,8 @@ describe('core', function() {
         SharedState.initialize(scope, 'state1', {defaultValue: false});
 
         scope.x = true;
-        let elem = angular.element(`<div ui-class="{ 'active': state1 || y }" ui-scope-context="x as y" />`);
-        let directiveElement = compile(elem)(scope);
+        var elem = angular.element('<div ui-class="{ \'active\': state1 || y }" ui-scope-context="x as y" />');
+        var directiveElement = compile(elem)(scope);
 
         scope.$digest();
 
@@ -45,8 +45,8 @@ describe('core', function() {
 
         scope.x = false;
         scope.y = true;
-        let elem = angular.element(`<div ui-class="{ 'active': state1 || x || y }" ui-scope-context="x, y" />`);
-        let directiveElement = compile(elem)(scope);
+        var elem = angular.element('<div ui-class="{ \'active\': state1 || x || y }" ui-scope-context="x, y" />');
+        var directiveElement = compile(elem)(scope);
 
         scope.$digest();
 
@@ -58,8 +58,8 @@ describe('core', function() {
 
         scope.x = false;
         scope.z = true;
-        let elem = angular.element(`<div ui-class="{ 'active': state1 || x || y }" ui-scope-context="x, z as y" />`);
-        let directiveElement = compile(elem)(scope);
+        var elem = angular.element('<div ui-class="{ \'active\': state1 || x || y }" ui-scope-context="x, z as y" />');
+        var directiveElement = compile(elem)(scope);
 
         scope.$digest();
 
@@ -74,8 +74,8 @@ describe('core', function() {
           z: 1
         };
 
-        let elem = angular.element(`<div ui-class="{ 'active': state1 || ((x + z) === 2) }" ui-scope-context="x, y.z as z" />`);
-        let directiveElement = compile(elem)(scope);
+        var elem = angular.element('<div ui-class="{ \'active\': state1 || ((x + z) === 2) }" ui-scope-context="x, y.z as z" />');
+        var directiveElement = compile(elem)(scope);
 
         scope.$digest();
 

@@ -2,8 +2,8 @@
 
 describe('components', function() {
   describe('scrollable', function() {
-    let scope;
-    let compile;
+    var scope;
+    var compile;
 
     beforeEach(function() {
       module('mobile-angular-ui.components');

@@ -2,9 +2,9 @@
 
 describe('core', function() {
   describe('sharedState', function() {
-    let scope;
-    let compile;
-    let SharedState;
+    var scope;
+    var compile;
+    var SharedState;
 
     beforeEach(function() {
       module('mobile-angular-ui.core');
@@ -19,9 +19,7 @@ describe('core', function() {
       it('should remove elem if state is false', function() {
         SharedState.initialize(scope, 'state1', {defaultValue: false});
 
-        let elem = compile(angular.element(`
-          <div><div ui-if='state1'>content</div></div>
-        `.trim()))(scope);
+        var elem = compile(angular.element('<div><div ui-if="state1">content</div></div>'))(scope);
 
         scope.$digest();
         expect(elem.text()).not.toContain('content');
@@ -30,9 +28,7 @@ describe('core', function() {
       it('should not remove elem if state is true', function() {
         SharedState.initialize(scope, 'state1', {defaultValue: true});
 
-        let elem = compile(angular.element(`
-          <div><div ui-if='state1'>content</div></div>
-        `.trim()))(scope);
+        var elem = compile(angular.element('<div><div ui-if="state1">content</div></div>'))(scope);
 
         scope.$digest();
         expect(elem.text()).toContain('content');
@@ -42,9 +38,7 @@ describe('core', function() {
         SharedState.initialize(scope, 'state1', {defaultValue: false});
 
         scope.x = 1;
-        let elem = compile(angular.element(`
-          <div><div ui-if='state{{x}}'>content</div></div>
-        `.trim()))(scope);
+        var elem = compile(angular.element('<div><div ui-if="state{{x}}">content</div></div>'))(scope);
 
         scope.$digest();
         expect(elem.text()).not.toContain('content');
@@ -54,9 +48,7 @@ describe('core', function() {
         SharedState.initialize(scope, 'state1', {defaultValue: true});
 
         scope.x = 1;
-        let elem = compile(angular.element(`
-          <div><div ui-if='state{{x}}'>content</div></div>
-        `.trim()))(scope);
+        var elem = compile(angular.element('<div><div ui-if="state{{x}}">content</div></div>'))(scope);
 
         scope.$digest();
         expect(elem.text()).toContain('content');

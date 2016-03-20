@@ -2,8 +2,8 @@
 
 describe('components', function() {
   describe('ui-switch', function() {
-    let scope;
-    let compile;
+    var scope;
+    var compile;
 
     beforeEach(function() {
       module('mobile-angular-ui.components');
@@ -21,13 +21,13 @@ describe('components', function() {
 
     // Trying to detect what's wrong I've found a solution.
     // In the "switch" directive the line
-    // ```
+    // '''
     // if (attrs.disabled == null) {
-    // ```
+    // '''
     // should be changed with
-    // ```
+    // '''
     // if (attrs.disabled == null || attrs.disabled == false) {
-    // ```
+    // '''
     // Is it correct?
     xit('should work with disabled', function() {});
 
