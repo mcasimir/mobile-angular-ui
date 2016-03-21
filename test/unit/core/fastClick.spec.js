@@ -15,7 +15,7 @@ describe('core', function() {
       spyOn(FastClick.prototype, 'onTouchEnd').and.callThrough();
       fastclickOnTouchEnd = FastClick.prototype.onTouchEnd;
 
-      module('mobile-angular-ui.core');
+      module('mobile-angular-ui.core.fastclick');
 
       inject(function($rootScope, $compile) {
         scope = $rootScope.$new();

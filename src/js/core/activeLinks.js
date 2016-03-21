@@ -26,18 +26,16 @@
   'use strict';
 
   angular.module('mobile-angular-ui.core.activeLinks', [])
-
-  .run([
-      '$rootScope',
+    .factory('setupActiveLinks', [
       '$window',
       '$document',
       '$location',
-      function($rootScope, $window, $document, $location) {
-
-        var setupActiveLinks = function() {
+      function($window, $document, $location) {
+        return function() {
           // Excludes both search part and hash part from
           // comparison.
           var url = $location.url();
+          console.log(url);
           var firstHash = url.indexOf('#');
           var firstSearchMark = url.indexOf('?');
           var locationHref = $window.location.href;
@@ -63,10 +61,9 @@
             }
           }
         };
-
-        $rootScope.$on('$locationChangeSuccess', setupActiveLinks);
-        $rootScope.$on('$includeContentLoaded', setupActiveLinks);
-      }
-  ]);
-
+      }])
+    .run(['$rootScope', 'setupActiveLinks', function($rootScope, setupActiveLinks) {
+      $rootScope.$on('$locationChangeSuccess', setupActiveLinks);
+      $rootScope.$on('$includeContentLoaded', setupActiveLinks);
+    }]);
 }());

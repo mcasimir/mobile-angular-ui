@@ -8,7 +8,7 @@ describe('core', function() {
     var $animate;
 
     beforeEach(function() {
-      module('mobile-angular-ui.core');
+      module('mobile-angular-ui.core.sharedState');
       inject(function($rootScope, $compile, _$animate_, _SharedState_) {
         scope = $rootScope.$new();
         compile = $compile;

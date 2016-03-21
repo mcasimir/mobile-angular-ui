@@ -129,6 +129,8 @@
        var yielders = {};
 
        return {
+         yielders: yielders,
+
          resetAll: function() {
            for (var name in yielders) {
              if (yielders.hasOwnProperty(name)) {

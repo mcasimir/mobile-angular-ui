@@ -7,7 +7,7 @@ describe('core', function() {
     var SharedState;
 
     beforeEach(function() {
-      module('mobile-angular-ui.core');
+      module('mobile-angular-ui.core.sharedState');
       inject(function($rootScope, _SharedState_) {
         scope = $rootScope.$new();
         scope2 = $rootScope.$new();
