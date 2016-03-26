@@ -100,7 +100,9 @@
             if (condition(e)) {
               e.allowTouchmoveDefault = true;
               // jQuery normalizes the event object, need to put this property on the copied originalEvent.
-              if (e.originalEvent) e.originalEvent.allowTouchmoveDefault = true;
+              if (e.originalEvent) {
+                e.originalEvent.allowTouchmoveDefault = true;
+              }
             }
           };
 
