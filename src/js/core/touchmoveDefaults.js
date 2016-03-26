@@ -47,7 +47,9 @@
 
   module.directive('uiPreventTouchmoveDefaults', function() {
     var preventTouchmoveDefaultsCb = function(e) {
-      if (e.allowTouchmoveDefault !== true) {
+      // Get this flag from either the saved event if jQuery is being used, otherwise get it from the event itself.
+      var allowTouchmoveEventFlag = e.originalEvent ? e.originalEvent.allowTouchmoveDefault : e.allowTouchmoveDefault;
+      if (allowTouchmoveEventFlag !== true) {
         e.preventDefault();
       }
     };
@@ -95,7 +97,11 @@
           condition = condition || fnTrue;
 
           var allowTouchmoveDefaultCallback = function(e) {
-            if (condition(e)) { e.allowTouchmoveDefault = true; }
+            if (condition(e)) {
+              e.allowTouchmoveDefault = true;
+              // jQuery normalizes the event object, need to put this property on the copied originalEvent.
+              if (e.originalEvent) e.originalEvent.allowTouchmoveDefault = true;
+            }
           };
 
           $element = angular.element($element);
