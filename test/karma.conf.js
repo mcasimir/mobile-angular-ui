@@ -59,8 +59,8 @@ module.exports = function(config) {
         {type: 'text-summary'}
       ],
       dir: 'coverage',
-      subdir: function(browser) {
-        return browser.toLowerCase().split(/[ /-]/)[0];
+      subdir: function() {
+        return '';
       }
     },
     singleRun: true,
