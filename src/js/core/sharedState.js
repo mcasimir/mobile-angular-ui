@@ -177,8 +177,8 @@
  */
 
   module.factory('SharedState', [
-  '$rootScope',
-    function($rootScope) {
+  '$rootScope', '$log',
+    function($rootScope, $log) {
       var values = {};    // values, context object for evals
       var statusesMeta = {};  // status info
       var scopes = {};    // scopes references
@@ -200,7 +200,7 @@
          * @param  {string} id The unique name of this state
          * @param  {object} [options] Options
          * @param  {object} [options.defaultValue] the initialization value, it is taken into account only if the state `id` is not already initialized
-         * @param  {object} [options.exclusionGroup] Specifies an exclusion group for the state. This means that for boolean operations (ie. toggle, turnOn, turnOf) when this state is set to `true`, any other state that is in the same `exclusionGroup` will be set to `false`.
+         * @param  {string} [options.exclusionGroup] Specifies an exclusion group for the state. This means that for boolean operations (ie. toggle, turnOn, turnOf) when this state is set to `true`, any other state that is in the same `exclusionGroup` will be set to `false`.
          */
         initialize: function(scope, id, options) {
           options = options || {};
@@ -276,10 +276,7 @@
             }
             return value;
           } else {
-            /* global console: false */
-            if (console) {
-              console.warn('Warning: Attempt to set uninitialized shared state:', id);
-            }
+            $log.warn('Warning: Attempt to set uninitialized shared state: ' + id);
           }
         },
 
@@ -317,7 +314,9 @@
          * @param {any} [value] The value to assign in case idOrMap is a string.
          */
         set: function(idOrMap, value) {
-          if (angular.isObject(idOrMap) && angular.isUndefined(value)) {
+          if (!idOrMap) {
+            return;
+          } else if (angular.isObject(idOrMap)) {
             this.setMany(idOrMap);
           } else {
             this.setOne(idOrMap, value);
@@ -510,8 +509,11 @@
          */
         values: function() {
           return values;
-        }
+        },
 
+        exclusionGroups: function() {
+          return exclusionGroups;
+        }
       };
     }
   ]);
