@@ -2,7 +2,9 @@ language: node_js
 node_js:
 - 4.4.0
 sudo: required
-
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install docker-engine
 services:
   - docker
 env:
@@ -10,5 +12,6 @@ env:
   - secure: gaEfbACVQEtdXK2cJgNphqxYCJzNgKBZuE9EgD6TsxKKPtLgBvpk/yA2VGX9j1ppn+QUmYsQEc+yXyPXaY3cVPAUDoYpJRS3gq3dz++pQrNQjxYsG2j9rCoN5TGAUau3w8GVMdLpUXxfVx5hvocP4nc9e/UKjva4H+LRzi5h3uk=
   - secure: MFZuzAYhk8Y4HBCpczi8pK0Xy2TvzO7/SGt/FbyRBvGWOzRNW70L+Yf//sGMDhMfXki6gGPGJE/L32P6Wma2aPdk3T2+7s7y4LIngcgTa0XhpdUt3IyRx/P8MgyEya0rEAL+uMPp0qCywS9syl6TtFHOnxUn+R9fkdz+hRwZAIU=
 script:
+  - docker --version
   - node_modules/.bin/gulp test:ci:docker
   - node_modules/.bin/codecov

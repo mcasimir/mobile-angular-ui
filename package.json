@@ -51,6 +51,7 @@
     "karma-jasmine": "0.3.7",
     "karma-mocha-reporter": "2.0.0",
     "karma-selenium-webdriver-launcher": "0.0.3",
-    "require-all": "2.0.0"
+    "require-all": "2.0.0",
+    "selenium-webdriver": "2.53.1"
   }
 }

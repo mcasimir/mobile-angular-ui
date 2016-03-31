@@ -42,10 +42,12 @@ var config = {
       'bootstrap',
       'mobile-angular-ui',
       'jasmine-core',
+      'codecov',
       'karma-jasmine',
       'karma-mocha-reporter',
       'karma-selenium-webdriver-launcher',
-      'karma-coverage'
+      'karma-coverage',
+      'selenium-webdriver'
     ]
   },
   lint: ['./src/**/*.js', './test/**/*.js', './*.js']
