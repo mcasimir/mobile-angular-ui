@@ -4,7 +4,7 @@ node_js:
 sudo: required
 before_install:
   - sudo apt-get update
-  - sudo apt-get install docker-engine
+  - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
 services:
   - docker
 env:
