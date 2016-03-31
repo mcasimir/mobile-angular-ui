@@ -12,6 +12,8 @@ env:
   - secure: gaEfbACVQEtdXK2cJgNphqxYCJzNgKBZuE9EgD6TsxKKPtLgBvpk/yA2VGX9j1ppn+QUmYsQEc+yXyPXaY3cVPAUDoYpJRS3gq3dz++pQrNQjxYsG2j9rCoN5TGAUau3w8GVMdLpUXxfVx5hvocP4nc9e/UKjva4H+LRzi5h3uk=
   - secure: MFZuzAYhk8Y4HBCpczi8pK0Xy2TvzO7/SGt/FbyRBvGWOzRNW70L+Yf//sGMDhMfXki6gGPGJE/L32P6Wma2aPdk3T2+7s7y4LIngcgTa0XhpdUt3IyRx/P8MgyEya0rEAL+uMPp0qCywS9syl6TtFHOnxUn+R9fkdz+hRwZAIU=
 script:
-  - docker --version
-  - node_modules/.bin/gulp test:ci:docker
+  - docker network create -d bridge maui-test-net
+  - docker run -d --name chrome --net maui-test-net --net-alias chrome.maui-test-net -v /dev/shm:/dev/shm selenium/standalone-chrome
+  - docker run --rm --net maui-test-net --net-alias karma.maui-test-net -w /usr/src/app -v $PWD:/usr/src/app node:5.5.0 ./node_modules/.bin/gulp test:ci
+  - docker rm -f chrome > /dev/null
   - node_modules/.bin/codecov

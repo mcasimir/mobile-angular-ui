@@ -148,3 +148,5 @@ xcuserdata/
 
 # sftp configuration file
 sftp-config.json
+
+travis.sh
