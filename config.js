@@ -42,10 +42,9 @@ var config = {
       'bootstrap',
       'mobile-angular-ui',
       'jasmine-core',
-      'karma-chrome-launcher',
       'karma-jasmine',
       'karma-mocha-reporter',
-      'karma-sauce-launcher',
+      'karma-selenium-webdriver-launcher',
       'karma-coverage'
     ]
   },

@@ -1,39 +1,34 @@
 'use strict';
 
+var PATH_SEPARATOR = process.platform === 'win32' ? ';' : ':';
+var webdriver = require('selenium-webdriver');
+var chromedriver = require('chromedriver');
 var src = require('../config').globs.js;
+process.env.PATH = chromedriver.path + PATH_SEPARATOR + process.env.PATH;
 
-var customLaunchersCi = {
-  ciChrome: {
-    base: 'SauceLabs',
-    browserName: 'chrome',
-    platform: 'Windows 7',
-    version: '35'
+var customLaunchers = {
+  chrome: {
+    base: 'SeleniumWebdriver',
+    browserName: 'Chrome',
+    getDriver: function() {
+      var driver = new webdriver.Builder()
+          .forBrowser('chrome')
+          .usingServer('http://chrome.maui-test-net:4444/wd/hub')
+          .build();
+      return driver;
+    }
   }
 };
-
-var customLaunchersLocal = {
-  localChrome: {
-    base: 'Chrome'
-  }
-};
-
-var customLaunchers = process.env.CI ?
-  customLaunchersCi :
-    customLaunchersLocal;
-
-var reporters = ['mocha', 'coverage'];
-
-if (process.env.CI) {
-  reporters.push('saucelabs');
-}
 
 module.exports = function(config) {
   config.set({
     basePath: '..',
+
     frameworks: ['jasmine'],
+
     files: [
       'node_modules/angular/angular.js',
-    ].concat(src)
+      ].concat(src)
       .concat([
       'node_modules/angular-mocks/angular-mocks.js',
       'test/unit/**/*.spec.js'
@@ -43,27 +38,24 @@ module.exports = function(config) {
       'src/js/**/*.js': ['coverage']
     },
 
-    captureTimeout: 120000,
-    sauceLabs: {
-      testName: `mobile-angular-ui@${process.env.TRAVIS_BRANCH || 'local'} (build #${process.env.TRAVIS_BUILD_NUMBER || 'local'})`
-    },
     customLaunchers: customLaunchers,
     browsers: Object.keys(customLaunchers),
-    port: 9876,
-    colors: true,
-    logLevel: config.LOG_INFO,
-    reporters: reporters,
+
+    reporters: ['mocha', 'coverage'],
     coverageReporter: {
       reporters: [
         {type: 'lcov'},
         {type: 'text-summary'}
       ],
       dir: 'coverage',
-      subdir: function() {
-        return '';
-      }
+      subdir: function() {return '';}
     },
+
     singleRun: true,
-    concurrency: 1
+    concurrency: 1,
+    hostname: 'karma.maui-test-net',
+    port: 9876,
+    colors: true,
+    logLevel: config.LOG_INFO
   });
 };
