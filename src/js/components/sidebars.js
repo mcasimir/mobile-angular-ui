@@ -20,7 +20,7 @@
  *   </div>
  * </div>
  *
- * <div class="sidebar sidebar-rigth">
+ * <div class="sidebar sidebar-right">
  *   <!-- -->
  * </div>
  * ```
@@ -51,7 +51,7 @@
 
   angular.forEach(['left', 'right'], function(side) {
     var directiveName = 'sidebar' + side.charAt(0).toUpperCase() + side.slice(1);
-    var stateName = 'ui' + directiveName.charAt(0).toUpperCase() + directiveName.slice(1);
+    var defaultStateName = 'ui' + directiveName.charAt(0).toUpperCase() + directiveName.slice(1);
 
     module.directive(directiveName, [
       '$rootElement',
@@ -70,10 +70,8 @@
             var parentClass = 'has-sidebar-' + side;
             var visibleClass = 'sidebar-' + side + '-visible';
             var activeClass = 'sidebar-' + side + '-in';
-
-            if (attrs.id) {
-              stateName = attrs.id;
-            }
+            var stateName = attrs.id ? attrs.id : defaultStateName;
+            var trackAsSearchParam = attrs.uiTrackAsSearchParam === '' || attrs.uiTrackAsSearchParam;
 
             var outerClickCb = function() {
               SharedState.turnOff(stateName);
@@ -97,7 +95,7 @@
             SharedState.initialize(scope, stateName, {defaultValue: defaultActive});
 
             scope.$on('mobile-angular-ui.state.changed.' + stateName, function(e, active) {
-              if (attrs.uiTrackAsSearchParam === '' || attrs.uiTrackAsSearchParam) {
+              if (trackAsSearchParam) {
                 $location.search(stateName, active || null);
               }
 
@@ -118,7 +116,7 @@
             });
 
             scope.$on('$routeUpdate', function() {
-              if (attrs.uiTrackAsSearchParam) {
+              if (trackAsSearchParam) {
                 if (($location.search())[stateName]) {
                   SharedState.turnOn(stateName);
                 } else {
