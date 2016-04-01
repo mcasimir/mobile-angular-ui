@@ -3,7 +3,13 @@
 </div>
 
 <div class="section toucharea">
-    <div ng-show="touch">
+    <div ng-if="touch">
+      <div ng-show="touch.type !== 'touchend'" class="touch-mark" style="left: {{touch.startX - containerRect.left}}px; top: {{touch.startY - containerRect.top}}px; background-color: yellow;">
+      </div>
+
+      <div ng-show="touch.type !== 'touchend'" class="touch-mark" style="left: {{touch.x - (containerRect.left)}}px; top: {{touch.y - containerRect.top}}px; background-color: orange;">
+      </div>
+
       <ul>
         <li>type: {{touch.type}}</li>
         <li>point: [{{touch.x}}, {{touch.y}}]</li>
@@ -16,6 +22,7 @@
         <li>direction: {{touch.direction == null ? '-' : touch.direction}}</li>
       </ul>
     </div>
+
     <div ng-hide="touch">
       <h1>Touch Me!</h1>
     <div>

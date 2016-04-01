@@ -56,6 +56,7 @@ app.directive('toucharea', ['$touch', function($touch) {
       $scope.touch = null;
       $touch.bind(elem, {
         start: function(touch) {
+          $scope.containerRect = elem[0].getBoundingClientRect();
           $scope.touch = touch;
           $scope.$apply();
         },
