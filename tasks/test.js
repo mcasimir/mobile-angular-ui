@@ -8,14 +8,17 @@ var dns             = require('dns');
 
 module.exports = function(gulp) {
   gulp.task('test:unit', function() {
-    return reacheable(
-      'chrome.maui-test-net',
-      'karma.maui-test-net'
-    ).then(runUnitTest);
+    if (process.env.CI) {
+      return reacheable(
+        'chrome.maui-test-net',
+        'karma.maui-test-net'
+      ).then(runUnitTest);
+    } else {
+      return runUnitTest();
+    }
   });
 
   gulp.task('test:ci', seq('depcheck', 'lint', 'test:unit'));
-  gulp.task('test:ci:docker', seq('depcheck', 'lint', 'test:unit:docker'));
 };
 
 function reacheableOne(host) {

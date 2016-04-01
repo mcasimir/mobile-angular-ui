@@ -57,20 +57,22 @@
 (function() {
   'use strict';
 
-  var isAncestorOrSelf = function(element, target) {
-     var parent = element;
-     while (parent.length > 0) {
-       if (parent[0] === target[0]) {
-         parent = null;
-         return true;
-       }
-       parent = parent.parent();
-     }
-     parent = null;
-     return false;
-   };
-
   angular.module('mobile-angular-ui.core.outerClick', [])
+
+  .factory('_mauiIsAncestorOrSelf', function() {
+    return function(element, target) {
+       var parent = element;
+       while (parent.length > 0) {
+         if (parent[0] === target[0]) {
+           parent = null;
+           return true;
+         }
+         parent = parent.parent();
+       }
+       parent = null;
+       return false;
+     };
+  })
 
   /**
    * @service bindOuterClick
@@ -103,7 +105,8 @@
   .factory('bindOuterClick', [
     '$document',
     '$timeout',
-     function($document, $timeout) {
+    '_mauiIsAncestorOrSelf',
+     function($document, $timeout, isAncestorOrSelf) {
 
        return function(scope, element, outerClickFn, outerClickIf) {
          var handleOuterClick = function(event) {
