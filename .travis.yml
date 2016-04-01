@@ -14,6 +14,6 @@ env:
 script:
   - docker network create -d bridge maui-test-net
   - docker run -d --name chrome --net maui-test-net --net-alias chrome.maui-test-net -v /dev/shm:/dev/shm selenium/standalone-chrome
-  - docker run --rm --net maui-test-net --net-alias karma.maui-test-net -w /usr/src/app -v $PWD:/usr/src/app node:5.5.0 ./node_modules/.bin/gulp test:ci
+  - docker run --rm --net maui-test-net --net-alias karma.maui-test-net -e CI=true -w /usr/src/app -v $PWD:/usr/src/app node:5.5.0 ./node_modules/.bin/gulp test:ci
   - docker rm -f chrome > /dev/null
   - node_modules/.bin/codecov
