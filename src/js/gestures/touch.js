@@ -357,7 +357,7 @@
       //                |
       //               90°
       //
-      angle = dx !== 0 || dy !== 0  ? atan2(dy, dx) * (180 / Math.PI) : null;
+      var angle = dx !== 0 || dy !== 0  ? atan2(dy, dx) * (180 / Math.PI) : null;
       angle = angle === -180 ? 180 : angle;
 
       return {
