@@ -31,8 +31,8 @@ module.exports = function(gulp, config) {
   =            Clean dest folder            =
   =========================================*/
 
-  gulp.task('clean', function(cb) {
-    del(['dist/**'], cb);
+  gulp.task('clean', function() {
+    return del(['dist/**']);
   });
 
   /*==========================================
@@ -41,6 +41,7 @@ module.exports = function(gulp, config) {
 
   gulp.task('connect', function() {
     connect.server({
+      root: process.cwd(),
       host: '0.0.0.0',
       port: 3000,
       livereload: true
