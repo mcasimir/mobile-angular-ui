@@ -3,13 +3,23 @@ node_js:
 - 4.4.0
 sudo: required
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
+- sudo apt-get update
+- sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
 services:
-  - docker
+- docker
 script:
-  - docker network create -d bridge maui-test-net
-  - docker run -d --name chrome --net maui-test-net --net-alias chrome.maui-test-net -v /dev/shm:/dev/shm selenium/standalone-chrome
-  - docker run --rm --net maui-test-net --net-alias karma.maui-test-net -e CI=true -w /usr/src/app -v $PWD:/usr/src/app node:5.5.0 ./node_modules/.bin/gulp test:ci
-  - docker rm -f chrome > /dev/null
-  - node_modules/.bin/codecov
+- docker network create -d bridge maui-test-net
+- docker run -d --name chrome --net maui-test-net --net-alias chrome.maui-test-net
+  -v /dev/shm:/dev/shm selenium/standalone-chrome
+- docker run --rm --net maui-test-net --net-alias karma.maui-test-net -e CI=true -w
+  /usr/src/app -v $PWD:/usr/src/app node:5.5.0 ./node_modules/.bin/gulp test:ci
+- docker rm -f chrome > /dev/null
+- node_modules/.bin/codecov
+deploy:
+  provider: npm
+  email: maurizio.cas@gmail.com
+  api_key:
+    secure: IsXTjqdxaByIttOU5yyPiFcQkqGD2F/+opjoKQ6ujjc5uYkUa3gy82ZeSk479RE/tnhGuwcVOFtMLBwhqY5Xb0jq5sAStG616YN7JAYiUtX32bPEgnCT77ZlTgoUp8vhO3Cl5XXOOjLR/99jVJUPem6ury41RghjC9r/aHNJluA=
+  on:
+    tags: true
+    repo: mcasimir/mobile-angular-ui
