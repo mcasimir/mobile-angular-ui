@@ -17,7 +17,9 @@ module.exports = function(config) {
     ]),
 
     preprocessors: {
-      'src/js/**/*.js': ['coverage']
+      'src/js/*.js': ['coverage'],
+      'src/js/components/*.js': ['coverage'],
+      'src/js/core/*.js': ['coverage']
     },
 
     browsers: ['Chrome'],
