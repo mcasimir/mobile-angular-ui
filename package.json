@@ -8,7 +8,7 @@
     "dist": "dist"
   },
   "scripts": {
-    "test": "gulp build && gulp test:ci"
+    "test": "gulp build && gulp test:ci",
     "postinstall": "./node_modules/protractor/bin/webdriver-manager update"
   },
   "repository": {
