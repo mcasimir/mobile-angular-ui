@@ -86,12 +86,12 @@
   module.directive('scrollableContent', function() {
     return {
       restrict: 'C',
-      controller: ['$element', 'allowTouchmoveDefault', function($element, allowTouchmoveDefault) {
+      controller: ['$element', '$document', 'allowTouchmoveDefault', function($element, $document, allowTouchmoveDefault) {
         var scrollableContent = $element[0];
         var scrollable = $element.parent()[0];
 
         // Handle nobounce behaviour
-        if ('ontouchmove' in document) {
+        if ('ontouchmove' in $document) {
           var allowUp;
           var allowDown;
           var prevTop;
