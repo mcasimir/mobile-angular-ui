@@ -47,6 +47,7 @@ var config = {
       'karma-mocha-reporter',
       'karma-selenium-webdriver-launcher',
       'karma-coverage',
+      'karma-chrome-launcher',
       'selenium-webdriver'
     ]
   },
