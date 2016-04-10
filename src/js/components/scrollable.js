@@ -231,28 +231,28 @@
       module.directive(directiveName, [
         '$window',
           function($window) {
-                  return {
-                    restrict: 'C',
-                    link: function(scope, element) {
-                      var el = element[0];
-                      var parentStyle = element.parent()[0].style;
+            return {
+              restrict: 'C',
+              link: function(scope, element) {
+                var el = element[0];
+                var parentStyle = element.parent()[0].style;
 
-                      var adjustParentPadding = function() {
-                        var styles = $window.getComputedStyle(el);
-                        var margin = parseInt(styles.marginTop, 10) + parseInt(styles.marginBottom, 10);
-                        parentStyle['padding' + side] = el.offsetHeight + margin + 'px';
-                      };
+                var adjustParentPadding = function() {
+                  var styles = $window.getComputedStyle(el);
+                  var margin = parseInt(styles.marginTop, 10) + parseInt(styles.marginBottom, 10);
+                  parentStyle['padding' + side] = el.offsetHeight + margin + 'px';
+                };
 
-                      var interval = setInterval(adjustParentPadding, 30);
+                var interval = setInterval(adjustParentPadding, 30);
 
-                      element.on('$destroy', function() {
-                        parentStyle['padding' + side] = null;
-                        clearInterval(interval);
-                        interval = adjustParentPadding = element = null;
-                      });
-                    }
-                  };
-                }
+                element.on('$destroy', function() {
+                  parentStyle['padding' + side] = null;
+                  clearInterval(interval);
+                  interval = adjustParentPadding = element = null;
+                });
+              }
+            };
+          }
         ]);
     });
 }());
