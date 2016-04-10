@@ -84,12 +84,8 @@
           }
         });
 
-        var isEnabled = function() {
-          return !disabled;
-        };
-
         var setModel = function(value) {
-          if (isEnabled() && value !== scope.model) {
+          if (!disabled && (value !== scope.model)) {
             scope.model = value;
             scope.$apply();
             if (scope.changeExpr !== null && scope.changeExpr !== undefined) {
@@ -138,7 +134,7 @@
           unbind();
           unwatchDisabled();
           unwatch();
-          isEnabled = setModel = unbind = unwatch = unwatchDisabled = clickCb = null;
+          setModel = unbind = unwatch = unwatchDisabled = clickCb = null;
         });
       }
     };
