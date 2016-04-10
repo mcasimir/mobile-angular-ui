@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <base href="/test/e2e/app/" />
+    <title>Mobile Angular UI E2E Tests</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="yes" />
+    <link rel="stylesheet" href="/dist/css/mobile-angular-ui-base.css" media="screen" charset="utf-8">
+    <script src="/node_modules/fastclick/lib/fastclick.js" charset="utf-8"></script>
+    <script src="/node_modules/fg-overthrow/src/overthrow-detect.js" charset="utf-8"></script>
+    <script src="/node_modules/fg-overthrow/src/overthrow-init.js" charset="utf-8"></script>
+    <script src="/node_modules/fg-overthrow/src/overthrow-polyfill.js" charset="utf-8"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular-route.min.js"></script>
+    <script src="/src/js/core/activeLinks.js" charset="utf-8"></script>
+    <script src="/src/js/core/capture.js" charset="utf-8"></script>
+    <script src="/src/js/core/fastclick.js" charset="utf-8"></script>
+    <script src="/src/js/core/outerClick.js" charset="utf-8"></script>
+    <script src="/src/js/core/sharedState.js" charset="utf-8"></script>
+    <script src="/src/js/core/touchmoveDefaults.js" charset="utf-8"></script>
+    <script src="/src/js/mobile-angular-ui.core.js" charset="utf-8"></script>
+    <script src="/src/js/components/modals.js" charset="utf-8"></script>
+    <script src="/src/js/components/navbars.js" charset="utf-8"></script>
+    <script src="/src/js/components/scrollable.js" charset="utf-8"></script>
+    <script src="/src/js/components/sidebars.js" charset="utf-8"></script>
+    <script src="/src/js/components/switch.js" charset="utf-8"></script>
+    <script src="/src/js/mobile-angular-ui.components.js" charset="utf-8"></script>
+    <script src="/src/js/gestures/drag.js" charset="utf-8"></script>
+    <script src="/src/js/gestures/swipe.js" charset="utf-8"></script>
+    <script src="/src/js/gestures/touch.js" charset="utf-8"></script>
+    <script src="/src/js/gestures/transform.js" charset="utf-8"></script>
+    <script src="/src/js/mobile-angular-ui.gestures.js" charset="utf-8"></script>
+    <script src="/src/js/mobile-angular-ui.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      var app = angular.module('MobileAngularUiE2e', ['ngRoute', 'mobile-angular-ui', 'mobile-angular-ui.gestures']);
+      app.config(function($routeProvider) {
+        $routeProvider.when('/scrollable', {templateUrl: 'scrollable.html'});
+      });
+    </script>
+  </head>
+
+  <body ng-app="MobileAngularUiE2e">
+    <div class="app">
+      <div class="app-body" ng-class="{loading: loading}">
+        <div class="app-content">
+          <ng-view></ng-view>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -5,6 +5,8 @@ var Server          = require('karma').Server;
 var seq             = require('gulp-sequence');
 var gutil           = require('gulp-util');
 var dns             = require('dns');
+var protractor      = require('gulp-protractor').protractor;
+var connect         = require('gulp-connect');
 
 module.exports = function(gulp) {
   gulp.task('test:unit', function() {
@@ -18,7 +20,25 @@ module.exports = function(gulp) {
     }
   });
 
-  gulp.task('test:ci', seq('depcheck', 'lint', 'test:unit'));
+  gulp.task('test:e2e', function() {
+    connect.server({
+      root: process.cwd(),
+      port: 8888
+    });
+
+    return gulp.src(['./test/e2e/*.spec.js'])
+     .pipe(protractor({
+       configFile: 'test/protractor.conf.js'
+     }))
+     .on('error', function() {
+       connect.serverClose();
+     })
+     .on('end', function() {
+       connect.serverClose();
+     });
+  });
+
+  gulp.task('test:ci', seq('depcheck', 'lint', 'test:unit', 'test:e2e'));
 };
 
 function reacheableOne(host) {

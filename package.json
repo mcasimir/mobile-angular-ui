@@ -9,6 +9,7 @@
   },
   "scripts": {
     "test": "gulp build && gulp test:ci"
+    "postinstall": "./node_modules/protractor/bin/webdriver-manager update"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,7 @@
     "gulp-jshint": "2.0.0",
     "gulp-less": "3.0.5",
     "gulp-mobilizer": "0.0.3",
+    "gulp-protractor": "2.3.0",
     "gulp-release-tasks": "0.0.3",
     "gulp-rename": "1.2.2",
     "gulp-sequence": "0.4.5",
