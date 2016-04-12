@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "gulp build && gulp test:ci",
-    "postinstall": "./node_modules/protractor/bin/webdriver-manager update"
+    "postinstall": "./node_modules/.bin/webdriver-manager update"
   },
   "repository": {
     "type": "git",
