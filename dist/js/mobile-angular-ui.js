@@ -3155,12 +3155,12 @@
   module.directive('scrollableContent', function() {
     return {
       restrict: 'C',
-      controller: ['$element', 'allowTouchmoveDefault', function($element, allowTouchmoveDefault) {
+      controller: ['$element', '$document', 'allowTouchmoveDefault', function($element, $document, allowTouchmoveDefault) {
         var scrollableContent = $element[0];
         var scrollable = $element.parent()[0];
 
         // Handle nobounce behaviour
-        if ('ontouchmove' in document) {
+        if ('ontouchmove' in $document) {
           var allowUp;
           var allowDown;
           var prevTop;
@@ -3300,28 +3300,28 @@
       module.directive(directiveName, [
         '$window',
           function($window) {
-                  return {
-                    restrict: 'C',
-                    link: function(scope, element) {
-                      var el = element[0];
-                      var parentStyle = element.parent()[0].style;
+            return {
+              restrict: 'C',
+              link: function(scope, element) {
+                var el = element[0];
+                var parentStyle = element.parent()[0].style;
 
-                      var adjustParentPadding = function() {
-                        var styles = $window.getComputedStyle(el);
-                        var margin = parseInt(styles.marginTop, 10) + parseInt(styles.marginBottom, 10);
-                        parentStyle['padding' + side] = el.offsetHeight + margin + 'px';
-                      };
+                var adjustParentPadding = function() {
+                  var styles = $window.getComputedStyle(el);
+                  var margin = parseInt(styles.marginTop, 10) + parseInt(styles.marginBottom, 10);
+                  parentStyle['padding' + side] = el.offsetHeight + margin + 'px';
+                };
 
-                      var interval = setInterval(adjustParentPadding, 30);
+                var interval = setInterval(adjustParentPadding, 30);
 
-                      element.on('$destroy', function() {
-                        parentStyle['padding' + side] = null;
-                        clearInterval(interval);
-                        interval = adjustParentPadding = element = null;
-                      });
-                    }
-                  };
-                }
+                element.on('$destroy', function() {
+                  parentStyle['padding' + side] = null;
+                  clearInterval(interval);
+                  interval = adjustParentPadding = element = null;
+                });
+              }
+            };
+          }
         ]);
     });
 }());
@@ -3568,12 +3568,8 @@
           }
         });
 
-        var isEnabled = function() {
-          return !disabled;
-        };
-
         var setModel = function(value) {
-          if (isEnabled() && value !== scope.model) {
+          if (!disabled && (value !== scope.model)) {
             scope.model = value;
             scope.$apply();
             if (scope.changeExpr !== null && scope.changeExpr !== undefined) {
@@ -3622,7 +3618,7 @@
           unbind();
           unwatchDisabled();
           unwatch();
-          isEnabled = setModel = unbind = unwatch = unwatchDisabled = clickCb = null;
+          setModel = unbind = unwatch = unwatchDisabled = clickCb = null;
         });
       }
     };
