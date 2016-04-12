@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "gulp build && gulp test:ci",
-    "postinstall": "./node_modules/.bin/webdriver-manager update"
+    "postinstall": "./node_modules/protractor/bin/webdriver-manager update"
   },
   "repository": {
     "type": "git",
@@ -57,6 +57,7 @@
     "karma-jasmine": "0.3.7",
     "karma-mocha-reporter": "2.0.0",
     "karma-selenium-webdriver-launcher": "0.0.3",
+    "protractor": "3.2.2",
     "require-all": "2.0.0",
     "selenium-webdriver": "2.53.1"
   }
