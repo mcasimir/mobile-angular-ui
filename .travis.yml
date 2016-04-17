@@ -2,14 +2,14 @@ language: node_js
 node_js:
 - 4.4.3
 sudo: required
-before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - bash scripts/ci-support.sh
+before_install:
+- sudo apt-get update
+- sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
+services:
+- docker
 script:
-  - npm install
-  - xvfb-run gulp test:ci
-  - node_modules/.bin/codecov
+- docker run --rm --privileged -w /usr/src/app -v $PWD:/usr/src/app mcasimir/dind-node-build-runner:4.4.3 bash ci.sh
+- node_modules/.bin/codecov
 deploy:
   provider: npm
   email: maurizio.cas@gmail.com
@@ -18,6 +18,3 @@ deploy:
   on:
     tags: true
     repo: mcasimir/mobile-angular-ui
-cache:
-  directories:
-    - node_modules
