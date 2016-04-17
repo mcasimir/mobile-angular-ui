@@ -39,7 +39,7 @@ module.exports = function(gulp) {
      });
   });
 
-  gulp.task('test:ci', seq('depcheck', 'lint', 'test:unit', 'test:e2e'));
+  gulp.task('test:ci', seq('depcheck', 'lint', 'test:unit'));
 };
 
 function reacheableOne(host) {
