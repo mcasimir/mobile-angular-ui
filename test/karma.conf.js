@@ -22,7 +22,17 @@ module.exports = function(config) {
       'src/js/core/*.js': ['coverage']
     },
 
-    browsers: ['Chrome'],
+    browsers: ['ChromeWithTouch'],
+
+    customLaunchers: {
+      ChromeWithTouch: {
+        base: 'Chrome',
+        flags: [
+          '--no-sandbox',
+          '--touch-events=enabled'
+        ]
+      }
+    },
 
     reporters: ['mocha', 'coverage'],
     coverageReporter: {
