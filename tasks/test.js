@@ -23,6 +23,7 @@ module.exports = function(gulp) {
   gulp.task('test:e2e', function() {
     connect.server({
       root: process.cwd(),
+      host: '0.0.0.0',
       port: 8888
     });
 
