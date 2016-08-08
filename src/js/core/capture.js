@@ -108,14 +108,14 @@
  * </div>
  * ```
  */
-(function () {
-   'use strict';
+(function() {
+  'use strict';
 
-   angular.module('mobile-angular-ui.core.capture', [])
+  angular.module('mobile-angular-ui.core.capture', [])
 
-   .run([
-     'Capture',
-     '$rootScope',
+  .run([
+    'Capture',
+    '$rootScope',
      function(Capture, $rootScope) {
        $rootScope.$on('$routeChangeSuccess', function() {
          Capture.resetAll();
@@ -129,11 +129,13 @@
        var yielders = {};
 
        return {
+         yielders: yielders,
+
          resetAll: function() {
            for (var name in yielders) {
-            if (yielders.hasOwnProperty(name)) {
-              this.resetYielder(name);
-            }
+             if (yielders.hasOwnProperty(name)) {
+               this.resetYielder(name);
+             }
            }
          },
 
@@ -194,7 +196,7 @@
        return {
          compile: function(tElem, tAttrs) {
            var rawContent = tElem.html();
-           if(tAttrs.uiDuplicate === null || tAttrs.uiDuplicate === undefined) {
+           if (tAttrs.uiDuplicate === null || tAttrs.uiDuplicate === undefined) {
              // no need to compile anything!
              tElem.html('');
              tElem.remove();
@@ -225,11 +227,11 @@
          link: function(scope, element, attr) {
            Capture.putYielder(attr.uiYieldTo, element, scope, element.html());
 
-           element.on('$destroy', function(){
+           element.on('$destroy', function() {
              Capture.removeYielder(attr.uiYieldTo);
            });
 
-           scope.$on('$destroy', function(){
+           scope.$on('$destroy', function() {
              Capture.removeYielder(attr.uiYieldTo);
            });
          }

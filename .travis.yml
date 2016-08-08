@@ -1,13 +1,20 @@
 language: node_js
 node_js:
-- '0.11'
-env:
-  global:
-    - secure: i33p1k4Wk1JFm1kiVPGG6StjhXUTdtg6EyMlVuARS5npioNymFgl3RgkNzar6joRIdGp7Fce0Px5B6Iy1U6LZgGOneogVk9VmEBWFtheiL/O3rzujiD3DTw7WeH6vllCjV9O9GodpZ+wbHxgq1I3aNr/n37iyL3Hc3cMspW+7kg=
-    - secure: cHXdgud0+4z21j8U82FsNj+LSRmMPNofgqg0Vroiv2a3GPcKXHzBki/1ZoTEGBDBY/UCADlD7pWRXq5JgxGxfjXGopT2/GBH5zGlXOoTyme3/PyuJgnQaAU1nXvrsxq69x9V11/mYxG/kQ0oCT0BgMFcRz6hoBdiBZYST7SdBAc=
-    - NODE_ENV: travis
-
+- 4.4.3
+sudo: required
 before_install:
-  - npm install
-  - npm install -g bower
-  - bower install
+- sudo apt-get update
+- sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
+services:
+- docker
+script:
+- docker run --rm --privileged -w /usr/src/app -v $PWD:/usr/src/app mcasimir/dind-node-build-runner:6.2.1 bash ci.sh
+- node_modules/.bin/codecov
+deploy:
+  provider: npm
+  email: maurizio.cas@gmail.com
+  api_key:
+    secure: kaKfP4ZS8Bd/XdwJPrCDsllC3SGvMQTdEsC7LriMv5AHCxJFY6rBJ8YqgFx/Tna9TVGjr9Q0lQ6hX1V1im0I8/lT5y5dHW5Kib2WwOosCA530kkkfc/7u4zHIxrl5wzLLp2VQhBaSMherV/btD3cGIPk91M8Q5c2kc0fORx8Cc0=
+  on:
+    tags: true
+    repo: mcasimir/mobile-angular-ui

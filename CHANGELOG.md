@@ -1,605 +1,528 @@
-# Mobile Angular Ui Changelog
+<a name="1.2.1"></a>
+## 1.2.1 (2016-03-06)
 
-### v. 1.2.0-beta.10
+* Added support tu ui.router ([27c34a4](https://github.com/mcasimir/mobile-angular-ui/commit/27c34a4))
+* fix docs for gestures ([d5eeb6e](https://github.com/mcasimir/mobile-angular-ui/commit/d5eeb6e))
+* removed beta version ([db00a9e](https://github.com/mcasimir/mobile-angular-ui/commit/db00a9e))
+* Revert "Added support tu ui.router" ([2368518](https://github.com/mcasimir/mobile-angular-ui/commit/2368518))
+* use sauce for ci tests ([c961675](https://github.com/mcasimir/mobile-angular-ui/commit/c961675))
 
-_Fri Dec 19 2014_
 
-`ui-if/ui-hide/ui-show/ui-class` does not evaluate with scope by default anymore.
-You should use `ui-scope-context` to inject scope vars into condition context.
 
-### v. 1.2.0-beta.9
+<a name="1.2.0-rc.3"></a>
+# 1.2.0-rc.3 (2015-08-04)
 
-- Fix #183 (padding not removed when sidebar-header/footer are removed)
+* 1.2.0-rc.3 ([35b9c81](https://github.com/mcasimir/mobile-angular-ui/commit/35b9c81))
+* build+bump ([d44ef94](https://github.com/mcasimir/mobile-angular-ui/commit/d44ef94))
 
-_Fri Dec 19 2014_
 
 
-### v. 1.2.0-beta.8
+<a name="1.2.0-rc.2"></a>
+# 1.2.0-rc.2 (2015-08-04)
 
-_Fri Dec 19 2014_
+* 1.2.0-rc.2 ([464f323](https://github.com/mcasimir/mobile-angular-ui/commit/464f323))
 
-Drag Fixes and Demo improvements:
 
-- Transform now works in FF (broken due to bad property name)
-- Added translate(0,0) workaround to [drag-to-dismiss] in demo to make
-it work in Android and mobile chrome
-- Drag prevent propagation of move so it works while nested in ng-swipe
-- Demo uses modals with ng-include
 
-### v. 1.2.0-beta.7
+<a name="1.2.0-rc.1"></a>
+# 1.2.0-rc.1 (2015-08-04)
 
-_Fri Dec 19 2014_
+* $drag prevents outer $swipes from being triggered ([fc374d3](https://github.com/mcasimir/mobile-angular-ui/commit/fc374d3))
+* 1.2.0-rc.1 ([e284aa4](https://github.com/mcasimir/mobile-angular-ui/commit/e284aa4))
+* adapted test exit code to fail in travis ([07dc3bc](https://github.com/mcasimir/mobile-angular-ui/commit/07dc3bc))
+* added .gitignore, .travis.yml, .jshintrc ([ccefb42](https://github.com/mcasimir/mobile-angular-ui/commit/ccefb42))
+* added .gitignore, .travis.yml, .jshintrc ([fb428a2](https://github.com/mcasimir/mobile-angular-ui/commit/fb428a2))
+* added back ng-swipe to demo ([0c637c3](https://github.com/mcasimir/mobile-angular-ui/commit/0c637c3))
+* Added Gitter badge ([bd6c13c](https://github.com/mcasimir/mobile-angular-ui/commit/bd6c13c))
+* added overscroll workaround, fix #192 ([3498a94](https://github.com/mcasimir/mobile-angular-ui/commit/3498a94)), closes [#192](https://github.com/mcasimir/mobile-angular-ui/issues/192)
+* added pre-interpolation to SharedState ([bef33ee](https://github.com/mcasimir/mobile-angular-ui/commit/bef33ee))
+* Allow nested property names in uiScopeContext, using dot notation in Strings ([e861686](https://github.com/mcasimir/mobile-angular-ui/commit/e861686))
+* Assign noop correctly to allow switch to be properly destroyed ([a78ab20](https://github.com/mcasimir/mobile-angular-ui/commit/a78ab20))
+* Fastclick fix: mcasimir/mobile-angular-ui#230 ([f2ffd65](https://github.com/mcasimir/mobile-angular-ui/commit/f2ffd65))
+* fix #187, fix #191 ([5fe06cd](https://github.com/mcasimir/mobile-angular-ui/commit/5fe06cd)), closes [#187](https://github.com/mcasimir/mobile-angular-ui/issues/187) [#191](https://github.com/mcasimir/mobile-angular-ui/issues/191)
+* fix #282 ([dd41223](https://github.com/mcasimir/mobile-angular-ui/commit/dd41223)), closes [#282](https://github.com/mcasimir/mobile-angular-ui/issues/282)
+* fix 205 ([367a0b9](https://github.com/mcasimir/mobile-angular-ui/commit/367a0b9))
+* Fix display table in Firefox ([2ec32e4](https://github.com/mcasimir/mobile-angular-ui/commit/2ec32e4))
+* fix ui-set pre-interpolation ([7786474](https://github.com/mcasimir/mobile-angular-ui/commit/7786474))
+* fixed active links without href ([0e83b7a](https://github.com/mcasimir/mobile-angular-ui/commit/0e83b7a))
+* fixed package for travis ([81ba4c2](https://github.com/mcasimir/mobile-angular-ui/commit/81ba4c2))
+* fixed swipe implementation over $touch ([a7e7bd2](https://github.com/mcasimir/mobile-angular-ui/commit/a7e7bd2))
+* improved doc comments; moved doc task to website repo ([bb91246](https://github.com/mcasimir/mobile-angular-ui/commit/bb91246))
+* linted fastclick + gulpfile ([5d3ce75](https://github.com/mcasimir/mobile-angular-ui/commit/5d3ce75))
+* major gesture module changes and improvements ([2cb11ca](https://github.com/mcasimir/mobile-angular-ui/commit/2cb11ca))
+* moved nobounce to preventTouchmoveDefaults directive; ui-switch support $drag if present ([d773374](https://github.com/mcasimir/mobile-angular-ui/commit/d773374))
+* parsing docs ok ([03756b8](https://github.com/mcasimir/mobile-angular-ui/commit/03756b8))
+* readded dist ([3c629d2](https://github.com/mcasimir/mobile-angular-ui/commit/3c629d2))
+* Remove moot `version` property from bower.json ([dcf57ff](https://github.com/mcasimir/mobile-angular-ui/commit/dcf57ff))
+* removed unneeded global variable ([d939ab1](https://github.com/mcasimir/mobile-angular-ui/commit/d939ab1))
+* started supporting ci ([8705b86](https://github.com/mcasimir/mobile-angular-ui/commit/8705b86))
+* Update README.md ([79eee3b](https://github.com/mcasimir/mobile-angular-ui/commit/79eee3b))
+* updated gulp less; fix #284 ([66732cf](https://github.com/mcasimir/mobile-angular-ui/commit/66732cf)), closes [#284](https://github.com/mcasimir/mobile-angular-ui/issues/284)
+* use gulp, jsdoc+ngdoc, refactored tests, gestures ([3b8a273](https://github.com/mcasimir/mobile-angular-ui/commit/3b8a273))
+* Fixes: #187  Overthrow / fastclick error ([637c129](https://github.com/mcasimir/mobile-angular-ui/commit/637c129))
 
-- fix #177
-- ui-* now fires after ng-click
 
-### v. 1.2.0-beta.6
 
-_Thu Dec 18 2014_
+<a name="1.2.0-beta.11"></a>
+# 1.2.0-beta.11 (2014-12-20)
 
-- Added ng-swipe-left/ng-swipe-right directives
-- Improved tests for SharedState
-- Scaffolded specs for ui-switch
+* introduced ui-scope-context ([8370918](https://github.com/mcasimir/mobile-angular-ui/commit/8370918))
+* updated changelog ([aa585ea](https://github.com/mcasimir/mobile-angular-ui/commit/aa585ea))
 
-### v. 1.2.0-beta.4 - v. 1.2.0-beta.5
 
-_Thu Dec 16 2014_
 
-- Fixes $drag causing exception or warning due to misused `insertRule`
-- Doc comments in drag.js now reflects $drag actual interface
+<a name="1.2.0-beta.10"></a>
+# 1.2.0-beta.10 (2014-12-19)
 
-### v. 1.2.0-beta.3
+* fix #183 ([35d2147](https://github.com/mcasimir/mobile-angular-ui/commit/35d2147)), closes [#183](https://github.com/mcasimir/mobile-angular-ui/issues/183)
 
-_Thu Dec 16 2014_
 
-- Fixes #179: causing exception on focus inputs inside scrollables, now Angular soft keyboard workaround will work again
-- Added tests with Protractor
 
-### v. 1.2.0-beta.2
+<a name="1.2.0-beta.9"></a>
+# 1.2.0-beta.9 (2014-12-19)
 
-_Wed Nov 28 2014_
+* Drag Fixes and Demo improvements ([7605f16](https://github.com/mcasimir/mobile-angular-ui/commit/7605f16))
+* gestures module improvements ([ed2e946](https://github.com/mcasimir/mobile-angular-ui/commit/ed2e946))
 
-# Migrating to Mobile Angular UI 1.2
 
-All of the functionalities are now separed in 3 modules: `core`, `components` and `gestures`.
 
-## Core UI functionalities
+<a name="1.2.0-beta.8"></a>
+# 1.2.0-beta.8 (2014-12-18)
 
-Core UI Functionalities are those any HTML UI built on Angular could use. They are not Mobile-specific nor depending on anything else that Angular itself, and you could use them with any css framework.
+* fix #177, ui-* now fires after ng-click ([7cab55f](https://github.com/mcasimir/mobile-angular-ui/commit/7cab55f)), closes [#177](https://github.com/mcasimir/mobile-angular-ui/issues/177)
 
-### YieldTo/ContentFor
 
-They are the same that 1.1 beside to be prefixed with `ui-` so use: `ui-yield-to` and `ui-content-for`.
 
+<a name="1.2.0-beta.7"></a>
+# 1.2.0-beta.7 (2014-12-18)
 
-### Toggle/Toggleable to SharedState and ui-*
+* completed migrate to be compatible with old demo ([d57a318](https://github.com/mcasimir/mobile-angular-ui/commit/d57a318))
+* Fix missing styling of input type "password" ([393a551](https://github.com/mcasimir/mobile-angular-ui/commit/393a551))
 
-Toggle has been rewritten from scratch for 1.2. In place of that there is a new service with it's own isolated context.
 
-It is called `SharedState`. It will act as a BUS between UI elements to share UI related state that is automatically disposed when all scopes requiring it are destroyed.
 
-eg.
+<a name="1.2.0-beta.6"></a>
+# 1.2.0-beta.6 (2014-12-18)
 
-``` js
-SharedState.initialize(requiringScope, 'myId');
-SharedState.toggle('myId');
-```
+* Added ng-swipe-left/ng-swipe-right directives ([2a57076](https://github.com/mcasimir/mobile-angular-ui/commit/2a57076))
 
-Using `SharedState` directives is very close to attach an `ng-init` in root element and interact through expression and ng-click, but it has handy features to avoid polluting controllers/scopes with ui-related stuffs.
 
-`SharedState` methods are exposed through `ui-` directives. So you should never use it directly in your controller, and you can spare them to hold application logic. 
 
-Example: Tabs
+<a name="1.2.0-beta.5"></a>
+# 1.2.0-beta.5 (2014-12-16)
 
+* fixed  exception with insertRule ([5a0a9d6](https://github.com/mcasimir/mobile-angular-ui/commit/5a0a9d6))
+* fixed  exception with insertRule ([f78c726](https://github.com/mcasimir/mobile-angular-ui/commit/f78c726))
 
-``` html
 
-<div class="tabs" ui-state="activeTab">
 
-  <ul class="nav nav-tabs">
-    <li ui-class="{'active': activeTab == 1)}">
-      <a ui-set="{'activeTab': 1}">Tab 1</a>
-    </li>
-    <li ui-class="{'active': activeTab == 2)}">
-      <a ui-set="{'activeTab': 2}">Tab 2</a>
-    </li>
-    <li ui-class="{'active': activeTab == 3)}">
-      <a ui-set="{'activeTab': 3}">Tab 3</a>
-    </li>
-  </ul>
-
-  <div ui-if="activeTab == 1">
-    Tab 1
-  </div>
-
-  <div ui-if="activeTab == 2">
-    Tab 2
-  </div>
-
-  <div ui-if="activeTab == 3">
-    Tab 3
-  </div>
-
-</div>
-
-```
-
-NOTE: `ui-toggle/set/turnOn/turnOff` responds to `click/tap` without stopping propagation so you can use them along with ng-click too. You can also change events to respond to with `ui-triggers` attribute.
-
-Any `SharedState` method is exposed through `Ui` object in `$rootScope`. So you could always do `ng-click="Ui.turnOn('myVar')"`.
-
-Since `SharedState` is a service you can initialize/set statuses through controllers too:
-
-``` js
-app.controller('myController', function($scope, SharedState){
-  SharedState.initialize($scope, "activeTab", 3);
-});
-```
-
-As well as you can use `ui-default` for that: 
-
-``` html
-<div class="tabs" ui-state="activeTab" ui-default="thisIsAnExpression(5 + 1 - 2)"></div>
-```
-
-### Outer Clicks
-
-`ui-outer-click` and `ui-outer-click-if` are directives that allow to specifiy a behaviour when click/tap events happen outside an element. This can be easily used to implement eg. __close on outer click__ feature for a dropdown.
-
-
-``` html
-  <div class="btn-group pull-right">
-    <a ui-turn-on='myDropdown' class='btn'>
-      <i class="fa fa-ellipsis-v"></i>
-    </a>
-    <ul 
-      class="dropdown-menu"
-      
-      ui-state="myDropdown"
-      ui-if="myDropdown"
-      
-      ui-outer-click="ui.turnOff('myDropdown')"
-      ui-outer-click-if="ui.active('myDropdown')"
-      
-      ui-turn-off="myDropdown">
-
-      <li><a>Action</a></li>
-      <li><a>Another action</a></li>
-      <li><a>Something else here</a></li>
-      <li class="divider"></li>
-      <li><a>Separated link</a></li>
-    </ul>
-  </div>
-```
-
-## New Experimental Features
-
-### $swipe
-
-A drop in replacement for `ngTouch`'s `$swipe`. It is free from other `ngTouch` features that does not play or duplicates fastclicks behaviour.
-
-### $drag
-
-`$drag` Service wraps `$swipe` to extend its behavior moving target element through css transform according to the `$swipe` coords thus creating a drag effect.
-
-$drag interface is very close to `$swipe`:
-
-``` js
-app.controller('MyController', function($drag, $element){
-  var unbindDrag = $drag.bind($element, {
-   // drag callbacks
-   // - rect is the current result of getBoundingClientRect() for bound element
-   // - cancelFn issue a "touchcancel" on element
-   // - resetFn restore the initial transform
-   // - undoFn undoes the current movement
-   // - swipeCoords are the coordinates exposed by the underlying $swipe service
-   start: function(rect, cancelFn, resetFn, swipeCoords){},
-   move: function(rect, cancelFn, resetFn, swipeCoords){},
-   end: function(rect, undoFn, resetFn, swipeCoords) {};
-   cancel: function(rect, resetFn){},
-
-   // constraints for the movement
-   // you can use a "static" object of the form:
-   // {top: .., lelf: .., bottom: .., rigth: ..}
-   // or pass a function that is called on each movement 
-   // and return it in a dynamic way.
-   // This is useful if you have to constraint drag movement while bounduaries are
-   // changing over time.
-
-   constraint: function(){ return {top: y1, left: x1, bottom: y2, right: x2}; }, // or just {top: y1, left: x1, bottom: y2, right: x2}
-
-   // instantiates the Trasform according to touch movement (defaults to `t.translate(dx, dy);`)
-   // dx, dy are the distances of movement for x and y axis after constraints are applyied
-   transform: function(transform, dx, dy, currSwipeX, currSwipeY, startSwipeX, startSwipeY) {},
-
-   // changes the Transform before is applied to element (useful to add something like easing or accelleration)
-   adaptTransform: function(transform, dx, dy, currSwipeX, currSwipeY, startSwipeX, startSwipeY) {}
-
-  });
-  
-  // This is automatically called when element is disposed so it is not necessary
-  // that you call this manually but if you have to detatch $drag service before
-  // this you could just call:
-  unbindDrag();
-});
-```
-
-Main differences with `$swipe` are:
- - bound elements will move following swipe direction automatically
- - coords param take into account css transform so you can easily detect collision with other elements.
- - start, move, end callback receive a cancel funcion that can be used to cancel the motion and reset
-   the transform.
- - you can configure the transform behavior passing a transform function to options.
- - you can constraint the motion through the constraint option (setting relative movement limits)
-
-**Example 1.** Drag to dismiss
-
-``` js
-app.directive('dragToDismiss', function($drag, $parse, $timeout){
-  return {
-    restrict: 'A',
-    compile: function(elem, attrs) {
-      var dismissFn = $parse(attrs.dragToDismiss);
-      return function(scope, elem, attrs){
-        var dismiss = false;
-
-        $drag.bind(elem, {
-          constraint: {
-            minX: 0, 
-            minY: 0, 
-            maxY: 0 
-          },
-          move: function(c) {
-            if( c.left >= c.width / 4) {
-              dismiss = true;
-              elem.addClass('dismiss');
-            } else {
-              dismiss = false;
-              elem.removeClass('dismiss');
-            }
-          },
-          cancel: function(){
-            elem.removeClass('dismiss');
-          },
-          end: function(c, undo, reset) {
-            if (dismiss) {
-              elem.addClass('dismitted');
-              $timeout(function() { 
-                scope.$apply(function() {
-                  dismissFn(scope);  
-                });
-              }, 400);
-            } else {
-              reset();
-            }
-          }
-        });
-      };
-    }
-  };
-});
-```
-
-**Example 2.** Touch enabled "deck of cards" carousel directive
-
-``` js
-app.directive('carousel', function(){
-  return {
-    restrict: 'C',
-    scope: {},
-    controller: function($scope) {
-      this.itemCount = 0;
-      this.activeItem = null;
-
-      this.addItem = function(){
-        var newId = this.itemCount++;
-        this.activeItem = this.itemCount == 1 ? newId : this.activeItem;
-        return newId;
-      };
-
-      this.next = function(){
-        this.activeItem = this.activeItem || 0;
-        this.activeItem = this.activeItem == this.itemCount - 1 ? 0 : this.activeItem + 1;
-      };
-
-      this.prev = function(){
-        this.activeItem = this.activeItem || 0;
-        this.activeItem = this.activeItem === 0 ? this.itemCount - 1 : this.activeItem - 1;
-      };
-    }
-  };
-});
-
-app.directive('carouselItem', function($drag) {
-  return {
-    restrict: 'C',
-    require: '^carousel',
-    scope: {},
-    transclude: true,
-    template: '<div class="item"><div ng-transclude></div></div>',
-    link: function(scope, elem, attrs, carousel) {
-      scope.carousel = carousel;
-      var id = carousel.addItem();
-      
-      var zIndex = function(){
-        var res = 0;
-        if (id == carousel.activeItem){
-          res = 2000;
-        } else if (carousel.activeItem < id) {
-          res = 2000 - (id - carousel.activeItem);
-        } else {
-          res = 2000 - (carousel.itemCount - 1 - carousel.activeItem + id);
-        }
-        return res;
-      };
-
-      scope.$watch(function(){
-        return carousel.activeItem;
-      }, function(n, o){
-        elem[0].style['z-index']=zIndex();
-      });
-      
-
-      $drag.bind(elem, {
-        constraint: { minY: 0, maxY: 0 },
-        adaptTransform: function(t, dx, dy, x, y, x0, y0) {
-          var maxAngle = 15;
-          var velocity = 0.02;
-          var r = t.getRotation();
-          var newRot = r + Math.round(dx * velocity);
-          newRot = Math.min(newRot, maxAngle);
-          newRot = Math.max(newRot, -maxAngle);
-          t.rotate(-r);
-          t.rotate(newRot);
-        },
-        move: function(c){
-          if(c.left >= c.width / 4 || c.left <= -(c.width / 4)) {
-            elem.addClass('dismiss');  
-          } else {
-            elem.removeClass('dismiss');  
-          }          
-        },
-        cancel: function(){
-          elem.removeClass('dismiss');
-        },
-        end: function(c, undo, reset) {
-          elem.removeClass('dismiss');
-          if(c.left >= c.width / 4) {
-            scope.$apply(function() {
-              carousel.next();
-            });
-          } else if (c.left <= -(c.width / 4)) {
-            scope.$apply(function() {
-              carousel.next();
-            });
-          }
-          reset();
-        }
-      });
-    }
-  };
-});
-```
-
-### Transform
-
-`Transform` is the underlying service used by `$drag` to deal with css trasform matrix in a simpler and vendor-angnostic way.
-
-``` html
-<div id="myElem" style="transform: translateX: 20px;"></div>
-```
-
-``` js
-var e = document.getElementById('myElem');
-var t0 = Transform.fromElement(e);
-
-console.log(t0.getTranslation().x);
-// -> 20;
-
-t0.rotate(90);
-
-// Set t0 to element ignoring previous transform.
-t0.set(e);
-
-var t1 = new Transform();
-
-t1.translate(12, 40);
-
-// merges t1 with current trasformation matrix of element.
-t1.apply(e);
-
-```
-
-## UI Components
-
-### General Considerations
-
-Since 1.2 I've tried to retain bootstrap existing components look and feel as much as possible for two reason:
-
-1. People would expect to already know them and how customize their appearence through css.
-2. Mobile Angular UI dependance on bootstrap is more loose so it does not need to be updated each time BS3 changes.
-
-As a consequence i've reduced special styles for panels/forms/modals to the bare minimum.
-
-### Navbars
-
-Pretty much the same. They plays well with `ng-if` now.
-
-### Scrollables
-
-`.scrollable` component is backward compatible but also has some major improvements too.
-
-1. `.scrollable-header/.scrollable-footer` can be used to add fixed header/footer to a scrollable area without having to deal with css height and positioning to avoid breaking scroll.
-2. `.scrollable-content` controller now expose a `scrollTo` function.
-3. It plays nice with android keyboard and forms.
-4. You can use `ui-scroll-bottom/ui-scroll-top` directives handle that events and implement features like _infinite scroll_.
-
-``` html
-
-<div class="scrollable">
-  <div class="scrollable-content section" ui-scroll-bottom="loadMore()">
-    <ul>
-      <li ng-repeat="item in items">
-        {{item.name}}
-      </li>
-    </ul>
-  </div>
-</div>
-
-```
-
-### Modals and Overlay
-
-Modal dialogs has been reintroduced from Bootstrap, overlays are now just modals styled different.
-
-``` html
-
-<div content-for="modals">
-  
-  <!-- A plain modal dialog -->
-  <div class="modal" ui-if='modal1' ui-state='modal1'>
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button class="close" 
-                  ui-turn-off="modal1">&times;</button>
-          <h4 class="modal-title">Modal title</h4>
-        </div>
-        <div class="modal-body">
-          <p>{{lorem}}</p>
-        </div>
-        <div class="modal-footer">
-          <button ui-turn-off="modal1" class="btn btn-default">Close</button>
-          <button ui-turn-off="modal1" ng-click="doSomething()" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- A blurred overlay dialog -->
-    <div class="modal modal-overlay" ui-if='modal2' ui-state='modal2'>
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button class="close"
-                    ui-turn-off="modal2">&times;</button>
-            <h4 class="modal-title">Modal title</h4>
-          </div>
-          <div class="modal-body">
-            <p>{{lorem}}</p>
-          </div>
-          <div class="modal-footer">
-            <button ui-turn-off="modal2" class="btn btn-default">Close</button>
-            <button ui-turn-off="modal2" ng-click="doSomething()" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-</div>
-
-```
-
-### Sidebars
-
-Basically the same, but now they rely on `SharedState` and `bindOuterClick` to activate/inactivate them.
-
-Syntax is basically the same:
-
-```
-<div class="sidebar sidebar-left">
-  <!-- ... -->
-</div>
-```
-
-Also you can now track sidebars status in url specifing `uiTrackAsSearchParam` attribute. This way you can manage to close a sidebar on back button too. It is optional cause it has a big caveat: you should not use query string part to update your view automatically. It is safe for many apps but not for all, so its optional.
-
-To use this feature:
-
-1. enable it in sidebar setting `uiTrackAsSearchParam` to `true`:
-
-``` html
-<div class="sidebar sidebar-left" ui-track-as-search-param="true">
-  <!-- ... -->
-</div>
-```
-
-2. Specify `reloadOnSearch: false` on your routes:
-
-``` js
-app.config(function($routeProvider) {
-  $routeProvider.when('/',          {templateUrl: 'home.html', reloadOnSearch: false});
-  $routeProvider.when('/scroll',    {templateUrl: 'scroll.html', reloadOnSearch: false}); 
-  $routeProvider.when('/toggle',    {templateUrl: 'toggle.html', reloadOnSearch: false}); 
-  $routeProvider.when('/tabs',      {templateUrl: 'tabs.html', reloadOnSearch: false}); 
-  $routeProvider.when('/accordion', {templateUrl: 'accordion.html', reloadOnSearch: false}); 
-  $routeProvider.when('/overlay',   {templateUrl: 'overlay.html', reloadOnSearch: false}); 
-  $routeProvider.when('/forms',     {templateUrl: 'forms.html', reloadOnSearch: false});
-  $routeProvider.when('/dropdown',  {templateUrl: 'dropdown.html', reloadOnSearch: false});
-  $routeProvider.when('/drag',      {templateUrl: 'drag.html', reloadOnSearch: false});
-  $routeProvider.when('/carousel',  {templateUrl: 'carousel.html', reloadOnSearch: false});
-});
-
-```
-
-## Carousel
-
-Carousel implementations (with `$swipe` or `$drag`) has been moved in an external file/plugin and not included by default.
-
-## Utils
-
-`panels` and `forms` has been discontinued completely. This is due to: panels has a trivial markup as they are in bootstrap. Forms on the contrary has a lot of functionalities so in my opinion `.form-*` directives need an external plugin to be implemented and mantained correctly.
-
-
-### v. 1.1.0-beta.22
-
-_Sun May 25 2014_
-
-- Fix #60: contentFor directive not compiling already compiled content anymore. You can use directives in contentFor blocks. 
-
-- Fix #64: switch directive:  ngModel changes are now properly reflected in the parent scope and external changes to the linked ngModel are now handled by the directive through ngClass.
-
-- Dropped overthrow.toss.js
-
-### v. 1.1.0-beta.21
-
-- Fixes #53: Android devices bad rendering box model with %-based translate3d. Switched to fixed sidebars width and media-queries.
-
-### v. 1.1.0-beta.20
-
-_Sun May  11 12:54 2014_
-
-- Drop angular.js dependencies
-- grunt/grunt connect now serves both from "." and "site/output" simplifying demo testing
-
-### v. 1.1.0-beta.19
-_Sat May  10 15:10 2014_
-
-- Changed css distribution policy. Now base.css includes .sm grid and desktop.css includes .md+ grid. No other styles are distributed.
-
-### v. 1.1.0-beta.18
-
-_Fri May  9 19:21 2014_
-
-- Changed `bs-form-control` directive to obtain a flexible behaviour with grids
-- Added responsive .sm+ grid style to desktop.css version (it won't affect containers, they stay always fluid).
-- Improved form style to look consitently both in horizontal and vertical layout
-- Switch now supports ng-change and ng-click (fixes #46)
-
-### v. 1.1.0-beta.17
-
-_Tue May  6 13:59 2014_
-
-- Added this changelog :)
-- Updated to latest bootstrap (3.1.1) and angular.js (1.2.17)
-- Rewritten everything in vanilla js in the hope to have more people collaborating
-- Rewritten toggle/toggleable directives in a more Angular.js fashion
-- A lot of work to get rid of memory leaks
-- Restructured .less code to be more understandable and use bootstrap vars and mixins whenever possible (you can now customize almost everything through less vars)
-- Supporting different icons sets (added same style of .fa to .icon)
-- Dropped support to iScroll (sorry too much work to maintain even this)
-- Removed $swipe service from fastclick touch implementation (just use ngTouch for that)
-- Included everything else in the same distribution file
-- Renamed bsInput to bsFormControl
-- Sidebars closes by default on outer clicks (customizable). Fix #45.
-- Fixes bsFormControl label disappearing with jquery. Fix #42.
+<a name="1.2.0-beta.4"></a>
+# 1.2.0-beta.4 (2014-12-16)
+
+* fixed  exception with insertRule ([71ca20e](https://github.com/mcasimir/mobile-angular-ui/commit/71ca20e))
+
+
+
+<a name="1.2.0-beta.3"></a>
+# 1.2.0-beta.3 (2014-12-16)
+
+* Fixes #179 ([8298d85](https://github.com/mcasimir/mobile-angular-ui/commit/8298d85)), closes [#179](https://github.com/mcasimir/mobile-angular-ui/issues/179)
+* started tests; fix #179 ([b3443f5](https://github.com/mcasimir/mobile-angular-ui/commit/b3443f5)), closes [#179](https://github.com/mcasimir/mobile-angular-ui/issues/179)
+
+
+
+<a name="1.2.0-beta.2"></a>
+# 1.2.0-beta.2 (2014-12-12)
+
+* 1.2 first beta ([41d6222](https://github.com/mcasimir/mobile-angular-ui/commit/41d6222))
+* 1.2.0-beta.0 ([db52011](https://github.com/mcasimir/mobile-angular-ui/commit/db52011))
+* Cosmetic fixes ([00b8ed5](https://github.com/mcasimir/mobile-angular-ui/commit/00b8ed5))
+* fix #171, completed migration module ([77bd63f](https://github.com/mcasimir/mobile-angular-ui/commit/77bd63f)), closes [#171](https://github.com/mcasimir/mobile-angular-ui/issues/171)
+* fixed 1.2 pre-release to reflect https://gist.github.com/mcasimir/824b28d14ca1e09d03c6#migrating-to- ([c6b17a6](https://github.com/mcasimir/mobile-angular-ui/commit/c6b17a6)), closes [https://gist.github.com/mcasimir/824b28d14ca1e09d03c6#migrating-to-mobile-angular-ui-12](https://github.com/https://gist.github.com/mcasimir/824b28d14ca1e09d03c6/issues/migrating-to-mobile-angular-ui-12)
+* fixed demo for ui-switch, discontinued pointerEvents ad moved to migrate.disabled ([5c195c5](https://github.com/mcasimir/mobile-angular-ui/commit/5c195c5))
+* fixed sidebar names in demo ([08bc975](https://github.com/mcasimir/mobile-angular-ui/commit/08bc975))
+* Fixes before releasing 1.2-beta ([48eeb56](https://github.com/mcasimir/mobile-angular-ui/commit/48eeb56))
+* merged 1.2 ([aae7661](https://github.com/mcasimir/mobile-angular-ui/commit/aae7661))
+* moved util services to plain private functions; merged ui and sharedState ([5dab837](https://github.com/mcasimir/mobile-angular-ui/commit/5dab837))
+* reorganized modules ([28a97e2](https://github.com/mcasimir/mobile-angular-ui/commit/28a97e2))
+
+
+
+<a name="1.1.0-beta.30"></a>
+# 1.1.0-beta.30 (2014-09-18)
+
+* fix #127, fix #126, fix #125 ([8868550](https://github.com/mcasimir/mobile-angular-ui/commit/8868550)), closes [#127](https://github.com/mcasimir/mobile-angular-ui/issues/127) [#126](https://github.com/mcasimir/mobile-angular-ui/issues/126) [#125](https://github.com/mcasimir/mobile-angular-ui/issues/125)
+* fix #82, hide the right sidebar ([87b2948](https://github.com/mcasimir/mobile-angular-ui/commit/87b2948)), closes [#82](https://github.com/mcasimir/mobile-angular-ui/issues/82)
+* updated bower deps ([0983b7e](https://github.com/mcasimir/mobile-angular-ui/commit/0983b7e))
+* updated favicon ([d4fd386](https://github.com/mcasimir/mobile-angular-ui/commit/d4fd386))
+
+
+
+<a name="1.1.0-beta.29"></a>
+# 1.1.0-beta.29 (2014-07-27)
+
+* fixed navbar-top height without buttons in desktop mode ([90b1528](https://github.com/mcasimir/mobile-angular-ui/commit/90b1528))
+
+
+
+<a name="1.1.0-beta.28"></a>
+# 1.1.0-beta.28 (2014-07-27)
+
+* fix #100, keeping border radius for c controls ([3092071](https://github.com/mcasimir/mobile-angular-ui/commit/3092071)), closes [#100](https://github.com/mcasimir/mobile-angular-ui/issues/100)
+* fixed README ([49f5b55](https://github.com/mcasimir/mobile-angular-ui/commit/49f5b55))
+* fixed README ([04026e5](https://github.com/mcasimir/mobile-angular-ui/commit/04026e5))
+* Update README.md ([3608ab7](https://github.com/mcasimir/mobile-angular-ui/commit/3608ab7))
+
+
+
+<a name="1.1.0-beta.27"></a>
+# 1.1.0-beta.27 (2014-07-18)
+
+* fix #98 ([b46a3ce](https://github.com/mcasimir/mobile-angular-ui/commit/b46a3ce)), closes [#98](https://github.com/mcasimir/mobile-angular-ui/issues/98)
+
+
+
+<a name="1.1.0-beta.26"></a>
+# 1.1.0-beta.26 (2014-07-09)
+
+* fix #77 directives in overlays, closes #78 ([be39011](https://github.com/mcasimir/mobile-angular-ui/commit/be39011)), closes [#77](https://github.com/mcasimir/mobile-angular-ui/issues/77) [#78](https://github.com/mcasimir/mobile-angular-ui/issues/78)
+
+
+
+<a name="1.1.0-beta.25"></a>
+# 1.1.0-beta.25 (2014-07-08)
+
+* split :hover css in separate file, fix #75 ([11d3f6a](https://github.com/mcasimir/mobile-angular-ui/commit/11d3f6a)), closes [#75](https://github.com/mcasimir/mobile-angular-ui/issues/75)
+
+
+
+<a name="1.1.0-beta.24"></a>
+# 1.1.0-beta.24 (2014-07-08)
+
+* clean website stuffs ([399f324](https://github.com/mcasimir/mobile-angular-ui/commit/399f324))
+* fix #74 ([a3c6ff0](https://github.com/mcasimir/mobile-angular-ui/commit/a3c6ff0)), closes [#74](https://github.com/mcasimir/mobile-angular-ui/issues/74)
+
+
+
+<a name="1.1.0-beta.23"></a>
+# 1.1.0-beta.23 (2014-07-06)
+
+* added demo to bower ([c2ce776](https://github.com/mcasimir/mobile-angular-ui/commit/c2ce776))
+* added demo to bower download ([076c6bb](https://github.com/mcasimir/mobile-angular-ui/commit/076c6bb))
+
+
+
+<a name="1.1.0-beta.22"></a>
+# 1.1.0-beta.22 (2014-05-25)
+
+* 1.1.0-beta.22 ([dc0f6e9](https://github.com/mcasimir/mobile-angular-ui/commit/dc0f6e9))
+* added ngClass and $apply to switch-directive's template to stay in sync with ngModel ([70ecf8f](https://github.com/mcasimir/mobile-angular-ui/commit/70ecf8f))
+* deleted iScroll stuffs ([a7e4d49](https://github.com/mcasimir/mobile-angular-ui/commit/a7e4d49))
+* fix #60, fix #64, dropped overthrow.toss.js ([d02d020](https://github.com/mcasimir/mobile-angular-ui/commit/d02d020)), closes [#60](https://github.com/mcasimir/mobile-angular-ui/issues/60) [#64](https://github.com/mcasimir/mobile-angular-ui/issues/64)
+* Fix contentFor directive: Do not compile already compiled content ([259e495](https://github.com/mcasimir/mobile-angular-ui/commit/259e495))
+* Fixed main path ([99c98da](https://github.com/mcasimir/mobile-angular-ui/commit/99c98da))
+
+
+
+<a name="1.1.0-beta.21"></a>
+# 1.1.0-beta.21 (2014-05-15)
+
+* drop angular.js deps ([dea4314](https://github.com/mcasimir/mobile-angular-ui/commit/dea4314))
+* fix #51, fix #54 ([095e472](https://github.com/mcasimir/mobile-angular-ui/commit/095e472)), closes [#51](https://github.com/mcasimir/mobile-angular-ui/issues/51) [#54](https://github.com/mcasimir/mobile-angular-ui/issues/54)
+* Fixed malformed bower.json ([f2ed8df](https://github.com/mcasimir/mobile-angular-ui/commit/f2ed8df))
+* Fixes #53 ([a9a20c7](https://github.com/mcasimir/mobile-angular-ui/commit/a9a20c7)), closes [#53](https://github.com/mcasimir/mobile-angular-ui/issues/53)
+
+
+
+<a name="1.1.0-beta.19"></a>
+# 1.1.0-beta.19 (2014-05-10)
+
+* distribution policy changed. Base now targets xs and sm screens, while desktop is for  md and lg. Re ([98313e5](https://github.com/mcasimir/mobile-angular-ui/commit/98313e5))
+
+
+
+<a name="1.1.0-beta.18"></a>
+# 1.1.0-beta.18 (2014-05-10)
+
+* changes for 1.1.0-beta.17 ([14b4558](https://github.com/mcasimir/mobile-angular-ui/commit/14b4558))
+* fix #46, improve form style and bs-form-control behavior, responsive grid added in desktop.css ([54b8657](https://github.com/mcasimir/mobile-angular-ui/commit/54b8657)), closes [#46](https://github.com/mcasimir/mobile-angular-ui/issues/46)
+
+
+
+<a name="1.1.0-beta.17"></a>
+# 1.1.0-beta.17 (2014-05-06)
+
+* Fix #45, Fix #42. Moving from coffee to js. Refactoring code. ([2e449fd](https://github.com/mcasimir/mobile-angular-ui/commit/2e449fd)), closes [#45](https://github.com/mcasimir/mobile-angular-ui/issues/45) [#42](https://github.com/mcasimir/mobile-angular-ui/issues/42)
+
+
+
+<a name="1.1.0-beta.16"></a>
+# 1.1.0-beta.16 (2014-05-03)
+
+* ignore crash.log and Gemfile.lock for site ([09f9cc1](https://github.com/mcasimir/mobile-angular-ui/commit/09f9cc1))
+* reverted scrollable to be css based. Fix #44, fix #30, fix #36 ([bbf31da](https://github.com/mcasimir/mobile-angular-ui/commit/bbf31da)), closes [#44](https://github.com/mcasimir/mobile-angular-ui/issues/44) [#30](https://github.com/mcasimir/mobile-angular-ui/issues/30) [#36](https://github.com/mcasimir/mobile-angular-ui/issues/36)
+
+
+
+<a name="1.1.0-beta.15"></a>
+# 1.1.0-beta.15 (2014-05-01)
+
+* default value for overlays; build process improvements; website and docs improvements ([39c791c](https://github.com/mcasimir/mobile-angular-ui/commit/39c791c))
+
+
+
+<a name="1.1.0-beta.14"></a>
+# 1.1.0-beta.14 (2014-04-30)
+
+* added default state for overlays ([a17be42](https://github.com/mcasimir/mobile-angular-ui/commit/a17be42))
+
+
+
+<a name="1.1.0-beta.13"></a>
+# 1.1.0-beta.13 (2014-04-30)
+
+* add default state of overlay ([e585d2b](https://github.com/mcasimir/mobile-angular-ui/commit/e585d2b)), closes [#37](https://github.com/mcasimir/mobile-angular-ui/issues/37)
+* added default state for overlays ([1647575](https://github.com/mcasimir/mobile-angular-ui/commit/1647575))
+
+
+
+<a name="1.1.0-beta.12"></a>
+# 1.1.0-beta.12 (2014-04-29)
+
+* re-added tooltips and modals style ([79286d0](https://github.com/mcasimir/mobile-angular-ui/commit/79286d0))
+
+
+
+<a name="1.1.0-beta.11"></a>
+# 1.1.0-beta.11 (2014-04-24)
+
+* Fixes #19, Fixes #30. Scrollable not readjusted after window.resize ([b9e0547](https://github.com/mcasimir/mobile-angular-ui/commit/b9e0547)), closes [#19](https://github.com/mcasimir/mobile-angular-ui/issues/19) [#30](https://github.com/mcasimir/mobile-angular-ui/issues/30)
+
+
+
+<a name="1.1.0-beta.10"></a>
+# 1.1.0-beta.10 (2014-04-20)
+
+* Fix css for panel-group headers ([612f5d7](https://github.com/mcasimir/mobile-angular-ui/commit/612f5d7))
+
+
+
+<a name="1.1.0-beta.9"></a>
+# 1.1.0-beta.9 (2014-04-20)
+
+* Switch transition delayed to avoid flikering on default true ([5fbe670](https://github.com/mcasimir/mobile-angular-ui/commit/5fbe670))
+
+
+
+<a name="1.1.0-beta.8"></a>
+# 1.1.0-beta.8 (2014-04-19)
+
+* Fixed odd behaviours combining position:absolute and transform3d; Added switch component; Added dona ([8ed7d65](https://github.com/mcasimir/mobile-angular-ui/commit/8ed7d65))
+* references #21 of the original repository. a directive looks wrong ([0a11917](https://github.com/mcasimir/mobile-angular-ui/commit/0a11917))
+
+
+
+<a name="1.1.0-beta.7"></a>
+# 1.1.0-beta.7 (2014-04-04)
+
+* move toggle.toggled to be fired after classes are applied ([ed25983](https://github.com/mcasimir/mobile-angular-ui/commit/ed25983))
+
+
+
+<a name="1.1.0-beta.6"></a>
+# 1.1.0-beta.6 (2014-04-04)
+
+* fixes #18 ([da36fdf](https://github.com/mcasimir/mobile-angular-ui/commit/da36fdf)), closes [#18](https://github.com/mcasimir/mobile-angular-ui/issues/18)
+
+
+
+<a name="1.1.0-beta.5"></a>
+# 1.1.0-beta.5 (2014-04-03)
+
+* fixes #15 ([0f8b5ab](https://github.com/mcasimir/mobile-angular-ui/commit/0f8b5ab)), closes [#15](https://github.com/mcasimir/mobile-angular-ui/issues/15)
+
+
+
+<a name="1.1.0-beta.4"></a>
+# 1.1.0-beta.4 (2014-03-10)
+
+* Added carousels; ([55eb6d3](https://github.com/mcasimir/mobile-angular-ui/commit/55eb6d3))
+* demo improvements ([f8eb120](https://github.com/mcasimir/mobile-angular-ui/commit/f8eb120))
+* demo improvements ([f259ba2](https://github.com/mcasimir/mobile-angular-ui/commit/f259ba2))
+* demo improvements ([f3f4319](https://github.com/mcasimir/mobile-angular-ui/commit/f3f4319))
+
+
+
+<a name="1.1.0-beta.3"></a>
+# 1.1.0-beta.3 (2014-03-08)
+
+* Scrollables now autosizing with overthrow ([e8adab4](https://github.com/mcasimir/mobile-angular-ui/commit/e8adab4))
+
+
+
+<a name="1.1.0-beta.2"></a>
+# 1.1.0-beta.2 (2014-03-08)
+
+* Smoother transitions for sidebars ([57e6cdb](https://github.com/mcasimir/mobile-angular-ui/commit/57e6cdb))
+
+
+
+<a name="1.1.0-beta.1"></a>
+# 1.1.0-beta.1 (2014-03-08)
+
+* Fixed release task ([b5e6b62](https://github.com/mcasimir/mobile-angular-ui/commit/b5e6b62))
+
+
+
+<a name="1.1.0-beta.0"></a>
+# 1.1.0-beta.0 (2014-03-08)
+
+* fixed css for sidebars with height: auto; added task for releases ([7ad5669](https://github.com/mcasimir/mobile-angular-ui/commit/7ad5669))
+
+
+
+<a name="1.0.21-beta"></a>
+## 1.0.21-beta (2014-03-07)
+
+* fix #10; both sidebars can now coexist; changed scrollable style, now its relative; added directives ([aa2ecdf](https://github.com/mcasimir/mobile-angular-ui/commit/aa2ecdf)), closes [#10](https://github.com/mcasimir/mobile-angular-ui/issues/10)
+
+
+
+<a name="1.0.20-beta"></a>
+## 1.0.20-beta (2014-03-06)
+
+* reverted to overflow:auto for scrollable and overthrow ([732a792](https://github.com/mcasimir/mobile-angular-ui/commit/732a792))
+
+
+
+<a name="1.0.19-beta"></a>
+## 1.0.19-beta (2014-03-06)
+
+* fix #9 ([8d722fd](https://github.com/mcasimir/mobile-angular-ui/commit/8d722fd)), closes [#9](https://github.com/mcasimir/mobile-angular-ui/issues/9)
+
+
+
+<a name="1.0.18-beta"></a>
+## 1.0.18-beta (2014-03-06)
+
+* fix #8: body with overflow:auto; also fixes some other desktop related issues. ([52d71e8](https://github.com/mcasimir/mobile-angular-ui/commit/52d71e8)), closes [#8](https://github.com/mcasimir/mobile-angular-ui/issues/8)
+
+
+
+<a name="1.0.15-beta"></a>
+## 1.0.15-beta (2014-03-06)
+
+* fix #7; added implementation of scrollable based on overthrow.js; fastclick now supporting ngSwipeLe ([a00a9c1](https://github.com/mcasimir/mobile-angular-ui/commit/a00a9c1)), closes [#7](https://github.com/mcasimir/mobile-angular-ui/issues/7)
+
+
+
+<a name="1.0.14-beta"></a>
+## 1.0.14-beta (2014-03-05)
+
+* restructured distribution to make it modular ([388f1a7](https://github.com/mcasimir/mobile-angular-ui/commit/388f1a7))
+
+
+
+<a name="1.0.13-beta"></a>
+## 1.0.13-beta (2014-03-01)
+
+* fix duplicated overlays ([6376b3d](https://github.com/mcasimir/mobile-angular-ui/commit/6376b3d))
+
+
+
+<a name="1.0.12-beta"></a>
+## 1.0.12-beta (2014-02-28)
+
+* updated to IScroll 5 ([8c6202e](https://github.com/mcasimir/mobile-angular-ui/commit/8c6202e))
+
+
+
+<a name="1.0.11-beta"></a>
+## 1.0.11-beta (2014-02-28)
+
+* using translate3d to force hardware acceleration-a ([f3b2162](https://github.com/mcasimir/mobile-angular-ui/commit/f3b2162))
+
+
+
+<a name="1.0.10-beta"></a>
+## 1.0.10-beta (2014-02-27)
+
+* fix #5 ([6db3f65](https://github.com/mcasimir/mobile-angular-ui/commit/6db3f65)), closes [#5](https://github.com/mcasimir/mobile-angular-ui/issues/5)
+* reverted transform3d to test with devices ([e4dcab3](https://github.com/mcasimir/mobile-angular-ui/commit/e4dcab3))
+
+
+
+<a name="1.0.9-beta"></a>
+## 1.0.9-beta (2014-02-26)
+
+* fix desktop sidebar with translate3d ([27153fa](https://github.com/mcasimir/mobile-angular-ui/commit/27153fa))
+
+
+
+<a name="1.0.8-beta"></a>
+## 1.0.8-beta (2014-02-26)
+
+* fix #3 ([3fdf1c1](https://github.com/mcasimir/mobile-angular-ui/commit/3fdf1c1)), closes [#3](https://github.com/mcasimir/mobile-angular-ui/issues/3)
+
+
+
+<a name="1.0.7-beta"></a>
+## 1.0.7-beta (2014-02-24)
+
+* fix #2 ([9933e56](https://github.com/mcasimir/mobile-angular-ui/commit/9933e56)), closes [#2](https://github.com/mcasimir/mobile-angular-ui/issues/2)
+* fixed README-a ([da448db](https://github.com/mcasimir/mobile-angular-ui/commit/da448db))
+
+
+
+<a name="1.0.6-beta"></a>
+## 1.0.6-beta (2014-02-12)
+
+* First Beta ([ceaadda](https://github.com/mcasimir/mobile-angular-ui/commit/ceaadda))
+
+
+
+<a name="1.0.5-alpha"></a>
+## 1.0.5-alpha (2014-01-07)
+
+* Fix for iscroll and forms, validation css added ([ecac7b9](https://github.com/mcasimir/mobile-angular-ui/commit/ecac7b9))
+
+
+
+<a name="1.0.4-alpha"></a>
+## 1.0.4-alpha (2013-12-29)
+
+* moved to iScroll ([2b714c6](https://github.com/mcasimir/mobile-angular-ui/commit/2b714c6))
+
+
+
+<a name="1.0.3-alpha"></a>
+## 1.0.3-alpha (2013-12-27)
+
+* added site, minify by default, fixed Readme ([d9e703b](https://github.com/mcasimir/mobile-angular-ui/commit/d9e703b))
+* many changes ([35e8f9b](https://github.com/mcasimir/mobile-angular-ui/commit/35e8f9b))
+
+
+
+<a name="1.0.2-alpha"></a>
+## 1.0.2-alpha (2013-12-25)
+
+* added angular-route as dependency, renamed toggle commands ([06b6024](https://github.com/mcasimir/mobile-angular-ui/commit/06b6024))
+
+
+
+<a name="1.0.1-alpha"></a>
+## 1.0.1-alpha (2013-12-25)
+
+* prerelease ([2cd360c](https://github.com/mcasimir/mobile-angular-ui/commit/2cd360c))
+
+
+
+<a name="1.0.0-alpha"></a>
+# 1.0.0-alpha (2013-12-25)
+
+* added capture directives and bspanels ([9037654](https://github.com/mcasimir/mobile-angular-ui/commit/9037654))
+* Cleaned up dependencies, grunt commit now committing after minify distributed assets ([38aca0d](https://github.com/mcasimir/mobile-angular-ui/commit/38aca0d))
+* first complete release ([719c1eb](https://github.com/mcasimir/mobile-angular-ui/commit/719c1eb))
+* Grunt Git task added ([0862a2a](https://github.com/mcasimir/mobile-angular-ui/commit/0862a2a))
+* removed git hooks; added tabs; added polifil for pointer-events:none ([09e7a2c](https://github.com/mcasimir/mobile-angular-ui/commit/09e7a2c))
+* switched name ([d6caeab](https://github.com/mcasimir/mobile-angular-ui/commit/d6caeab))

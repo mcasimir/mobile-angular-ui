@@ -1,74 +1,75 @@
 /**
-@module mobile-angular-ui.core.activeLinks
-@description
-
-`mobile-angular-ui.activeLinks` module sets up `.active` class for `a` elements those `href` attribute matches the current angular `$location` url. It takes care of excluding both search part and hash part from comparison.
-
-`.active` classes are added/removed each time one of `$locationChangeSuccess` or `$includeContentLoaded` is fired.
-
-## Usage
-
-Just declare it as a dependency to your app unless you have already included one of its super-modules.
-
-```
-angular.module('myApp', ['mobile-angular-ui.core.activeLinks']);
-```
-
-**NOTE:** if you are using it without Bootstrap you may need to add some css to your stylesheets to reflect the activation state of links. I.e.
-
-``` css
-a.active {
-  color: blue;
-}
-```
-
-*/
-(function () {
+ * @module mobile-angular-ui.core.activeLinks
+ * @description
+ *
+ * `mobile-angular-ui.activeLinks` module sets up `.active` class for `a` elements those `href` attribute matches the current angular `$location` url. It takes care of excluding both search part and hash part from comparison.
+ *
+ * `.active` classes are added/removed each time one of `$locationChangeSuccess` or `$includeContentLoaded` is fired.
+ *
+ * ## Usage
+ *
+ * Just declare it as a dependency to your app unless you have already included one of its super-modules.
+ *
+ * ```
+ * angular.module('myApp', ['mobile-angular-ui.core.activeLinks']);
+ * ```
+ *
+ * **NOTE:** if you are using it without Bootstrap you may need to add some css to your stylesheets to reflect the activation state of links. I.e.
+ *
+ * ``` css
+ * a.active {
+ *   color: blue;
+ * }
+ * ```
+ */
+(function() {
   'use strict';
 
-  angular.module("mobile-angular-ui.core.activeLinks", [])
+  angular.module('mobile-angular-ui.core.activeLinks', [])
+    .provider('setupActiveLinks', ['$locationProvider', function($locationProvider) {
+      this.$get = [
+        '$document',
+        '$location',
+        function($document, $location) {
+          return function() {
+            var currentPath = $location.path();
+            var links = $document[0].links;
 
-  .run([
-      '$rootScope', 
-      '$window', 
-      '$document',
-      '$location',
-      function($rootScope, $window, $document, $location){
+            for (var i = 0; i < links.length; i++) {
+              var link = angular.element(links[0]);
+              var href = link.attr('href');
 
-        var setupActiveLinks = function() {
-          // Excludes both search part and hash part from 
-          // comparison.
-          var url = $location.url(),
-              firstHash = url.indexOf('#'),
-              firstSearchMark = url.indexOf('?'),
-              locationHref = $window.location.href,
-              plainUrlLength = locationHref.indexOf(url),
-              newPath;
+              if (!href) {
+                return link.removeClass('active');
+              }
 
-          if (firstHash === -1 && firstSearchMark === -1) {
-            newPath = locationHref;
-          } else if (firstHash !== -1 && firstHash > firstSearchMark) {
-            newPath = locationHref.slice(0, plainUrlLength + firstHash);
-          } else if (firstSearchMark !== -1 && firstSearchMark > firstHash) {
-            newPath = locationHref.slice(0, plainUrlLength + firstSearchMark);
-          }
-          
-          var domLinks = $document[0].links;
-          for (var i = 0; i < domLinks.length; i++) {
-            var domLink = domLinks[i];
-            var link    = angular.element(domLink);
-            if (link.attr('href') && link.attr('href') !== '' && domLink.href === newPath) {
-              link.addClass('active');
-            } else if (link.attr('href') && link.attr('href') !== '' && domLink.href && domLink.href.length) {
-              link.removeClass('active');
+              var html5Mode = $locationProvider.html5Mode().enabled;
+              if (!html5Mode) {
+                var linkPrefix = '#' + $locationProvider.hashPrefix();
+                if (href.slice(0, linkPrefix.length) === linkPrefix) {
+                  href = href.slice(linkPrefix.length);
+                } else {
+                  return link.removeClass('active');
+                }
+              }
+
+              if (href.charAt(0) !== '/') {
+                return link.removeClass('active');
+              }
+
+              href = href.split('#')[0].split('?')[0];
+
+              if (href === currentPath) {
+                link.addClass('active');
+              } else {
+                link.removeClass('active');
+              }
             }
-          }
-        };
-
-        $rootScope.$on('$locationChangeSuccess', setupActiveLinks);
-        $rootScope.$on('$includeContentLoaded', setupActiveLinks);
-      }
-  ]);
-
+          };
+        }];
+    }])
+    .run(['$rootScope', 'setupActiveLinks', function($rootScope, setupActiveLinks) {
+      $rootScope.$on('$locationChangeSuccess', setupActiveLinks);
+      $rootScope.$on('$includeContentLoaded', setupActiveLinks);
+    }]);
 }());
-

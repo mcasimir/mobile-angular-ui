@@ -8,7 +8,7 @@ to follow development of new releases.
 Unscheduled:
   ❑ Look forward to use typescript/closure compiler or similar to perform maximum compression/optimization and structure sources better
   ❑ Support basic material design principles and visual feedbacks
-      
+
 
 Unscheduled 1.2:
   ❑ Support ms devices through -ms- touch property
@@ -29,7 +29,7 @@ Unscheduled 1.2:
 1.2.0.beta.11 (gestures and gulp):
 
   ✔ switch should work with $drag if present @done (15-01-26 19:47)
-  
+
   ✔ $swipe @done (15-01-26 13:45)
     ✔ Allow for nested $swipe @done (15-01-18 23:03)
     ✔ Fix compatibility between $swipe and FastClick @done (15-01-19 00:09)

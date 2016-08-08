@@ -109,7 +109,7 @@ h1 {
 }
 
 [drag-to-dismiss]{
-  transform: translate(0,0); /* NOTE: this is required to prevent mobile webkit issues */ 
+  transform: translate(0,0); /* NOTE: this is required to prevent mobile webkit issues */
   -webkit-user-drag: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -142,7 +142,7 @@ h1 {
 }
 
 .list-group-item-home {
-  padding: 20px; 
+  padding: 20px;
 }
 
 pre {
@@ -154,3 +154,15 @@ input.scrollable-header {
 }
 
 .toucharea {width: 100%; height: 100%;}
+
+.touch-mark {
+  position: absolute;
+  background-color: #ccc;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  margin-top: -15px;
+  margin-left: -15px;
+  opacity: .5;
+  transform: scale(1, 1);
+}
