@@ -8,13 +8,13 @@ before_install:
 services:
 - docker
 script:
-- docker run --rm --privileged -w /usr/src/app -v $PWD:/usr/src/app mcasimir/dind-node-build-runner:4.4.3 bash ci.sh
+- docker run --rm --privileged -w /usr/src/app -v $PWD:/usr/src/app mcasimir/dind-node-build-runner:6.2.1 bash ci.sh
 - node_modules/.bin/codecov
 deploy:
   provider: npm
   email: maurizio.cas@gmail.com
   api_key:
-    secure: IsXTjqdxaByIttOU5yyPiFcQkqGD2F/+opjoKQ6ujjc5uYkUa3gy82ZeSk479RE/tnhGuwcVOFtMLBwhqY5Xb0jq5sAStG616YN7JAYiUtX32bPEgnCT77ZlTgoUp8vhO3Cl5XXOOjLR/99jVJUPem6ury41RghjC9r/aHNJluA=
+    secure: kaKfP4ZS8Bd/XdwJPrCDsllC3SGvMQTdEsC7LriMv5AHCxJFY6rBJ8YqgFx/Tna9TVGjr9Q0lQ6hX1V1im0I8/lT5y5dHW5Kib2WwOosCA530kkkfc/7u4zHIxrl5wzLLp2VQhBaSMherV/btD3cGIPk91M8Q5c2kc0fORx8Cc0=
   on:
     tags: true
     repo: mcasimir/mobile-angular-ui
