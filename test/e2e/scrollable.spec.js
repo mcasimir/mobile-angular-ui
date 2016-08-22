@@ -4,7 +4,7 @@
 
 describe('scrollable', function() {
   beforeEach(function() {
-    browser.get('/#/scrollable');
+    browser.get('/test/e2e/app/#/scrollable');
   });
 
   it('should center input and textareas when focused and window resizes (soft keyboard workaround)', function() {
