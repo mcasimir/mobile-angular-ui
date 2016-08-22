@@ -164,7 +164,13 @@
                 // since an input got focus we assume soft keyboard is showing.
                 //
                 if (h1 > h2) {
-                  scrollable.scrollTo(elem, 10);
+                  var marginTop = 10;
+                  //if scrollableHeader is present increase the marginTop to compensate for scrollableHeader's height.
+                  var scrollableHeader = scrollable.scrollableContent.parentElement.querySelector('.scrollable-header');
+                  if (scrollableHeader) {
+                    marginTop = (scrollableHeader.getBoundingClientRect().bottom - scrollableHeader.getBoundingClientRect().top) + marginTop;
+                  }
+                  scrollable.scrollTo(elem, marginTop);
                 }
               }, 500);
             }
