@@ -39,6 +39,7 @@ var config = {
     ignore: [
       'angular',
       'angular-mocks',
+      'angular-route',
       'bootstrap',
       'mobile-angular-ui',
       'jasmine-core',
