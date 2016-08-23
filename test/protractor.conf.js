@@ -3,7 +3,7 @@
 exports.config = {
   specs: ['test/e2e/*.spec.js'],
   capabilities: {
-  browserName: 'chrome',
+    browserName: 'chrome',
     chromeOptions: {
       args: [
         '--no-sandbox',
