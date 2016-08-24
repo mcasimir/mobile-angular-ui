@@ -2,9 +2,9 @@
 
 describe('core', function() {
   describe('sharedState', function() {
-    var scope;
-    var compile;
-    var SharedState;
+    let scope;
+    let compile;
+    let SharedState;
 
     beforeEach(function() {
       module('mobile-angular-ui.core.sharedState');
@@ -19,8 +19,8 @@ describe('core', function() {
       it('should set defined class if state is true', function() {
         SharedState.initialize(scope, 'state1', {defaultValue: true});
 
-        var elem = angular.element('<div ui-class="{ \'active\': state1 }" />');
-        var directiveElement = compile(elem)(scope);
+        let elem = angular.element('<div ui-class="{ \'active\': state1 }" />');
+        let directiveElement = compile(elem)(scope);
 
         scope.$digest();
 
@@ -30,8 +30,8 @@ describe('core', function() {
       it('should not set defined class if state is false', function() {
         SharedState.initialize(scope, 'state1', {defaultValue: false});
 
-        var elem = angular.element('<div ui-class="{ \'active\': state1 }" />');
-        var directiveElement = compile(elem)(scope);
+        let elem = angular.element('<div ui-class="{ \'active\': state1 }" />');
+        let directiveElement = compile(elem)(scope);
 
         scope.$digest();
 
@@ -42,8 +42,8 @@ describe('core', function() {
         SharedState.initialize(scope, 'state1', {defaultValue: true});
         scope.x = 1;
 
-        var elem = angular.element('<div ui-class="{ \'active\': state{{x}} }" />');
-        var directiveElement = compile(elem)(scope);
+        let elem = angular.element('<div ui-class="{ \'active\': state{{x}} }" />');
+        let directiveElement = compile(elem)(scope);
 
         scope.$digest();
 
@@ -54,8 +54,8 @@ describe('core', function() {
         SharedState.initialize(scope, 'state1', {defaultValue: false});
         scope.x = 1;
 
-        var elem = angular.element('<div ui-class="{ \'active\': state{{x}} }" />');
-        var directiveElement = compile(elem)(scope);
+        let elem = angular.element('<div ui-class="{ \'active\': state{{x}} }" />');
+        let directiveElement = compile(elem)(scope);
 
         scope.$digest();
 

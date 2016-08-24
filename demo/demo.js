@@ -1,4 +1,4 @@
-/* global angular */
+/* eslint no-alert: 0 */
 
 'use strict';
 
@@ -6,7 +6,7 @@
 // Here is how to define your module
 // has dependent on mobile-angular-ui
 //
-var app = angular.module('MobileAngularUiExamples', [
+let app = angular.module('MobileAngularUiExamples', [
   'ngRoute',
   'mobile-angular-ui',
 
@@ -28,19 +28,19 @@ app.run(function($transform) {
 // in order to avoid unwanted routing.
 //
 app.config(function($routeProvider) {
-  $routeProvider.when('/',              {templateUrl: 'home.html', reloadOnSearch: false});
-  $routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false});
-  $routeProvider.when('/toggle',        {templateUrl: 'toggle.html', reloadOnSearch: false});
-  $routeProvider.when('/tabs',          {templateUrl: 'tabs.html', reloadOnSearch: false});
-  $routeProvider.when('/accordion',     {templateUrl: 'accordion.html', reloadOnSearch: false});
-  $routeProvider.when('/overlay',       {templateUrl: 'overlay.html', reloadOnSearch: false});
-  $routeProvider.when('/forms',         {templateUrl: 'forms.html', reloadOnSearch: false});
-  $routeProvider.when('/dropdown',      {templateUrl: 'dropdown.html', reloadOnSearch: false});
-  $routeProvider.when('/touch',         {templateUrl: 'touch.html', reloadOnSearch: false});
-  $routeProvider.when('/swipe',         {templateUrl: 'swipe.html', reloadOnSearch: false});
-  $routeProvider.when('/drag',          {templateUrl: 'drag.html', reloadOnSearch: false});
-  $routeProvider.when('/drag2',         {templateUrl: 'drag2.html', reloadOnSearch: false});
-  $routeProvider.when('/carousel',      {templateUrl: 'carousel.html', reloadOnSearch: false});
+  $routeProvider.when('/', {templateUrl: 'home.html', reloadOnSearch: false});
+  $routeProvider.when('/scroll', {templateUrl: 'scroll.html', reloadOnSearch: false});
+  $routeProvider.when('/toggle', {templateUrl: 'toggle.html', reloadOnSearch: false});
+  $routeProvider.when('/tabs', {templateUrl: 'tabs.html', reloadOnSearch: false});
+  $routeProvider.when('/accordion', {templateUrl: 'accordion.html', reloadOnSearch: false});
+  $routeProvider.when('/overlay', {templateUrl: 'overlay.html', reloadOnSearch: false});
+  $routeProvider.when('/forms', {templateUrl: 'forms.html', reloadOnSearch: false});
+  $routeProvider.when('/dropdown', {templateUrl: 'dropdown.html', reloadOnSearch: false});
+  $routeProvider.when('/touch', {templateUrl: 'touch.html', reloadOnSearch: false});
+  $routeProvider.when('/swipe', {templateUrl: 'swipe.html', reloadOnSearch: false});
+  $routeProvider.when('/drag', {templateUrl: 'drag.html', reloadOnSearch: false});
+  $routeProvider.when('/drag2', {templateUrl: 'drag2.html', reloadOnSearch: false});
+  $routeProvider.when('/carousel', {templateUrl: 'carousel.html', reloadOnSearch: false});
 });
 
 //
@@ -86,9 +86,9 @@ app.directive('dragToDismiss', function($drag, $parse, $timeout) {
   return {
     restrict: 'A',
     compile: function(elem, attrs) {
-      var dismissFn = $parse(attrs.dragToDismiss);
+      let dismissFn = $parse(attrs.dragToDismiss);
       return function(scope, elem) {
-        var dismiss = false;
+        let dismiss = false;
 
         $drag.bind(elem, {
           transform: $drag.TRANSLATE_RIGHT,
@@ -135,7 +135,7 @@ app.directive('carousel', function() {
       this.activeItem = null;
 
       this.addItem = function() {
-        var newId = this.itemCount++;
+        let newId = this.itemCount++;
         this.activeItem = this.itemCount === 1 ? newId : this.activeItem;
         return newId;
       };
@@ -162,10 +162,10 @@ app.directive('carouselItem', function($drag) {
     template: '<div class="item"><div ng-transclude></div></div>',
     link: function(scope, elem, attrs, carousel) {
       scope.carousel = carousel;
-      var id = carousel.addItem();
+      let id = carousel.addItem();
 
-      var zIndex = function() {
-        var res = 0;
+      let zIndex = function() {
+        let res = 0;
         if (id === carousel.activeItem) {
           res = 2000;
         } else if (carousel.activeItem < id) {
@@ -190,15 +190,15 @@ app.directive('carouselItem', function($drag) {
           //
           // use translate both as basis for the new transform:
           //
-          var t = $drag.TRANSLATE_BOTH(element, transform, touch);
+          let t = $drag.TRANSLATE_BOTH(element, transform, touch);
 
           //
           // Add rotation:
           //
-          var Dx    = touch.distanceX;
-          var t0    = touch.startTransform;
-          var sign  = Dx < 0 ? -1 : 1;
-          var angle = sign * Math.min((Math.abs(Dx) / 700) * 30 , 30);
+          let Dx = touch.distanceX;
+          let t0 = touch.startTransform;
+          let sign = Dx < 0 ? -1 : 1;
+          let angle = sign * Math.min((Math.abs(Dx) / 700) * 30, 30);
 
           t.rotateZ = angle + (Math.round(t0.rotateZ));
 
@@ -281,16 +281,15 @@ app.controller('MainController', function($rootScope, $scope) {
   //
   // 'Scroll' screen
   //
-  var scrollItems = [];
+  let scrollItems = [];
 
-  for (var i = 1; i <= 100; i++) {
+  for (let i = 1; i <= 100; i++) {
     scrollItems.push('Item ' + i);
   }
 
   $scope.scrollItems = scrollItems;
 
   $scope.bottomReached = function() {
-    /* global alert: false; */
     alert('Congrats you scrolled to the end of the list!');
   };
 
@@ -340,12 +339,12 @@ app.controller('MainController', function($rootScope, $scope) {
   //
   $scope.notices = [];
 
-  for (var j = 0; j < 10; j++) {
+  for (let j = 0; j < 10; j++) {
     $scope.notices.push({icon: 'envelope', message: 'Notice ' + (j + 1)});
   }
 
   $scope.deleteNotice = function(notice) {
-    var index = $scope.notices.indexOf(notice);
+    let index = $scope.notices.indexOf(notice);
     if (index > -1) {
       $scope.notices.splice(index, 1);
     }

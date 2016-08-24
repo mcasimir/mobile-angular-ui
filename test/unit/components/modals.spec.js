@@ -1,9 +1,9 @@
 'use strict';
 
 describe('components', function() {
-  var scope;
-  var compile;
-  var $rootElement;
+  let scope;
+  let compile;
+  let $rootElement;
 
   beforeEach(function() {
     $rootElement = angular.element(document.body);
@@ -20,7 +20,7 @@ describe('components', function() {
 
   describe('modal', function() {
     it('adds class has-modal if modal is present', function() {
-      var elem = angular.element('<div class="modal" />');
+      let elem = angular.element('<div class="modal" />');
       compile(elem)(scope);
       scope.$digest();
 
@@ -28,7 +28,7 @@ describe('components', function() {
     });
 
     it('removes class has-modal if modal scope is destroyed', function() {
-      var elem = angular.element('<div class="modal" />');
+      let elem = angular.element('<div class="modal" />');
       compile(elem)(scope);
       scope.$digest();
       scope.$destroy();
@@ -36,7 +36,7 @@ describe('components', function() {
     });
 
     it('removes class has-modal if modal element is destroyed', function() {
-      var elem = angular.element('<div class="modal" />');
+      let elem = angular.element('<div class="modal" />');
       compile(elem)(scope);
       scope.$digest();
       elem.remove();
@@ -44,7 +44,7 @@ describe('components', function() {
     });
 
     it('adds class has-modal-overlay to rootElement if element has class modal-overlay', function() {
-      var elem = angular.element('<div class="modal modal-overlay" />');
+      let elem = angular.element('<div class="modal modal-overlay" />');
       compile(elem)(scope);
       scope.$digest();
 
@@ -52,7 +52,7 @@ describe('components', function() {
     });
 
     it('removes class has-modal-overlay from rootElement if element scope is destroyed', function() {
-      var elem = angular.element('<div class="modal modal-overlay" />');
+      let elem = angular.element('<div class="modal modal-overlay" />');
       compile(elem)(scope);
       scope.$digest();
       scope.$destroy();
@@ -60,7 +60,7 @@ describe('components', function() {
     });
 
     it('removes class has-modal-overlay from rootElement if element is destroyed', function() {
-      var elem = angular.element('<div class="modal modal-overlay" />');
+      let elem = angular.element('<div class="modal modal-overlay" />');
       compile(elem)(scope);
       scope.$digest();
       elem.remove();

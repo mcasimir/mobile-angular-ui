@@ -35,4 +35,4 @@
     'mobile-angular-ui.core.sharedState',
     'mobile-angular-ui.core.touchmoveDefaults'
   ]);
-}());
+})();

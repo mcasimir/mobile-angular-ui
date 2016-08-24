@@ -9,7 +9,9 @@
  *
  * <div class="alert alert-warning">
  * <p>
- * <i class="fa fa-warning"></i> This module will not work with `ngTouch` cause it is intended, among offering more features, to be a drop-in replacement for it.
+ * <i class="fa fa-warning"></i> This module will not work with `ngTouch`
+ * cause it is intended, among offering more features, to be a drop-in
+ * replacement for it.
  * </p>
  * <p>
  * Be aware that `ngTouch` is still not playing well with `fastclick.js` and its usage with `mobile-angular-ui` is currently discouraged anyway.
@@ -18,7 +20,9 @@
  *
  * ## Usage
  *
- * `.gestures` module is not required by `mobile-angular-ui` module. It has no dependency on other modules and is intended to be used alone with any other angular framework.
+ * `.gestures` module is not required by `mobile-angular-ui` module. It has no
+ * dependency on other modules and is intended to be used alone with any other
+ * angular framework.
  *
  * You have to include `mobile-angular-ui.gestures.min.js` to your project in order to use it. Ie.
  *
@@ -38,4 +42,4 @@
     'mobile-angular-ui.gestures.swipe',
     'mobile-angular-ui.gestures.transform'
   ]);
-}());
+})();

@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="/dist/css/mobile-angular-ui-base.min.css" />
     <link rel="stylesheet" href="/dist/css/mobile-angular-ui-desktop.min.css" />
     <link rel="stylesheet" href="demo.css" />
-    <script src="angular.min.js"></script>
-    <script src="angular-route.min.js"></script>
+    <script src="/node_modules/angular/angular.js"></script>
+    <script src="/node_modules/angular-route/angular-route.js"></script>
     <script src="/dist/js/mobile-angular-ui.min.js"></script>
     <!-- Required to use $touch, $swipe, $drag and $translate services -->
     <script src="/dist/js/mobile-angular-ui.gestures.min.js"></script>
@@ -78,15 +78,5 @@
     </div><!-- ~ .app -->
 
     <div ui-yield-to="modals"></div>
-
-    <script>
-       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-       ga('create', 'UA-48036416-1', 'mobileangularui.com');
-       ga('send', 'pageview');
-     </script>
   </body>
 </html>

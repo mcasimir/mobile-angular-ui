@@ -41,7 +41,7 @@
    * take care of disposing them when no scopes are requiring them anymore.
    *
    * A set of `ui-*` directives are available to interact with `SharedState`
-   * module and will hopefully let you spare your controllers and your time
+   * module and will hopefully var you spare your controllers and your time
    * for something that is more meaningful than this:
    *
    * ``` js
@@ -71,11 +71,15 @@
    *
    * <iframe class='embedded-example'  src='/examples/lightbulb.html'></iframe>
    *
-   * NOTE: `ui-toggle/set/turnOn/turnOff` responds to `click/tap` without stopping propagation so you can use them along with ng-click too. You can also change events to respond to with `ui-triggers` attribute.
+   * NOTE: `ui-toggle/set/turnOn/turnOff` responds to `click/tap` without
+   * stopping propagation so you can use them along with ng-click too.
+   * You can also change events to respond to with `ui-triggers` attribute.
    *
-   * Any `SharedState` method is exposed through `Ui` object in `$rootScope`. So you could always do `ng-click="Ui.turnOn('myVar')"`.
+   * Any `SharedState` method is exposed through `Ui` object in `$rootScope`.
+   * So you could always do `ng-click="Ui.turnOn('myVar')"`.
    *
-   * Since `SharedState` is a service you can initialize/set statuses through controllers too:
+   * Since `SharedState` is a service you can initialize/set statuses through
+   * controllers too:
    *
    * ``` js
    * app.controller('myController', function($scope, SharedState){
@@ -100,9 +104,11 @@
    *
    * A `SharedState` state can be considered as a global variable identified by an `id`.
    *
-   * `SharedState` service exposes methods to interact with statuses to create, read and update states.
+   * `SharedState` service exposes methods to interact with statuses to create,
+   * read and update states.
    *
-   * It acts as a BUS between UI elements to share UI related state that is automatically disposed when all scopes requiring it are destroyed.
+   * It acts as a BUS between UI elements to share UI related state that is
+   * automatically disposed when all scopes requiring it are destroyed.
    *
    * eg.
    *
@@ -116,9 +122,14 @@
    * });
    * ```
    *
-   * Data structures retaining statuses will stay outside angular scopes thus they are not evaluated against digest cycle until its necessary. Also although statuses are sort of global variables `SharedState` will take care of disposing them when no scopes are requiring them anymore.
+   * Data structures retaining statuses will stay outside angular scopes thus
+   * they are not evaluated against digest cycle until its necessary. Also
+   * although statuses are sort of global variables `SharedState` will take
+   * care of disposing them when no scopes are requiring them anymore.
    *
-   * A set of `ui-*` directives are available to interact with `SharedState` module and will hopefully let you spare your controllers and your time for something that is more meaningful than this:
+   * A set of `ui-*` directives are available to interact with `SharedState`
+   * module and will hopefully var you spare your controllers and your time for
+   * something that is more meaningful than this:
    *
    * ``` js
    * $scope.activeTab = 1;
@@ -136,7 +147,8 @@
   * @memberOf mobile-angular-ui.core.sharedState~SharedState
   *
   * @description
-  * Broadcasted on `$rootScope` when `#initialize` is called for a new state not referenced by any scope currently.
+  * Broadcasted on `$rootScope` when `#initialize` is called for a new state not
+  * referenced by any scope currently.
   *
   * @param {any} currentValue The value with which this state has been initialized
   *
@@ -177,7 +189,7 @@
  */
 
   module.factory('SharedState', [
-  '$rootScope', '$log',
+    '$rootScope', '$log',
     function($rootScope, $log) {
       var values = {};    // values, context object for evals
       var statusesMeta = {};  // status info
@@ -192,7 +204,10 @@
          *
          * Initialize, or require if already intialized, a state identified by `id` within the provided `scope`, making it available to the rest of application.
          *
-         * A `SharedState` is bound to one or more scopes. Each time `initialize` is called for an angular `scope` this will be bound to the `SharedState` and a reference count is incremented to allow garbage collection.
+         * A `SharedState` is bound to one or more scopes. Each time
+         * `initialize` is called for an angular `scope` this will be bound to
+         * the `SharedState` and a reference count is incremented to allow
+         * garbage collection.
          *
          * Reference count is decremented once the scope is destroyed. When the counter reach 0 the state will be disposed.
          *
@@ -200,7 +215,10 @@
          * @param  {string} id The unique name of this state
          * @param  {object} [options] Options
          * @param  {object} [options.defaultValue] the initialization value, it is taken into account only if the state `id` is not already initialized
-         * @param  {string} [options.exclusionGroup] Specifies an exclusion group for the state. This means that for boolean operations (ie. toggle, turnOn, turnOf) when this state is set to `true`, any other state that is in the same `exclusionGroup` will be set to `false`.
+         * @param  {string} [options.exclusionGroup] Specifies an exclusion group
+         * for the state. This means that for boolean operations (ie. toggle,
+         * turnOn, turnOf) when this state is set to `true`, any other state
+         * that is in the same `exclusionGroup` will be set to `false`.
          */
         initialize: function(scope, id, options) {
           options = options || {};
@@ -275,9 +293,8 @@
               $rootScope.$broadcast('mobile-angular-ui.state.changed.' + id, value, prev);
             }
             return value;
-          } else {
-            $log.warn('Warning: Attempt to set uninitialized shared state: ' + id);
           }
+          $log.warn('Warning: Attempt to set uninitialized shared state: ' + id);
         },
 
         /**
@@ -404,7 +421,7 @@
          * @returns {bool}
          */
         isActive: function(id) {
-          return !!this.get(id);
+          return Boolean(this.get(id));
         },
 
         /**
@@ -542,9 +559,9 @@
         restrict: 'EA',
         priority: 601, // more than ng-if
         link: function(scope, elem, attrs) {
-          var id               = attrs.uiState || attrs.id;
-          var defaultValueExpr = attrs.uiDefault || attrs['default'];
-          var defaultValue     = defaultValueExpr ? scope.$eval(defaultValueExpr) : undefined;
+          var id = attrs.uiState || attrs.id;
+          var defaultValueExpr = attrs.uiDefault || attrs.default;
+          var defaultValue = defaultValueExpr ? scope.$eval(defaultValueExpr) : undefined;
 
           SharedState.initialize(scope, id, {
             defaultValue: defaultValue,
@@ -610,41 +627,41 @@
         '$interpolate',
         'SharedState',
         function($parse, $interpolate, SharedState) {
-              var method = SharedState[methodName];
-              return {
-                restrict: 'A',
-                priority: 1, // This would make postLink calls happen after ngClick
+          var method = SharedState[methodName];
+          return {
+            restrict: 'A',
+            priority: 1, // This would make postLink calls happen after ngClick
                 // (and similar) ones, thus intercepting events after them.
                 //
                 // This will prevent eventual ng-if to detach elements
                 // before ng-click fires.
 
-                compile: function(elem, attrs) {
-                  var attr = attrs[directiveName];
-                  var needsInterpolation = attr.match(/\{\{/);
+            compile: function(elem, attrs) {
+              var attr = attrs[directiveName];
+              var needsInterpolation = attr.match(/\{\{/);
 
-                  var exprFn = function($scope) {
-                    var res = attr;
-                    if (needsInterpolation) {
-                      var interpolateFn = $interpolate(res);
-                      res = interpolateFn($scope);
-                    }
-                    if (methodName === 'set') {
-                      res = ($parse(res))($scope);
-                    }
-                    return res;
-                  };
-
-                  return function(scope, elem, attrs) {
-                    var callback = function() {
-                      var arg = exprFn(scope);
-                      return method.call(SharedState, arg);
-                    };
-                    uiBindEvent(scope, elem, attrs.uiTriggers, callback);
-                  };
+              var exprFn = function($scope) {
+                var res = attr;
+                if (needsInterpolation) {
+                  var interpolateFn = $interpolate(res);
+                  res = interpolateFn($scope);
                 }
+                if (methodName === 'set') {
+                  res = ($parse(res))($scope);
+                }
+                return res;
+              };
+
+              return function(scope, elem, attrs) {
+                var callback = function() {
+                  var arg = exprFn(scope);
+                  return method.call(SharedState, arg);
+                };
+                uiBindEvent(scope, elem, attrs.uiTriggers, callback);
               };
             }
+          };
+        }
       ]);
     });
 
@@ -781,8 +798,11 @@
     * @description
     * Same as `ngIf` but evaluates condition against `SharedState` statuses too
     *
-    * @param {expression} uiIf A condition to decide wether to attach the element to the dom
-    * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]` specifing one of more scope variables to take into account when evaluating condition.
+    * @param {expression} uiIf A condition to decide wether to attach the
+    * element to the dom
+    * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]`
+    * specifing one of more scope variables to take into account when
+    * evaluating condition.
     */
   module.directive('uiIf', ['$animate', 'SharedState', '$parse', '$interpolate', function($animate, SharedState, $parse, $interpolate) {
     function getBlockNodes(nodes) {
@@ -791,7 +811,9 @@
       var blockNodes = [node];
       do {
         node = node.nextSibling;
-        if (!node) { break; }
+        if (!node) {
+          break;
+        }
         blockNodes.push(node);
       } while (node !== endNode);
 
@@ -812,42 +834,42 @@
         var uiIfFn = parseUiCondition('uiIf', $attr, $scope, SharedState, $parse, $interpolate);
 
         $scope.$watch(uiIfFn, function uiIfWatchAction(value) {
-            if (value) {
-              if (!childScope) {
-                $transclude(function(clone, newScope) {
-                  childScope = newScope;
-                  clone[clone.length++] = document.createComment(' end uiIf: ' + $attr.uiIf + ' ');
+          if (value) {
+            if (!childScope) {
+              $transclude(function(clone, newScope) {
+                childScope = newScope;
+                clone[clone.length++] = document.createComment(' end uiIf: ' + $attr.uiIf + ' ');
                   // Note: We only need the first/last node of the cloned nodes.
                   // However, we need to keep the reference to the jqlite wrapper as it might be changed later
                   // by a directive with templateUrl when its template arrives.
-                  block = {
-                    clone: clone
-                  };
-                  $animate.enter(clone, $element.parent(), $element);
-                });
-              }
-            } else {
-              if (previousElements) {
-                previousElements.remove();
-                previousElements = null;
-              }
-              if (childScope) {
-                childScope.$destroy();
-                childScope = null;
-              }
-              if (block) {
-                previousElements = getBlockNodes(block.clone);
-                var done = function() {
-                  previousElements = null;
+                block = {
+                  clone: clone
                 };
-                var nga = $animate.leave(previousElements, done);
-                if (nga) {
-                  nga.then(done);
-                }
-                block = null;
-              }
+                $animate.enter(clone, $element.parent(), $element);
+              });
             }
-          });
+          } else {
+            if (previousElements) {
+              previousElements.remove();
+              previousElements = null;
+            }
+            if (childScope) {
+              childScope.$destroy();
+              childScope = null;
+            }
+            if (block) {
+              previousElements = getBlockNodes(block.clone);
+              var done = function() {
+                previousElements = null;
+              };
+              var nga = $animate.leave(previousElements, done);
+              if (nga) {
+                nga.then(done);
+              }
+              block = null;
+            }
+          }
+        });
       }
     };
   }]);
@@ -860,7 +882,8 @@
    * Same as `ngHide` but evaluates condition against `SharedState` statuses
    *
    * @param {expression} uiShow A condition to decide wether to hide the element
-   * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]` specifing one of more scope variables to take into account when evaluating condition.
+   * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]`
+   * specifing one of more scope variables to take into account when evaluating condition.
    */
   module.directive('uiHide', ['$animate', 'SharedState', '$parse', '$interpolate', function($animate, SharedState, $parse, $interpolate) {
     var NG_HIDE_CLASS = 'ng-hide';
@@ -888,7 +911,8 @@
    * Same as `ngShow` but evaluates condition against `SharedState` statuses
    *
    * @param {expression} uiShow A condition to decide wether to show the element
-   * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]` specifing one of more scope variables to take into account when evaluating condition.
+   * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]`
+   * specifing one of more scope variables to take into account when evaluating condition.
    */
   module.directive('uiShow', ['$animate', 'SharedState', '$parse', '$interpolate', function($animate, SharedState, $parse) {
     var NG_HIDE_CLASS = 'ng-hide';
@@ -915,8 +939,12 @@
    * @description
    * A simplified version of `ngClass` that evaluates in context of `SharedState`, it only suppors the `{'className': expr}` syntax.
    *
-   * @param {expression} uiClass An expression that has to evaluate to an object of the form `{'className': expr}`, where `expr` decides wether the class should appear to element's class list.
-   * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]` specifing one of more scope variables to take into account when evaluating condition.
+   * @param {expression} uiClass An expression that has to evaluate to an object
+   * of the form `{'className': expr}`, where `expr` decides wether the class
+   * should appear to element's class list.
+   * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]`
+   * specifing one of more scope variables to take into account when evaluating
+   * condition.
    */
   module.directive('uiClass', ['SharedState', '$parse', '$interpolate', function(SharedState, $parse) {
     return {
@@ -954,4 +982,4 @@
     }
   ]);
 
-}());
+})();

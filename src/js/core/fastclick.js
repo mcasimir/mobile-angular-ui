@@ -4,12 +4,14 @@
 
   module.run(['$window', function($window) {
 
-    //Temporarly bugfix in overthrow/fastclick:
+    // Temporarly bugfix in overthrow/fastclick:
     var orgHandler = FastClick.prototype.onTouchEnd;
 
     // Some old versions of Android don't have Function.prototype.bind
     function bind(method, context) {
-      return function() { return method.apply(context, arguments); };
+      return function() {
+        return method.apply(context, arguments);
+      };
     }
 
     FastClick.prototype.onTouchEnd = function(event) {
@@ -37,4 +39,4 @@
       };
     });
   });
-}());
+})();

@@ -2,9 +2,9 @@
 
 describe('core', function() {
   describe('fastclick', function() {
-    var scope;
-    var compile;
-    var fastclickOnTouchEnd;
+    let scope;
+    let compile;
+    let fastclickOnTouchEnd;
 
     beforeEach(function() {
       FastClick.notNeeded = function() {
@@ -28,14 +28,14 @@ describe('core', function() {
     });
 
     it('forwards touchend events to original handler', function() {
-      var event = new Event('touchend');
+      let event = new Event('touchend');
       event.changedTouches = [{}];
       document.body.dispatchEvent(event);
       expect(fastclickOnTouchEnd).toHaveBeenCalled();
     });
 
     it('adapts touchend events if missing event.changedTouches', function() {
-      var event = new Event('touchend');
+      let event = new Event('touchend');
       document.body.dispatchEvent(event);
       expect(fastclickOnTouchEnd).toHaveBeenCalledWith(jasmine.objectContaining({
         changedTouches: [{}]
@@ -43,7 +43,7 @@ describe('core', function() {
     });
 
     it('should add needsclick to input', function() {
-      var elem = angular.element(
+      let elem = angular.element(
         '<input type="text">'
       );
 
@@ -54,7 +54,7 @@ describe('core', function() {
     });
 
     it('should add needsclick to select', function() {
-      var elem = angular.element(
+      let elem = angular.element(
         '<select></select>'
       );
 
@@ -65,7 +65,7 @@ describe('core', function() {
     });
 
     it('should add needsclick to textarea', function() {
-      var elem = angular.element(
+      let elem = angular.element(
         '<textarea></textarea>'
       );
 

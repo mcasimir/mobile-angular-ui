@@ -2,9 +2,9 @@
 
 describe('core', function() {
   describe('sharedState', function() {
-    var scope;
-    var compile;
-    var SharedState;
+    let scope;
+    let compile;
+    let SharedState;
 
     beforeEach(function() {
       module('mobile-angular-ui.core.sharedState');
@@ -19,11 +19,11 @@ describe('core', function() {
       it('runs on click', function() {
         spyOn(SharedState, 'turnOff');
 
-        var elem = angular.element(
+        let elem = angular.element(
           '<div ui-turn-off="state1" />'
         );
 
-        var directiveElement = compile(elem)(scope);
+        let directiveElement = compile(elem)(scope);
 
         scope.$digest();
 
@@ -35,11 +35,11 @@ describe('core', function() {
       it('does not run on click if uiTriggers is not click', function() {
         spyOn(SharedState, 'turnOff');
 
-        var elem = angular.element(
+        let elem = angular.element(
           '<div ui-turn-off="state1" ui-triggers="tap" />'
         );
 
-        var directiveElement = compile(elem)(scope);
+        let directiveElement = compile(elem)(scope);
 
         scope.$digest();
 
@@ -51,11 +51,11 @@ describe('core', function() {
       it('runs on tap if uiTriggers is tap', function() {
         spyOn(SharedState, 'turnOff');
 
-        var elem = angular.element(
+        let elem = angular.element(
           '<div ui-turn-off="state1" ui-triggers="tap" />'
         );
 
-        var directiveElement = compile(elem)(scope);
+        let directiveElement = compile(elem)(scope);
 
         scope.$digest();
 
@@ -65,7 +65,7 @@ describe('core', function() {
       });
 
       it('should bind after ng-click (1)', function() {
-        var calls = [];
+        let calls = [];
         scope.ngClickCallback = function() {
           calls.push('ngClick');
         };
@@ -74,11 +74,11 @@ describe('core', function() {
           calls.push('turnOff');
         });
 
-        var elem = angular.element(
+        let elem = angular.element(
           '<div ui-turn-off="state1" ng-click="ngClickCallback()" />'
         );
 
-        var directiveElement = compile(elem)(scope);
+        let directiveElement = compile(elem)(scope);
 
         scope.$digest();
 
@@ -91,7 +91,7 @@ describe('core', function() {
       });
 
       it('should bind after ng-click (2)', function() {
-        var calls = [];
+        let calls = [];
         scope.ngClickCallback = function() {
           calls.push('ngClick');
         };
@@ -100,11 +100,11 @@ describe('core', function() {
           calls.push('turnOff');
         });
 
-        var elem = angular.element(
+        let elem = angular.element(
           '<div ng-click="ngClickCallback()" ui-turn-off="state1" />'
         );
 
-        var directiveElement = compile(elem)(scope);
+        let directiveElement = compile(elem)(scope);
 
         scope.$digest();
 

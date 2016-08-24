@@ -2,11 +2,11 @@
 
 describe('core', function() {
   describe('sharedState', function() {
-    var scope;
-    var scope2;
-    var SharedState;
-    var $rootScope;
-    var $log;
+    let scope;
+    let scope2;
+    let SharedState;
+    let $rootScope;
+    let $log;
 
     beforeEach(function() {
       module('mobile-angular-ui.core.sharedState');
@@ -111,7 +111,7 @@ describe('core', function() {
           SharedState.initialize(scope, 'state1');
           SharedState.initialize(scope2, 'state1');
 
-          var calls = $rootScope.$broadcast.calls.allArgs().filter(function(args) {
+          let calls = $rootScope.$broadcast.calls.allArgs().filter(function(args) {
             return args[0] === 'mobile-angular-ui.state.initialized.state1';
           });
 

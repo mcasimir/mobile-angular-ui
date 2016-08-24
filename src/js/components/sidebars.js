@@ -3,7 +3,8 @@
  *
  * @description
  *
- * Sidebars can be placed either in left side or right side adding respectively `.sidebar-left` and `.sidebar-right` classes.
+ * Sidebars can be placed either in left side or right side adding respectively
+ * `.sidebar-left` and `.sidebar-right` classes.
  *
  * ``` html
  * <div class="sidebar sidebar-left">
@@ -27,7 +28,9 @@
  *
  * #### Interacting with sidebars
  *
- * Under the hood sidebar uses `SharedState` exposing respective statuses: `uiSidebarLeft` and `uiSidebarRight` unless you define different state name through `id` attribute on sidebar elements.
+ * Under the hood sidebar uses `SharedState` exposing respective statuses:
+ * `uiSidebarLeft` and `uiSidebarRight` unless you define different state name
+ * through `id` attribute on sidebar elements.
  *
  * ``` html
  * <a href ui-toggle='uiSidebarLeft'>Toggle sidebar left</a>
@@ -35,7 +38,8 @@
  * <a href ui-toggle='uiSidebarRight'>Toggle sidebar right</a>
  * ```
  *
- * You can put `ui-turn-off='uiSidebarLeft'` or `ui-turn-off='uiSidebarLeft'` inside the sidebar to make it close after clicking links inside them.
+ * You can put `ui-turn-off='uiSidebarLeft'` or `ui-turn-off='uiSidebarLeft'`
+ * inside the sidebar to make it close after clicking links inside them.
  *
  * By default sidebar are closed by clicking/tapping outside them.
  */
@@ -152,4 +156,4 @@
       }
     };
   }]);
-}());
+})();

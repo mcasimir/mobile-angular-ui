@@ -2,11 +2,15 @@
  * @module mobile-angular-ui.components.scrollable
  * @description
  *
- * One thing you'll always have to deal with approaching mobile web app development is scroll and `position:fixed` bugs.
+ * One thing you'll always have to deal with approaching mobile web app
+ * development is scroll and `position:fixed` bugs.
  *
- * Due to the lack of support in some devices fixed positioned elements may bounce or disappear during scroll. Also mobile interaction often leverages horizontal scroll eg. in carousels or sliders.
+ * Due to the lack of support in some devices fixed positioned elements may
+ * bounce or disappear during scroll. Also mobile interaction often leverages
+ * horizontal scroll eg. in carousels or sliders.
  *
- * We use `overflow:auto` to create scrollable areas and solve any problems related to scroll.
+ * We use `overflow:auto` to create scrollable areas and solve any problems
+ * related to scroll.
  *
  * Since `overflow:auto` is not always available in touch devices we use [Overthrow](http://filamentgroup.github.io/Overthrow/) to polyfill that.
  *
@@ -18,11 +22,14 @@
  * </div>
  * ```
  *
- * This piece of code will trigger a directive that properly setup a new `Overthrow` instance for the `.scrollable` node.
+ * This piece of code will trigger a directive that properly setup a new `Overthrow`
+ * instance for the `.scrollable` node.
  *
  * #### Headers and footers
  *
- * `.scrollable-header/.scrollable-footer` can be used to add fixed header/footer to a scrollable area without having to deal with css height and positioning to avoid breaking scroll.
+ * `.scrollable-header/.scrollable-footer` can be used to add fixed header/footer
+ * to a scrollable area without having to deal with css height and positioning to
+ * avoid breaking scroll.
  *
  * ``` html
  * <div class="scrollable">
@@ -94,15 +101,11 @@
         if ('ontouchmove' in $document) {
           var allowUp;
           var allowDown;
-          var prevTop;
-          var prevBot;
           var lastY;
           var setupTouchstart = function(event) {
             allowUp = (scrollableContent.scrollTop > 0);
 
             allowDown = (scrollableContent.scrollTop < scrollableContent.scrollHeight - scrollableContent.clientHeight);
-            prevTop = null;
-            prevBot = null;
             lastY = getTouchY(event);
           };
 
@@ -149,7 +152,7 @@
   });
 
   angular.forEach(['input', 'textarea'], function(directiveName) {
-    module.directive(directiveName, ['$rootScope','$timeout', function($rootScope, $timeout) {
+    module.directive(directiveName, ['$rootScope', '$timeout', function($rootScope, $timeout) {
       return {
         require: '?^^scrollableContent',
         link: function(scope, elem, attrs, scrollable) {
@@ -165,7 +168,7 @@
                 //
                 if (h1 > h2) {
                   var marginTop = 10;
-                  //if scrollableHeader is present increase the marginTop to compensate for scrollableHeader's height.
+                  // if scrollableHeader is present increase the marginTop to compensate for scrollableHeader's height.
                   var scrollableHeader = scrollable.scrollableContent.parentElement.querySelector('.scrollable-header');
                   if (scrollableHeader) {
                     marginTop = (scrollableHeader.getBoundingClientRect().bottom - scrollableHeader.getBoundingClientRect().top) + marginTop;
@@ -236,29 +239,29 @@
     function(directiveName, side) {
       module.directive(directiveName, [
         '$window',
-          function($window) {
-            return {
-              restrict: 'C',
-              link: function(scope, element) {
-                var el = element[0];
-                var parentStyle = element.parent()[0].style;
+        function($window) {
+          return {
+            restrict: 'C',
+            link: function(scope, element) {
+              var el = element[0];
+              var parentStyle = element.parent()[0].style;
 
-                var adjustParentPadding = function() {
-                  var styles = $window.getComputedStyle(el);
-                  var margin = parseInt(styles.marginTop, 10) + parseInt(styles.marginBottom, 10);
-                  parentStyle['padding' + side] = el.offsetHeight + margin + 'px';
-                };
+              var adjustParentPadding = function() {
+                var styles = $window.getComputedStyle(el);
+                var margin = parseInt(styles.marginTop, 10) + parseInt(styles.marginBottom, 10);
+                parentStyle['padding' + side] = el.offsetHeight + margin + 'px';
+              };
 
-                var interval = setInterval(adjustParentPadding, 30);
+              var interval = setInterval(adjustParentPadding, 30);
 
-                element.on('$destroy', function() {
-                  parentStyle['padding' + side] = null;
-                  clearInterval(interval);
-                  interval = adjustParentPadding = element = null;
-                });
-              }
-            };
-          }
-        ]);
+              element.on('$destroy', function() {
+                parentStyle['padding' + side] = null;
+                clearInterval(interval);
+                interval = adjustParentPadding = element = null;
+              });
+            }
+          };
+        }
+      ]);
     });
-}());
+})();

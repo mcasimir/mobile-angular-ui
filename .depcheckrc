@@ -1,0 +1,12 @@
+var config = require('./config');
+
+module.exports = {
+  ignoreDirs: ['dist'],
+  ignore: config.globs.js.concat(config.globs.fonts)
+      .filter(function(path) {
+        return path.match(/^node_modules/);
+      }).map(function(path) {
+        return path.split('/')[1];
+      })
+      .concat(config.depcheck.ignore)
+}

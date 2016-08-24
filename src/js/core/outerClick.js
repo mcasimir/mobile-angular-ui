@@ -59,20 +59,20 @@
 
   angular.module('mobile-angular-ui.core.outerClick', [])
 
-  .factory('_mauiIsAncestorOrSelf', function() {
-    return function(element, target) {
-       var parent = element;
-       while (parent.length > 0) {
-         if (parent[0] === target[0]) {
-           parent = null;
-           return true;
-         }
-         parent = parent.parent();
-       }
-       parent = null;
-       return false;
-     };
-  })
+    .factory('_mauiIsAncestorOrSelf', function() {
+      return function(element, target) {
+        var parent = element;
+        while (parent.length > 0) {
+          if (parent[0] === target[0]) {
+            parent = null;
+            return true;
+          }
+          parent = parent.parent();
+        }
+        parent = null;
+        return false;
+      };
+    })
 
   /**
    * @service bindOuterClick
@@ -102,51 +102,51 @@
    * @param {function} callback A `function(scope, options)`, usually the result of `$parse`, that is called when an _outer click_ event happens.
    * @param {string|function} condition Angular `$watch` expression to decide whether to run `callback` or not.
    */
-  .factory('bindOuterClick', [
-    '$document',
-    '$timeout',
-    '_mauiIsAncestorOrSelf',
-     function($document, $timeout, isAncestorOrSelf) {
+    .factory('bindOuterClick', [
+      '$document',
+      '$timeout',
+      '_mauiIsAncestorOrSelf',
+      function($document, $timeout, isAncestorOrSelf) {
 
-       return function(scope, element, outerClickFn, outerClickIf) {
-         var handleOuterClick = function(event) {
-           if (!isAncestorOrSelf(angular.element(event.target), element)) {
-             scope.$apply(function() {
-               outerClickFn(scope, {$event: event});
-             });
-           }
-         };
+        return function(scope, element, outerClickFn, outerClickIf) {
+          var handleOuterClick = function(event) {
+            if (!isAncestorOrSelf(angular.element(event.target), element)) {
+              scope.$apply(function() {
+                outerClickFn(scope, {$event: event});
+              });
+            }
+          };
 
-         var stopWatching = angular.noop;
-         var t = null;
+          var stopWatching = angular.noop;
+          var t = null;
 
-         if (outerClickIf) {
-           stopWatching = scope.$watch(outerClickIf, function(value) {
-             $timeout.cancel(t);
+          if (outerClickIf) {
+            stopWatching = scope.$watch(outerClickIf, function(value) {
+              $timeout.cancel(t);
 
-             if (value) {
+              if (value) {
                // prevents race conditions
                // activating with other click events
-               t = $timeout(function() {
-                 $document.on('click tap', handleOuterClick);
-               }, 0);
+                t = $timeout(function() {
+                  $document.on('click tap', handleOuterClick);
+                }, 0);
 
-             } else {
-               $document.unbind('click tap', handleOuterClick);
-             }
-           });
-         } else {
-           $timeout.cancel(t);
-           $document.on('click tap', handleOuterClick);
-         }
+              } else {
+                $document.unbind('click tap', handleOuterClick);
+              }
+            });
+          } else {
+            $timeout.cancel(t);
+            $document.on('click tap', handleOuterClick);
+          }
 
-         scope.$on('$destroy', function() {
-           stopWatching();
-           $document.unbind('click tap', handleOuterClick);
-         });
-       };
-     }
-   ])
+          scope.$on('$destroy', function() {
+            stopWatching();
+            $document.unbind('click tap', handleOuterClick);
+          });
+        };
+      }
+    ])
 
   /**
    * @directive outerClick
@@ -157,20 +157,20 @@
    * @param {expression} uiOuterClick Expression to evaluate when an _Outer Click_ event happens.
    * @param {expression} uiOuterClickIf Condition to enable/disable the listener. Defaults to `true`.
    */
-   .directive('uiOuterClick', [
-     'bindOuterClick',
-     '$parse',
-     function(bindOuterClick, $parse) {
-       return {
-         restrict: 'A',
-         compile: function(elem, attrs) {
-           var outerClickFn = $parse(attrs.uiOuterClick);
-           var outerClickIf = attrs.uiOuterClickIf;
-           return function(scope, elem) {
-             bindOuterClick(scope, elem, outerClickFn, outerClickIf);
-           };
-         }
-       };
-     }
-   ]);
-}());
+    .directive('uiOuterClick', [
+      'bindOuterClick',
+      '$parse',
+      function(bindOuterClick, $parse) {
+        return {
+          restrict: 'A',
+          compile: function(elem, attrs) {
+            var outerClickFn = $parse(attrs.uiOuterClick);
+            var outerClickIf = attrs.uiOuterClickIf;
+            return function(scope, elem) {
+              bindOuterClick(scope, elem, outerClickFn, outerClickIf);
+            };
+          }
+        };
+      }
+    ]);
+})();

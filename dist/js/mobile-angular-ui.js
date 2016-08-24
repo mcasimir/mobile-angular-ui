@@ -844,19 +844,24 @@
  * @module mobile-angular-ui.core.activeLinks
  * @description
  *
- * `mobile-angular-ui.activeLinks` module sets up `.active` class for `a` elements those `href` attribute matches the current angular `$location` url. It takes care of excluding both search part and hash part from comparison.
+ * `mobile-angular-ui.activeLinks` module sets up `.active` class for `a`
+ * elements those `href` attribute matches the current angular `$location` url.
+ * It takes care of excluding both search part and hash part from comparison.
  *
- * `.active` classes are added/removed each time one of `$locationChangeSuccess` or `$includeContentLoaded` is fired.
+ * `.active` classes are added/removed each time one of `$locationChangeSuccess`
+ * or `$includeContentLoaded` is fired.
  *
  * ## Usage
  *
- * Just declare it as a dependency to your app unless you have already included one of its super-modules.
+ * Just declare it as a dependency to your app unless you have already included
+ * one of its super-modules.
  *
  * ```
  * angular.module('myApp', ['mobile-angular-ui.core.activeLinks']);
  * ```
  *
- * **NOTE:** if you are using it without Bootstrap you may need to add some css to your stylesheets to reflect the activation state of links. I.e.
+ * **NOTE:** if you are using it without Bootstrap you may need to add some css
+ * to your stylesheets to reflect the activation state of links. I.e.
  *
  * ``` css
  * a.active {
@@ -914,21 +919,29 @@
       $rootScope.$on('$locationChangeSuccess', setupActiveLinks);
       $rootScope.$on('$includeContentLoaded', setupActiveLinks);
     }]);
-}());
+})();
 
 /**
  * @module mobile-angular-ui.core.capture
  * @description
  *
- * The `capture` module exposes directives to let you extract markup which can be used in other parts of a template using `uiContentFor` and `uiYieldTo` directives.
+ * The `capture` module exposes directives to var you extract markup which can
+ * be used in other parts of a template using `uiContentFor` and `uiYieldTo`
+ * directives.
  *
  * It provides a way to move or clone a block of markup to other parts of the document.
  *
- * This method is particularly useful to setup parts of the layout within an angular view. Since blocks of html are transplanted within their original `$scope` is easy to create layout interactions depending on the context. Some tipical task you can accomplish with these directives are: _setup the navbar title depending on the view_ or _place a submit button for a form inside a navbar_.
+ * This method is particularly useful to setup parts of the layout within an
+ * angular view. Since blocks of html are transplanted within their original
+ * `$scope` is easy to create layout interactions depending on the context.
+ * Some tipical task you can accomplish with these directives are: _setup
+ * the navbar title depending on the view_ or _place a submit button for a
+ * form inside a navbar_.
  *
  * ## Usage
  *
- * Declare it as a dependency to your app unless you have already included some of its super-modules.
+ * Declare it as a dependency to your app unless you have already included some
+ * of its super-modules.
  *
  * ```
  * angular.module('myApp', ['mobile-angular-ui']);
@@ -972,8 +985,9 @@
  * </div>
  * ```
  *
- * Since the original scope is preserved you can use directives inside `ui-content-for` blocks to interact with the current scope. In the following example we will add a navbar button to submit a form inside a nested view.
- *
+ * Since the original scope is preserved you can use directives inside
+ * `ui-content-for` blocks to interact with the current scope. In the following
+ * example we will add a navbar button to submit a form inside a nested view.
  *
  * ``` html
  * <!-- index.html -->
@@ -1031,66 +1045,66 @@
 
   angular.module('mobile-angular-ui.core.capture', [])
 
-  .run([
-    'Capture',
-    '$rootScope',
-     function(Capture, $rootScope) {
-       $rootScope.$on('$routeChangeSuccess', function() {
-         Capture.resetAll();
-       });
-     }
-   ])
+    .run([
+      'Capture',
+      '$rootScope',
+      function(Capture, $rootScope) {
+        $rootScope.$on('$routeChangeSuccess', function() {
+          Capture.resetAll();
+        });
+      }
+    ])
 
-   .factory('Capture', [
-     '$compile',
-     function($compile) {
-       var yielders = {};
+    .factory('Capture', [
+      '$compile',
+      function($compile) {
+        var yielders = {};
 
-       return {
-         yielders: yielders,
+        return {
+          yielders: yielders,
 
-         resetAll: function() {
-           for (var name in yielders) {
-             if (yielders.hasOwnProperty(name)) {
-               this.resetYielder(name);
-             }
-           }
-         },
+          resetAll: function() {
+            for (var name in yielders) {
+              if (yielders.hasOwnProperty(name)) {
+                this.resetYielder(name);
+              }
+            }
+          },
 
-         resetYielder: function(name) {
-           var b = yielders[name];
-           this.setContentFor(name, b.defaultContent, b.defaultScope);
-         },
+          resetYielder: function(name) {
+            var b = yielders[name];
+            this.setContentFor(name, b.defaultContent, b.defaultScope);
+          },
 
-         putYielder: function(name, element, defaultScope, defaultContent) {
-           var yielder = {};
-           yielder.name = name;
-           yielder.element = element;
-           yielder.defaultContent = defaultContent || '';
-           yielder.defaultScope = defaultScope;
-           yielders[name] = yielder;
-         },
+          putYielder: function(name, element, defaultScope, defaultContent) {
+            var yielder = {};
+            yielder.name = name;
+            yielder.element = element;
+            yielder.defaultContent = defaultContent || '';
+            yielder.defaultScope = defaultScope;
+            yielders[name] = yielder;
+          },
 
-         getYielder: function(name) {
-           return yielders[name];
-         },
+          getYielder: function(name) {
+            return yielders[name];
+          },
 
-         removeYielder: function(name) {
-           delete yielders[name];
-         },
+          removeYielder: function(name) {
+            delete yielders[name];
+          },
 
-         setContentFor: function(name, content, scope) {
-           var b = yielders[name];
-           if (!b) {
-             return;
-           }
-           b.element.html(content);
-           $compile(b.element.contents())(scope);
-         }
+          setContentFor: function(name, content, scope) {
+            var b = yielders[name];
+            if (!b) {
+              return;
+            }
+            b.element.html(content);
+            $compile(b.element.contents())(scope);
+          }
 
-       };
-     }
-   ])
+        };
+      }
+    ])
 
   /**
    * @directive uiContentFor
@@ -1108,24 +1122,24 @@
    * @param {boolean} uiDuplicate If present duplicates the content instead of moving it (default to `false`)
    *
    */
-   .directive('uiContentFor', [
-     'Capture',
-     function(Capture) {
-       return {
-         compile: function(tElem, tAttrs) {
-           var rawContent = tElem.html();
-           if (tAttrs.uiDuplicate === null || tAttrs.uiDuplicate === undefined) {
+    .directive('uiContentFor', [
+      'Capture',
+      function(Capture) {
+        return {
+          compile: function(tElem, tAttrs) {
+            var rawContent = tElem.html();
+            if (tAttrs.uiDuplicate === null || tAttrs.uiDuplicate === undefined) {
              // no need to compile anything!
-             tElem.html('');
-             tElem.remove();
-           }
-           return function(scope, elem, attrs) {
-             Capture.setContentFor(attrs.uiContentFor, rawContent, scope);
-           };
-         }
-       };
-     }
-   ])
+              tElem.html('');
+              tElem.remove();
+            }
+            return function(scope, elem, attrs) {
+              Capture.setContentFor(attrs.uiContentFor, rawContent, scope);
+            };
+          }
+        };
+      }
+    ])
 
    /**
     * @directive uiYieldTo
@@ -1139,25 +1153,25 @@
     * @param {string} uiYieldTo The unique id of this placeholder.
     *
     */
-   .directive('uiYieldTo', [
-     '$compile', 'Capture', function($compile, Capture) {
-       return {
-         link: function(scope, element, attr) {
-           Capture.putYielder(attr.uiYieldTo, element, scope, element.html());
+    .directive('uiYieldTo', [
+      '$compile', 'Capture', function($compile, Capture) {
+        return {
+          link: function(scope, element, attr) {
+            Capture.putYielder(attr.uiYieldTo, element, scope, element.html());
 
-           element.on('$destroy', function() {
-             Capture.removeYielder(attr.uiYieldTo);
-           });
+            element.on('$destroy', function() {
+              Capture.removeYielder(attr.uiYieldTo);
+            });
 
-           scope.$on('$destroy', function() {
-             Capture.removeYielder(attr.uiYieldTo);
-           });
-         }
-       };
-     }
-   ]);
+            scope.$on('$destroy', function() {
+              Capture.removeYielder(attr.uiYieldTo);
+            });
+          }
+        };
+      }
+    ]);
 
-}());
+})();
 
 (function() {
   'use strict';
@@ -1165,12 +1179,14 @@
 
   module.run(['$window', function($window) {
 
-    //Temporarly bugfix in overthrow/fastclick:
+    // Temporarly bugfix in overthrow/fastclick:
     var orgHandler = FastClick.prototype.onTouchEnd;
 
     // Some old versions of Android don't have Function.prototype.bind
     function bind(method, context) {
-      return function() { return method.apply(context, arguments); };
+      return function() {
+        return method.apply(context, arguments);
+      };
     }
 
     FastClick.prototype.onTouchEnd = function(event) {
@@ -1198,7 +1214,7 @@
       };
     });
   });
-}());
+})();
 
 /**
  *
@@ -1261,20 +1277,20 @@
 
   angular.module('mobile-angular-ui.core.outerClick', [])
 
-  .factory('_mauiIsAncestorOrSelf', function() {
-    return function(element, target) {
-       var parent = element;
-       while (parent.length > 0) {
-         if (parent[0] === target[0]) {
-           parent = null;
-           return true;
-         }
-         parent = parent.parent();
-       }
-       parent = null;
-       return false;
-     };
-  })
+    .factory('_mauiIsAncestorOrSelf', function() {
+      return function(element, target) {
+        var parent = element;
+        while (parent.length > 0) {
+          if (parent[0] === target[0]) {
+            parent = null;
+            return true;
+          }
+          parent = parent.parent();
+        }
+        parent = null;
+        return false;
+      };
+    })
 
   /**
    * @service bindOuterClick
@@ -1304,51 +1320,51 @@
    * @param {function} callback A `function(scope, options)`, usually the result of `$parse`, that is called when an _outer click_ event happens.
    * @param {string|function} condition Angular `$watch` expression to decide whether to run `callback` or not.
    */
-  .factory('bindOuterClick', [
-    '$document',
-    '$timeout',
-    '_mauiIsAncestorOrSelf',
-     function($document, $timeout, isAncestorOrSelf) {
+    .factory('bindOuterClick', [
+      '$document',
+      '$timeout',
+      '_mauiIsAncestorOrSelf',
+      function($document, $timeout, isAncestorOrSelf) {
 
-       return function(scope, element, outerClickFn, outerClickIf) {
-         var handleOuterClick = function(event) {
-           if (!isAncestorOrSelf(angular.element(event.target), element)) {
-             scope.$apply(function() {
-               outerClickFn(scope, {$event: event});
-             });
-           }
-         };
+        return function(scope, element, outerClickFn, outerClickIf) {
+          var handleOuterClick = function(event) {
+            if (!isAncestorOrSelf(angular.element(event.target), element)) {
+              scope.$apply(function() {
+                outerClickFn(scope, {$event: event});
+              });
+            }
+          };
 
-         var stopWatching = angular.noop;
-         var t = null;
+          var stopWatching = angular.noop;
+          var t = null;
 
-         if (outerClickIf) {
-           stopWatching = scope.$watch(outerClickIf, function(value) {
-             $timeout.cancel(t);
+          if (outerClickIf) {
+            stopWatching = scope.$watch(outerClickIf, function(value) {
+              $timeout.cancel(t);
 
-             if (value) {
+              if (value) {
                // prevents race conditions
                // activating with other click events
-               t = $timeout(function() {
-                 $document.on('click tap', handleOuterClick);
-               }, 0);
+                t = $timeout(function() {
+                  $document.on('click tap', handleOuterClick);
+                }, 0);
 
-             } else {
-               $document.unbind('click tap', handleOuterClick);
-             }
-           });
-         } else {
-           $timeout.cancel(t);
-           $document.on('click tap', handleOuterClick);
-         }
+              } else {
+                $document.unbind('click tap', handleOuterClick);
+              }
+            });
+          } else {
+            $timeout.cancel(t);
+            $document.on('click tap', handleOuterClick);
+          }
 
-         scope.$on('$destroy', function() {
-           stopWatching();
-           $document.unbind('click tap', handleOuterClick);
-         });
-       };
-     }
-   ])
+          scope.$on('$destroy', function() {
+            stopWatching();
+            $document.unbind('click tap', handleOuterClick);
+          });
+        };
+      }
+    ])
 
   /**
    * @directive outerClick
@@ -1359,23 +1375,23 @@
    * @param {expression} uiOuterClick Expression to evaluate when an _Outer Click_ event happens.
    * @param {expression} uiOuterClickIf Condition to enable/disable the listener. Defaults to `true`.
    */
-   .directive('uiOuterClick', [
-     'bindOuterClick',
-     '$parse',
-     function(bindOuterClick, $parse) {
-       return {
-         restrict: 'A',
-         compile: function(elem, attrs) {
-           var outerClickFn = $parse(attrs.uiOuterClick);
-           var outerClickIf = attrs.uiOuterClickIf;
-           return function(scope, elem) {
-             bindOuterClick(scope, elem, outerClickFn, outerClickIf);
-           };
-         }
-       };
-     }
-   ]);
-}());
+    .directive('uiOuterClick', [
+      'bindOuterClick',
+      '$parse',
+      function(bindOuterClick, $parse) {
+        return {
+          restrict: 'A',
+          compile: function(elem, attrs) {
+            var outerClickFn = $parse(attrs.uiOuterClick);
+            var outerClickIf = attrs.uiOuterClickIf;
+            return function(scope, elem) {
+              bindOuterClick(scope, elem, outerClickFn, outerClickIf);
+            };
+          }
+        };
+      }
+    ]);
+})();
 
 (function() {
   'use strict';
@@ -1420,7 +1436,7 @@
    * take care of disposing them when no scopes are requiring them anymore.
    *
    * A set of `ui-*` directives are available to interact with `SharedState`
-   * module and will hopefully let you spare your controllers and your time
+   * module and will hopefully var you spare your controllers and your time
    * for something that is more meaningful than this:
    *
    * ``` js
@@ -1450,11 +1466,15 @@
    *
    * <iframe class='embedded-example'  src='/examples/lightbulb.html'></iframe>
    *
-   * NOTE: `ui-toggle/set/turnOn/turnOff` responds to `click/tap` without stopping propagation so you can use them along with ng-click too. You can also change events to respond to with `ui-triggers` attribute.
+   * NOTE: `ui-toggle/set/turnOn/turnOff` responds to `click/tap` without
+   * stopping propagation so you can use them along with ng-click too.
+   * You can also change events to respond to with `ui-triggers` attribute.
    *
-   * Any `SharedState` method is exposed through `Ui` object in `$rootScope`. So you could always do `ng-click="Ui.turnOn('myVar')"`.
+   * Any `SharedState` method is exposed through `Ui` object in `$rootScope`.
+   * So you could always do `ng-click="Ui.turnOn('myVar')"`.
    *
-   * Since `SharedState` is a service you can initialize/set statuses through controllers too:
+   * Since `SharedState` is a service you can initialize/set statuses through
+   * controllers too:
    *
    * ``` js
    * app.controller('myController', function($scope, SharedState){
@@ -1479,9 +1499,11 @@
    *
    * A `SharedState` state can be considered as a global variable identified by an `id`.
    *
-   * `SharedState` service exposes methods to interact with statuses to create, read and update states.
+   * `SharedState` service exposes methods to interact with statuses to create,
+   * read and update states.
    *
-   * It acts as a BUS between UI elements to share UI related state that is automatically disposed when all scopes requiring it are destroyed.
+   * It acts as a BUS between UI elements to share UI related state that is
+   * automatically disposed when all scopes requiring it are destroyed.
    *
    * eg.
    *
@@ -1495,9 +1517,14 @@
    * });
    * ```
    *
-   * Data structures retaining statuses will stay outside angular scopes thus they are not evaluated against digest cycle until its necessary. Also although statuses are sort of global variables `SharedState` will take care of disposing them when no scopes are requiring them anymore.
+   * Data structures retaining statuses will stay outside angular scopes thus
+   * they are not evaluated against digest cycle until its necessary. Also
+   * although statuses are sort of global variables `SharedState` will take
+   * care of disposing them when no scopes are requiring them anymore.
    *
-   * A set of `ui-*` directives are available to interact with `SharedState` module and will hopefully let you spare your controllers and your time for something that is more meaningful than this:
+   * A set of `ui-*` directives are available to interact with `SharedState`
+   * module and will hopefully var you spare your controllers and your time for
+   * something that is more meaningful than this:
    *
    * ``` js
    * $scope.activeTab = 1;
@@ -1515,7 +1542,8 @@
   * @memberOf mobile-angular-ui.core.sharedState~SharedState
   *
   * @description
-  * Broadcasted on `$rootScope` when `#initialize` is called for a new state not referenced by any scope currently.
+  * Broadcasted on `$rootScope` when `#initialize` is called for a new state not
+  * referenced by any scope currently.
   *
   * @param {any} currentValue The value with which this state has been initialized
   *
@@ -1556,7 +1584,7 @@
  */
 
   module.factory('SharedState', [
-  '$rootScope', '$log',
+    '$rootScope', '$log',
     function($rootScope, $log) {
       var values = {};    // values, context object for evals
       var statusesMeta = {};  // status info
@@ -1571,7 +1599,10 @@
          *
          * Initialize, or require if already intialized, a state identified by `id` within the provided `scope`, making it available to the rest of application.
          *
-         * A `SharedState` is bound to one or more scopes. Each time `initialize` is called for an angular `scope` this will be bound to the `SharedState` and a reference count is incremented to allow garbage collection.
+         * A `SharedState` is bound to one or more scopes. Each time
+         * `initialize` is called for an angular `scope` this will be bound to
+         * the `SharedState` and a reference count is incremented to allow
+         * garbage collection.
          *
          * Reference count is decremented once the scope is destroyed. When the counter reach 0 the state will be disposed.
          *
@@ -1579,7 +1610,10 @@
          * @param  {string} id The unique name of this state
          * @param  {object} [options] Options
          * @param  {object} [options.defaultValue] the initialization value, it is taken into account only if the state `id` is not already initialized
-         * @param  {string} [options.exclusionGroup] Specifies an exclusion group for the state. This means that for boolean operations (ie. toggle, turnOn, turnOf) when this state is set to `true`, any other state that is in the same `exclusionGroup` will be set to `false`.
+         * @param  {string} [options.exclusionGroup] Specifies an exclusion group
+         * for the state. This means that for boolean operations (ie. toggle,
+         * turnOn, turnOf) when this state is set to `true`, any other state
+         * that is in the same `exclusionGroup` will be set to `false`.
          */
         initialize: function(scope, id, options) {
           options = options || {};
@@ -1654,9 +1688,8 @@
               $rootScope.$broadcast('mobile-angular-ui.state.changed.' + id, value, prev);
             }
             return value;
-          } else {
-            $log.warn('Warning: Attempt to set uninitialized shared state: ' + id);
           }
+          $log.warn('Warning: Attempt to set uninitialized shared state: ' + id);
         },
 
         /**
@@ -1783,7 +1816,7 @@
          * @returns {bool}
          */
         isActive: function(id) {
-          return !!this.get(id);
+          return Boolean(this.get(id));
         },
 
         /**
@@ -1921,9 +1954,9 @@
         restrict: 'EA',
         priority: 601, // more than ng-if
         link: function(scope, elem, attrs) {
-          var id               = attrs.uiState || attrs.id;
-          var defaultValueExpr = attrs.uiDefault || attrs['default'];
-          var defaultValue     = defaultValueExpr ? scope.$eval(defaultValueExpr) : undefined;
+          var id = attrs.uiState || attrs.id;
+          var defaultValueExpr = attrs.uiDefault || attrs.default;
+          var defaultValue = defaultValueExpr ? scope.$eval(defaultValueExpr) : undefined;
 
           SharedState.initialize(scope, id, {
             defaultValue: defaultValue,
@@ -1989,41 +2022,41 @@
         '$interpolate',
         'SharedState',
         function($parse, $interpolate, SharedState) {
-              var method = SharedState[methodName];
-              return {
-                restrict: 'A',
-                priority: 1, // This would make postLink calls happen after ngClick
+          var method = SharedState[methodName];
+          return {
+            restrict: 'A',
+            priority: 1, // This would make postLink calls happen after ngClick
                 // (and similar) ones, thus intercepting events after them.
                 //
                 // This will prevent eventual ng-if to detach elements
                 // before ng-click fires.
 
-                compile: function(elem, attrs) {
-                  var attr = attrs[directiveName];
-                  var needsInterpolation = attr.match(/\{\{/);
+            compile: function(elem, attrs) {
+              var attr = attrs[directiveName];
+              var needsInterpolation = attr.match(/\{\{/);
 
-                  var exprFn = function($scope) {
-                    var res = attr;
-                    if (needsInterpolation) {
-                      var interpolateFn = $interpolate(res);
-                      res = interpolateFn($scope);
-                    }
-                    if (methodName === 'set') {
-                      res = ($parse(res))($scope);
-                    }
-                    return res;
-                  };
-
-                  return function(scope, elem, attrs) {
-                    var callback = function() {
-                      var arg = exprFn(scope);
-                      return method.call(SharedState, arg);
-                    };
-                    uiBindEvent(scope, elem, attrs.uiTriggers, callback);
-                  };
+              var exprFn = function($scope) {
+                var res = attr;
+                if (needsInterpolation) {
+                  var interpolateFn = $interpolate(res);
+                  res = interpolateFn($scope);
                 }
+                if (methodName === 'set') {
+                  res = ($parse(res))($scope);
+                }
+                return res;
+              };
+
+              return function(scope, elem, attrs) {
+                var callback = function() {
+                  var arg = exprFn(scope);
+                  return method.call(SharedState, arg);
+                };
+                uiBindEvent(scope, elem, attrs.uiTriggers, callback);
               };
             }
+          };
+        }
       ]);
     });
 
@@ -2160,8 +2193,11 @@
     * @description
     * Same as `ngIf` but evaluates condition against `SharedState` statuses too
     *
-    * @param {expression} uiIf A condition to decide wether to attach the element to the dom
-    * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]` specifing one of more scope variables to take into account when evaluating condition.
+    * @param {expression} uiIf A condition to decide wether to attach the
+    * element to the dom
+    * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]`
+    * specifing one of more scope variables to take into account when
+    * evaluating condition.
     */
   module.directive('uiIf', ['$animate', 'SharedState', '$parse', '$interpolate', function($animate, SharedState, $parse, $interpolate) {
     function getBlockNodes(nodes) {
@@ -2170,7 +2206,9 @@
       var blockNodes = [node];
       do {
         node = node.nextSibling;
-        if (!node) { break; }
+        if (!node) {
+          break;
+        }
         blockNodes.push(node);
       } while (node !== endNode);
 
@@ -2191,42 +2229,42 @@
         var uiIfFn = parseUiCondition('uiIf', $attr, $scope, SharedState, $parse, $interpolate);
 
         $scope.$watch(uiIfFn, function uiIfWatchAction(value) {
-            if (value) {
-              if (!childScope) {
-                $transclude(function(clone, newScope) {
-                  childScope = newScope;
-                  clone[clone.length++] = document.createComment(' end uiIf: ' + $attr.uiIf + ' ');
+          if (value) {
+            if (!childScope) {
+              $transclude(function(clone, newScope) {
+                childScope = newScope;
+                clone[clone.length++] = document.createComment(' end uiIf: ' + $attr.uiIf + ' ');
                   // Note: We only need the first/last node of the cloned nodes.
                   // However, we need to keep the reference to the jqlite wrapper as it might be changed later
                   // by a directive with templateUrl when its template arrives.
-                  block = {
-                    clone: clone
-                  };
-                  $animate.enter(clone, $element.parent(), $element);
-                });
-              }
-            } else {
-              if (previousElements) {
-                previousElements.remove();
-                previousElements = null;
-              }
-              if (childScope) {
-                childScope.$destroy();
-                childScope = null;
-              }
-              if (block) {
-                previousElements = getBlockNodes(block.clone);
-                var done = function() {
-                  previousElements = null;
+                block = {
+                  clone: clone
                 };
-                var nga = $animate.leave(previousElements, done);
-                if (nga) {
-                  nga.then(done);
-                }
-                block = null;
-              }
+                $animate.enter(clone, $element.parent(), $element);
+              });
             }
-          });
+          } else {
+            if (previousElements) {
+              previousElements.remove();
+              previousElements = null;
+            }
+            if (childScope) {
+              childScope.$destroy();
+              childScope = null;
+            }
+            if (block) {
+              previousElements = getBlockNodes(block.clone);
+              var done = function() {
+                previousElements = null;
+              };
+              var nga = $animate.leave(previousElements, done);
+              if (nga) {
+                nga.then(done);
+              }
+              block = null;
+            }
+          }
+        });
       }
     };
   }]);
@@ -2239,7 +2277,8 @@
    * Same as `ngHide` but evaluates condition against `SharedState` statuses
    *
    * @param {expression} uiShow A condition to decide wether to hide the element
-   * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]` specifing one of more scope variables to take into account when evaluating condition.
+   * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]`
+   * specifing one of more scope variables to take into account when evaluating condition.
    */
   module.directive('uiHide', ['$animate', 'SharedState', '$parse', '$interpolate', function($animate, SharedState, $parse, $interpolate) {
     var NG_HIDE_CLASS = 'ng-hide';
@@ -2267,7 +2306,8 @@
    * Same as `ngShow` but evaluates condition against `SharedState` statuses
    *
    * @param {expression} uiShow A condition to decide wether to show the element
-   * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]` specifing one of more scope variables to take into account when evaluating condition.
+   * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]`
+   * specifing one of more scope variables to take into account when evaluating condition.
    */
   module.directive('uiShow', ['$animate', 'SharedState', '$parse', '$interpolate', function($animate, SharedState, $parse) {
     var NG_HIDE_CLASS = 'ng-hide';
@@ -2294,8 +2334,12 @@
    * @description
    * A simplified version of `ngClass` that evaluates in context of `SharedState`, it only suppors the `{'className': expr}` syntax.
    *
-   * @param {expression} uiClass An expression that has to evaluate to an object of the form `{'className': expr}`, where `expr` decides wether the class should appear to element's class list.
-   * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]` specifing one of more scope variables to take into account when evaluating condition.
+   * @param {expression} uiClass An expression that has to evaluate to an object
+   * of the form `{'className': expr}`, where `expr` decides wether the class
+   * should appear to element's class list.
+   * @param {list} [uiScopeContext] A list `scopeVar[ as aliasName] [, ...]`
+   * specifing one of more scope variables to take into account when evaluating
+   * condition.
    */
   module.directive('uiClass', ['SharedState', '$parse', '$interpolate', function(SharedState, $parse) {
     return {
@@ -2333,7 +2377,7 @@
     }
   ]);
 
-}());
+})();
 
 /**
  * Provides directives and service to prevent touchmove default behaviour
@@ -2427,42 +2471,44 @@
    */
 
   module.factory('allowTouchmoveDefault', function() {
-    var fnTrue = function() { return true; };
+    var fnTrue = function() {
+      return true;
+    };
 
     if ('ontouchmove' in document) {
       return function($element, condition) {
-          condition = condition || fnTrue;
+        condition = condition || fnTrue;
 
-          var allowTouchmoveDefaultCallback = function(e) {
-            if (condition(e)) {
-              e.allowTouchmoveDefault = true;
+        var allowTouchmoveDefaultCallback = function(e) {
+          if (condition(e)) {
+            e.allowTouchmoveDefault = true;
               // jQuery normalizes the event object, need to put this property on the copied originalEvent.
-              if (e.originalEvent) {
-                e.originalEvent.allowTouchmoveDefault = true;
-              }
+            if (e.originalEvent) {
+              e.originalEvent.allowTouchmoveDefault = true;
             }
-          };
-
-          $element = angular.element($element);
-          $element.on('touchmove',  allowTouchmoveDefaultCallback);
-
-          $element.on('$destroy', function() {
-            $element.off('touchmove', allowTouchmoveDefaultCallback);
-            $element = null;
-          });
-
-          return function() {
-            if ($element) {
-              $element.off('touchmove', allowTouchmoveDefaultCallback);
-            }
-          };
+          }
         };
-    } else {
-      return angular.noop;
+
+        $element = angular.element($element);
+        $element.on('touchmove', allowTouchmoveDefaultCallback);
+
+        $element.on('$destroy', function() {
+          $element.off('touchmove', allowTouchmoveDefaultCallback);
+          $element = null;
+        });
+
+        return function() {
+          if ($element) {
+            $element.off('touchmove', allowTouchmoveDefaultCallback);
+          }
+        };
+      };
     }
+
+    return angular.noop;
   });
 
-}());
+})();
 
 /**
  * @module mobile-angular-ui.core
@@ -2501,7 +2547,7 @@
     'mobile-angular-ui.core.sharedState',
     'mobile-angular-ui.core.touchmoveDefaults'
   ]);
-}());
+})();
 
 /*! Overthrow. An overflow:auto polyfill for responsive design. (c) 2012: Scott Jehl, Filament Group, Inc. http://filamentgroup.github.com/Overthrow/license.txt */
 (function( w, undefined ){
@@ -2914,33 +2960,33 @@
    * @directive modal
    * @restrict C
    */
-  .directive('modal', [
-    '$rootElement',
-    function($rootElement) {
-      return {
-        restrict: 'C',
-        link: function(scope, elem) {
-          $rootElement.addClass('has-modal');
-          elem.on('$destroy', function() {
-            $rootElement.removeClass('has-modal');
-          });
-          scope.$on('$destroy', function() {
-            $rootElement.removeClass('has-modal');
-          });
-
-          if (elem.hasClass('modal-overlay')) {
-            $rootElement.addClass('has-modal-overlay');
+    .directive('modal', [
+      '$rootElement',
+      function($rootElement) {
+        return {
+          restrict: 'C',
+          link: function(scope, elem) {
+            $rootElement.addClass('has-modal');
             elem.on('$destroy', function() {
-              $rootElement.removeClass('has-modal-overlay');
+              $rootElement.removeClass('has-modal');
             });
             scope.$on('$destroy', function() {
-              $rootElement.removeClass('has-modal-overlay');
+              $rootElement.removeClass('has-modal');
             });
+
+            if (elem.hasClass('modal-overlay')) {
+              $rootElement.addClass('has-modal-overlay');
+              elem.on('$destroy', function() {
+                $rootElement.removeClass('has-modal-overlay');
+              });
+              scope.$on('$destroy', function() {
+                $rootElement.removeClass('has-modal-overlay');
+              });
+            }
           }
-        }
-      };
-    }]);
-}());
+        };
+      }]);
+})();
 
 /**
  * @module mobile-angular-ui.components.navbars
@@ -3079,11 +3125,15 @@
  * @module mobile-angular-ui.components.scrollable
  * @description
  *
- * One thing you'll always have to deal with approaching mobile web app development is scroll and `position:fixed` bugs.
+ * One thing you'll always have to deal with approaching mobile web app
+ * development is scroll and `position:fixed` bugs.
  *
- * Due to the lack of support in some devices fixed positioned elements may bounce or disappear during scroll. Also mobile interaction often leverages horizontal scroll eg. in carousels or sliders.
+ * Due to the lack of support in some devices fixed positioned elements may
+ * bounce or disappear during scroll. Also mobile interaction often leverages
+ * horizontal scroll eg. in carousels or sliders.
  *
- * We use `overflow:auto` to create scrollable areas and solve any problems related to scroll.
+ * We use `overflow:auto` to create scrollable areas and solve any problems
+ * related to scroll.
  *
  * Since `overflow:auto` is not always available in touch devices we use [Overthrow](http://filamentgroup.github.io/Overthrow/) to polyfill that.
  *
@@ -3095,11 +3145,14 @@
  * </div>
  * ```
  *
- * This piece of code will trigger a directive that properly setup a new `Overthrow` instance for the `.scrollable` node.
+ * This piece of code will trigger a directive that properly setup a new `Overthrow`
+ * instance for the `.scrollable` node.
  *
  * #### Headers and footers
  *
- * `.scrollable-header/.scrollable-footer` can be used to add fixed header/footer to a scrollable area without having to deal with css height and positioning to avoid breaking scroll.
+ * `.scrollable-header/.scrollable-footer` can be used to add fixed header/footer
+ * to a scrollable area without having to deal with css height and positioning to
+ * avoid breaking scroll.
  *
  * ``` html
  * <div class="scrollable">
@@ -3171,15 +3224,11 @@
         if ('ontouchmove' in $document) {
           var allowUp;
           var allowDown;
-          var prevTop;
-          var prevBot;
           var lastY;
           var setupTouchstart = function(event) {
             allowUp = (scrollableContent.scrollTop > 0);
 
             allowDown = (scrollableContent.scrollTop < scrollableContent.scrollHeight - scrollableContent.clientHeight);
-            prevTop = null;
-            prevBot = null;
             lastY = getTouchY(event);
           };
 
@@ -3226,7 +3275,7 @@
   });
 
   angular.forEach(['input', 'textarea'], function(directiveName) {
-    module.directive(directiveName, ['$rootScope','$timeout', function($rootScope, $timeout) {
+    module.directive(directiveName, ['$rootScope', '$timeout', function($rootScope, $timeout) {
       return {
         require: '?^^scrollableContent',
         link: function(scope, elem, attrs, scrollable) {
@@ -3242,7 +3291,7 @@
                 //
                 if (h1 > h2) {
                   var marginTop = 10;
-                  //if scrollableHeader is present increase the marginTop to compensate for scrollableHeader's height.
+                  // if scrollableHeader is present increase the marginTop to compensate for scrollableHeader's height.
                   var scrollableHeader = scrollable.scrollableContent.parentElement.querySelector('.scrollable-header');
                   if (scrollableHeader) {
                     marginTop = (scrollableHeader.getBoundingClientRect().bottom - scrollableHeader.getBoundingClientRect().top) + marginTop;
@@ -3313,39 +3362,40 @@
     function(directiveName, side) {
       module.directive(directiveName, [
         '$window',
-          function($window) {
-            return {
-              restrict: 'C',
-              link: function(scope, element) {
-                var el = element[0];
-                var parentStyle = element.parent()[0].style;
+        function($window) {
+          return {
+            restrict: 'C',
+            link: function(scope, element) {
+              var el = element[0];
+              var parentStyle = element.parent()[0].style;
 
-                var adjustParentPadding = function() {
-                  var styles = $window.getComputedStyle(el);
-                  var margin = parseInt(styles.marginTop, 10) + parseInt(styles.marginBottom, 10);
-                  parentStyle['padding' + side] = el.offsetHeight + margin + 'px';
-                };
+              var adjustParentPadding = function() {
+                var styles = $window.getComputedStyle(el);
+                var margin = parseInt(styles.marginTop, 10) + parseInt(styles.marginBottom, 10);
+                parentStyle['padding' + side] = el.offsetHeight + margin + 'px';
+              };
 
-                var interval = setInterval(adjustParentPadding, 30);
+              var interval = setInterval(adjustParentPadding, 30);
 
-                element.on('$destroy', function() {
-                  parentStyle['padding' + side] = null;
-                  clearInterval(interval);
-                  interval = adjustParentPadding = element = null;
-                });
-              }
-            };
-          }
-        ]);
+              element.on('$destroy', function() {
+                parentStyle['padding' + side] = null;
+                clearInterval(interval);
+                interval = adjustParentPadding = element = null;
+              });
+            }
+          };
+        }
+      ]);
     });
-}());
+})();
 
 /**
  * @module mobile-angular-ui.components.sidebars
  *
  * @description
  *
- * Sidebars can be placed either in left side or right side adding respectively `.sidebar-left` and `.sidebar-right` classes.
+ * Sidebars can be placed either in left side or right side adding respectively
+ * `.sidebar-left` and `.sidebar-right` classes.
  *
  * ``` html
  * <div class="sidebar sidebar-left">
@@ -3369,7 +3419,9 @@
  *
  * #### Interacting with sidebars
  *
- * Under the hood sidebar uses `SharedState` exposing respective statuses: `uiSidebarLeft` and `uiSidebarRight` unless you define different state name through `id` attribute on sidebar elements.
+ * Under the hood sidebar uses `SharedState` exposing respective statuses:
+ * `uiSidebarLeft` and `uiSidebarRight` unless you define different state name
+ * through `id` attribute on sidebar elements.
  *
  * ``` html
  * <a href ui-toggle='uiSidebarLeft'>Toggle sidebar left</a>
@@ -3377,7 +3429,8 @@
  * <a href ui-toggle='uiSidebarRight'>Toggle sidebar right</a>
  * ```
  *
- * You can put `ui-turn-off='uiSidebarLeft'` or `ui-turn-off='uiSidebarLeft'` inside the sidebar to make it close after clicking links inside them.
+ * You can put `ui-turn-off='uiSidebarLeft'` or `ui-turn-off='uiSidebarLeft'`
+ * inside the sidebar to make it close after clicking links inside them.
  *
  * By default sidebar are closed by clicking/tapping outside them.
  */
@@ -3494,7 +3547,7 @@
       }
     };
   }]);
-}());
+})();
 
 /**
  * A module with just a directive to create a switch input component.
@@ -3539,21 +3592,21 @@
    * @param {boolean} [disabled] Whether this component should be disabled.
    * @param {expression} [ngChange] An expression to be evaluated when model changes.
    */
-  .directive('uiSwitch', ['$injector', function($injector) {
-    var $drag = $injector.has('$drag') && $injector.get('$drag');
+    .directive('uiSwitch', ['$injector', function($injector) {
+      var $drag = $injector.has('$drag') && $injector.get('$drag');
 
-    return {
-      restrict: 'EA',
-      scope: {
-        model: '=ngModel',
-        changeExpr: '@ngChange'
-      },
-      link: function(scope, elem, attrs) {
-        elem.addClass('switch');
+      return {
+        restrict: 'EA',
+        scope: {
+          model: '=ngModel',
+          changeExpr: '@ngChange'
+        },
+        link: function(scope, elem, attrs) {
+          elem.addClass('switch');
 
-        var disabled = attrs.disabled || elem.attr('disabled');
+          var disabled = attrs.disabled || elem.attr('disabled');
 
-        var unwatchDisabled = scope.$watch(
+          var unwatchDisabled = scope.$watch(
           function() {
             return attrs.disabled || elem.attr('disabled');
           },
@@ -3566,78 +3619,78 @@
           }
         );
 
-        var handle = angular.element('<div class="switch-handle"></div>');
-        elem.append(handle);
+          var handle = angular.element('<div class="switch-handle"></div>');
+          elem.append(handle);
 
-        if (scope.model) {
-          elem.addClass('active');
-        }
-        elem.addClass('switch-transition-enabled');
-
-        var unwatch = scope.$watch('model', function(value) {
-          if (value) {
+          if (scope.model) {
             elem.addClass('active');
-          } else {
-            elem.removeClass('active');
           }
-        });
+          elem.addClass('switch-transition-enabled');
 
-        var setModel = function(value) {
-          if (!disabled && (value !== scope.model)) {
-            scope.model = value;
-            scope.$apply();
-            if (scope.changeExpr !== null && scope.changeExpr !== undefined) {
-              scope.$parent.$eval(scope.changeExpr);
-            }
-          }
-        };
-
-        var clickCb = function() {
-          setModel(!scope.model);
-        };
-
-        elem.on('click tap', clickCb);
-
-        var unbind = angular.noop;
-
-        if ($drag) {
-          unbind = $drag.bind(handle, {
-            transform: $drag.TRANSLATE_INSIDE(elem),
-            start: function() {
-              elem.off('click tap', clickCb);
-            },
-            cancel: function() {
-              handle.removeAttr('style');
-              elem.off('click tap', clickCb);
-              elem.on('click tap', clickCb);
-            },
-            end: function() {
-              var rh = handle[0].getBoundingClientRect();
-              var re = elem[0].getBoundingClientRect();
-              if (rh.left - re.left < rh.width / 3) {
-                setModel(false);
-                handle.removeAttr('style');
-              } else if (re.right - rh.right < rh.width / 3) {
-                setModel(true);
-                handle.removeAttr('style');
-              } else {
-                handle.removeAttr('style');
-              }
-              elem.on('click tap', clickCb);
+          var unwatch = scope.$watch('model', function(value) {
+            if (value) {
+              elem.addClass('active');
+            } else {
+              elem.removeClass('active');
             }
           });
-        }
 
-        elem.on('$destroy', function() {
-          unbind();
-          unwatchDisabled();
-          unwatch();
-          setModel = unbind = unwatch = unwatchDisabled = clickCb = null;
-        });
-      }
-    };
-  }]);
-}());
+          var setModel = function(value) {
+            if (!disabled && (value !== scope.model)) {
+              scope.model = value;
+              scope.$apply();
+              if (scope.changeExpr !== null && scope.changeExpr !== undefined) {
+                scope.$parent.$eval(scope.changeExpr);
+              }
+            }
+          };
+
+          var clickCb = function() {
+            setModel(!scope.model);
+          };
+
+          elem.on('click tap', clickCb);
+
+          var unbind = angular.noop;
+
+          if ($drag) {
+            unbind = $drag.bind(handle, {
+              transform: $drag.TRANSLATE_INSIDE(elem),
+              start: function() {
+                elem.off('click tap', clickCb);
+              },
+              cancel: function() {
+                handle.removeAttr('style');
+                elem.off('click tap', clickCb);
+                elem.on('click tap', clickCb);
+              },
+              end: function() {
+                var rh = handle[0].getBoundingClientRect();
+                var re = elem[0].getBoundingClientRect();
+                if (rh.left - re.left < rh.width / 3) {
+                  setModel(false);
+                  handle.removeAttr('style');
+                } else if (re.right - rh.right < rh.width / 3) {
+                  setModel(true);
+                  handle.removeAttr('style');
+                } else {
+                  handle.removeAttr('style');
+                }
+                elem.on('click tap', clickCb);
+              }
+            });
+          }
+
+          elem.on('$destroy', function() {
+            unbind();
+            unwatchDisabled();
+            unwatch();
+            setModel = unbind = unwatch = unwatchDisabled = clickCb = null;
+          });
+        }
+      };
+    }]);
+})();
 
 /**
  * @module mobile-angular-ui.components
@@ -3670,7 +3723,7 @@
     'mobile-angular-ui.components.scrollable',
     'mobile-angular-ui.components.switch'
   ]);
-}());
+})();
 
 /**
  * @module mobile-angular-ui
@@ -3698,4 +3751,4 @@
     'mobile-angular-ui.components'
   ]);
 
-}());
+})();

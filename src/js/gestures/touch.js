@@ -1,3 +1,5 @@
+/* eslint complexity: 0 */
+
 /**
  * Device agnostic touch handling.
  *
@@ -63,7 +65,7 @@
    */
   module.provider('$touch', function() {
 
-    /*=====================================
+    /* =====================================
     =            Configuration            =
     =====================================*/
 
@@ -74,12 +76,12 @@
     var MOVEMENT_THRESHOLD = 1;
 
     var POINTER_EVENTS = {
-      'mouse': {
+      mouse: {
         start: 'mousedown',
         move: 'mousemove',
         end: 'mouseup'
       },
-      'touch': {
+      touch: {
         start: 'touchstart',
         move: 'touchmove',
         end: 'touchend',
@@ -200,7 +202,8 @@
      * @param {function|Element|TextRectangle} sensitiveArea The new default sensitive area,
      *                                                       either static or as function
      *                                                       taking an element and returning another
-     *                                                       element or a [rectangle](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect).
+     *                                                       element or a
+     *                                                       [rectangle](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect).
      *
      * @method  setSensitiveArea
      * @memberOf mobile-angular-ui.gestures.touch~$touch.$touchProvider
@@ -216,7 +219,7 @@
     var atan2 = Math.atan2;
     var sqrt = Math.sqrt;
 
-    /*===============================
+    /* ===============================
     =            Helpers            =
     ===============================*/
 
@@ -357,7 +360,7 @@
       //                |
       //               90°
       //
-      var angle = dx !== 0 || dy !== 0  ? atan2(dy, dx) * (180 / Math.PI) : null;
+      var angle = dx !== 0 || dy !== 0 ? atan2(dy, dx) * (180 / Math.PI) : null;
       angle = angle === -180 ? 180 : angle;
 
       return {
@@ -371,7 +374,7 @@
         x: c.x,
         y: c.y,
 
-        step:  dl, // distance from prev
+        step: dl, // distance from prev
         stepX: dxl,
         stepY: dyl,
 
@@ -391,7 +394,7 @@
       };
     };
 
-    /*======================================
+    /* ======================================
     =            Factory Method            =
     ======================================*/
 
@@ -420,9 +423,10 @@
          * @param  {object} [options] Options.
          * @param  {integer} [options.movementThreshold] Amount of pixels of movement before start to trigger `touchmove` handlers.
          * @param  {function} [options.valid] Validity function. A `function(TouchInfo, event)⟶boolean` deciding if a touch should be handled or ignored.
-         * @param  {function|Element|TextRectangle} [options.sensitiveArea] A [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect) or an element
-         *                                                                  or a function that takes the bound element and returns one of the previous.
-         *                                                                  Sensitive area define bounduaries to release touch when movement is outside.
+         * @param  {function|Element|TextRectangle} [options.sensitiveArea] A
+         * [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect) or an element
+         *  or a function that takes the bound element and returns one of the previous.
+         *  Sensitive area define bounduaries to release touch when movement is outside.
          * @param  {array} [options.pointerTypes] Pointer types to handle. An array of pointer types that is intended to be
          *                                        a subset of keys from default pointer events map (see `$touchProvider.setPointerEvents`).
          *
@@ -458,16 +462,21 @@
           var cancelEventHandler = eventHandlers.cancel;
 
           var $movementTarget = angular.element($element[0].ownerDocument);
+          var onTouchMove;
+          var onTouchEnd;
+          var onTouchCancel;
 
           var resetTouch = function() {
             t0 = tl = null;
             $movementTarget.off(moveEvents, onTouchMove);
             $movementTarget.off(endEvents, onTouchEnd);
-            if (cancelEvents) { $movementTarget.off(cancelEvents, onTouchCancel); }
+            if (cancelEvents) {
+              $movementTarget.off(cancelEvents, onTouchCancel);
+            }
           };
 
           var isActive = function() {
-            return !!t0;
+            return Boolean(t0);
           };
 
           //
@@ -477,18 +486,22 @@
           // on touchstart
           var onTouchStart = function(event) {
             // don't handle multi-touch
-            if (event.touches && event.touches.length > 1) { return; }
+            if (event.touches && event.touches.length > 1) {
+              return;
+            }
             tl = t0 = buildTouchInfo('touchstart', getCoordinates(event));
             $movementTarget.on(moveEvents, onTouchMove);
             $movementTarget.on(endEvents, onTouchEnd);
-            if (cancelEvents) { $movementTarget.on(cancelEvents, onTouchCancel); }
+            if (cancelEvents) {
+              $movementTarget.on(cancelEvents, onTouchCancel);
+            }
             if (startEventHandler) {
               startEventHandler(t0, event);
             }
           };
 
           // on touchCancel
-          var onTouchCancel = function(event) {
+          onTouchCancel = function(event) {
             var t = buildTouchInfo('touchcancel', getCoordinates(event), t0, tl);
             resetTouch();
             if (cancelEventHandler) {
@@ -497,11 +510,15 @@
           };
 
           // on touchMove
-          var onTouchMove = function(event) {
+          onTouchMove = function(event) {
             // don't handle multi-touch
-            if (event.touches && event.touches.length > 1) { return; }
+            if (event.touches && event.touches.length > 1) {
+              return;
+            }
 
-            if (!isActive()) { return; }
+            if (!isActive()) {
+              return;
+            }
 
             var coords = getCoordinates(event);
 
@@ -513,7 +530,9 @@
 
             var mvaRect = mva instanceof Element ? mva.getBoundingClientRect() : mva;
 
-            if (coords.x < mvaRect.left || coords.x > mvaRect.right || coords.y < mvaRect.top || coords.y > mvaRect.bottom) { return; }
+            if (coords.x < mvaRect.left || coords.x > mvaRect.right || coords.y < mvaRect.top || coords.y > mvaRect.bottom) {
+              return;
+            }
 
             var t = buildTouchInfo('touchmove', coords, t0, tl);
             var totalX = t.totalX;
@@ -536,11 +555,16 @@
           };
 
           // on touchEnd
-          var onTouchEnd = function(event) {
+          onTouchEnd = function(event) {
             // don't handle multi-touch
-            if (event.touches && event.touches.length > 1) { return; }
+            if (event.touches && event.touches.length > 1) {
+              return;
+            }
 
-            if (!isActive()) { return; }
+            if (!isActive()) {
+              return;
+            }
+
             var t = angular.extend({}, tl, {type: 'touchend'});
             if (isValid(t, event)) {
               if (event.cancelable === undefined || event.cancelable) {
@@ -562,7 +586,9 @@
           return function unbind() {
             if ($element) { // <- wont throw if accidentally called twice
               $element.off(startEvents, onTouchStart);
-              if (cancelEvents) { $movementTarget.off(cancelEvents, onTouchCancel); }
+              if (cancelEvents) {
+                $movementTarget.off(cancelEvents, onTouchCancel);
+              }
               $movementTarget.off(moveEvents, onTouchMove);
               $movementTarget.off(endEvents, onTouchEnd);
 
@@ -578,4 +604,4 @@
       };
     }];
   });
-}());
+})();

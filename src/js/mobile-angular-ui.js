@@ -24,4 +24,4 @@
     'mobile-angular-ui.components'
   ]);
 
-}());
+})();

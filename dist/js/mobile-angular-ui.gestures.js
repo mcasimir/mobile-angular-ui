@@ -40,8 +40,10 @@
  * - `dragInfo` is an extended version of `touchInfo` from [$touch](../module:touch),
  *   extending it with:
  *   - `originalTransform`: The [$transform](../module:transform) object relative to CSS transform before `$drag` is bound.
- *   - `originalRect`: The [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect) for bound element before any drag action.
- *   - `startRect`: The [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect) for bound element registered at `start` event.
+ *   - `originalRect`: The [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect)
+ *   for bound element before any drag action.
+ *   - `startRect`: The [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect)
+ *   for bound element registered at `start` event.
  *   - `startTransform`: The [$transform](../module:transform) at `start` event.
  *   - `rect`: The current [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect) for bound element.
  *   - `transform`: The current [$transform](../module:transform).
@@ -121,26 +123,26 @@
     'mobile-angular-ui.gestures.transform'
   ])
 
-  .provider('$drag', function() {
-    this.$get = ['$touch', '$transform', function($touch, $transform) {
+    .provider('$drag', function() {
+      this.$get = ['$touch', '$transform', function($touch, $transform) {
 
       // Add some css rules to be used while moving elements
-      var style = document.createElement('style');
-      style.appendChild(document.createTextNode(''));
-      document.head.appendChild(style);
-      var sheet = style.sheet;
+        var style = document.createElement('style');
+        style.appendChild(document.createTextNode(''));
+        document.head.appendChild(style);
+        var sheet = style.sheet;
 
       // Makes z-index 99999
-      sheet.insertRule('html .ui-drag-move{z-index: 99999 !important;}', 0);
+        sheet.insertRule('html .ui-drag-move{z-index: 99999 !important;}', 0);
       // Disable transitions
-      sheet.insertRule('html .ui-drag-move{' +
+        sheet.insertRule('html .ui-drag-move{' +
         '-webkit-transition: none !important;' +
         '-moz-transition: none !important;-o-transition: none !important;' +
         '-ms-transition: none !important;transition: none !important;' +
         '}', 0);
 
       // Makes text unselectable
-      sheet.insertRule('html .ui-drag-move, html .ui-drag-move *{' +
+        sheet.insertRule('html .ui-drag-move, html .ui-drag-move *{' +
         '-webkit-touch-callout: none !important;' +
         '-webkit-user-select: none !important;' +
         '-khtml-user-select: none !important;' +
@@ -149,75 +151,73 @@
         'user-select: none !important;' +
       '}', 0);
 
-      style = sheet = null;   // we wont use them anymore so make
+        style = sheet = null;   // we wont use them anymore so make
       // their memory immediately claimable
 
-      return {
+        return {
 
         //
         // built-in transforms
         //
-        NULL_TRANSFORM: function(element, transform) {
-          return transform;
-        },
+          NULL_TRANSFORM: function(element, transform) {
+            return transform;
+          },
 
-        TRANSLATE_BOTH: function(element, transform, touch) {
-          transform.translateX = touch.distanceX;
-          transform.translateY = touch.distanceY;
-          return transform;
-        },
+          TRANSLATE_BOTH: function(element, transform, touch) {
+            transform.translateX = touch.distanceX;
+            transform.translateY = touch.distanceY;
+            return transform;
+          },
 
-        TRANSLATE_HORIZONTAL: function(element, transform, touch) {
-          transform.translateX = touch.distanceX;
-          transform.translateY = 0;
-          return transform;
-        },
+          TRANSLATE_HORIZONTAL: function(element, transform, touch) {
+            transform.translateX = touch.distanceX;
+            transform.translateY = 0;
+            return transform;
+          },
 
-        TRANSLATE_UP: function(element, transform, touch) {
-          transform.translateY = touch.distanceY <= 0 ? touch.distanceY : 0;
-          transform.translateX = 0;
-          return transform;
-        },
+          TRANSLATE_UP: function(element, transform, touch) {
+            transform.translateY = touch.distanceY <= 0 ? touch.distanceY : 0;
+            transform.translateX = 0;
+            return transform;
+          },
 
-        TRANSLATE_DOWN: function(element, transform, touch) {
-          transform.translateY = touch.distanceY >= 0 ? touch.distanceY : 0;
-          transform.translateX = 0;
-          return transform;
-        },
+          TRANSLATE_DOWN: function(element, transform, touch) {
+            transform.translateY = touch.distanceY >= 0 ? touch.distanceY : 0;
+            transform.translateX = 0;
+            return transform;
+          },
 
-        TRANSLATE_LEFT: function(element, transform, touch) {
-          transform.translateX = touch.distanceX <= 0 ? touch.distanceX : 0;
-          transform.translateY = 0;
-          return transform;
-        },
+          TRANSLATE_LEFT: function(element, transform, touch) {
+            transform.translateX = touch.distanceX <= 0 ? touch.distanceX : 0;
+            transform.translateY = 0;
+            return transform;
+          },
 
-        TRANSLATE_RIGHT: function(element, transform, touch) {
-          transform.translateX = touch.distanceX >= 0 ? touch.distanceX : 0;
-          transform.translateY = 0;
-          return transform;
-        },
+          TRANSLATE_RIGHT: function(element, transform, touch) {
+            transform.translateX = touch.distanceX >= 0 ? touch.distanceX : 0;
+            transform.translateY = 0;
+            return transform;
+          },
 
-        TRANSLATE_VERTICAL: function(element, transform, touch) {
-          transform.translateX = 0;
-          transform.translateY = touch.distanceY;
-          return transform;
-        },
+          TRANSLATE_VERTICAL: function(element, transform, touch) {
+            transform.translateX = 0;
+            transform.translateY = touch.distanceY;
+            return transform;
+          },
 
-        TRANSLATE_INSIDE: function(wrapperElementOrRectangle) {
-          wrapperElementOrRectangle = wrapperElementOrRectangle.length ? wrapperElementOrRectangle[0] : wrapperElementOrRectangle;
+          TRANSLATE_INSIDE: function(wrapperElementOrRectangle) {
+            wrapperElementOrRectangle = wrapperElementOrRectangle.length ? wrapperElementOrRectangle[0] : wrapperElementOrRectangle;
 
-          return function(element, transform, touch) {
-            element = element.length ? element[0] : element;
-            var re = element.getBoundingClientRect();
-            var rw = wrapperElementOrRectangle instanceof Element ? wrapperElementOrRectangle.getBoundingClientRect() : wrapperElementOrRectangle;
-            var tx;
-            var ty;
+            return function(element, transform, touch) {
+              element = element.length ? element[0] : element;
+              var re = element.getBoundingClientRect();
+              var rw = wrapperElementOrRectangle instanceof Element ? wrapperElementOrRectangle.getBoundingClientRect() : wrapperElementOrRectangle;
+              var tx;
+              var ty;
 
-            if (re.width >= rw.width) {
-              tx = 0;
-            } else {
-              // compute translateX so that re.left and re.right will stay between rw.left and rw.right
-              if (re.right + touch.stepX > rw.right) {
+              if (re.width >= rw.width) {
+                tx = 0;
+              } else if (re.right + touch.stepX > rw.right) {
                 tx = rw.right - re.right;
               } else if (re.left + touch.stepX < rw.left) {
                 tx = rw.left - re.left;
@@ -225,74 +225,70 @@
                 tx = touch.stepX;
               }
 
-            }
-
-            if (re.height >= rw.height) {
-              ty = 0;
-            } else {
-              if (re.bottom + touch.stepY > rw.bottom) {
+              if (re.height >= rw.height) {
+                ty = 0;
+              } else if (re.bottom + touch.stepY > rw.bottom) {
                 ty = rw.bottom - re.bottom;
               } else if (re.top + touch.stepY < rw.top) {
                 ty = rw.top - re.top;
               } else {
                 ty = touch.stepY;
               }
-            }
 
-            transform.translateX += tx;
-            transform.translateY += ty;
-            return transform;
-          };
-        },
+              transform.translateX += tx;
+              transform.translateY += ty;
+              return transform;
+            };
+          },
 
         //
         // bind function
         //
-        bind: function($element, dragOptions, touchOptions) {
-          $element = angular.element($element);
-          dragOptions = dragOptions || {};
-          touchOptions = touchOptions || {};
+          bind: function($element, dragOptions, touchOptions) {
+            $element = angular.element($element);
+            dragOptions = dragOptions || {};
+            touchOptions = touchOptions || {};
 
-          var startEventHandler = dragOptions.start;
-          var endEventHandler = dragOptions.end;
-          var moveEventHandler = dragOptions.move;
-          var cancelEventHandler = dragOptions.cancel;
-          var transformEventHandler = dragOptions.transform || this.TRANSLATE_BOTH;
+            var startEventHandler = dragOptions.start;
+            var endEventHandler = dragOptions.end;
+            var moveEventHandler = dragOptions.move;
+            var cancelEventHandler = dragOptions.cancel;
+            var transformEventHandler = dragOptions.transform || this.TRANSLATE_BOTH;
 
-          var domElement = $element[0];
-          var tO = $transform.get($element); // original transform
-          var rO = domElement.getBoundingClientRect(); // original bounding rect
-          var tS; // transform at start
-          var rS;
+            var domElement = $element[0];
+            var tO = $transform.get($element); // original transform
+            var rO = domElement.getBoundingClientRect(); // original bounding rect
+            var tS; // transform at start
+            var rS;
 
-          var moving = false;
+            var moving = false;
 
-          var isMoving = function() {
+            var isMoving = function() {
               return moving;
             };
 
-          var cleanup = function() {
+            var cleanup = function() {
               moving = false;
               tS = rS = null;
               $element.removeClass('ui-drag-move');
             };
 
-          var reset = function() {
+            var reset = function() {
               $transform.set(domElement, tO);
             };
 
-          var undo = function() {
+            var undo = function() {
               $transform.set(domElement, tS || tO);
             };
 
-          var setup = function() {
+            var setup = function() {
               moving = true;
               rS = domElement.getBoundingClientRect();
               tS = $transform.get(domElement);
               $element.addClass('ui-drag-move');
             };
 
-          var createDragInfo = function(touch) {
+            var createDragInfo = function(touch) {
               touch = angular.extend({}, touch);
               touch.originalTransform = tO;
               touch.originalRect = rO;
@@ -305,7 +301,7 @@
               return touch;
             };
 
-          var onTouchMove = function(touch, event) {
+            var onTouchMove = function(touch, event) {
               // preventDefault no matter what
               // it is (ie. maybe html5 drag for images or scroll)
               event.preventDefault();
@@ -315,12 +311,7 @@
               // dragging and not for touches we will bind $drag.start
               // to the first time move is called
 
-              if (!isMoving()) { // drag start
-                setup();
-                if (startEventHandler) {
-                  startEventHandler(createDragInfo(touch), event);
-                }
-              } else { // drag move
+              if (isMoving()) { // drag move
                 touch = createDragInfo(touch);
 
                 var transform = transformEventHandler($element, angular.extend({}, touch.transform), touch, event);
@@ -330,11 +321,18 @@
                 if (moveEventHandler) {
                   moveEventHandler(touch, event);
                 }
+              } else { // drag start
+                setup();
+                if (startEventHandler) {
+                  startEventHandler(createDragInfo(touch), event);
+                }
               }
             };
 
-          var onTouchEnd = function(touch, event) {
-              if (!isMoving()) { return; }
+            var onTouchEnd = function(touch, event) {
+              if (!isMoving()) {
+                return;
+              }
 
               // prevents outer swipes
               event.__UiSwipeHandled__ = true;
@@ -347,8 +345,10 @@
               }
             };
 
-          var onTouchCancel = function(touch, event) {
-              if (!isMoving()) { return; }
+            var onTouchCancel = function(touch, event) {
+              if (!isMoving()) {
+                return;
+              }
 
               touch = createDragInfo(touch);
               undo(); // on cancel movement is undoed automatically;
@@ -359,15 +359,15 @@
               }
             };
 
-          return $touch.bind($element,
+            return $touch.bind($element,
             {move: onTouchMove, end: onTouchEnd, cancel: onTouchCancel},
             touchOptions);
-        } // ~ bind
-      }; // ~ return $drag
-    }]; // ~ $get
-  });
+          } // ~ bind
+        }; // ~ return $drag
+      }]; // ~ $get
+    });
 
-}());
+})();
 
 /**
  * A module providing swipe gesture services and directives.
@@ -518,7 +518,9 @@
       }]);
     });
   });
-}());
+})();
+
+/* eslint complexity: 0 */
 
 /**
  * Device agnostic touch handling.
@@ -585,7 +587,7 @@
    */
   module.provider('$touch', function() {
 
-    /*=====================================
+    /* =====================================
     =            Configuration            =
     =====================================*/
 
@@ -596,12 +598,12 @@
     var MOVEMENT_THRESHOLD = 1;
 
     var POINTER_EVENTS = {
-      'mouse': {
+      mouse: {
         start: 'mousedown',
         move: 'mousemove',
         end: 'mouseup'
       },
-      'touch': {
+      touch: {
         start: 'touchstart',
         move: 'touchmove',
         end: 'touchend',
@@ -722,7 +724,8 @@
      * @param {function|Element|TextRectangle} sensitiveArea The new default sensitive area,
      *                                                       either static or as function
      *                                                       taking an element and returning another
-     *                                                       element or a [rectangle](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect).
+     *                                                       element or a
+     *                                                       [rectangle](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect).
      *
      * @method  setSensitiveArea
      * @memberOf mobile-angular-ui.gestures.touch~$touch.$touchProvider
@@ -738,7 +741,7 @@
     var atan2 = Math.atan2;
     var sqrt = Math.sqrt;
 
-    /*===============================
+    /* ===============================
     =            Helpers            =
     ===============================*/
 
@@ -879,7 +882,7 @@
       //                |
       //               90°
       //
-      var angle = dx !== 0 || dy !== 0  ? atan2(dy, dx) * (180 / Math.PI) : null;
+      var angle = dx !== 0 || dy !== 0 ? atan2(dy, dx) * (180 / Math.PI) : null;
       angle = angle === -180 ? 180 : angle;
 
       return {
@@ -893,7 +896,7 @@
         x: c.x,
         y: c.y,
 
-        step:  dl, // distance from prev
+        step: dl, // distance from prev
         stepX: dxl,
         stepY: dyl,
 
@@ -913,7 +916,7 @@
       };
     };
 
-    /*======================================
+    /* ======================================
     =            Factory Method            =
     ======================================*/
 
@@ -942,9 +945,10 @@
          * @param  {object} [options] Options.
          * @param  {integer} [options.movementThreshold] Amount of pixels of movement before start to trigger `touchmove` handlers.
          * @param  {function} [options.valid] Validity function. A `function(TouchInfo, event)⟶boolean` deciding if a touch should be handled or ignored.
-         * @param  {function|Element|TextRectangle} [options.sensitiveArea] A [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect) or an element
-         *                                                                  or a function that takes the bound element and returns one of the previous.
-         *                                                                  Sensitive area define bounduaries to release touch when movement is outside.
+         * @param  {function|Element|TextRectangle} [options.sensitiveArea] A
+         * [Bounding Client Rect](https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect) or an element
+         *  or a function that takes the bound element and returns one of the previous.
+         *  Sensitive area define bounduaries to release touch when movement is outside.
          * @param  {array} [options.pointerTypes] Pointer types to handle. An array of pointer types that is intended to be
          *                                        a subset of keys from default pointer events map (see `$touchProvider.setPointerEvents`).
          *
@@ -980,16 +984,21 @@
           var cancelEventHandler = eventHandlers.cancel;
 
           var $movementTarget = angular.element($element[0].ownerDocument);
+          var onTouchMove;
+          var onTouchEnd;
+          var onTouchCancel;
 
           var resetTouch = function() {
             t0 = tl = null;
             $movementTarget.off(moveEvents, onTouchMove);
             $movementTarget.off(endEvents, onTouchEnd);
-            if (cancelEvents) { $movementTarget.off(cancelEvents, onTouchCancel); }
+            if (cancelEvents) {
+              $movementTarget.off(cancelEvents, onTouchCancel);
+            }
           };
 
           var isActive = function() {
-            return !!t0;
+            return Boolean(t0);
           };
 
           //
@@ -999,18 +1008,22 @@
           // on touchstart
           var onTouchStart = function(event) {
             // don't handle multi-touch
-            if (event.touches && event.touches.length > 1) { return; }
+            if (event.touches && event.touches.length > 1) {
+              return;
+            }
             tl = t0 = buildTouchInfo('touchstart', getCoordinates(event));
             $movementTarget.on(moveEvents, onTouchMove);
             $movementTarget.on(endEvents, onTouchEnd);
-            if (cancelEvents) { $movementTarget.on(cancelEvents, onTouchCancel); }
+            if (cancelEvents) {
+              $movementTarget.on(cancelEvents, onTouchCancel);
+            }
             if (startEventHandler) {
               startEventHandler(t0, event);
             }
           };
 
           // on touchCancel
-          var onTouchCancel = function(event) {
+          onTouchCancel = function(event) {
             var t = buildTouchInfo('touchcancel', getCoordinates(event), t0, tl);
             resetTouch();
             if (cancelEventHandler) {
@@ -1019,11 +1032,15 @@
           };
 
           // on touchMove
-          var onTouchMove = function(event) {
+          onTouchMove = function(event) {
             // don't handle multi-touch
-            if (event.touches && event.touches.length > 1) { return; }
+            if (event.touches && event.touches.length > 1) {
+              return;
+            }
 
-            if (!isActive()) { return; }
+            if (!isActive()) {
+              return;
+            }
 
             var coords = getCoordinates(event);
 
@@ -1035,7 +1052,9 @@
 
             var mvaRect = mva instanceof Element ? mva.getBoundingClientRect() : mva;
 
-            if (coords.x < mvaRect.left || coords.x > mvaRect.right || coords.y < mvaRect.top || coords.y > mvaRect.bottom) { return; }
+            if (coords.x < mvaRect.left || coords.x > mvaRect.right || coords.y < mvaRect.top || coords.y > mvaRect.bottom) {
+              return;
+            }
 
             var t = buildTouchInfo('touchmove', coords, t0, tl);
             var totalX = t.totalX;
@@ -1058,11 +1077,16 @@
           };
 
           // on touchEnd
-          var onTouchEnd = function(event) {
+          onTouchEnd = function(event) {
             // don't handle multi-touch
-            if (event.touches && event.touches.length > 1) { return; }
+            if (event.touches && event.touches.length > 1) {
+              return;
+            }
 
-            if (!isActive()) { return; }
+            if (!isActive()) {
+              return;
+            }
+
             var t = angular.extend({}, tl, {type: 'touchend'});
             if (isValid(t, event)) {
               if (event.cancelable === undefined || event.cancelable) {
@@ -1084,7 +1108,9 @@
           return function unbind() {
             if ($element) { // <- wont throw if accidentally called twice
               $element.off(startEvents, onTouchStart);
-              if (cancelEvents) { $movementTarget.off(cancelEvents, onTouchCancel); }
+              if (cancelEvents) {
+                $movementTarget.off(cancelEvents, onTouchCancel);
+              }
               $movementTarget.off(moveEvents, onTouchMove);
               $movementTarget.off(endEvents, onTouchEnd);
 
@@ -1100,7 +1126,9 @@
       };
     }];
   });
-}());
+})();
+
+/* eslint complexity: 0 */
 
 /**
  * @module mobile-angular-ui.gestures.transform
@@ -1208,7 +1236,7 @@
 
   module.factory('$transform', function() {
 
-    /*==============================================================
+    /* ==============================================================
     =            Cross-Browser Property Prefix Handling            =
     ==============================================================*/
 
@@ -1235,8 +1263,8 @@
     var getElementTransformProperty = function(e) {
       e = e.length ? e[0] : e;
       var tr = window
-              .getComputedStyle(e, null)
-              .getPropertyValue(transformProperty);
+        .getComputedStyle(e, null)
+        .getPropertyValue(transformProperty);
       return tr;
     };
 
@@ -1246,7 +1274,7 @@
       elem.style[styleProperty] = value;
     };
 
-    /*======================================================
+    /* ======================================================
     =            Transform Matrix Decomposition            =
     ======================================================*/
 
@@ -1264,7 +1292,7 @@
     var floor = Math.floor;
 
     var cloneMatrix = function(m) {
-      var res = [[],[],[],[]];
+      var res = [[], [], [], []];
       for (var i = 0; i < m.length; i++) {
         for (var j = 0; j < m[i].length; j++) {
           res[i][j] = m[i][j];
@@ -1282,9 +1310,21 @@
     };
 
     var determinant4x4 = function(m) {
-      var a1 = m[0][0]; var b1 = m[0][1]; var c1 = m[0][2]; var d1 = m[0][3]; var a2 = m[1][0];
-      var b2 = m[1][1]; var c2 = m[1][2]; var d2 = m[1][3]; var a3 = m[2][0]; var b3 = m[2][1];
-      var c3 = m[2][2]; var d3 = m[2][3]; var a4 = m[3][0]; var b4 = m[3][1]; var c4 = m[3][2];
+      var a1 = m[0][0];
+      var b1 = m[0][1];
+      var c1 = m[0][2];
+      var d1 = m[0][3];
+      var a2 = m[1][0];
+      var b2 = m[1][1];
+      var c2 = m[1][2];
+      var d2 = m[1][3];
+      var a3 = m[2][0];
+      var b3 = m[2][1];
+      var c3 = m[2][2];
+      var d3 = m[2][3];
+      var a4 = m[3][0];
+      var b4 = m[3][1];
+      var c4 = m[3][2];
       var d4 = m[3][3];
       return a1 * determinant3x3(b2, b3, b4, c2, c3, c4, d2, d3, d4) -
               b1 * determinant3x3(a2, a3, a4, c2, c3, c4, d2, d3, d4) +
@@ -1293,28 +1333,40 @@
     };
 
     var adjoint = function(m) {
-      var res = [[],[],[],[]];
-      var a1 = m[0][0]; var b1 = m[0][1]; var c1 = m[0][2]; var d1 = m[0][3];
-      var a2 = m[1][0]; var b2 = m[1][1]; var c2 = m[1][2]; var d2 = m[1][3];
-      var a3 = m[2][0]; var b3 = m[2][1]; var c3 = m[2][2]; var d3 = m[2][3];
-      var a4 = m[3][0]; var b4 = m[3][1]; var c4 = m[3][2]; var d4 = m[3][3];
+      var res = [[], [], [], []];
+      var a1 = m[0][0];
+      var b1 = m[0][1];
+      var c1 = m[0][2];
+      var d1 = m[0][3];
+      var a2 = m[1][0];
+      var b2 = m[1][1];
+      var c2 = m[1][2];
+      var d2 = m[1][3];
+      var a3 = m[2][0];
+      var b3 = m[2][1];
+      var c3 = m[2][2];
+      var d3 = m[2][3];
+      var a4 = m[3][0];
+      var b4 = m[3][1];
+      var c4 = m[3][2];
+      var d4 = m[3][3];
 
-      res[0][0]  =   determinant3x3(b2, b3, b4, c2, c3, c4, d2, d3, d4);
-      res[1][0]  = -determinant3x3(a2, a3, a4, c2, c3, c4, d2, d3, d4);
-      res[2][0]  =   determinant3x3(a2, a3, a4, b2, b3, b4, d2, d3, d4);
-      res[3][0]  = -determinant3x3(a2, a3, a4, b2, b3, b4, c2, c3, c4);
-      res[0][1]  = -determinant3x3(b1, b3, b4, c1, c3, c4, d1, d3, d4);
-      res[1][1]  =   determinant3x3(a1, a3, a4, c1, c3, c4, d1, d3, d4);
-      res[2][1]  = -determinant3x3(a1, a3, a4, b1, b3, b4, d1, d3, d4);
-      res[3][1]  =   determinant3x3(a1, a3, a4, b1, b3, b4, c1, c3, c4);
-      res[0][2]  =   determinant3x3(b1, b2, b4, c1, c2, c4, d1, d2, d4);
-      res[1][2]  = -determinant3x3(a1, a2, a4, c1, c2, c4, d1, d2, d4);
-      res[2][2]  =   determinant3x3(a1, a2, a4, b1, b2, b4, d1, d2, d4);
-      res[3][2]  = -determinant3x3(a1, a2, a4, b1, b2, b4, c1, c2, c4);
-      res[0][3]  = -determinant3x3(b1, b2, b3, c1, c2, c3, d1, d2, d3);
-      res[1][3]  =   determinant3x3(a1, a2, a3, c1, c2, c3, d1, d2, d3);
-      res[2][3]  = -determinant3x3(a1, a2, a3, b1, b2, b3, d1, d2, d3);
-      res[3][3]  =   determinant3x3(a1, a2, a3, b1, b2, b3, c1, c2, c3);
+      res[0][0] = determinant3x3(b2, b3, b4, c2, c3, c4, d2, d3, d4);
+      res[1][0] = -determinant3x3(a2, a3, a4, c2, c3, c4, d2, d3, d4);
+      res[2][0] = determinant3x3(a2, a3, a4, b2, b3, b4, d2, d3, d4);
+      res[3][0] = -determinant3x3(a2, a3, a4, b2, b3, b4, c2, c3, c4);
+      res[0][1] = -determinant3x3(b1, b3, b4, c1, c3, c4, d1, d3, d4);
+      res[1][1] = determinant3x3(a1, a3, a4, c1, c3, c4, d1, d3, d4);
+      res[2][1] = -determinant3x3(a1, a3, a4, b1, b3, b4, d1, d3, d4);
+      res[3][1] = determinant3x3(a1, a3, a4, b1, b3, b4, c1, c3, c4);
+      res[0][2] = determinant3x3(b1, b2, b4, c1, c2, c4, d1, d2, d4);
+      res[1][2] = -determinant3x3(a1, a2, a4, c1, c2, c4, d1, d2, d4);
+      res[2][2] = determinant3x3(a1, a2, a4, b1, b2, b4, d1, d2, d4);
+      res[3][2] = -determinant3x3(a1, a2, a4, b1, b2, b4, c1, c2, c4);
+      res[0][3] = -determinant3x3(b1, b2, b3, c1, c2, c3, d1, d2, d3);
+      res[1][3] = determinant3x3(a1, a2, a3, c1, c2, c3, d1, d2, d3);
+      res[2][3] = -determinant3x3(a1, a2, a3, b1, b2, b3, d1, d2, d3);
+      res[3][3] = determinant3x3(a1, a2, a3, b1, b2, b3, c1, c2, c3);
 
       return res;
     };
@@ -1322,18 +1374,20 @@
     var inverse = function(m) {
       var res = adjoint(m);
       var det = determinant4x4(m);
-      if (abs(det) < SMALL_NUMBER) { return false; }
+      if (abs(det) < SMALL_NUMBER) {
+        return false;
+      }
 
       for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 4; j++) {
-          res[i][j] = res[i][j] / det;
+          res[i][j] /= det;
         }
       }
       return res;
     };
 
     var transposeMatrix4 = function(m) {
-      var res = [[],[],[],[]];
+      var res = [[], [], [], []];
       for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 4; j++) {
           res[i][j] = m[j][i];
@@ -1362,7 +1416,8 @@
     };
 
     var v3Scale = function(v, desiredLength) {
-      var res = []; var len = v3Length(v);
+      var res = [];
+      var len = v3Length(v);
       if (len !== 0) {
         var l = desiredLength / len;
         res[0] *= l;
@@ -1393,7 +1448,10 @@
     };
 
     var decompose = function(mat) {
-      var result = {}; var localMatrix = cloneMatrix(mat); var i; var j;
+      var result = {};
+      var localMatrix = cloneMatrix(mat);
+      var i;
+      var j;
 
       // Normalize the matrix.
       if (localMatrix[3][3] === 0) {
@@ -1455,7 +1513,7 @@
       localMatrix[3][2] = 0;
 
       // Now get scale and shear.
-      var row = [[],[],[]];
+      var row = [[], [], []];
       var pdum3;
 
       for (i = 0; i < 3; i++) {
@@ -1504,26 +1562,26 @@
       }
 
       // Rotation (angles smaller then SMALL_NUMBER are zeroed)
-      result.rotateY = rad2deg(asin(-row[0][2]))  || 0;
-      if (cos(result.rotateY) !== 0) {
-        result.rotateX = rad2deg(atan2(row[1][2], row[2][2]))  || 0;
-        result.rotateZ = rad2deg(atan2(row[0][1], row[0][0]))  || 0;
-      } else {
+      result.rotateY = rad2deg(asin(-row[0][2])) || 0;
+      if (cos(result.rotateY) === 0) {
         result.rotateX = rad2deg(atan2(-row[2][0], row[1][1])) || 0;
         result.rotateZ = 0;
+      } else {
+        result.rotateX = rad2deg(atan2(row[1][2], row[2][2])) || 0;
+        result.rotateZ = rad2deg(atan2(row[0][1], row[0][0])) || 0;
       }
 
       return result;
     };
 
-    /*=========================================
+    /* =========================================
     =            Factory interface            =
     =========================================*/
 
     var fCom = function(n, def) {
       // avoid scientific notation with toFixed
       var val = (n || def || 0);
-      return '' + val.toFixed(20);
+      return String(val.toFixed(20));
     };
 
     var fPx = function(n, def) {
@@ -1536,7 +1594,7 @@
 
     return {
       fromCssMatrix: function(tr) {
-        var M = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
+        var M = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]];
 
         // Just returns identity in case no transform is setup for the element
         if (tr && tr !== 'none') {
@@ -1633,7 +1691,7 @@
       }
     };
   });
-}());
+})();
 
 /**
  * @module mobile-angular-ui.gestures
@@ -1646,7 +1704,9 @@
  *
  * <div class="alert alert-warning">
  * <p>
- * <i class="fa fa-warning"></i> This module will not work with `ngTouch` cause it is intended, among offering more features, to be a drop-in replacement for it.
+ * <i class="fa fa-warning"></i> This module will not work with `ngTouch`
+ * cause it is intended, among offering more features, to be a drop-in
+ * replacement for it.
  * </p>
  * <p>
  * Be aware that `ngTouch` is still not playing well with `fastclick.js` and its usage with `mobile-angular-ui` is currently discouraged anyway.
@@ -1655,7 +1715,9 @@
  *
  * ## Usage
  *
- * `.gestures` module is not required by `mobile-angular-ui` module. It has no dependency on other modules and is intended to be used alone with any other angular framework.
+ * `.gestures` module is not required by `mobile-angular-ui` module. It has no
+ * dependency on other modules and is intended to be used alone with any other
+ * angular framework.
  *
  * You have to include `mobile-angular-ui.gestures.min.js` to your project in order to use it. Ie.
  *
@@ -1675,4 +1737,4 @@
     'mobile-angular-ui.gestures.swipe',
     'mobile-angular-ui.gestures.transform'
   ]);
-}());
+})();
