@@ -64,6 +64,7 @@
     "gulp-sequence": "0.4.5",
     "gulp-sourcemaps": "1.6.0",
     "gulp-uglify": "1.5.3",
+    "http-server": "0.9.0",
     "jasmine-core": "2.4.1",
     "jasmine-es6": "0.3.0",
     "jasmine-spec-reporter": "2.7.0",
