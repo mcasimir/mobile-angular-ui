@@ -151,3 +151,4 @@ sftp-config.json
 
 travis.sh
 nohup.out
+test/e2e/screenshots/*.png

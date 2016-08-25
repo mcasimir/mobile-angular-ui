@@ -28,11 +28,11 @@
     >
 
     <!-- Sidebars -->
-    <div ng-include="sidebar.html"
+    <div ng-include="'sidebar.html'"
             ui-track-as-search-param="true"
             class="sidebar sidebar-left"></div>
 
-    <div ng-include="sidebarRight.html"
+    <div ng-include="'sidebarRight.html'"
             class="sidebar sidebar-right"></div>
 
     <div class="app"
@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="btn-group pull-right" ui-yield-to="navbarAction">
-          <div ui-toggle="uiSidebarRight" class="btn">
+          <div ui-toggle="uiSidebarRight" class="btn sidebar-right-toggle">
             <i class="fa fa-comment"></i> Chat
           </div>
         </div>
