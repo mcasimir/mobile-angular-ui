@@ -207,7 +207,7 @@ function waitFor(resources) {
     return new Promise(function(resolve, reject) {
       waitOn({
         resources: resources,
-        timeout: 2000
+        timeout: 5000
       }, function(err) {
         if (err) {
           return reject(err);
