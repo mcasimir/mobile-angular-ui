@@ -16,13 +16,15 @@
     "lint": "eslint . --quiet",
     "test": "npm run depcheck && npm run lint && npm run test:unit && npm run test:e2e",
     "test:unit": "karma start test/unit/karma.conf.js",
+    "server": "http-server . -p 8888",
     "pretest:e2e": "pid-terminator 8889 && nohup http-server . -p 8889 &",
     "test:e2e": "protractor test/e2e/protractor.conf.js",
     "posttest:e2e": "pid-terminator 8889",
-    "release": "release-flow"
+    "release": "release-flow",
+    "git:commit-all": "npm run build && sleep 2 && git add . && git commit -am"
   },
   "pre-commit": [
-    "build"
+    "lint"
   ],
   "repository": {
     "type": "git",
