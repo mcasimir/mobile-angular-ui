@@ -2,17 +2,15 @@
 
 describe('core', function() {
   describe('capture', function() {
-    var scope;
-    var $rootScope;
-    var compile;
-    var Capture;
+    let scope;
+    let $rootScope;
+    let Capture;
 
     beforeEach(function() {
       module('mobile-angular-ui.core.capture');
       inject(function(_$rootScope_, $compile, _Capture_) {
         $rootScope = _$rootScope_;
         scope = _$rootScope_.$new();
-        compile = $compile;
         Capture = _Capture_;
       });
     });
@@ -67,7 +65,7 @@ describe('core', function() {
 
       describe('getYielder', function() {
         it('Should return a yielder by name', function() {
-          var yielder1 = {
+          let yielder1 = {
             defaultContent: 'content',
             defaultScope: 'scope'
           };
@@ -80,7 +78,7 @@ describe('core', function() {
 
       describe('removeYielder', function() {
         it('Should remove a yielder by name', function() {
-          var yielder1 = {
+          let yielder1 = {
             defaultContent: 'content',
             defaultScope: 'scope'
           };
@@ -100,7 +98,7 @@ describe('core', function() {
         });
 
         it('Should set content on matching yielder', function() {
-          var elem = angular.element('<div></div>');
+          let elem = angular.element('<div></div>');
           Capture.yielders.yielder1 = {
             element: elem
           };
@@ -111,7 +109,7 @@ describe('core', function() {
         });
 
         it('Should compile content against scope', function() {
-          var elem = angular.element('<div></div>');
+          let elem = angular.element('<div></div>');
           scope.greeting = 'Hello';
           Capture.yielders.yielder1 = {
             element: elem

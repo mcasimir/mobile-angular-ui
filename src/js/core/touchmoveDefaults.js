@@ -90,39 +90,41 @@
    */
 
   module.factory('allowTouchmoveDefault', function() {
-    var fnTrue = function() { return true; };
+    var fnTrue = function() {
+      return true;
+    };
 
     if ('ontouchmove' in document) {
       return function($element, condition) {
-          condition = condition || fnTrue;
+        condition = condition || fnTrue;
 
-          var allowTouchmoveDefaultCallback = function(e) {
-            if (condition(e)) {
-              e.allowTouchmoveDefault = true;
+        var allowTouchmoveDefaultCallback = function(e) {
+          if (condition(e)) {
+            e.allowTouchmoveDefault = true;
               // jQuery normalizes the event object, need to put this property on the copied originalEvent.
-              if (e.originalEvent) {
-                e.originalEvent.allowTouchmoveDefault = true;
-              }
+            if (e.originalEvent) {
+              e.originalEvent.allowTouchmoveDefault = true;
             }
-          };
-
-          $element = angular.element($element);
-          $element.on('touchmove',  allowTouchmoveDefaultCallback);
-
-          $element.on('$destroy', function() {
-            $element.off('touchmove', allowTouchmoveDefaultCallback);
-            $element = null;
-          });
-
-          return function() {
-            if ($element) {
-              $element.off('touchmove', allowTouchmoveDefaultCallback);
-            }
-          };
+          }
         };
-    } else {
-      return angular.noop;
+
+        $element = angular.element($element);
+        $element.on('touchmove', allowTouchmoveDefaultCallback);
+
+        $element.on('$destroy', function() {
+          $element.off('touchmove', allowTouchmoveDefaultCallback);
+          $element = null;
+        });
+
+        return function() {
+          if ($element) {
+            $element.off('touchmove', allowTouchmoveDefaultCallback);
+          }
+        };
+      };
     }
+
+    return angular.noop;
   });
 
-}());
+})();

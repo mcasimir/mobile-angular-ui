@@ -29,4 +29,4 @@
     'mobile-angular-ui.components.scrollable',
     'mobile-angular-ui.components.switch'
   ]);
-}());
+})();

@@ -4,40 +4,40 @@ describe('core', function() {
   describe('outerClick', function() {
 
     function click($el) {
-      var el = $el[0];
-      var ev = document.createEvent('MouseEvent');
+      let el = $el[0];
+      let ev = document.createEvent('MouseEvent');
       ev.initMouseEvent(
           'click',
           true /* bubble */, true /* cancelable */,
           window, null,
           0, 0, 0, 0, /* coordinates */
           false, false, false, false, /* modifier keys */
-          0 /*left*/, null
+          0 /* left*/, null
       );
       el.dispatchEvent(ev);
     }
 
     function tap($el) {
-      var el = $el[0];
-      var ev = document.createEvent('MouseEvent');
+      let el = $el[0];
+      let ev = document.createEvent('MouseEvent');
       ev.initMouseEvent(
           'tap',
           true /* bubble */, true /* cancelable */,
           window, null,
           0, 0, 0, 0, /* coordinates */
           false, false, false, false, /* modifier keys */
-          0 /*left*/, null
+          0 /* left*/, null
       );
       el.dispatchEvent(ev);
     }
 
-    var scope;
-    var compile;
-    var isAncestorOrSelf;
-    var bindOuterClick;
-    var body;
-    var $document;
-    var $timeout;
+    let scope;
+    let compile;
+    let isAncestorOrSelf;
+    let bindOuterClick;
+    let body;
+    let $document;
+    let $timeout;
 
     beforeEach(function() {
       module('mobile-angular-ui.core.outerClick');
@@ -54,20 +54,20 @@ describe('core', function() {
 
     describe('_mauiIsAncestorOrSelf', function() {
       it('returns true if target is parent of element', function() {
-        var elem = angular.element('<div></div>');
-        var target = angular.element('<div></div>');
+        let elem = angular.element('<div></div>');
+        let target = angular.element('<div></div>');
         target.append(elem);
         expect(isAncestorOrSelf(elem, target)).toBe(true);
       });
 
       it('returns true if target is element', function() {
-        var elem = angular.element('<div></div>');
+        let elem = angular.element('<div></div>');
         expect(isAncestorOrSelf(elem, elem)).toBe(true);
       });
 
       it('returns false if target is child of element', function() {
-        var elem = angular.element('<div></div>');
-        var target = angular.element('<div></div>');
+        let elem = angular.element('<div></div>');
+        let target = angular.element('<div></div>');
         elem.append(target);
         expect(isAncestorOrSelf(elem, target)).toBe(false);
       });
@@ -75,9 +75,9 @@ describe('core', function() {
 
     describe('bindOuterClick', function() {
       it('runs callback on click on parent', function() {
-        var elem = angular.element('<div></div>');
-        var wrapper = angular.element('<div></div>');
-        var callback = jasmine.createSpy('callback');
+        let elem = angular.element('<div></div>');
+        let wrapper = angular.element('<div></div>');
+        let callback = jasmine.createSpy('callback');
         wrapper.append(elem);
         body.append(wrapper);
         bindOuterClick(scope, elem, callback);
@@ -86,10 +86,10 @@ describe('core', function() {
       });
 
       it('runs callback on click on sibling', function() {
-        var elem = angular.element('<div></div>');
-        var elem2 = angular.element('<div></div>');
-        var wrapper = angular.element('<div></div>');
-        var callback = jasmine.createSpy('callback');
+        let elem = angular.element('<div></div>');
+        let elem2 = angular.element('<div></div>');
+        let wrapper = angular.element('<div></div>');
+        let callback = jasmine.createSpy('callback');
         wrapper.append(elem);
         wrapper.append(elem2);
         body.append(wrapper);
@@ -99,29 +99,29 @@ describe('core', function() {
       });
 
       it('does not run callback on click on self', function() {
-        var elem = angular.element('<div></div>');
+        let elem = angular.element('<div></div>');
         body.append(elem);
-        var callback = jasmine.createSpy('callback');
+        let callback = jasmine.createSpy('callback');
         bindOuterClick(scope, elem, callback);
         click(elem);
         expect(callback).not.toHaveBeenCalled();
       });
 
       it('does not run callback on click on child', function() {
-        var elem = angular.element('<div></div>');
-        var child = angular.element('<div></div>');
+        let elem = angular.element('<div></div>');
+        let child = angular.element('<div></div>');
         elem.append(child);
         body.append(elem);
-        var callback = jasmine.createSpy('callback');
+        let callback = jasmine.createSpy('callback');
         bindOuterClick(scope, elem, callback);
         click(child);
         expect(callback).not.toHaveBeenCalled();
       });
 
       it('runs callback on tap on parent', function() {
-        var elem = angular.element('<div></div>');
-        var wrapper = angular.element('<div></div>');
-        var callback = jasmine.createSpy('callback');
+        let elem = angular.element('<div></div>');
+        let wrapper = angular.element('<div></div>');
+        let callback = jasmine.createSpy('callback');
         wrapper.append(elem);
         body.append(wrapper);
         bindOuterClick(scope, elem, callback);
@@ -130,10 +130,10 @@ describe('core', function() {
       });
 
       it('runs callback on tap on sibling', function() {
-        var elem = angular.element('<div></div>');
-        var elem2 = angular.element('<div></div>');
-        var wrapper = angular.element('<div></div>');
-        var callback = jasmine.createSpy('callback');
+        let elem = angular.element('<div></div>');
+        let elem2 = angular.element('<div></div>');
+        let wrapper = angular.element('<div></div>');
+        let callback = jasmine.createSpy('callback');
         wrapper.append(elem);
         wrapper.append(elem2);
         body.append(wrapper);
@@ -143,37 +143,37 @@ describe('core', function() {
       });
 
       it('does not run callback on tap on self', function() {
-        var elem = angular.element('<div></div>');
+        let elem = angular.element('<div></div>');
         body.append(elem);
-        var callback = jasmine.createSpy('callback');
+        let callback = jasmine.createSpy('callback');
         bindOuterClick(scope, elem, callback);
         tap(elem);
         expect(callback).not.toHaveBeenCalled();
       });
 
       it('does not run callback on tap on child', function() {
-        var elem = angular.element('<div></div>');
-        var child = angular.element('<div></div>');
+        let elem = angular.element('<div></div>');
+        let child = angular.element('<div></div>');
         elem.append(child);
         body.append(elem);
-        var callback = jasmine.createSpy('callback');
+        let callback = jasmine.createSpy('callback');
         bindOuterClick(scope, elem, callback);
         tap(child);
         expect(callback).not.toHaveBeenCalled();
       });
 
       it('checks condition if passed', function() {
-        var elem = angular.element('<div></div>');
-        var condition = jasmine.createSpy('condition');
+        let elem = angular.element('<div></div>');
+        let condition = jasmine.createSpy('condition');
         bindOuterClick(scope, elem, null, condition);
         scope.$digest();
         expect(condition).toHaveBeenCalled();
       });
 
       it('runs callback if condition is matched', function() {
-        var elem = angular.element('<div></div>');
-        var wrapper = angular.element('<div></div>');
-        var callback = jasmine.createSpy('callback');
+        let elem = angular.element('<div></div>');
+        let wrapper = angular.element('<div></div>');
+        let callback = jasmine.createSpy('callback');
         wrapper.append(elem);
         body.append(wrapper);
         bindOuterClick(scope, elem, callback, function() {
@@ -186,7 +186,7 @@ describe('core', function() {
       });
 
       it('unbinds outerClick if condition is not matched', function() {
-        var elem = angular.element('<div></div>');
+        let elem = angular.element('<div></div>');
         spyOn($document, 'on');
         spyOn($document, 'unbind');
         bindOuterClick(scope, elem, null, function() {
@@ -200,7 +200,7 @@ describe('core', function() {
       });
 
       it('unbinds outerClick on scope destroy', function() {
-        var elem = angular.element('<div></div>');
+        let elem = angular.element('<div></div>');
         spyOn($document, 'unbind');
         bindOuterClick(scope, elem);
         scope.$destroy();
@@ -211,8 +211,8 @@ describe('core', function() {
     describe('uiOuterClick', function() {
       it('should evaluate expression on outerClick', function() {
         scope.callback = jasmine.createSpy('callback');
-        var elem = angular.element('<div ui-outer-click="callback()" />');
-        var directiveElement = compile(elem)(scope);
+        let elem = angular.element('<div ui-outer-click="callback()" />');
+        let directiveElement = compile(elem)(scope);
         body.append(directiveElement);
         scope.$digest();
         click(body);

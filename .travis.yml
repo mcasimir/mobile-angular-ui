@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- 4.4.3
+- 6.2.1
 sudo: required
 before_install:
 - sudo apt-get update

@@ -2,9 +2,9 @@
 
 describe('core', function() {
   describe('capture', function() {
-    var scope;
-    var compile;
-    var Capture;
+    let scope;
+    let compile;
+    let Capture;
 
     beforeEach(function() {
       module('mobile-angular-ui.core.capture');
@@ -19,11 +19,11 @@ describe('core', function() {
       it('should setup a yielder when linked', function() {
         spyOn(Capture, 'putYielder');
 
-        var elem = angular.element(
+        let elem = angular.element(
           '<div ui-yield-to="placeholder"><span class="defaultContent"></span></div>'
         );
 
-        elem = compile(elem)(scope);
+        compile(elem)(scope);
         scope.$digest();
 
         expect(Capture.putYielder).toHaveBeenCalledWith('placeholder', elem, scope, '<span class="defaultContent"></span>');
@@ -32,7 +32,7 @@ describe('core', function() {
       it('should remove yielder when element is destroyed', function() {
         spyOn(Capture, 'removeYielder');
 
-        var elem = angular.element(
+        let elem = angular.element(
           '<div ui-yield-to="placeholder"><span class="defaultContent"></span></div>'
         );
 
@@ -47,11 +47,11 @@ describe('core', function() {
       it('should remove yielder when scope is destroyed', function() {
         spyOn(Capture, 'removeYielder');
 
-        var elem = angular.element(
+        let elem = angular.element(
           '<div ui-yield-to="placeholder"><span class="defaultContent"></span></div>'
         );
 
-        elem = compile(elem)(scope);
+        compile(elem)(scope);
         scope.$digest();
         scope.$destroy();
 
@@ -61,7 +61,7 @@ describe('core', function() {
       it('should allow ng-click to work', function() {
         scope.ngClickCallback = jasmine.createSpy('ngClickCallback');
 
-        var elem = angular.element(
+        let elem = angular.element(
           '<div ui-yield-to="placeholder"><a href ng-click="ngClickCallback()">Ng Click</a></div>'
         );
 

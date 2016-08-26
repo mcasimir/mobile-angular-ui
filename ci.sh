@@ -3,4 +3,7 @@
 set -x
 set -e
 
-xvfb-run gulp test:ci
+xvfb-run npm test
+
+# Remove chrome temp files
+rm -Rf .com.google*

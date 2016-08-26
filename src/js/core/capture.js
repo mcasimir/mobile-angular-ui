@@ -2,15 +2,23 @@
  * @module mobile-angular-ui.core.capture
  * @description
  *
- * The `capture` module exposes directives to let you extract markup which can be used in other parts of a template using `uiContentFor` and `uiYieldTo` directives.
+ * The `capture` module exposes directives to var you extract markup which can
+ * be used in other parts of a template using `uiContentFor` and `uiYieldTo`
+ * directives.
  *
  * It provides a way to move or clone a block of markup to other parts of the document.
  *
- * This method is particularly useful to setup parts of the layout within an angular view. Since blocks of html are transplanted within their original `$scope` is easy to create layout interactions depending on the context. Some tipical task you can accomplish with these directives are: _setup the navbar title depending on the view_ or _place a submit button for a form inside a navbar_.
+ * This method is particularly useful to setup parts of the layout within an
+ * angular view. Since blocks of html are transplanted within their original
+ * `$scope` is easy to create layout interactions depending on the context.
+ * Some tipical task you can accomplish with these directives are: _setup
+ * the navbar title depending on the view_ or _place a submit button for a
+ * form inside a navbar_.
  *
  * ## Usage
  *
- * Declare it as a dependency to your app unless you have already included some of its super-modules.
+ * Declare it as a dependency to your app unless you have already included some
+ * of its super-modules.
  *
  * ```
  * angular.module('myApp', ['mobile-angular-ui']);
@@ -54,8 +62,9 @@
  * </div>
  * ```
  *
- * Since the original scope is preserved you can use directives inside `ui-content-for` blocks to interact with the current scope. In the following example we will add a navbar button to submit a form inside a nested view.
- *
+ * Since the original scope is preserved you can use directives inside
+ * `ui-content-for` blocks to interact with the current scope. In the following
+ * example we will add a navbar button to submit a form inside a nested view.
  *
  * ``` html
  * <!-- index.html -->
@@ -113,66 +122,66 @@
 
   angular.module('mobile-angular-ui.core.capture', [])
 
-  .run([
-    'Capture',
-    '$rootScope',
-     function(Capture, $rootScope) {
-       $rootScope.$on('$routeChangeSuccess', function() {
-         Capture.resetAll();
-       });
-     }
-   ])
+    .run([
+      'Capture',
+      '$rootScope',
+      function(Capture, $rootScope) {
+        $rootScope.$on('$routeChangeSuccess', function() {
+          Capture.resetAll();
+        });
+      }
+    ])
 
-   .factory('Capture', [
-     '$compile',
-     function($compile) {
-       var yielders = {};
+    .factory('Capture', [
+      '$compile',
+      function($compile) {
+        var yielders = {};
 
-       return {
-         yielders: yielders,
+        return {
+          yielders: yielders,
 
-         resetAll: function() {
-           for (var name in yielders) {
-             if (yielders.hasOwnProperty(name)) {
-               this.resetYielder(name);
-             }
-           }
-         },
+          resetAll: function() {
+            for (var name in yielders) {
+              if (yielders.hasOwnProperty(name)) {
+                this.resetYielder(name);
+              }
+            }
+          },
 
-         resetYielder: function(name) {
-           var b = yielders[name];
-           this.setContentFor(name, b.defaultContent, b.defaultScope);
-         },
+          resetYielder: function(name) {
+            var b = yielders[name];
+            this.setContentFor(name, b.defaultContent, b.defaultScope);
+          },
 
-         putYielder: function(name, element, defaultScope, defaultContent) {
-           var yielder = {};
-           yielder.name = name;
-           yielder.element = element;
-           yielder.defaultContent = defaultContent || '';
-           yielder.defaultScope = defaultScope;
-           yielders[name] = yielder;
-         },
+          putYielder: function(name, element, defaultScope, defaultContent) {
+            var yielder = {};
+            yielder.name = name;
+            yielder.element = element;
+            yielder.defaultContent = defaultContent || '';
+            yielder.defaultScope = defaultScope;
+            yielders[name] = yielder;
+          },
 
-         getYielder: function(name) {
-           return yielders[name];
-         },
+          getYielder: function(name) {
+            return yielders[name];
+          },
 
-         removeYielder: function(name) {
-           delete yielders[name];
-         },
+          removeYielder: function(name) {
+            delete yielders[name];
+          },
 
-         setContentFor: function(name, content, scope) {
-           var b = yielders[name];
-           if (!b) {
-             return;
-           }
-           b.element.html(content);
-           $compile(b.element.contents())(scope);
-         }
+          setContentFor: function(name, content, scope) {
+            var b = yielders[name];
+            if (!b) {
+              return;
+            }
+            b.element.html(content);
+            $compile(b.element.contents())(scope);
+          }
 
-       };
-     }
-   ])
+        };
+      }
+    ])
 
   /**
    * @directive uiContentFor
@@ -190,24 +199,24 @@
    * @param {boolean} uiDuplicate If present duplicates the content instead of moving it (default to `false`)
    *
    */
-   .directive('uiContentFor', [
-     'Capture',
-     function(Capture) {
-       return {
-         compile: function(tElem, tAttrs) {
-           var rawContent = tElem.html();
-           if (tAttrs.uiDuplicate === null || tAttrs.uiDuplicate === undefined) {
+    .directive('uiContentFor', [
+      'Capture',
+      function(Capture) {
+        return {
+          compile: function(tElem, tAttrs) {
+            var rawContent = tElem.html();
+            if (tAttrs.uiDuplicate === null || tAttrs.uiDuplicate === undefined) {
              // no need to compile anything!
-             tElem.html('');
-             tElem.remove();
-           }
-           return function(scope, elem, attrs) {
-             Capture.setContentFor(attrs.uiContentFor, rawContent, scope);
-           };
-         }
-       };
-     }
-   ])
+              tElem.html('');
+              tElem.remove();
+            }
+            return function(scope, elem, attrs) {
+              Capture.setContentFor(attrs.uiContentFor, rawContent, scope);
+            };
+          }
+        };
+      }
+    ])
 
    /**
     * @directive uiYieldTo
@@ -221,22 +230,22 @@
     * @param {string} uiYieldTo The unique id of this placeholder.
     *
     */
-   .directive('uiYieldTo', [
-     '$compile', 'Capture', function($compile, Capture) {
-       return {
-         link: function(scope, element, attr) {
-           Capture.putYielder(attr.uiYieldTo, element, scope, element.html());
+    .directive('uiYieldTo', [
+      '$compile', 'Capture', function($compile, Capture) {
+        return {
+          link: function(scope, element, attr) {
+            Capture.putYielder(attr.uiYieldTo, element, scope, element.html());
 
-           element.on('$destroy', function() {
-             Capture.removeYielder(attr.uiYieldTo);
-           });
+            element.on('$destroy', function() {
+              Capture.removeYielder(attr.uiYieldTo);
+            });
 
-           scope.$on('$destroy', function() {
-             Capture.removeYielder(attr.uiYieldTo);
-           });
-         }
-       };
-     }
-   ]);
+            scope.$on('$destroy', function() {
+              Capture.removeYielder(attr.uiYieldTo);
+            });
+          }
+        };
+      }
+    ]);
 
-}());
+})();

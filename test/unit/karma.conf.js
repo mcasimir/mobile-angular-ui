@@ -1,20 +1,20 @@
 'use strict';
 
-var src = require('../config').globs.js;
+let src = require('../../config').globs.js;
 
 module.exports = function(config) {
   config.set({
-    basePath: '..',
+    basePath: '../..',
 
     frameworks: ['jasmine'],
 
     files: [
-      'node_modules/angular/angular.js',
-      ].concat(src)
+      'node_modules/angular/angular.js'
+    ].concat(src)
       .concat([
-      'node_modules/angular-mocks/angular-mocks.js',
-      'test/unit/**/*.spec.js'
-    ]),
+        'node_modules/angular-mocks/angular-mocks.js',
+        'test/unit/**/*.spec.js'
+      ]),
 
     preprocessors: {
       'src/js/*.js': ['coverage'],
@@ -41,7 +41,9 @@ module.exports = function(config) {
         {type: 'text-summary'}
       ],
       dir: 'coverage',
-      subdir: function() {return '';}
+      subdir: function() {
+        return '';
+      }
     },
 
     singleRun: true,

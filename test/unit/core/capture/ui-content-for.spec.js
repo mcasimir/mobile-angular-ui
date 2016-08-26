@@ -2,9 +2,9 @@
 
 describe('core', function() {
   describe('capture', function() {
-    var scope;
-    var compile;
-    var Capture;
+    let scope;
+    let compile;
+    let Capture;
 
     beforeEach(function() {
       module('mobile-angular-ui.core.capture');
@@ -19,18 +19,18 @@ describe('core', function() {
       it('should set content for a yielder when linked', function() {
         spyOn(Capture, 'setContentFor');
 
-        var elem = angular.element(
+        let elem = angular.element(
           '<div ui-content-for="placeholder"><span class="content"></span></div>'
         );
 
-        elem = compile(elem)(scope);
+        compile(elem)(scope);
         scope.$digest();
 
         expect(Capture.setContentFor).toHaveBeenCalledWith('placeholder', '<span class="content"></span>', scope);
       });
 
       it('should remove content if uiDuplicate is not set', function() {
-        var elem = angular.element(
+        let elem = angular.element(
           '<div ui-content-for="placeholder">Content</div>'
         );
 
@@ -41,7 +41,7 @@ describe('core', function() {
       });
 
       it('should keep and compile content if uiDuplicate is true', function() {
-        var elem = angular.element(
+        let elem = angular.element(
           '<div ui-content-for="placeholder" ui-duplicate="true">Content {{1+1}}</div>'
         );
 

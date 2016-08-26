@@ -101,30 +101,30 @@
    * @directive modal
    * @restrict C
    */
-  .directive('modal', [
-    '$rootElement',
-    function($rootElement) {
-      return {
-        restrict: 'C',
-        link: function(scope, elem) {
-          $rootElement.addClass('has-modal');
-          elem.on('$destroy', function() {
-            $rootElement.removeClass('has-modal');
-          });
-          scope.$on('$destroy', function() {
-            $rootElement.removeClass('has-modal');
-          });
-
-          if (elem.hasClass('modal-overlay')) {
-            $rootElement.addClass('has-modal-overlay');
+    .directive('modal', [
+      '$rootElement',
+      function($rootElement) {
+        return {
+          restrict: 'C',
+          link: function(scope, elem) {
+            $rootElement.addClass('has-modal');
             elem.on('$destroy', function() {
-              $rootElement.removeClass('has-modal-overlay');
+              $rootElement.removeClass('has-modal');
             });
             scope.$on('$destroy', function() {
-              $rootElement.removeClass('has-modal-overlay');
+              $rootElement.removeClass('has-modal');
             });
+
+            if (elem.hasClass('modal-overlay')) {
+              $rootElement.addClass('has-modal-overlay');
+              elem.on('$destroy', function() {
+                $rootElement.removeClass('has-modal-overlay');
+              });
+              scope.$on('$destroy', function() {
+                $rootElement.removeClass('has-modal-overlay');
+              });
+            }
           }
-        }
-      };
-    }]);
-}());
+        };
+      }]);
+})();

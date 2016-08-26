@@ -1,0 +1,39 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "google"
+  ],
+  "plugins": [
+    "babel"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {}
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "jasmine": true,
+  },
+  "globals": {
+    "angular": false,
+    "inject": false
+  },
+  "rules": {
+    "new-cap": 0,
+    "no-console": [1, { "allow": ["info", "warn", "error"] }],
+    "quotes": [2, "single"],
+    "no-unused-vars": 2,
+    "eqeqeq": 2,
+    "complexity": [2, 10],
+    "max-len": [2, 160],
+    "comma-dangle": [2, "never"],
+    "no-mixed-spaces-and-tabs": 2,
+    "quote-props": [2, "as-needed"],
+    "padded-blocks": 0,
+    "require-jsdoc": 0,
+    "generator-star-spacing": 0,
+    "babel/generator-star-spacing": 1
+  }
+}

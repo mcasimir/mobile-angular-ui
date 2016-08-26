@@ -1,8 +1,8 @@
 'use strict';
 
-var path = require('path');
+let path = require('path');
 
-var config = {
+let config = {
   globs: {
     core: [
       'node_modules/fastclick/lib/fastclick.js',
@@ -39,6 +39,7 @@ var config = {
     ignore: [
       'angular',
       'angular-mocks',
+      'angular-route',
       'bootstrap',
       'mobile-angular-ui',
       'jasmine-core',
@@ -48,7 +49,9 @@ var config = {
       'karma-selenium-webdriver-launcher',
       'karma-coverage',
       'karma-chrome-launcher',
-      'selenium-webdriver'
+      'selenium-webdriver',
+      'chromedriver',
+      'pre-commit'
     ]
   },
   lint: ['./src/**/*.js', './test/**/*.js', './*.js']

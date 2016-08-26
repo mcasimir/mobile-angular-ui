@@ -1,3 +1,5 @@
+/* eslint complexity: 0 */
+
 /**
  * @module mobile-angular-ui.gestures.transform
  * @description
@@ -104,7 +106,7 @@
 
   module.factory('$transform', function() {
 
-    /*==============================================================
+    /* ==============================================================
     =            Cross-Browser Property Prefix Handling            =
     ==============================================================*/
 
@@ -131,8 +133,8 @@
     var getElementTransformProperty = function(e) {
       e = e.length ? e[0] : e;
       var tr = window
-              .getComputedStyle(e, null)
-              .getPropertyValue(transformProperty);
+        .getComputedStyle(e, null)
+        .getPropertyValue(transformProperty);
       return tr;
     };
 
@@ -142,7 +144,7 @@
       elem.style[styleProperty] = value;
     };
 
-    /*======================================================
+    /* ======================================================
     =            Transform Matrix Decomposition            =
     ======================================================*/
 
@@ -160,7 +162,7 @@
     var floor = Math.floor;
 
     var cloneMatrix = function(m) {
-      var res = [[],[],[],[]];
+      var res = [[], [], [], []];
       for (var i = 0; i < m.length; i++) {
         for (var j = 0; j < m[i].length; j++) {
           res[i][j] = m[i][j];
@@ -178,9 +180,21 @@
     };
 
     var determinant4x4 = function(m) {
-      var a1 = m[0][0]; var b1 = m[0][1]; var c1 = m[0][2]; var d1 = m[0][3]; var a2 = m[1][0];
-      var b2 = m[1][1]; var c2 = m[1][2]; var d2 = m[1][3]; var a3 = m[2][0]; var b3 = m[2][1];
-      var c3 = m[2][2]; var d3 = m[2][3]; var a4 = m[3][0]; var b4 = m[3][1]; var c4 = m[3][2];
+      var a1 = m[0][0];
+      var b1 = m[0][1];
+      var c1 = m[0][2];
+      var d1 = m[0][3];
+      var a2 = m[1][0];
+      var b2 = m[1][1];
+      var c2 = m[1][2];
+      var d2 = m[1][3];
+      var a3 = m[2][0];
+      var b3 = m[2][1];
+      var c3 = m[2][2];
+      var d3 = m[2][3];
+      var a4 = m[3][0];
+      var b4 = m[3][1];
+      var c4 = m[3][2];
       var d4 = m[3][3];
       return a1 * determinant3x3(b2, b3, b4, c2, c3, c4, d2, d3, d4) -
               b1 * determinant3x3(a2, a3, a4, c2, c3, c4, d2, d3, d4) +
@@ -189,28 +203,40 @@
     };
 
     var adjoint = function(m) {
-      var res = [[],[],[],[]];
-      var a1 = m[0][0]; var b1 = m[0][1]; var c1 = m[0][2]; var d1 = m[0][3];
-      var a2 = m[1][0]; var b2 = m[1][1]; var c2 = m[1][2]; var d2 = m[1][3];
-      var a3 = m[2][0]; var b3 = m[2][1]; var c3 = m[2][2]; var d3 = m[2][3];
-      var a4 = m[3][0]; var b4 = m[3][1]; var c4 = m[3][2]; var d4 = m[3][3];
+      var res = [[], [], [], []];
+      var a1 = m[0][0];
+      var b1 = m[0][1];
+      var c1 = m[0][2];
+      var d1 = m[0][3];
+      var a2 = m[1][0];
+      var b2 = m[1][1];
+      var c2 = m[1][2];
+      var d2 = m[1][3];
+      var a3 = m[2][0];
+      var b3 = m[2][1];
+      var c3 = m[2][2];
+      var d3 = m[2][3];
+      var a4 = m[3][0];
+      var b4 = m[3][1];
+      var c4 = m[3][2];
+      var d4 = m[3][3];
 
-      res[0][0]  =   determinant3x3(b2, b3, b4, c2, c3, c4, d2, d3, d4);
-      res[1][0]  = -determinant3x3(a2, a3, a4, c2, c3, c4, d2, d3, d4);
-      res[2][0]  =   determinant3x3(a2, a3, a4, b2, b3, b4, d2, d3, d4);
-      res[3][0]  = -determinant3x3(a2, a3, a4, b2, b3, b4, c2, c3, c4);
-      res[0][1]  = -determinant3x3(b1, b3, b4, c1, c3, c4, d1, d3, d4);
-      res[1][1]  =   determinant3x3(a1, a3, a4, c1, c3, c4, d1, d3, d4);
-      res[2][1]  = -determinant3x3(a1, a3, a4, b1, b3, b4, d1, d3, d4);
-      res[3][1]  =   determinant3x3(a1, a3, a4, b1, b3, b4, c1, c3, c4);
-      res[0][2]  =   determinant3x3(b1, b2, b4, c1, c2, c4, d1, d2, d4);
-      res[1][2]  = -determinant3x3(a1, a2, a4, c1, c2, c4, d1, d2, d4);
-      res[2][2]  =   determinant3x3(a1, a2, a4, b1, b2, b4, d1, d2, d4);
-      res[3][2]  = -determinant3x3(a1, a2, a4, b1, b2, b4, c1, c2, c4);
-      res[0][3]  = -determinant3x3(b1, b2, b3, c1, c2, c3, d1, d2, d3);
-      res[1][3]  =   determinant3x3(a1, a2, a3, c1, c2, c3, d1, d2, d3);
-      res[2][3]  = -determinant3x3(a1, a2, a3, b1, b2, b3, d1, d2, d3);
-      res[3][3]  =   determinant3x3(a1, a2, a3, b1, b2, b3, c1, c2, c3);
+      res[0][0] = determinant3x3(b2, b3, b4, c2, c3, c4, d2, d3, d4);
+      res[1][0] = -determinant3x3(a2, a3, a4, c2, c3, c4, d2, d3, d4);
+      res[2][0] = determinant3x3(a2, a3, a4, b2, b3, b4, d2, d3, d4);
+      res[3][0] = -determinant3x3(a2, a3, a4, b2, b3, b4, c2, c3, c4);
+      res[0][1] = -determinant3x3(b1, b3, b4, c1, c3, c4, d1, d3, d4);
+      res[1][1] = determinant3x3(a1, a3, a4, c1, c3, c4, d1, d3, d4);
+      res[2][1] = -determinant3x3(a1, a3, a4, b1, b3, b4, d1, d3, d4);
+      res[3][1] = determinant3x3(a1, a3, a4, b1, b3, b4, c1, c3, c4);
+      res[0][2] = determinant3x3(b1, b2, b4, c1, c2, c4, d1, d2, d4);
+      res[1][2] = -determinant3x3(a1, a2, a4, c1, c2, c4, d1, d2, d4);
+      res[2][2] = determinant3x3(a1, a2, a4, b1, b2, b4, d1, d2, d4);
+      res[3][2] = -determinant3x3(a1, a2, a4, b1, b2, b4, c1, c2, c4);
+      res[0][3] = -determinant3x3(b1, b2, b3, c1, c2, c3, d1, d2, d3);
+      res[1][3] = determinant3x3(a1, a2, a3, c1, c2, c3, d1, d2, d3);
+      res[2][3] = -determinant3x3(a1, a2, a3, b1, b2, b3, d1, d2, d3);
+      res[3][3] = determinant3x3(a1, a2, a3, b1, b2, b3, c1, c2, c3);
 
       return res;
     };
@@ -218,18 +244,20 @@
     var inverse = function(m) {
       var res = adjoint(m);
       var det = determinant4x4(m);
-      if (abs(det) < SMALL_NUMBER) { return false; }
+      if (abs(det) < SMALL_NUMBER) {
+        return false;
+      }
 
       for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 4; j++) {
-          res[i][j] = res[i][j] / det;
+          res[i][j] /= det;
         }
       }
       return res;
     };
 
     var transposeMatrix4 = function(m) {
-      var res = [[],[],[],[]];
+      var res = [[], [], [], []];
       for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 4; j++) {
           res[i][j] = m[j][i];
@@ -258,7 +286,8 @@
     };
 
     var v3Scale = function(v, desiredLength) {
-      var res = []; var len = v3Length(v);
+      var res = [];
+      var len = v3Length(v);
       if (len !== 0) {
         var l = desiredLength / len;
         res[0] *= l;
@@ -289,7 +318,10 @@
     };
 
     var decompose = function(mat) {
-      var result = {}; var localMatrix = cloneMatrix(mat); var i; var j;
+      var result = {};
+      var localMatrix = cloneMatrix(mat);
+      var i;
+      var j;
 
       // Normalize the matrix.
       if (localMatrix[3][3] === 0) {
@@ -351,7 +383,7 @@
       localMatrix[3][2] = 0;
 
       // Now get scale and shear.
-      var row = [[],[],[]];
+      var row = [[], [], []];
       var pdum3;
 
       for (i = 0; i < 3; i++) {
@@ -400,26 +432,26 @@
       }
 
       // Rotation (angles smaller then SMALL_NUMBER are zeroed)
-      result.rotateY = rad2deg(asin(-row[0][2]))  || 0;
-      if (cos(result.rotateY) !== 0) {
-        result.rotateX = rad2deg(atan2(row[1][2], row[2][2]))  || 0;
-        result.rotateZ = rad2deg(atan2(row[0][1], row[0][0]))  || 0;
-      } else {
+      result.rotateY = rad2deg(asin(-row[0][2])) || 0;
+      if (cos(result.rotateY) === 0) {
         result.rotateX = rad2deg(atan2(-row[2][0], row[1][1])) || 0;
         result.rotateZ = 0;
+      } else {
+        result.rotateX = rad2deg(atan2(row[1][2], row[2][2])) || 0;
+        result.rotateZ = rad2deg(atan2(row[0][1], row[0][0])) || 0;
       }
 
       return result;
     };
 
-    /*=========================================
+    /* =========================================
     =            Factory interface            =
     =========================================*/
 
     var fCom = function(n, def) {
       // avoid scientific notation with toFixed
       var val = (n || def || 0);
-      return '' + val.toFixed(20);
+      return String(val.toFixed(20));
     };
 
     var fPx = function(n, def) {
@@ -432,7 +464,7 @@
 
     return {
       fromCssMatrix: function(tr) {
-        var M = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
+        var M = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]];
 
         // Just returns identity in case no transform is setup for the element
         if (tr && tr !== 'none') {
@@ -529,4 +561,4 @@
       }
     };
   });
-}());
+})();

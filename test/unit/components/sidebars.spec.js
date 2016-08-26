@@ -2,13 +2,13 @@
 
 describe('components', function() {
   describe('sidebars', function() {
-    var scope;
-    var compile;
-    var $rootElement;
-    var $rootScope;
-    var $location;
-    var SharedState;
-    var bindOuterClick;
+    let scope;
+    let compile;
+    let $rootElement;
+    let $rootScope;
+    let $location;
+    let SharedState;
+    let bindOuterClick;
 
     beforeEach(function() {
       $rootElement = angular.element(document.body);
@@ -29,7 +29,7 @@ describe('components', function() {
 
     describe('sidebarLeft', function() {
       it('adds class has-sidebar-left to rootElement on link', function() {
-        var elem = angular.element('<div class="sidebar-left" />');
+        let elem = angular.element('<div class="sidebar-left" />');
         compile(elem)(scope);
         scope.$digest();
 
@@ -37,7 +37,7 @@ describe('components', function() {
       });
 
       it('adds sidebar-left-visible when associated state changes to true', function() {
-        var elem = angular.element('<div class="sidebar-left" />');
+        let elem = angular.element('<div class="sidebar-left" />');
         compile(elem)(scope);
         scope.$digest();
         $rootScope.$broadcast('mobile-angular-ui.state.changed.uiSidebarLeft', true);
@@ -45,7 +45,7 @@ describe('components', function() {
       });
 
       it('adds sidebar-left-in when associated state changes to true', function() {
-        var elem = angular.element('<div class="sidebar-left" />');
+        let elem = angular.element('<div class="sidebar-left" />');
         compile(elem)(scope);
         scope.$digest();
         $rootScope.$broadcast('mobile-angular-ui.state.changed.uiSidebarLeft', true);
@@ -53,7 +53,7 @@ describe('components', function() {
       });
 
       it('removes sidebar-left-in when associated state changes to false', function() {
-        var elem = angular.element('<div class="sidebar-left" />');
+        let elem = angular.element('<div class="sidebar-left" />');
         compile(elem)(scope);
         scope.$digest();
         $rootElement.addClass('sidebar-left-in');
@@ -66,7 +66,7 @@ describe('components', function() {
           defaultValue: true
         });
 
-        var elem = angular.element('<div class="sidebar-left" />');
+        let elem = angular.element('<div class="sidebar-left" />');
         compile(elem)(scope);
         scope.$digest();
         expect(SharedState.get('uiSidebarLeft')).toBe(true);
@@ -75,21 +75,21 @@ describe('components', function() {
       });
 
       it('initializes associated state to false', function() {
-        var elem = angular.element('<div class="sidebar-left" />');
+        let elem = angular.element('<div class="sidebar-left" />');
         compile(elem)(scope);
         scope.$digest();
         expect(SharedState.get('uiSidebarLeft')).not.toBe(true);
       });
 
       it('initializes associated state to true if attr.active', function() {
-        var elem = angular.element('<div class="sidebar-left" active/>');
+        let elem = angular.element('<div class="sidebar-left" active/>');
         compile(elem)(scope);
         scope.$digest();
         expect(SharedState.get('uiSidebarLeft')).toBe(true);
       });
 
       it('removes activeClass on app transitionend', function() {
-        var elem = angular.element('<div class="sidebar-left" />');
+        let elem = angular.element('<div class="sidebar-left" />');
         compile(elem)(scope);
         scope.$digest();
 
@@ -103,7 +103,7 @@ describe('components', function() {
       });
 
       it('does not remove activeClass on app transitionend if state is active again', function() {
-        var elem = angular.element('<div class="sidebar-left" />');
+        let elem = angular.element('<div class="sidebar-left" />');
         compile(elem)(scope);
         scope.$digest();
 
@@ -117,14 +117,14 @@ describe('components', function() {
       });
 
       it('names associated state after id attribute', function() {
-        var elem = angular.element('<div class="sidebar-left" id="mySidebar" />');
+        let elem = angular.element('<div class="sidebar-left" id="mySidebar" />');
         compile(elem)(scope);
         scope.$digest();
         expect(SharedState.has('mySidebar')).toBe(true);
       });
 
       it('removes sidebar-left-in from $rootElement on scope destroy', function() {
-        var elem = angular.element('<div class="sidebar-left" />');
+        let elem = angular.element('<div class="sidebar-left" />');
         compile(elem)(scope);
         scope.$digest();
         spyOn($rootElement, 'removeClass');
@@ -133,7 +133,7 @@ describe('components', function() {
       });
 
       it('removes sidebar-left-visible from $rootElement on scope destroy', function() {
-        var elem = angular.element('<div class="sidebar-left" />');
+        let elem = angular.element('<div class="sidebar-left" />');
         compile(elem)(scope);
         scope.$digest();
         spyOn($rootElement, 'removeClass');
@@ -142,7 +142,7 @@ describe('components', function() {
       });
 
       it('removes has-sidebar-left from $rootElement on scope destroy', function() {
-        var elem = angular.element('<div class="sidebar-left" />');
+        let elem = angular.element('<div class="sidebar-left" />');
         compile(elem)(scope);
         scope.$digest();
         spyOn($rootElement, 'removeClass');
@@ -151,24 +151,24 @@ describe('components', function() {
       });
 
       it('binds outerClicks if attrs.closeOnOuterClicks !== false', function() {
-        var elem = angular.element('<div class="sidebar-left" />');
+        let elem = angular.element('<div class="sidebar-left" />');
         compile(elem)(scope);
         scope.$digest();
         expect(bindOuterClick).toHaveBeenCalled();
       });
 
       it('does not bind outerClicks if attrs.closeOnOuterClicks === false', function() {
-        var elem = angular.element('<div class="sidebar-left" close-on-outer-clicks="false" />');
+        let elem = angular.element('<div class="sidebar-left" close-on-outer-clicks="false" />');
         compile(elem)(scope);
         scope.$digest();
         expect(bindOuterClick).not.toHaveBeenCalled();
       });
 
       it('checks if sidebar is active on the outerClicks condition', function() {
-        var elem = angular.element('<div class="sidebar-left" />');
+        let elem = angular.element('<div class="sidebar-left" />');
         compile(elem)(scope);
         scope.$digest();
-        var condition = bindOuterClick.calls.mostRecent().args[3];
+        let condition = bindOuterClick.calls.mostRecent().args[3];
         spyOn(SharedState, 'isActive').and.callThrough();
         SharedState.setOne('uiSidebarLeft', false);
         expect(condition()).toBe(false);
@@ -182,10 +182,10 @@ describe('components', function() {
       });
 
       it('turns associated state off in outerClicks callback', function() {
-        var elem = angular.element('<div class="sidebar-left" />');
+        let elem = angular.element('<div class="sidebar-left" />');
         compile(elem)(scope);
         scope.$digest();
-        var callback = bindOuterClick.calls.mostRecent().args[2];
+        let callback = bindOuterClick.calls.mostRecent().args[2];
         spyOn(SharedState, 'turnOff').and.callThrough();
         SharedState.setOne('uiSidebarLeft', true);
         callback();
@@ -193,7 +193,7 @@ describe('components', function() {
       });
 
       it('sync $location.search on associated state changes if attr uiTrackAsSearchParam', function() {
-        var elem = angular.element('<div class="sidebar-left" ui-track-as-search-param />');
+        let elem = angular.element('<div class="sidebar-left" ui-track-as-search-param />');
         compile(elem)(scope);
         scope.$digest();
         spyOn($location, 'search');
@@ -208,7 +208,7 @@ describe('components', function() {
       });
 
       it('sync associated state with $location.search if attr uiTrackAsSearchParam', function() {
-        var elem = angular.element('<div class="sidebar-left" ui-track-as-search-param />');
+        let elem = angular.element('<div class="sidebar-left" ui-track-as-search-param />');
         compile(elem)(scope);
         scope.$digest();
 
@@ -230,7 +230,7 @@ describe('components', function() {
       it('forwards transitionend through $broadcast', function() {
         spyOn($rootScope, '$broadcast');
 
-        var elem = angular.element('<div class="app" />');
+        let elem = angular.element('<div class="app" />');
         compile(elem)(scope);
         scope.$digest();
         elem.triggerHandler('transitionend');

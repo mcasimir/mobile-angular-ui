@@ -2,11 +2,11 @@
 
 describe('components', function() {
   describe('switch', function() {
-    var scope;
-    var compile;
-    var $drag;
+    let scope;
+    let compile;
+    let $drag;
 
-    var getServices = function($rootScope, $compile) {
+    let getServices = function($rootScope, $compile) {
       scope = $rootScope.$new();
       compile = $compile;
     };
@@ -19,7 +19,7 @@ describe('components', function() {
         });
 
         it('should add switch class to elem', function() {
-          var elem = angular.element('<ui-switch />');
+          let elem = angular.element('<ui-switch />');
           compile(elem)(scope);
           scope.$digest();
 
@@ -27,16 +27,16 @@ describe('components', function() {
         });
 
         it('should add handle element on link', function() {
-          var elem = angular.element('<ui-switch />');
+          let elem = angular.element('<ui-switch />');
           compile(elem)(scope);
           scope.$digest();
-          var handle = elem[0].querySelectorAll('.switch-handle');
+          let handle = elem[0].querySelectorAll('.switch-handle');
           expect(handle.length).toBe(1);
         });
 
         it('should add class active if ng-model is true', function() {
           scope.myModel = true;
-          var elem = angular.element('<ui-switch ng-model="myModel" />');
+          let elem = angular.element('<ui-switch ng-model="myModel" />');
           compile(elem)(scope);
           scope.$digest();
           expect(elem.attr('class')).toContain('active');
@@ -44,7 +44,7 @@ describe('components', function() {
 
         it('should remove class active if ng-model is false', function() {
           scope.myModel = false;
-          var elem = angular.element('<ui-switch ng-model="myModel" class="active" />');
+          let elem = angular.element('<ui-switch ng-model="myModel" class="active" />');
           compile(elem)(scope);
           scope.$digest();
           expect(elem.attr('class')).not.toContain('active');
@@ -52,7 +52,7 @@ describe('components', function() {
 
         it('should set model to true clicking on inactive switch', function() {
           scope.myModel = false;
-          var elem = angular.element('<ui-switch ng-model="myModel" />');
+          let elem = angular.element('<ui-switch ng-model="myModel" />');
           compile(elem)(scope);
           scope.$digest();
           elem.triggerHandler('click');
@@ -61,7 +61,7 @@ describe('components', function() {
 
         it('should set model to false clicking on active switch', function() {
           scope.myModel = true;
-          var elem = angular.element('<ui-switch ng-model="myModel" />');
+          let elem = angular.element('<ui-switch ng-model="myModel" />');
           compile(elem)(scope);
           scope.$digest();
           elem.triggerHandler('click');
@@ -72,7 +72,7 @@ describe('components', function() {
           scope.myModel = false;
           scope.changeExpr = jasmine.createSpy('callback');
 
-          var elem = angular.element('<ui-switch ng-model="myModel" ng-change="changeExpr()" />');
+          let elem = angular.element('<ui-switch ng-model="myModel" ng-change="changeExpr()" />');
           compile(elem)(scope);
           scope.$digest();
           elem.triggerHandler('click');
@@ -84,7 +84,7 @@ describe('components', function() {
           scope.x = 5;
           scope.changeExpr = jasmine.createSpy('callback');
 
-          var elem = angular.element('<ui-switch ng-model="myModel" ng-change="changeExpr(x)" />');
+          let elem = angular.element('<ui-switch ng-model="myModel" ng-change="changeExpr(x)" />');
           compile(elem)(scope);
           scope.$digest();
           elem.triggerHandler('click');
@@ -95,7 +95,7 @@ describe('components', function() {
           scope.myModel = false;
           scope.changeExpr = jasmine.createSpy('callback');
 
-          var elem = angular.element('<ui-switch ng-model="myModel" ng-change="changeExpr()" disabled />');
+          let elem = angular.element('<ui-switch ng-model="myModel" ng-change="changeExpr()" disabled />');
           compile(elem)(scope);
           scope.$digest();
           elem.triggerHandler('click');
@@ -104,7 +104,7 @@ describe('components', function() {
 
         it('should not commit model if disabled', function() {
           scope.myModel = false;
-          var elem = angular.element('<ui-switch ng-model="myModel" ng-change="changeExpr()" disabled />');
+          let elem = angular.element('<ui-switch ng-model="myModel" ng-change="changeExpr()" disabled />');
           compile(elem)(scope);
           scope.$digest();
           elem.triggerHandler('click');
@@ -113,7 +113,7 @@ describe('components', function() {
 
         it('should clear callbacks on elem $destroy', function() {
           scope.myModel = false;
-          var elem = angular.element('<ui-switch ng-model="myModel" />');
+          let elem = angular.element('<ui-switch ng-model="myModel" />');
           compile(elem)(scope);
           scope.$digest();
           elem.remove();
@@ -136,7 +136,7 @@ describe('components', function() {
         });
 
         it('calls $drag.bind on handle if available', function() {
-          var elem = angular.element('<ui-switch />');
+          let elem = angular.element('<ui-switch />');
           compile(elem)(scope);
           scope.$digest();
           expect($drag.bind).toHaveBeenCalled();
@@ -144,13 +144,13 @@ describe('components', function() {
         });
 
         it('on $drag start unbinds click/tap callback', function() {
-          var options;
+          let options;
           $drag.bind.and.callFake(function(elem, _options_) {
             options = _options_;
           });
 
           scope.myModel = false;
-          var elem = angular.element('<ui-switch ng-model="myModel" />');
+          let elem = angular.element('<ui-switch ng-model="myModel" />');
           compile(elem)(scope);
           scope.$digest();
           options.start();
@@ -159,13 +159,13 @@ describe('components', function() {
         });
 
         it('on $drag cancel rebinds click/tap callback', function() {
-          var options;
+          let options;
           $drag.bind.and.callFake(function(elem, _options_) {
             options = _options_;
           });
 
           scope.myModel = false;
-          var elem = angular.element('<ui-switch ng-model="myModel" />');
+          let elem = angular.element('<ui-switch ng-model="myModel" />');
           compile(elem)(scope);
           scope.$digest();
           options.start();
@@ -175,16 +175,16 @@ describe('components', function() {
         });
 
         it('on $drag end sets model to true if handle is near switch end', function() {
-          var options;
+          let options;
           $drag.bind.and.callFake(function(elem, _options_) {
             options = _options_;
           });
           scope.myModel = false;
-          var elem = angular.element('<ui-switch ng-model="myModel" />');
+          let elem = angular.element('<ui-switch ng-model="myModel" />');
           compile(elem)(scope);
           scope.$digest();
 
-          var handle = elem[0].querySelectorAll('.switch-handle')[0];
+          let handle = elem[0].querySelectorAll('.switch-handle')[0];
           spyOn(handle, 'getBoundingClientRect').and.callFake(function() {
             return {
               width: 10,
@@ -199,17 +199,17 @@ describe('components', function() {
         });
 
         it('on $drag end sets model to false if handle is near switch start', function() {
-          var options;
+          let options;
           $drag.bind.and.callFake(function(elem, _options_) {
             options = _options_;
           });
 
           scope.myModel = true;
-          var elem = angular.element('<ui-switch ng-model="myModel" />');
+          let elem = angular.element('<ui-switch ng-model="myModel" />');
           compile(elem)(scope);
           scope.$digest();
 
-          var handle = elem[0].querySelectorAll('.switch-handle')[0];
+          let handle = elem[0].querySelectorAll('.switch-handle')[0];
           spyOn(handle, 'getBoundingClientRect').and.callFake(function() {
             return {
               width: 10,
@@ -224,17 +224,17 @@ describe('components', function() {
         });
 
         it('on $drag end does not change model if handle not near switch bounduaries', function() {
-          var options;
+          let options;
           $drag.bind.and.callFake(function(elem, _options_) {
             options = _options_;
           });
 
           scope.myModel = true;
-          var elem = angular.element('<ui-switch ng-model="myModel" />');
+          let elem = angular.element('<ui-switch ng-model="myModel" />');
           compile(elem)(scope);
           scope.$digest();
 
-          var handle = elem[0].querySelectorAll('.switch-handle')[0];
+          let handle = elem[0].querySelectorAll('.switch-handle')[0];
           spyOn(handle, 'getBoundingClientRect').and.callFake(function() {
             return {
               width: 10,
@@ -249,13 +249,13 @@ describe('components', function() {
         });
 
         it('on $drag end rebinds click/tap callback', function() {
-          var options;
+          let options;
           $drag.bind.and.callFake(function(elem, _options_) {
             options = _options_;
           });
 
           scope.myModel = false;
-          var elem = angular.element('<ui-switch ng-model="myModel" />');
+          let elem = angular.element('<ui-switch ng-model="myModel" />');
           compile(elem)(scope);
           scope.$digest();
           options.start();
