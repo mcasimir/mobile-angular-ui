@@ -10,7 +10,7 @@
   /**
    * A directive to create modals and overlays components.
    *
-   * Modals are basically the same of Bootstrap 3 but you have to use uiState
+   * Modals are basically the same of Bootstrap 3 but you have to use uiSharedState
    * with `ngIf/uiIf` or `ngHide/uiHide` to `activate/dismiss` it.
    *
    * By default both modals and overlay are made always showing up by
@@ -51,7 +51,7 @@
    *
    * ``` html
    * <div ui-content-for="modals">
-   *   <div class="modal" ui-if="modal1" ui-state='modal1'>
+   *   <div class="modal" ui-if="modal1" ui-shared-state='modal1'>
    *     <div class="modal-backdrop in"></div>
    *     <div class="modal-dialog">
    *       <div class="modal-content">
@@ -77,7 +77,7 @@
    *
    * ``` html
    * <div ui-content-for="modals">
-   *   <div class="modal modal-overlay" ui-if='modal2' ui-state='modal2'>
+   *   <div class="modal modal-overlay" ui-if='modal2' ui-shared-state='modal2'>
    *     <div class="modal-dialog">
    *       <div class="modal-content">
    *         <div class="modal-header">
