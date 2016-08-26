@@ -24,7 +24,8 @@
     "git:commit-all": "npm run build && sleep 2 && git add . && git commit -am"
   },
   "pre-commit": [
-    "lint"
+    "lint",
+    "depcheck"
   ],
   "repository": {
     "type": "git",
