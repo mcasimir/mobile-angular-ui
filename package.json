@@ -14,7 +14,7 @@
     "dev": "gulp dev",
     "depcheck": "depcheck-ci",
     "lint": "eslint . --quiet",
-    "test": "npm run depcheck && npm run lint && npm run test:unit && npm run build && npm run test:e2e",
+    "test": "npm run depcheck && npm run lint && npm run test:unit && npm run test:e2e",
     "test:unit": "karma start test/unit/karma.conf.js",
     "pretest:e2e": "pid-terminator 8889 && nohup http-server . -p 8889 &",
     "test:e2e": "protractor test/e2e/protractor.conf.js",
