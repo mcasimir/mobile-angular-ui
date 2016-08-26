@@ -10,6 +10,7 @@
   "scripts": {
     "postinstall": "./node_modules/protractor/bin/webdriver-manager update",
     "build": "gulp build && ls -1 dist/css dist/js dist/fonts",
+    "clean": "rm -f dist",
     "dev": "gulp dev",
     "depcheck": "depcheck-ci",
     "lint": "eslint . --quiet",
@@ -78,6 +79,7 @@
     "precommit": "1.2.2",
     "protractor": "3.3.0",
     "release-flow": "1.2.1",
-    "selenium-webdriver": "2.53.1"
+    "selenium-webdriver": "2.53.1",
+    "wait-on": "1.5.2"
   }
 }

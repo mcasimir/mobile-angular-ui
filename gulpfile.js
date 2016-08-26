@@ -17,6 +17,7 @@ let seq = require('gulp-sequence');
 let sourcemaps = require('gulp-sourcemaps');
 let uglify = require('gulp-uglify');
 let connect = require('gulp-connect');
+let waitOn = require('wait-on');
 
 /* ================================================
 =            Report Errors to Console            =
@@ -124,8 +125,31 @@ gulp.task('js', ['js:main', 'js:gestures', 'js:core']);
 =            Build Sequence            =
 ======================================*/
 
+gulp.task('build:wait', waitFor([
+  'dist/css/mobile-angular-ui-base.css',
+  'dist/css/mobile-angular-ui-base.min.css',
+  'dist/css/mobile-angular-ui-desktop.css',
+  'dist/css/mobile-angular-ui-desktop.min.css',
+  'dist/css/mobile-angular-ui-hover.css',
+  'dist/css/mobile-angular-ui-hover.min.css',
+  'dist/fonts/fontawesome-webfont.eot',
+  'dist/fonts/fontawesome-webfont.svg',
+  'dist/fonts/fontawesome-webfont.ttf',
+  'dist/fonts/fontawesome-webfont.woff',
+  'dist/fonts/fontawesome-webfont.woff2',
+  'dist/js/mobile-angular-ui.core.js',
+  'dist/js/mobile-angular-ui.core.min.js',
+  'dist/js/mobile-angular-ui.core.min.js.map',
+  'dist/js/mobile-angular-ui.gestures.js',
+  'dist/js/mobile-angular-ui.gestures.min.js',
+  'dist/js/mobile-angular-ui.gestures.min.js.map',
+  'dist/js/mobile-angular-ui.js',
+  'dist/js/mobile-angular-ui.min.js',
+  'dist/js/mobile-angular-ui.min.js.map'
+]));
+
 gulp.task('build', function(done) {
-  seq('clean', ['fonts', 'css', 'js'], done);
+  seq('clean', ['fonts', 'css', 'js'], 'build:wait', done);
 });
 
 /* ==========================================
@@ -177,3 +201,20 @@ gulp.task('watch', function() {
 
   gulp.watch(config.globs.fonts, ['fonts']);
 });
+
+function waitFor(resources) {
+  return function() {
+    return new Promise(function(resolve, reject) {
+      waitOn({
+        resources: resources,
+        timeout: 2000
+      }, function(err) {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve();
+      });
+    });
+  };
+}
