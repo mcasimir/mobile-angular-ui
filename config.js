@@ -51,7 +51,7 @@ let config = {
       'karma-chrome-launcher',
       'selenium-webdriver',
       'chromedriver',
-      'precommit'
+      'pre-commit'
     ]
   },
   lint: ['./src/**/*.js', './test/**/*.js', './*.js']
