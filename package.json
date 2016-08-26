@@ -9,7 +9,7 @@
   },
   "scripts": {
     "postinstall": "./node_modules/protractor/bin/webdriver-manager update",
-    "build": "gulp build",
+    "build": "gulp build && ls -1 dist/css dist/js dist/fonts",
     "dev": "gulp dev",
     "depcheck": "depcheck-ci",
     "lint": "eslint . --quiet",
