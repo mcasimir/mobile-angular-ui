@@ -1,3 +1,15 @@
+<a name="v1.3.0"></a>
+# [v1.3.0](https://github.com/mcasimir/mobile-angular-ui/compare/v1.2.1...v1.3.0)
+
+## Features
+
+- added `ui-shared-state` and **deprecated** `ui-state` so it does not clash with ui-router ([9ad2f57](https://github.com/mcasimir/mobile-angular-ui/commits/9ad2f578a3fb0c68c22a29ee415b04113251ce4f))
+- activeLinks module supports html5Mode ([d3cbbbf](https://github.com/mcasimir/mobile-angular-ui/commits/d3cbbbf07c74dc4e3631f0ad3cd22bbc3c3d7b20))
+
+## Fixes
+
+- angle not defined ([16bcd09](https://github.com/mcasimir/mobile-angular-ui/commits/16bcd09461fdecaa14c4af902d8910c4d96d12aa))
+
 <a name="1.2.1"></a>
 ## 1.2.1 (2016-03-06)
 
