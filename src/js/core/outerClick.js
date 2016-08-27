@@ -42,7 +42,7 @@
  *     ui-outer-click-if="Ui.active('myDropdown')"
  *     role="menu"
  *     ui-show="myDropdown"
- *     ui-state="myDropdown"
+ *     ui-shared-state="myDropdown"
  *     ui-turn-off="myDropdown">
  *
  *     <li><a>Action</a></li>

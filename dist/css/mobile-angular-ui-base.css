@@ -8411,7 +8411,7 @@ button.close {
 ng-view,
 ng-include,
 ng-transclude,
-ui-state {
+ui-shared-state {
   display: block;
 }
 

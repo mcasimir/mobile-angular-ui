@@ -16,13 +16,17 @@
     "lint": "eslint . --quiet",
     "test": "npm run depcheck && npm run lint && npm run test:unit && npm run test:e2e",
     "test:unit": "karma start test/unit/karma.conf.js",
+    "server": "http-server . -p 8888",
     "pretest:e2e": "pid-terminator 8889 && nohup http-server . -p 8889 &",
     "test:e2e": "protractor test/e2e/protractor.conf.js",
+    "test:docker": "docker run --rm --privileged -w /usr/src/app -v $PWD:/usr/src/app mcasimir/dind-node-build-runner:6.2.1 bash ci.sh",
     "posttest:e2e": "pid-terminator 8889",
-    "release": "release-flow"
+    "release": "release-flow",
+    "git:commit-all": "npm run build && sleep 2 && git add . && git commit -am"
   },
   "pre-commit": [
-    "build"
+    "lint",
+    "depcheck"
   ],
   "repository": {
     "type": "git",
@@ -80,6 +84,7 @@
     "protractor": "3.3.0",
     "release-flow": "1.2.1",
     "selenium-webdriver": "2.53.1",
+    "temp": "0.8.3",
     "wait-on": "1.5.2"
   }
 }

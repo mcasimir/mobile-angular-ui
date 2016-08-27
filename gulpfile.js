@@ -1,5 +1,6 @@
 let config = require('./config');
 let gulp = require('gulp');
+let temp = require('temp');
 
 /* ========================================
 =            Requiring stuffs            =
@@ -12,7 +13,6 @@ let less = require('gulp-less');
 let mobilizer = require('gulp-mobilizer');
 let path = require('path');
 let rename = require('gulp-rename');
-let os = require('os');
 let seq = require('gulp-sequence');
 let sourcemaps = require('gulp-sourcemaps');
 let uglify = require('gulp-uglify');
@@ -48,7 +48,7 @@ gulp.task('fonts', function() {
 =            Compile, minify, mobilize less                            =
 ======================================================================*/
 
-let CSS_TEMP_DIR = path.join(os.tmpdir(), 'mobile-angular-ui', 'css');
+let CSS_TEMP_DIR = temp.path({prefix: 'maui-css'});
 
 gulp.task('css:less', function() {
   gulp.src([
@@ -63,6 +63,13 @@ gulp.task('css:less', function() {
     }))
     .pipe(gulp.dest(CSS_TEMP_DIR));
 });
+
+gulp.task('css:less:wait', waitFor([
+  path.join(CSS_TEMP_DIR, 'sm-grid.css'),
+  path.join(CSS_TEMP_DIR, 'mobile-angular-ui-base.css'),
+  path.join(CSS_TEMP_DIR, 'mobile-angular-ui-hover.css'),
+  path.join(CSS_TEMP_DIR, 'mobile-angular-ui-desktop.css')
+]));
 
 gulp.task('css:concat', function() {
   return gulp.src([
@@ -88,8 +95,21 @@ gulp.task('css:minify', function() {
     .pipe(gulp.dest(path.join('dist', 'css')));
 });
 
+gulp.task('css:rmtemp', function() {
+  return del([CSS_TEMP_DIR], {force: true});
+});
+
 gulp.task('css', function(done) {
-  seq('css:less', 'css:concat', 'css:copy', 'css:minify', done);
+  seq(
+    'css:rmtemp',
+    'css:less',
+    'css:less:wait',
+    'css:concat',
+    'css:copy',
+    'css:minify',
+    'css:rmtemp',
+    done
+  );
 });
 
 /* ====================================================================
@@ -207,9 +227,10 @@ function waitFor(resources) {
     return new Promise(function(resolve, reject) {
       waitOn({
         resources: resources,
-        timeout: 5000
+        timeout: 30000
       }, function(err) {
         if (err) {
+          process.exit(2);
           return reject(err);
         }
 

@@ -1260,7 +1260,7 @@
  *     ui-outer-click-if="Ui.active('myDropdown')"
  *     role="menu"
  *     ui-show="myDropdown"
- *     ui-state="myDropdown"
+ *     ui-shared-state="myDropdown"
  *     ui-turn-off="myDropdown">
  *
  *     <li><a>Action</a></li>
@@ -1408,7 +1408,7 @@
    * Ie.
    *
    * ``` html
-   * <div class="nav nav-tabs" ui-state='activeTab'>
+   * <div class="nav nav-tabs" ui-shared-state='activeTab'>
    *   <a ui-set="{activeTab: 1}">Tab1</a>
    *   <a ui-set="{activeTab: 2}">Tab2</a>
    *   <a ui-set="{activeTab: 3}">Tab3</a>
@@ -1456,7 +1456,7 @@
    * angular.module('myApp', ['mobile-angular-ui.core.sharedState']);
    * ```
    *
-   * Use `ui-state` directive to require/initialize a state from the target element scope
+   * Use `ui-shared-state` directive to require/initialize a state from the target element scope
    *
    * **Example.** Tabs
    *
@@ -1485,7 +1485,7 @@
    * As well as you can use `ui-default` for that:
    *
    * ``` html
-   * <div class="tabs" ui-state="activeTab" ui-default="thisIsAnExpression(5 + 1 - 2)"></div>
+   * <div class="tabs" ui-shared-state="activeTab" ui-default="thisIsAnExpression(5 + 1 - 2)"></div>
    * ```
    *
    */
@@ -1945,11 +1945,39 @@
    * @param {string} uiState The shared state id
    * @param {expression} [uiDefault] the default value
    *
+   * @directive uiSharedState
+   */
+  module.directive('uiSharedState', [
+    'SharedState', function(SharedState) {
+      return {
+        restrict: 'EA',
+        priority: 601, // more than ng-if
+        link: function(scope, elem, attrs) {
+          var id = attrs.uiSharedState || attrs.id;
+          var defaultValueExpr = attrs.uiDefault || attrs.default;
+          var defaultValue = defaultValueExpr ? scope.$eval(defaultValueExpr) : undefined;
+
+          SharedState.initialize(scope, id, {
+            defaultValue: defaultValue,
+            exclusionGroup: attrs.uiExclusionGroup
+          });
+        }
+      };
+    }
+  ]);
+
+  /**
+   * Alias for uiSharedState. **Deprecated** since it clashes with
+   * [UI-Router](https://ui-router.github.io/) `uiState` directive.
+   *
+   * @deprecated
+   * @param {string} uiState The shared state id
+   * @param {expression} [uiDefault] the default value
+   *
    * @directive uiState
    */
   module.directive('uiState', [
-    'SharedState',
-    function(SharedState) {
+    'SharedState', function(SharedState) {
       return {
         restrict: 'EA',
         priority: 601, // more than ng-if
