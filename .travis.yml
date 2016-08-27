@@ -16,6 +16,7 @@ deploy:
   email: maurizio.cas@gmail.com
   api_key:
     secure: kaKfP4ZS8Bd/XdwJPrCDsllC3SGvMQTdEsC7LriMv5AHCxJFY6rBJ8YqgFx/Tna9TVGjr9Q0lQ6hX1V1im0I8/lT5y5dHW5Kib2WwOosCA530kkkfc/7u4zHIxrl5wzLLp2VQhBaSMherV/btD3cGIPk91M8Q5c2kc0fORx8Cc0=
+  skip_cleanup: true
   on:
     tags: true
     repo: mcasimir/mobile-angular-ui
