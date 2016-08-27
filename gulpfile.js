@@ -96,7 +96,7 @@ gulp.task('css:minify', function() {
 });
 
 gulp.task('css:rmtemp', function() {
-  return del([CSS_TEMP_DIR]);
+  return del([CSS_TEMP_DIR], {force: true});
 });
 
 gulp.task('css', function(done) {
