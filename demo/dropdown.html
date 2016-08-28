@@ -9,11 +9,11 @@
       <div class="panel panel-default" ng-repeat="idx in [1,2,3]">
         <div class="panel-heading">
           <div class="btn-group pull-right">
-            <a ui-turn-on='myDropdown{{idx}}' class='btn'>
+            <a ui-turn-on="myDropdown{{idx}}" class="btn">
               <i class="fa fa-ellipsis-v"></i>
             </a>
             <ul 
-              ui-state="myDropdown{{idx}}"
+              ui-shared-state="myDropdown{{idx}}"
 
               class="dropdown-menu"
               ui-outer-click="Ui.turnOff('myDropdown' + idx)"

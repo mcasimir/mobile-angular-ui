@@ -13,31 +13,31 @@
     <link rel="stylesheet" href="/dist/css/mobile-angular-ui-base.min.css" />
     <link rel="stylesheet" href="/dist/css/mobile-angular-ui-desktop.min.css" />
     <link rel="stylesheet" href="demo.css" />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular-route.min.js"></script>
+    <script src="/node_modules/angular/angular.js"></script>
+    <script src="/node_modules/angular-route/angular-route.js"></script>
     <script src="/dist/js/mobile-angular-ui.min.js"></script>
     <!-- Required to use $touch, $swipe, $drag and $translate services -->
     <script src="/dist/js/mobile-angular-ui.gestures.min.js"></script>
     <script src="demo.js"></script>
   </head>
 
-  <body 
-    ng-app="MobileAngularUiExamples" 
+  <body
+    ng-app="MobileAngularUiExamples"
     ng-controller="MainController"
     ui-prevent-touchmove-defaults
     >
 
     <!-- Sidebars -->
-    <div ng-include="'sidebar.html'" 
-            ui-track-as-search-param='true'
+    <div ng-include="'sidebar.html'"
+            ui-track-as-search-param="true"
             class="sidebar sidebar-left"></div>
 
-    <div ng-include="'sidebarRight.html'" 
+    <div ng-include="'sidebarRight.html'"
             class="sidebar sidebar-right"></div>
 
-    <div class="app" 
-         ui-swipe-right='Ui.turnOn("uiSidebarLeft")'
-         ui-swipe-left='Ui.turnOff("uiSidebarLeft")'>
+    <div class="app"
+         ui-swipe-right="Ui.turnOn('uiSidebarLeft')"
+         ui-swipe-left="Ui.turnOff('uiSidebarLeft')">
 
       <!-- Navbars -->
 
@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="btn-group pull-right" ui-yield-to="navbarAction">
-          <div ui-toggle="uiSidebarRight" class="btn">
+          <div ui-toggle="uiSidebarRight" class="btn sidebar-right-toggle">
             <i class="fa fa-comment"></i> Chat
           </div>
         </div>
@@ -78,15 +78,5 @@
     </div><!-- ~ .app -->
 
     <div ui-yield-to="modals"></div>
-
-    <script>
-       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-       ga('create', 'UA-48036416-1', 'mobileangularui.com');
-       ga('send', 'pageview');
-     </script>
   </body>
 </html>
