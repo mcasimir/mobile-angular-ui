@@ -11,7 +11,11 @@
 
 Mobile Angular UI is an HTML5 mobile UI framework that will let you use Angular Js and Bootstrap 3 for mobile app development.
 
-GettingStarted, Demo, Docs at http://mobileangularui.com.
+``` sh
+npm i mobile-angular-ui
+```
+
+Getting Started, Demo, Docs at http://mobileangularui.com.
 
 ![](http://mobileangularui.com/assets/img/phone.png)
 
