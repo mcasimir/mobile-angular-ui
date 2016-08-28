@@ -1,3 +1,10 @@
+<a name="v1.3.1"></a>
+# [v1.3.1](https://github.com/mcasimir/mobile-angular-ui/compare/v1.3.0...v1.3.1)
+
+## Fixes
+
+- removed webdriver postinstall hook ([2a43565](https://github.com/mcasimir/mobile-angular-ui/commits/2a4356537ed4b2522fb4eb2d2dfd08f7f7a405a5))
+
 <a name="v1.3.0"></a>
 # [v1.3.0](https://github.com/mcasimir/mobile-angular-ui/compare/1.2.1...v1.3.0)
 
