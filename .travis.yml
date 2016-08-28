@@ -8,6 +8,7 @@ before_install:
 services:
 - docker
 script:
+- npm run test:e2e:update-webdriver
 - npm run build
 - docker run --rm --privileged -w /usr/src/app -v $PWD:/usr/src/app mcasimir/dind-node-build-runner:6.2.1 bash ci.sh
 - node_modules/.bin/codecov
