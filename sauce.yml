@@ -1,0 +1,4 @@
+---
+  language: "javascript"
+  framework: "protractor"
+  configPath: "test/e2e/protractor.conf.js"
