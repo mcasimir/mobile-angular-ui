@@ -883,7 +883,7 @@
             var links = $document[0].links;
 
             for (var i = 0; i < links.length; i++) {
-              var link = angular.element(links[0]);
+              var link = angular.element(links[i]);
               var href = link.attr('href');
 
               if (!href) {
@@ -3249,7 +3249,7 @@
         var scrollable = $element.parent()[0];
 
         // Handle nobounce behaviour
-        if ('ontouchmove' in $document) {
+        if ('ontouchmove' in $document[0]) {
           var allowUp;
           var allowDown;
           var lastY;
