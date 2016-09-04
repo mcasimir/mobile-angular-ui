@@ -41,7 +41,7 @@
             var links = $document[0].links;
 
             for (var i = 0; i < links.length; i++) {
-              var link = angular.element(links[0]);
+              var link = angular.element(links[i]);
               var href = link.attr('href');
 
               if (!href) {
