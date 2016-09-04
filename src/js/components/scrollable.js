@@ -98,7 +98,7 @@
         var scrollable = $element.parent()[0];
 
         // Handle nobounce behaviour
-        if ('ontouchmove' in $document) {
+        if ('ontouchmove' in $document[0]) {
           var allowUp;
           var allowDown;
           var lastY;
