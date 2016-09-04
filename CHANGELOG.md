@@ -1,3 +1,13 @@
+<a name="v1.3.2"></a>
+# [v1.3.2](https://github.com/mcasimir/mobile-angular-ui/compare/v1.3.1...v1.3.2)
+
+## Fixes
+
+- added fontawesome.woff2 to bower json ([bdafc03](https://github.com/mcasimir/mobile-angular-ui/commits/bdafc038c4888fe4b697352f7b0f708904bbb6c0))
+- bolder default font-weight ([c21438b](https://github.com/mcasimir/mobile-angular-ui/commits/c21438b0e99c2eeec9aead729ba987dc3d7e79c5), [0a8030c](https://github.com/mcasimir/mobile-angular-ui/commits/0a8030c9ff8199236cce07b902aa4e3994417413))
+- active links not working  ([15564fb](https://github.com/mcasimir/mobile-angular-ui/commits/15564fba1b2a2ec6dc4727583603f24eb2ff19a6))
+- touch-move-default broken with scrollable ([60a807c](https://github.com/mcasimir/mobile-angular-ui/commits/60a807c09db2519e0fba3969e0442c9497b7a3b9))
+
 <a name="v1.3.1"></a>
 # [v1.3.1](https://github.com/mcasimir/mobile-angular-ui/compare/v1.3.0...v1.3.1)
 
