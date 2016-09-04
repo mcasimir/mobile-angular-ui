@@ -14,7 +14,8 @@
     "dist/fonts/fontawesome-webfont.eot",
     "dist/fonts/fontawesome-webfont.svg",
     "dist/fonts/fontawesome-webfont.ttf",
-    "dist/fonts/fontawesome-webfont.woff"
+    "dist/fonts/fontawesome-webfont.woff",
+    "dist/fonts/fontawesome-webfont.woff2"
   ],
   "keywords": [
     "mobile-angular-ui",

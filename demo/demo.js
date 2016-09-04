@@ -6,7 +6,7 @@
 // Here is how to define your module
 // has dependent on mobile-angular-ui
 //
-let app = angular.module('MobileAngularUiExamples', [
+var app = angular.module('MobileAngularUiExamples', [
   'ngRoute',
   'mobile-angular-ui',
 
@@ -86,9 +86,9 @@ app.directive('dragToDismiss', function($drag, $parse, $timeout) {
   return {
     restrict: 'A',
     compile: function(elem, attrs) {
-      let dismissFn = $parse(attrs.dragToDismiss);
+      var dismissFn = $parse(attrs.dragToDismiss);
       return function(scope, elem) {
-        let dismiss = false;
+        var dismiss = false;
 
         $drag.bind(elem, {
           transform: $drag.TRANSLATE_RIGHT,
@@ -135,7 +135,7 @@ app.directive('carousel', function() {
       this.activeItem = null;
 
       this.addItem = function() {
-        let newId = this.itemCount++;
+        var newId = this.itemCount++;
         this.activeItem = this.itemCount === 1 ? newId : this.activeItem;
         return newId;
       };
@@ -162,10 +162,10 @@ app.directive('carouselItem', function($drag) {
     template: '<div class="item"><div ng-transclude></div></div>',
     link: function(scope, elem, attrs, carousel) {
       scope.carousel = carousel;
-      let id = carousel.addItem();
+      var id = carousel.addItem();
 
-      let zIndex = function() {
-        let res = 0;
+      var zIndex = function() {
+        var res = 0;
         if (id === carousel.activeItem) {
           res = 2000;
         } else if (carousel.activeItem < id) {
@@ -190,15 +190,15 @@ app.directive('carouselItem', function($drag) {
           //
           // use translate both as basis for the new transform:
           //
-          let t = $drag.TRANSLATE_BOTH(element, transform, touch);
+          var t = $drag.TRANSLATE_BOTH(element, transform, touch);
 
           //
           // Add rotation:
           //
-          let Dx = touch.distanceX;
-          let t0 = touch.startTransform;
-          let sign = Dx < 0 ? -1 : 1;
-          let angle = sign * Math.min((Math.abs(Dx) / 700) * 30, 30);
+          var Dx = touch.distanceX;
+          var t0 = touch.startTransform;
+          var sign = Dx < 0 ? -1 : 1;
+          var angle = sign * Math.min((Math.abs(Dx) / 700) * 30, 30);
 
           t.rotateZ = angle + (Math.round(t0.rotateZ));
 
@@ -281,9 +281,9 @@ app.controller('MainController', function($rootScope, $scope) {
   //
   // 'Scroll' screen
   //
-  let scrollItems = [];
+  var scrollItems = [];
 
-  for (let i = 1; i <= 100; i++) {
+  for (var i = 1; i <= 100; i++) {
     scrollItems.push('Item ' + i);
   }
 
@@ -339,12 +339,12 @@ app.controller('MainController', function($rootScope, $scope) {
   //
   $scope.notices = [];
 
-  for (let j = 0; j < 10; j++) {
+  for (var j = 0; j < 10; j++) {
     $scope.notices.push({icon: 'envelope', message: 'Notice ' + (j + 1)});
   }
 
   $scope.deleteNotice = function(notice) {
-    let index = $scope.notices.indexOf(notice);
+    var index = $scope.notices.indexOf(notice);
     if (index > -1) {
       $scope.notices.splice(index, 1);
     }
