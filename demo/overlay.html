@@ -5,10 +5,10 @@
 <div class="scrollable">
   <div class="scrollable-content">
     <div class="section section-break">
-      <a href="" 
+      <a href=""
           ui-turn-on="modal1"
           class="btn btn-default">Show Modal</a>
-      <a href="" 
+      <a href=""
           ui-turn-on="modal2"
           class="btn btn-default">Show Overlay</a>
     </div>
@@ -22,6 +22,6 @@
 </div>
 
 <div ui-content-for="modals">
-  <div ng-include="modal1.html"></div>
-  <div ng-include="modal2.html"></div>
+  <div ng-include="'modal1.html'"></div>
+  <div ng-include="'modal2.html'"></div>
 </div>
