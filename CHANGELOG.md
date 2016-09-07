@@ -1,3 +1,6 @@
+<a name="v1.3.3"></a>
+# [v1.3.3](https://github.com/mcasimir/mobile-angular-ui/compare/v1.3.2...v1.3.3)
+
 <a name="v1.3.2"></a>
 # [v1.3.2](https://github.com/mcasimir/mobile-angular-ui/compare/v1.3.1...v1.3.2)
 
