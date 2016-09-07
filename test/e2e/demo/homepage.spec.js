@@ -1,7 +1,7 @@
 import HomePage from './HomePage';
 
 describe('demo', function() {
-  describe('sidebar left', function() {
+  describe('home page', function() {
     it('should show "Mobile Angular UI" as title', async function() {
       let homePage = await HomePage.get();
       expect(await homePage.heading.getText()).toBe('Mobile Angular UI');
