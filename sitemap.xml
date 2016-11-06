@@ -172,10 +172,10 @@
         <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:components/</loc>
     </url>
     <url>
-        <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:gestures/</loc>
+        <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:core/</loc>
     </url>
     <url>
-        <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:core/</loc>
+        <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:gestures/</loc>
     </url>
     <url>
         <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:components/module:modals/</loc>
@@ -193,18 +193,6 @@
         <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:components/module:switch/</loc>
     </url>
     <url>
-        <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:gestures/module:drag/</loc>
-    </url>
-    <url>
-        <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:gestures/module:swipe/</loc>
-    </url>
-    <url>
-        <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:gestures/module:touch/</loc>
-    </url>
-    <url>
-        <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:gestures/module:transform/</loc>
-    </url>
-    <url>
         <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:core/module:activelinks/</loc>
     </url>
     <url>
@@ -218,5 +206,17 @@
     </url>
     <url>
         <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:core/module:touchmovedefaults/</loc>
+    </url>
+    <url>
+        <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:gestures/module:drag/</loc>
+    </url>
+    <url>
+        <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:gestures/module:swipe/</loc>
+    </url>
+    <url>
+        <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:gestures/module:touch/</loc>
+    </url>
+    <url>
+        <loc>http://mobileangularui.com/docs/module:mobile-angular-ui/module:gestures/module:transform/</loc>
     </url>
 </urlset>
