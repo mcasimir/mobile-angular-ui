@@ -443,7 +443,7 @@
           // uses default pointer types in case of none passed
           var pointerTypes = options.pointerTypes || POINTER_TYPES;
           var isValid = options.valid === undefined ? VALID : options.valid;
-          var movementThreshold = options.movementThreshold === undefined ? MOVEMENT_THRESHOLD : options.valid;
+          var movementThreshold = options.movementThreshold === undefined ? MOVEMENT_THRESHOLD : options.movementThreshold;
           var sensitiveArea = options.sensitiveArea === undefined ? SENSITIVE_AREA : options.sensitiveArea;
 
           // first and last touch
