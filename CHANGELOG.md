@@ -1,3 +1,10 @@
+<a name="v1.3.4"></a>
+# [v1.3.4](https://github.com/mcasimir/mobile-angular-ui/compare/v1.3.3...v1.3.4)
+
+## Fixes
+
+- bug preventing to configure thresholds on touch ([af89f55](https://github.com/mcasimir/mobile-angular-ui/commits/af89f55bee62fe684512ad421d7eee5422aa2bed))
+
 <a name="v1.3.3"></a>
 # [v1.3.3](https://github.com/mcasimir/mobile-angular-ui/compare/v1.3.2...v1.3.3)
 
