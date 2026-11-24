@@ -12,23 +12,23 @@
  * It uses scrollable areas to avoid scroll issues. In the following figure you can
  * see the difference between fixed navbars and navbars with absolute positioning.
  *
- * <figure class="full-width-figure">
- *   <img src="/assets/img/figs/fixed-overflow.png" alt=""/>
+ * <figure class='full-width-figure'>
+ *   <img src='/assets/img/figs/fixed-overflow.png' alt=''/>
  * </figure>
  *
  * Here is the basic markup to achieve this.
  *
  * ``` html
- * <div class="app">
- *   <div class="navbar navbar-app navbar-absolute-top">
+ * <div class='app'>
+ *   <div class='navbar navbar-app navbar-absolute-top'>
  *     <!-- ... -->
  *   </div>
  *
- *   <div class="navbar navbar-app navbar-absolute-bottom">
+ *   <div class='navbar navbar-app navbar-absolute-bottom'>
  *     <!-- ... -->
  *   </div>
  *
- *   <div class="app-body">
+ *   <div class='app-body'>
  *     <ng-view></ng-view>
  *   </div>
  * </div>
@@ -53,24 +53,25 @@
  * Consider the following example:
  *
  * ``` html
- * <div class="navbar navbar-app navbar-absolute-top">
+ * <div class='navbar navbar-app navbar-absolute-top'>
  *
- *   <div class="navbar-brand navbar-brand-center">
+ *   <div class='navbar-brand navbar-brand-center'>
  *     Navbar Brand
  *   </div>
  *
- *   <div class="btn-group pull-left">
- *     <div class="btn btn-navbar">
+ *   <div class='btn-group pull-left'>
+ *     <div class='btn btn-navbar'>
  *       Left Action
  *     </div>
  *   </div>
  *
- *   <div class="btn-group pull-right">
- *     <div class="btn btn-navbar">
+ *   <div class='btn-group pull-right'>
+ *     <div class='btn btn-navbar'>
  *       Right Action
  *     </div>
  *   </div>
  * </div>
+ *
  * ```
  *
  * `.navbar-brand-center` is a specialization of BS3's `.navbar-brand`.  It will
@@ -85,33 +86,35 @@
 
   var module = angular.module('mobile-angular-ui.components.navbars', []);
 
-  /**
-   * @directive navbarAbsoluteTop
-   * @restrict C
-   * @description
-   *
-   * Setup absolute positioned top navbar.
-   *
-   * ``` html
-   *  <div class="navbar navbar-app navbar-absolute-top">
-   *    <!-- ... -->
-   *  </div>
-   * ```
-   */
+  var global;
 
-  /**
-   * @directive navbarAbsoluteBottom
-   * @restrict C
-   * @description
-   *
-   * Setup absolute positioned bottom navbar.
-   *
-   * ``` html
-   *  <div class="navbar navbar-app navbar-absolute-bottom">
-   *    <!-- ... -->
-   *  </div>
-   * ```
-   */
+ /**
+  * @directive navbarAbsoluteTop
+  * @restrict C
+  * @description
+  *
+  * Setup absolute positioned top navbar.
+  *
+  * ``` html
+  *  <div class='navbar navbar-app navbar-absolute-top'>
+  *    <!-- ... -->
+  *  </div>
+  * ```
+  */
+
+ /**
+  * @directive navbarAbsoluteBottom
+  * @restrict C
+  * @description
+  *
+  * Setup absolute positioned bottom navbar.
+  *
+  * ``` html
+  *  <div class='navbar navbar-app navbar-absolute-bottom'>
+  *    <!-- ... -->
+  *  </div>
+  * ```
+  */
   angular.forEach(['top', 'bottom'], function(side) {
     var directiveName = 'navbarAbsolute' + side.charAt(0).toUpperCase() + side.slice(1);
     module.directive(directiveName, [
@@ -119,14 +122,70 @@
       function($rootElement) {
         return {
           restrict: 'C',
-          link: function(scope) {
+          controller: function() {
+            this.registerController = function(name, ctrl) {
+              this[name] = ctrl;
+            };
+          },
+          link: function(scope, elem, attr, ctrl) {
             $rootElement.addClass('has-navbar-' + side);
             scope.$on('$destroy', function() {
               $rootElement.removeClass('has-navbar-' + side);
             });
+            if (!global) global = ctrl;
+            global.registerController(side, new (function() {
+              this.hide = function() {
+                $rootElement.removeClass('has-navbar-' + side);
+                elem.addClass('ng-hide');
+              };
+              this.show = function() {
+                elem.removeClass('ng-hide');
+                $rootElement.addClass('has-navbar-' + side);
+              };
+              this.slideout = function() {
+                $rootElement.removeClass('has-navbar-' + side);
+                elem.addClass('ng-hide');
+              };
+              this.slidein = function() {
+                elem.removeClass('ng-hide');
+                $rootElement.addClass('has-navbar-' + side);
+              };
+            })());
           }
         };
       }
     ]);
+  });
+
+  /**
+   * @directive [hide|show|slidein|slideout][Top|Bottom|Both][Nav]
+   * @restrict C
+   * @description
+   *
+   * Toggle each(or both) nabar(s) with or without animations
+   *
+   * ``` html
+   *  <view class='[hide|show|slidein|slideout]-[top|bottom|both]-[nav]'>
+   *    <!-- ... -->
+   *  </view>
+   * ```
+   */
+  angular.forEach(['Top', 'Bottom', 'Both'], function(nav) {
+    angular.forEach(['hide', 'show', 'slidein', 'slideout'], function(method) {
+      var name = method + nav + 'Nav';
+      module.directive(name, function() {
+        return {
+          restrict: 'C',
+          link: function(scope, elem, attr) {
+            if (global)
+              if (nav === 'Both') {
+                global.bottom[method]();
+                global.top[method]();
+              } else
+                global[nav.toLowerCase()][method]();
+          }
+        };
+      });
+    });
   });
 })();
