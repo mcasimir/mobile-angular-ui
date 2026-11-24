@@ -2,7 +2,7 @@
   "name": "mobile-angular-ui",
   "version": "1.3.4",
   "description": "Mobile Angular UI",
-  "main": "dist/mobile-angular-ui.js",
+  "main": "dist/js/mobile-angular-ui.js",
   "directories": {
     "demo": "demo",
     "dist": "dist"

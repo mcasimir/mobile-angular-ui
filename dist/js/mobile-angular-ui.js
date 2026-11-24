@@ -1173,7 +1173,11 @@
 
 })();
 
-(function() {
+if (typeof FastClick === 'undefined') {
+  throw new Error('mobile-angular-ui\'s JavaScript requires FastClick')
+}
+
+(function(FastClick) {
   'use strict';
   var module = angular.module('mobile-angular-ui.core.fastclick', []);
 
@@ -1214,7 +1218,7 @@
       };
     });
   });
-})();
+})(FastClick);
 
 /**
  *

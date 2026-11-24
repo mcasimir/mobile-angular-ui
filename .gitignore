@@ -146,6 +146,9 @@ xcuserdata/
 # proportion of contributors will probably not be using SublimeText
 # *.sublime-project
 
+### Jetbrains WebStorm ###
+.idea/
+
 # sftp configuration file
 sftp-config.json
 
