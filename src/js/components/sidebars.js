@@ -38,10 +38,10 @@
  * <a href ui-toggle='uiSidebarRight'>Toggle sidebar right</a>
  * ```
  *
- * You can put `ui-turn-off='uiSidebarLeft'` or `ui-turn-off='uiSidebarLeft'`
- * inside the sidebar to make it close after clicking links inside them.
+ * You can put `ui-turn-off='uiSidebarLeft'` or `ui-turn-off='uiSidebarRight'`
+ * inside the sidebar to make it close after clicking/tapping outside them.
  *
- * By default sidebar are closed by clicking/tapping outside them.
+ * By default (without ui-turn-off) sidebar are closed by clicking/tapping links inside them.
  */
 (function() {
   'use strict';
