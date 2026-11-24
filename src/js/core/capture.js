@@ -27,7 +27,7 @@
  * Or
  *
  * ```
- * angular.module('myApp', ['mobile-angular-ui']);
+ * angular.module('myApp', ['mobile-angular-ui.core']);
  * ```
  *
  * Or
