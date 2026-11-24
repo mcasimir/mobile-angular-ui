@@ -56,7 +56,6 @@
     "eslint-config-google": "0.6.0",
     "eslint-plugin-babel": "3.3.0",
     "eslint-plugin-protractor": "1.27.1",
-    "fastclick": "1.0.6",
     "fg-overthrow": "0.7.1",
     "font-awesome": "4.6.3",
     "gulp": "3.9.1",

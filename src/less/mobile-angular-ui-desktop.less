@@ -13,7 +13,7 @@
 @import "bootstrap/less/jumbotron.less";
 
 @media (min-width: @screen-desktop) {
-  
+
   .sidebar {
     pointer-events: auto;
   }
@@ -21,14 +21,14 @@
   .sidebar-toggle {
     display: none;
   }
-  
+
   .navbar-brand-center {
     text-align: left;
     width: auto;
     float: left;
     position: relative;
   }
-  
+
   .sidebar-left {
     display: block;
     left: 0;
@@ -43,24 +43,15 @@
   }
 
   .sidebar-right-in .sidebar-left {
-    -webkit-transform: translate3d(0, 0, 0) !important;
-    -moz-transform: translate3d(0, 0, 0) !important;
-    transform: translate3d(0, 0, 0) !important;
   }
 
   .sidebar-left-in .sidebar-right {
-    -webkit-transform: translate3d(0, 0, 0) !important;
-    -moz-transform: translate3d(0, 0, 0) !important;
-    transform: translate3d(0, 0, 0) !important;
   }
 
   .has-sidebar-left .app, .sidebar-left-in .app {
     width: auto;
     margin-left: @sidebar-left-width-md;
     left: 0;
-    -webkit-transform: translate3d(0, 0, 0) !important;
-    -moz-transform: translate3d(0, 0, 0) !important;
-    transform: translate3d(0, 0, 0) !important;
     position: relative;
     -webkit-transition: -webkit-transform 0 ease;
     -moz-transition: -moz-transform 0 ease;
@@ -71,9 +62,6 @@
     width: auto;
     margin-right: @sidebar-right-width-md;
     right: 0;
-    -webkit-transform: translate3d(0, 0, 0) !important;
-    -moz-transform: translate3d(0, 0, 0) !important;
-    transform: translate3d(0, 0, 0) !important;
     position: relative;
     -webkit-transition: -webkit-transform 0 ease;
     -moz-transition: -moz-transform 0 ease;
@@ -95,4 +83,3 @@
     margin-right: @sidebar-right-width-lg;
   }
 }
-

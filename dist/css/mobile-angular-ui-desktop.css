@@ -495,24 +495,11 @@
     left: auto;
     width: 300px;
   }
-  .sidebar-right-in .sidebar-left {
-    -webkit-transform: translate3d(0, 0, 0) !important;
-    -moz-transform: translate3d(0, 0, 0) !important;
-    transform: translate3d(0, 0, 0) !important;
-  }
-  .sidebar-left-in .sidebar-right {
-    -webkit-transform: translate3d(0, 0, 0) !important;
-    -moz-transform: translate3d(0, 0, 0) !important;
-    transform: translate3d(0, 0, 0) !important;
-  }
   .has-sidebar-left .app,
   .sidebar-left-in .app {
     width: auto;
     margin-left: 300px;
     left: 0;
-    -webkit-transform: translate3d(0, 0, 0) !important;
-    -moz-transform: translate3d(0, 0, 0) !important;
-    transform: translate3d(0, 0, 0) !important;
     position: relative;
     -webkit-transition: -webkit-transform 0 ease;
     -moz-transition: -moz-transform 0 ease;
@@ -522,9 +509,6 @@
     width: auto;
     margin-right: 300px;
     right: 0;
-    -webkit-transform: translate3d(0, 0, 0) !important;
-    -moz-transform: translate3d(0, 0, 0) !important;
-    transform: translate3d(0, 0, 0) !important;
     position: relative;
     -webkit-transition: -webkit-transform 0 ease;
     -moz-transition: -moz-transform 0 ease;

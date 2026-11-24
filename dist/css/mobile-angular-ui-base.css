@@ -164,12 +164,16 @@
     width: 440px;
   }
   .sidebar-left-in .app {
-    -webkit-transform: translate3d(440px, 0, 0);
-    transform: translate3d(440px, 0, 0);
+    -webkit-transform: translate(440px, 0);
+    -ms-transform: translate(440px, 0);
+    -o-transform: translate(440px, 0);
+    transform: translate(440px, 0);
   }
   .sidebar-right-in .app {
-    -webkit-transform: translate3d(-440px, 0, 0);
-    transform: translate3d(-440px, 0, 0);
+    -webkit-transform: translate(-440px, 0);
+    -ms-transform: translate(-440px, 0);
+    -o-transform: translate(-440px, 0);
+    transform: translate(-440px, 0);
   }
 }
 @media (min-width: 768px) {
@@ -180,12 +184,16 @@
     width: 688px;
   }
   .sidebar-left-in .app {
-    -webkit-transform: translate3d(688px, 0, 0);
-    transform: translate3d(688px, 0, 0);
+    -webkit-transform: translate(688px, 0);
+    -ms-transform: translate(688px, 0);
+    -o-transform: translate(688px, 0);
+    transform: translate(688px, 0);
   }
   .sidebar-right-in .app {
-    -webkit-transform: translate3d(-688px, 0, 0);
-    transform: translate3d(-688px, 0, 0);
+    -webkit-transform: translate(-688px, 0);
+    -ms-transform: translate(-688px, 0);
+    -o-transform: translate(-688px, 0);
+    transform: translate(-688px, 0);
   }
 }
 
@@ -8609,8 +8617,6 @@ a.list-group-item .icon.pull-right {
   width: 100%;
   background: #777777;
   overflow: hidden;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
   -webkit-transition: -webkit-transform 400ms ease;
   -moz-transition: -moz-transform 400ms ease;
   -o-transition: -o-transform 400ms ease;
@@ -8715,8 +8721,6 @@ a.list-group-item .icon.pull-right {
   top: 0;
   bottom: 0;
   display: none;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
   -webkit-transition: -webkit-transform 400ms ease;
   -moz-transition: -moz-transform 400ms ease;
   -o-transition: -o-transform 400ms ease;
