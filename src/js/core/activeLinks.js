@@ -50,6 +50,9 @@
 
               var html5Mode = $locationProvider.html5Mode().enabled;
               if (!html5Mode) {
+              	if (href.split("#") && href.split("#").length > 1) {
+              		href = "#" + href.split("#")[1];
+              	}                
                 var linkPrefix = '#' + $locationProvider.hashPrefix();
                 if (href.slice(0, linkPrefix.length) === linkPrefix) {
                   href = href.slice(linkPrefix.length);
